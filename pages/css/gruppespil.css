@@ -1,0 +1,1271 @@
+.gruppespil-div {
+    width: 60%;
+    margin: 0px auto;
+    margin-bottom: 50px;
+    min-height: 250px;
+}
+
+.dyster-container {
+    width: 60%;
+    margin: 0px auto;
+    margin-bottom: 50px;
+    height: 250px;
+    background-color: #fff;
+    border-radius: 3px;
+    margin-top: -220px;
+    z-index: 9;
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.2);
+    overflow: hidden;
+}
+
+.findComp {
+    margin-top: -90px;
+}
+
+.dyst-table-row {
+    border-radius: 3px;
+    background-color: #fff;
+    box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.08);
+    width: 300px;
+    display: flex;
+    cursor: pointer;
+    margin-right: 15px;
+    margin-bottom: 15px;
+    padding: 30px 0px;
+    align-items: center;
+    flex-direction: column;
+}
+
+.dyst-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    margin-top: 10px;
+}
+
+.dyst-info-element {
+    display: flex;
+    width: 80px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+}
+
+.dyst-info-h1 {
+    font-family: Inter;
+    font-weight: 600;
+    color: var(--softBlack);
+    font-size: 20px;
+}
+
+.dyst-info-h2 {
+    font-family: Inter;
+    font-weight: 600;
+    opacity: 0.7;
+    color: var(--softBlack);
+    font-size: 11px;
+}
+
+.gruppetable-navn2-el {
+    width: 350px;
+    font-weight: 500 !important;
+    color: var(--black) !important;
+    opacity: 0.8 !important;
+}
+
+.gruppetable-number2-el {
+    width: 160px;
+    font-weight: 400 !important;
+    color: var(--black) !important;
+    opacity: 0.8 !important;
+}
+
+.gruppespil-table ul {
+    width: 100%;
+    white-space: nowrap;
+}
+
+.gruppetable-number2-el2 {
+    width: 160px;
+    font-weight: 400 !important;
+    color: var(--black) !important;
+    opacity: 0.8 !important;
+    text-transform: capitalize;
+}
+
+.dyst-span {
+    padding: 5px 8px;
+    background-color: var(--primary);
+    border-radius: 4px;
+    color: #fff;
+    margin-left: 15px;
+    font-size: 13px;
+    font-family: Inter;
+    font-weight: 500;
+}
+
+.gruppespil-table-row {
+    cursor: pointer;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    transition: 0.2s;
+}
+
+.gruppespil-row-active {
+    background-color: var(--blueStageSurface) !important;
+}
+
+.gruppespil-row-active:hover {
+    background-color: var(--blueStageSurface) !important;
+}
+
+.gruppespil-table-row:hover {
+    background-color: var(--surface);
+}
+
+.gruppetable-kapital2-el {
+    width: 142px;
+    font-weight: 400 !important;
+    color: var(--black) !important;
+    opacity: 0.8 !important;
+}
+
+.gruppetable-navn2 {
+    width: 350px;
+}
+
+.gruppetable-number2 {
+    width: 160px;
+}
+
+.gruppetable-number22 {
+    width: 160px;
+}
+
+.gruppetable-kapital2 {
+    width: 160px;
+}
+
+.gruppespiltable-icon {
+    width: 15px;
+    height: 15px;
+    margin-top: 3.5px;
+    margin-right: 3px;
+    fill: var(--black) !important;
+    opacity: 0.8 !important;
+}
+
+.gruppespil-input {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    padding-left: 47px;
+    background-color: transparent;
+    border: 0px;
+    position: relative;
+    color: #444762;
+    font-size: 12px;
+}
+
+.gruppespil-input-div {
+    width: 300px;
+    height: clamp(35px, 6.5vw, 40px);
+    background-color: #DCE2EA;
+    border-radius: 3px;
+    position: relative;
+}
+
+.gruppespil-input-div input {
+    height: 100% !important;
+}
+
+.gruppespil-search-icon {
+    position: absolute;
+    left: 15px;
+    top: 0px;
+    margin-top: clamp(9px, 2.6vw, 11.5px);
+    fill: var(--softBlack);
+    width: 17px;
+    height: 17px;
+}
+
+.dyst-icon {
+    width: 60px;
+    height: 60px;
+    fill: var(--primary);
+    z-index: 2;
+    position: relative;
+    display: block;
+    opacity: 0.7;
+}
+
+.dyst-p {
+    font-family: Inter;
+    font-weight: 600;
+    opacity: 0.9;
+    color: var(--black);
+    font-size: 20px;
+    padding-top: 15px;
+}
+
+.dyst-figure {
+    background-color: var(--blueStageSurface);
+    width: 60px;
+    height: 60px;
+    position: absolute;
+    right: -10px;
+    opacity: 0.6;
+    bottom: -10px;
+    border-radius: 50%;
+}
+
+.dyst-wrapper {
+    margin-top: 15px;
+}
+
+.dyst-element {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    text-align: center;
+    justify-content: center;
+}
+
+.dyst-win-h1 {
+    font-family: Inter;
+    font-weight: 600;
+    color: var(--primary);
+    opacity: 0.8;
+    font-size: 22px;
+}
+
+.dyst-win-p {
+    font-family: Inter;
+    font-weight: 400;
+    opacity: 0.8;
+    padding-top: 2px;
+    color: var(--softBlack);
+    font-size: 18px;
+}
+
+.aktivespil-container {
+    min-height: 600px;
+    width: 100%;
+    padding: 185px 5%;
+    background-color: var(--stageSurface);
+  }
+  
+  .aktivespil-section {
+    background-color: #fff;
+    padding: 30px 50px;
+    border-top: 4px var(--primary) solid;
+    width: 900px;
+  }
+  
+  .spil-element-top {
+    background-color: var(--primary);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 400;
+    font-family: Inter;
+    text-align: center;
+    width: 100%;
+    padding: 3px 0px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+  }
+  
+  .modal-touch {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-top: 20px;
+  }
+  
+  .as-element {
+    padding: 13px 20px;
+    background-color: var(--stageSurface);
+    border-radius: 2px;
+    display: flex;
+    cursor: pointer;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .as-left {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  
+  .as-active {
+    width: 8px;
+    height: 8px;
+    background-color: var(--primary);
+    border-radius: 50%;
+  }
+  
+  .as-title {
+    font-family: Inter;
+    font-weight: 400;
+    font-size: 15px;
+    padding-left: 15px;
+    width: 17vw;
+    color: var(--softBlack);
+  }
+  
+  .as-p {
+    font-family: Inter;
+    font-weight: 500;
+    font-size: 15px;
+    color: var(--softBlack);
+  }
+  
+  .as-a {
+    font-family: CircularLight;
+    font-weight: 100;
+    font-size: 15px;
+    color: var(--primary);
+    cursor: pointer;
+    opacity: 0.8;
+  }
+  
+  .as-a:hover {
+    text-decoration: underline;
+  }
+  
+  .aktivespil-h1 {
+    font-family: Montserrat;
+    font-weight: 500;
+    font-size: 35px;
+    color: var(--black);
+  }
+  
+  .spil-container ul li {
+    display: inline-block;
+    vertical-align: top;
+  }
+  
+  .main-modal {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.25);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 12;
+  }
+  
+  .modal-box {
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 35px;
+    min-width: 300px;
+    max-width: 550px;
+  }
+  
+  .main-modal-h1 {
+    font-size: 20px;
+    font-family: Inter;
+    color: var(--softBlack);
+    font-weight: 600;
+  }
+  
+  .main-modal-h2 {
+    font-size: 16px;
+    padding-top: 5px;
+    font-family: Inter;
+    color: var(--softBlack);
+    font-weight: 400;
+  }
+  
+  .modal-p {
+    font-size: 14px;
+    font-family: CircularLight;
+    color: var(--primary);
+    font-weight: 100;
+    opacity: 0.8;
+  }
+  
+  .modal-p:hover {
+    text-decoration: unerline;
+    opacity: 1;
+  }
+  
+  .modal-btn {
+    background-color: var(--primary);
+    padding: 10px 15px;
+    border: 1px var(--primary) solid;
+    color: #fff;
+    font-size: 15px;
+    font-family: CircularLight;
+    font-weight: 100;
+    border: 0px;
+    cursor: pointer;
+    border-radius: 3px;
+    margin-right: 15px;
+    margin-bottom: 10px;
+    transition: 0.2s;
+  }
+  
+  .modal-btn:hover {
+    transform: scale(1.02);
+    background-color: var(--primaryAccent) !important;
+    border: 1px var(--primaryAccent) solid !important;
+  }
+  
+  .modal-btn-outline {
+    background-color: transparent;
+    padding: 10px 15px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    color: var(--softBlack);
+    font-size: 15px;
+    cursor: pointer;
+    font-family: CircularLight;
+    font-weight: 100;
+    border: 1px var(--softBlack) solid;
+    border-radius: 3px;
+    transition: 0.2s;
+  }
+  
+  .modal-btn-outline:hover {
+    transform: scale(1.02);
+    background-color: rgba(37, 53, 80, 0.05) !important;
+  }
+  
+  .aktivespil-divider {
+    width: 700px;
+    height: 2px;
+    background-color: var(--black);
+    opacity: 0.1;
+    border-radius: 2px;
+    margin-left: -5px;
+  }
+  
+  .aktivespil-nav {
+    padding: 15px 0px;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  
+  .aktivespil-element-active {
+    padding: 10px 5px;
+    background-color: transparent;
+    margin-right: 50px;
+    border-radius: 1px;
+    border: 0px;
+    cursor: pointer;
+    color: var(--black);
+    border-bottom: var(--primary) solid 3px;
+  }
+  
+  .aktivespil-element {
+    padding: 10px 5px;
+    background-color: transparent;
+    margin-right: 50px;
+    border-radius: 1px;
+    border: 0px;
+    cursor: pointer;
+    opacity: 0.8;
+    color: var(--black);
+    border-bottom: transparent solid 3px;
+  }
+  
+  .aktivespil-element:hover {
+    opacity: 1;
+  }
+  
+  .oddsspil-element-active {
+    padding: 10px 5px;
+    background-color: transparent;
+    margin-right: 15px;
+    border-radius: 1px;
+    border: 0px;
+    font-weight: 600 !important;
+    cursor: pointer;
+    color: var(--black);
+    border-bottom: var(--primary) solid 3px;
+  }
+  
+  .oddsspil-element {
+    padding: 10px 5px;
+    background-color: transparent;
+    margin-right: 15px;
+    border-radius: 1px;
+    border: 0px;
+    cursor: pointer;
+    opacity: 0.8;
+    color: var(--black);
+    font-family: Inter;
+    font-weight: 500;
+    border-bottom: transparent solid 3px;
+  }
+  
+  .oddsspil-element:hover {
+    opacity: 1;
+  }
+  
+  .spil-container {
+    margin-top: 5px;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  .spil-element-active {
+    width: 300px;
+    background-color: var(--stageSurface);
+    border-radius: 7px;
+    padding: 20px;
+    cursor: pointer;
+    transition: 0.2s;
+    opacity: 1;
+    border-top: 8px var(--primary) solid;
+  }
+  
+  .spil-element-con {
+    display: inline-block;
+    margin-right: 10px;
+    margin-bottom: 15px;
+  }
+  
+  .spil-element-con a {
+    text-decoration: none;
+  }
+  
+  .spil-element {
+    width: clamp(150px, 60vw, 300px);
+    background-color: var(--surface);
+    border-radius: 4px;
+    padding-top: 10px !important;
+    padding: 20px;
+    cursor: pointer;
+    transition: 0.2s;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.08);
+    opacity: 0.9;
+    position: relative;
+  }
+  
+  .spil-element:hover {
+    opacity: 1;
+  }
+  
+  .spil-h1 {
+    color: var(--blackAccent);
+    font-family: CircularMedium;
+    font-weight: 100;
+    opacity: 0.9;
+    font-size: 18px;
+  }
+  
+  .spil-h2 {
+    color: var(--softBlack);
+    font-family: CircularLight;
+    font-weight: 100;
+    opacity: 0.7;
+    font-size: 12px;
+  }
+  
+  .spil-element-bottom {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .input-under-p {
+    color: var(--softBlack);
+    opacity: 0.5;
+    font-size: 10px;
+    font-family: CircularLight;
+    font-weight: 100;
+  }
+  
+  .input-under-p2 {
+    color: var(--softBlack);
+    opacity: 0.5;
+    font-size: 12px;
+    font-family: CircularLight;
+    font-weight: 100;
+  }
+  
+  .input-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .input-bottom2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .spil-input {
+    width: 100%;
+    height: 2px;
+    border-radius: 2px;
+    -webkit-appearance: none;
+    overflow: hidden;
+    background-color: #fff;
+  }
+  
+  .input-range-con {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 8vw;
+    margin: 0px 10px;
+  }
+  
+  .spil-input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background: var(--primary);
+    box-shadow: -150px 0 0 150px var(--primary);
+  }
+  
+  .spil-divider {
+    width: 100%;
+    background-color: var(--grey);
+    margin-bottom: 5px;
+    height: 1px;
+    opacity: 0.3;
+  }
+
+  .gruppespil-container {
+    min-height: 600px;
+    width: 100%;
+    padding: 135px 5%;
+    background-color: var(--stageSurface);
+}
+
+.gruppespil-container-2 {
+    min-height: 600px;
+    width: 100%;
+    padding: 135px 5%;
+    background-color: var(--stageSurface);
+}
+
+.gruppespil-section {
+    background-color: #fff;
+    padding: 30px 50px;
+    border-top: 4px var(--primary) solid;
+    margin: 0px auto;
+    overflow: hidden;
+    width: 70%;
+    position: relative;
+    box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.05);
+}
+
+.gruppespil-opret-own {
+    font-size: 13px;
+    cursor: pointer;
+    color: var(--primary);
+    font-family: Inter;
+    font-weight: 400;
+    position: absolute;
+    right: 15px;
+    top: 20px;
+}
+
+.gruppespil-opret-own:hover {
+    text-decoration: underline;
+}
+
+.chat-error {
+    font-family: CircularLight;
+    color: var(--red);
+    font-size: 14px;
+    font-weight: 100;
+    padding-top: 10px;
+    padding-left: 28px;
+}
+
+.invite-p {
+  color: var(--black);
+  opacity: 0.7;
+  font-family: Open Sans;
+  font-size: 15px;
+  padding: 17px 15px;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.invite-copied {
+    position: absolute;
+    left: calc(50% - 30px);
+    padding: 5px 10px;
+    background-color: var(--black);
+    border-radius: 3px;
+    color: #fff;
+    font-family: CircularLight;
+    font-weight: 100;
+    top: -35px;
+    font-size: 13px;
+}
+
+.chat-element {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.chat-top {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 5px;
+}
+
+.chat-top-left {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 8px;
+}
+
+.chat-container {
+    padding: 10px 0px;
+    width: clamp(250px, 70vw, 350px);
+}
+
+.chat-input {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.chat-send {
+    width: 25px;
+    padding: 5px;
+    margin-left: -35px;
+    fill: var(--softBlack);
+    transition: 0.2s;
+    cursor: pointer;
+}
+
+.chat-send:hover {
+    fill: var(--primary);
+}
+
+.chat-int {
+    width: 25px;
+    padding: 5px;
+    fill: var(--softBlack);
+    margin-right: 20px;
+    border-radius: 50%;
+    transition: 0.2s;
+    cursor: pointer;
+}
+
+.chat-int:hover {
+    background-color: var(--stageSurface);
+}
+
+.chat-pic {
+    width: 20px;
+    height: 20px;
+    background-color: var(--black);
+    border-radius: 50%;
+}
+
+.chat-dato {
+    font-family: Inter;
+    font-weight: 300;
+    opacity: 0.7;
+    font-size: 12px;
+    color: var(--softBlack);
+}
+
+.chat-name {
+    font-family: Inter;
+    font-weight: 500;
+    font-size: 15px;
+    color: var(--softBlack);
+}
+
+.chat-name-active {
+    font-family: Inter;
+    font-weight: 500;
+    font-size: 15px;
+    color: var(--primary);
+}
+
+.chat-field {
+    background-color: var(--stageSurface);
+    border: 0px;
+    border-radius: 3px;
+    height: 37px;
+    width: 85%;
+    margin-left: 28px;
+    padding: 0px 15px;
+    color: var(--softBlack);
+    font-weight: 400;
+    font-family: Open Sans;
+    font-size: 13px;
+}
+
+.chat-p {
+    font-family: Inter;
+    font-weight: 400;
+    font-size: 13px;
+    opacity: 0.7;
+    color: var(--softBlack);
+    padding-left: 28px;
+}
+
+.potentiel-tabt {
+    color: var(--red) !important;
+    font-weight: 500 !important;
+}
+
+.potentiel-vundet {
+    color: var(--green) !important;
+    font-weight: 500 !important;
+}
+
+.invite-icon {
+    width: 25px;
+    height: 25px;
+    margin-top: 15px;
+    fill: var(--black);
+  opacity: 0.7;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.gruppespil-invite {
+    cursor: pointer;
+    width: 500px !important;
+    position: relative;
+}
+
+.gruppespil-h1 {
+    font-family: Inter;
+    font-weight: 500;
+    font-size: 24px;
+    display: inline-block;
+    color: var(--black);
+    vertical-align: top;  
+}
+
+  .gruppespil-btn {
+      padding: 4px 11px;
+      background-color: var(--primary);
+      border: 1px var(--primaryAccent);
+      color: #fff;
+      font-size: 12px;
+      font-family: Inter;
+      font-weight: 400;
+      border-radius: 3px;
+      vertical-align: top;
+      cursor: pointer;
+      margin-top: 7px;
+      margin-left: 10px;
+  }
+
+  .gruppespil-btn:hover {
+      background-color: var(--primaryAccent) !important;
+  }
+
+  .gruppespil2-btn {
+    padding: 4px 11px;
+    background-color: var(--primary);
+    border: 1px var(--primaryAccent);
+    color: #fff;
+    font-size: 12px;
+    font-family: Inter;
+    font-weight: 400;
+    border-radius: 3px;
+    vertical-align: top;
+    cursor: pointer;
+    margin-top: 2px;
+    margin-left: 10px;
+}
+
+.gruppespil2-btn:hover {
+    background-color: var(--primaryAccent) !important;
+}
+
+.gruppespil3-btn {
+    padding: 4px 11px;
+    background-color: var(--primary);
+    border: 1px var(--primaryAccent);
+    color: #fff;
+    font-size: 12px;
+    font-family: Open Sans;
+    font-weight: 400;
+    border-radius: 3px;
+    vertical-align: top;
+    cursor: pointer;
+    margin-top: 2px;
+    margin-left: 10px;
+}
+
+.gruppespil3-btn:hover {
+    background-color: var(--primaryAccent) !important;
+}
+
+  .gruppespil-info-info {
+      margin-top: 15px;
+  }
+
+  .gruppespil-info-element {
+    display: inline-block;
+    margin-right: 50px;
+}
+
+  .gruppespil-info-element-p {
+      font-family: Inter;
+      font-weight: 400;
+      font-size: 13px;
+      color: var(--black);
+      opacity: 0.7;
+  }
+
+  .gruppespil-info-element-h1 {
+    font-family: Inter;
+    font-weight: 500;
+    font-size: 22px;
+    max-width: 200px;
+    overflow: hidden;
+    color: var(--black);
+}
+
+.noti-kupon {
+    display: inline-block;
+    margin-bottom: 15px;
+    background-color: #fff;
+    border-top: 4px var(--primary) solid;
+    border-radius: 2px;
+    width: 20vw;
+    min-width: 280px;
+    min-height: 150px;
+    vertical-align: top;
+    position: relative;
+    margin-right: 20px;
+    box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.05);
+}
+
+.gruppespil-info {
+    margin-bottom: 50px;
+}
+
+.gruppespil-info-choose {
+    padding: 15px 20px;
+    background-color: var(--stageSurface);
+    border-radius: 2px;
+    margin-bottom: 15px;
+    cursor: pointer;
+}
+
+.gruppespil-kuponer {
+    padding: 20px 0px;
+}
+
+.noti-kupon ul {
+    width: 100%;
+}
+
+.noti-kupon ul li {
+    width: 100%;
+}
+
+.gruppespil-kupon ul {
+    width: 100%;
+}
+
+.gruppespil-kupon ul li {
+    width: 100%;
+}
+
+.gruppespil-kupon-1 ul {
+    width: 100%;
+}
+
+.gruppetable-loss {
+    color: var(--red) !important;
+}
+
+.gruppetable-win {
+    color: var(--green) !important;
+}
+
+.gruppetable-span {
+    color: var(--softBlack) !important;
+    opacity: 0.6;
+    font-size: 10px;
+    margin-left: 5px;
+}
+
+.gruppetable-icon-win {
+    width: 15px;
+    height: 15px;
+    fill: var(--green);
+    margin-bottom: -2px;
+    margin-right: 2px;
+}
+
+.gruppetable-icon-loss {
+    width: 15px;
+    height: 15px;
+    margin-bottom: -2px;
+    fill: var(--red);
+    margin-right: 2px;
+}
+
+.gruppespil-kupon-1 ul li {
+    width: 100%;
+}
+
+.gruppespil-kupon-2 ul {
+    width: 100%;
+}
+
+.gruppespil-kupon-2 ul li {
+    width: 100%;
+}
+
+.gruppespil-kupon {
+    display: inline-block;
+    margin-bottom: 15px;
+    background-color: #fff;
+    border-top: 4px var(--primary) solid;
+    border-radius: 2px;
+    width: 25vw;
+    min-width: 280px;
+    min-height: 150px;
+    max-width: 380px;
+    vertical-align: top;
+    position: relative;
+    margin-right: 20px;
+    box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.05);
+}
+
+#gruppespil-kuponer {
+    max-height: 600px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.gruppespil-scroll {
+    font-size: 14px;
+    color: var(--softBlack);
+    opacity: 0.7;
+    padding-bottom: 5px;
+    font-weight: 400;
+    font-family: Inter;
+}
+
+.gruppespil-li {
+    display: inline-block;
+    vertical-align: top;
+    width: inherit;
+}
+
+.gruppespil-kupon-1 {
+    display: inline-block;
+    margin-bottom: 15px;
+    background-color: #fff;
+    border-top: 4px var(--primary) solid;
+    border-radius: 2px;
+    width: 25vw;
+    min-width: 280px;
+    min-height: 150px;
+    max-width: 380px;
+    vertical-align: top;
+    position: relative;
+    margin-right: 20px;
+    box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.05);
+}
+
+.gruppespil-kupon-2 {
+    display: inline-block;
+    margin-bottom: 15px;
+    background-color: #fff;
+    border-top: 4px var(--primary) solid;
+    border-radius: 2px;
+    width: 25vw;
+    min-width: 280px;
+    min-height: 150px;
+    max-width: 380px;
+    vertical-align: top;
+    position: relative;
+    margin-right: 20px;
+    box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.05);
+}
+
+.gruppespil-table {
+    margin-top: 10px;
+}
+
+.gruppespil-table-title {
+    font-family: Inter;
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--black);
+    opacity: 0.6;
+    vertical-align: top;
+    display: inline-block;
+}
+
+.gruppespil-table-404 {
+    font-family: Open Sans;
+    font-weight: 400;
+    font-size: 14px;
+    color: var(--black);
+    opacity: 0.5;
+    vertical-align: top;
+    text-align: center;
+    padding: 10px 10px;
+    display: inline-block;
+}
+
+.gruppespil-stage-404 {
+    font-family: Open Sans;
+    font-weight: 400;
+    font-size: 14px;
+    color: var(--black);
+    opacity: 0.6;
+    vertical-align: top;
+    text-align: center;
+    padding: 10px 0px;
+    display: inline-block;
+}
+
+.gruppespil-table-p {
+    font-family: Open Sans;
+    font-weight: 500;
+    font-size: 15px;
+    color: var(--black);
+    vertical-align: top;
+    display: inline-block;
+    margin-top: 1px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.gruppespil-table-h1 {
+    font-family: Open Sans;
+    font-weight: 500;
+    font-size: 15px;
+    color: black;
+    display: inline-block;
+    vertical-align: top;
+    margin-top: 1px;
+}
+
+.gruppespil-table-place {
+    font-family: Open Sans;
+    font-weight: 500;
+    font-size: 17px;
+    color: var(--black);
+    display: inline-block;
+    vertical-align: top;
+}
+
+.gruppespil-table-top {
+    border-bottom: #87889747 1px solid;
+    padding: 5px 0px;
+}
+
+.gruppespil-table-row {
+    padding: 10px 10px;
+    border-bottom: #87889747 1px solid;
+}
+
+.gruppetable-navn {
+    margin-left: 50px;
+    width: 300px;
+}
+
+.gruppetable-el-navn {
+    width: 300px;
+}
+
+.gruppetable-number {
+    width: 160px;
+}
+
+.gruppetable-kapital {
+    width: 200px;
+}
+
+.gruppetable-place {
+    padding-right: 10px;
+}
+
+.gruppespil-table-medlemsskab-silver {
+    border-radius: 50%;
+    width: 10px;
+    vertical-align: top;
+    margin-right: 10px;
+    display: inline-block;
+    background-color: var(--silver);
+    height: 10px;
+}
+
+.gruppespil-table-medlemsskab-primary {
+    border-radius: 50%;
+    width: 10px;
+    vertical-align: top;
+    margin-right: 10px;
+    display: inline-block;
+    background-color: var(--primary);
+    height: 10px;
+}
+
+.gruppespil-table-medlemsskab-gold {
+    border-radius: 50%;
+    width: 10px;
+    vertical-align: top;
+    margin-right: 10px;
+    display: inline-block;
+    background-color: var(--gold);
+    height: 10px;
+}
+
+.gruppespil-table-medlemsskab-special {
+    border-radius: 50%;
+    width: 10px;
+    vertical-align: top;
+    margin-right: 10px;
+    display: inline-block;
+    background-color: var(--red);
+    height: 10px;
+}
+  
+  .spil-p-right {
+    display: inline-block;
+    color: #fff;
+    opacity: 0.6;
+    float: right;
+    font-size: 13px;
+  }
+  
+  .spil-avatar {
+    width: 30px;
+    height: 30px;
+    margin-bottom: 20px;
+    background-color: var(--primary);
+    border-radius: 50%;
+  }

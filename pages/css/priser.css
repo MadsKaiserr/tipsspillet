@@ -1,0 +1,41 @@
+.plan-img {
+    width: 370px;
+    margin-top: -20px;
+    margin-left: 20px;
+}
+
+.plans-con {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.main-trans {
+    padding-top: 50px;
+    text-align: center;
+  }
+
+.priser-h3 {
+    color: var(--primary);
+    font-size: 17px;
+    font-weight: 400;
+    letter-spacing: 1px;
+    font-family: Montserrat;
+}
+
+.priser-h1 {
+    color: var(--softBlack);
+    font-size: 44px;
+    font-weight: 500;
+    font-family: Helvetica;
+    margin: 10px 0px;
+}
+
+.priser-h2 {
+    color: var(--softBlack);
+    opacity: 0.8;
+    font-size: 17px;
+    font-weight: 100;
+    font-family: CircularLight;
+}

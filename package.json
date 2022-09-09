@@ -1,0 +1,26 @@
+{
+  "name": "tipsspillet",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@flaticon/flaticon-uicons": "^1.7.0",
+    "axios": "^0.27.2",
+    "date-fns": "^2.29.2",
+    "jwt-decode": "^3.1.2",
+    "next": "^12.2.5",
+    "react": "^18.2.0",
+    "react-day-picker": "^8.1.4",
+    "react-dom": "^18.2.0",
+    "react-facebook-login": "^4.1.1"
+  },
+  "devDependencies": {
+    "eslint": "8.23.0",
+    "eslint-config-next": "12.2.5"
+  }
+}
