@@ -106,10 +106,10 @@ function Blog () {
                             <div className="price-input-element" id="anbefalinger" onClick={() => setType("anbefalinger")}>Anbefalinger</div>
                         </div>
                     </div>
-                    <div className="blog-container">
+                    <ul className="blog-container">
                         {articles.map((item) => {
                             return (
-                                <div className="blog-element animation-fadetop" style={{animationDelay: "0.5s"}}>
+                                <li key={item.h1} className="blog-element animation-fadetop" style={{animationDelay: "0.5s"}}>
                                     <div className="blog-img"></div>
                                     <div className="blog-info">
                                         <h2 className="blog-h2">{item.h1}</h2>
@@ -122,10 +122,10 @@ function Blog () {
                                             <p className="blog-byline-h2">{item.dato}</p>
                                         </div>
                                     </div>
-                                </div>
+                                </li>
                             );
                         })}
-                    </div>
+                    </ul>
                 </div>
             </div>
             <FaqComponent />
