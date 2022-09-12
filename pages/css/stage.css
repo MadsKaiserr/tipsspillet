@@ -1157,6 +1157,13 @@
     padding-bottom: 125px;
     background-color: var(--stageSurface);
   }
+
+  .law-main-container {
+    padding: 0px 5%;
+    padding-top: 45px;
+    padding-bottom: 125px;
+    background-color: var(--surface);
+  }
   
   .stage-leftbar {
     height: 100%;
@@ -3014,7 +3021,7 @@
   text-align: center;
   animation: 1000ms ease 0s 1 normal none running fadeInUp;
   animation-fill-mode: forwards;
-  animation-delay: 0.9s;
+  animation-delay: 0.5s;
 }
 
 .faq-btn:hover {

@@ -266,17 +266,6 @@
 
 
 
-@media only screen and (max-width: 1400px) {
-  .gruppespil-div {
-    max-width: 840px !important;
-  }
-}
-
-@media only screen and (max-width: 1300px) {
-  .section-price {
-    padding-top: 80px !important;
-  }
-}
 
 @media only screen and (max-width: 1250px) {
   .favorit-container-match {
@@ -291,9 +280,6 @@
 }
 
 @media only screen and (max-width: 1095px) {
-  .findComp {
-    margin-top: -30px !important;
-  }
   .height-fix {
     height: 0px !important;
   }
@@ -484,9 +470,6 @@
   .plans-con {
     flex-direction: column;
   }
-  .section-price {
-    padding-top: 160px !important;
-  }
   .plan-element {
     width: clamp(237px, 45vw, 400px);
   }
@@ -658,6 +641,12 @@
     align-items: center !important;
     text-align: center !important;
   }
+  .inf-element-active {
+    width: 100% !important;
+    justify-content: center !important;
+    align-items: center !important;
+    text-align: center !important;
+  }
   .inf-top {
     justify-content: center !important;
     align-items: center !important;
@@ -815,9 +804,6 @@
   }
   .stage-indstillinger-main {
     padding-left: 20px !important;
-  }
-  .findComp {
-    margin-top: 0px !important;
   }
   .nav-container-bottom {
     display: none !important;

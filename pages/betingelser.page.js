@@ -4,6 +4,7 @@ import Link from 'next/link'
 import Head from 'next/head'
 import Image from 'next/image'
 import Header from './layout/header';
+import Spacer from './components/spacer';
  
 function Betingelser () {
 
@@ -21,7 +22,8 @@ function Betingelser () {
                 <meta property="og:description" content="Følgende vilkår og rettigheder er gældende i forbindelse med anvendelsen af internetsiden. Ved at gå ind på denne internetside anerkender og tiltræder du følgende vilkår og rettigheder. Såfremt du ikke kan acceptere disse vilkår og rettigheder, skal du ikke benytte denne internetside" />
             </Head>
             <Header />
-            <div className="stage-main-container">
+            <Spacer />
+            <div className="law-main-container">
                 <div className="betingelser-container">
                 <h1 className="betingelser-h1">Tipsspillet Betingelser</h1>
                 <p className="betingelser-h2">Sidst opdateret 24. maj, 2022</p>

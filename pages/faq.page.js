@@ -7,13 +7,15 @@ import FaqSite from './components/faq';
 import Image from 'next/image'
 import Head from 'next/head'
 import Link from 'next/link'
+
+import SpilMed from './components/spilmed';
  
 function Faq () {
     
     useEffect(() => {
         window.addEventListener("scroll", function(){
             if (document.getElementById("designer-hero")) {
-                document.getElementById("designer-hero").classList.toggle("designer-relative", window.scrollY > 420);
+                document.getElementById("designer-hero").classList.toggle("designer-relative", window.scrollY > 340);
             }
         })
     }, [])
@@ -21,7 +23,7 @@ function Faq () {
     return (
         <>
             <Head>
-                <title>FAQ - Spørgsmål og svar - Tipsspillet</title>
+                <title>FAQ - Spørgsmål og svar - Få svar på dine spørgsmål - Ofte stillede spørgsmål | Tipsspillet</title>
                 <link rel="canonical" href="https://www.tipsspillet.dk/faq" />
                 <meta name="description" content="FAQ - Få svar på dine spørgsmål - Hvordan opretter man gruppespil? Hvordan tilmelder jeg mig præmiedyser? Hvordan inviterer jeg folk til mit gruppespil?" />
                 <meta name="author" content="Mads Kaiser" />
@@ -44,34 +46,8 @@ function Faq () {
                 <div className="designer-element-fixed" style={{backgroundColor: "var(--stageSurface)"}}>
                     <div className="designer-fixed" id="designer-hero">
                         <div className="designer-left">
-                            <h1 className="route-h1">
-                                <div className="main-component-h">
-                                    <span>O</span>
-                                    <span>f</span>
-                                    <span>t</span>
-                                    <span>e</span>
-                                    &nbsp;
-                                    <span>s</span>
-                                    <span>t</span>
-                                    <span>i</span>
-                                    <span>l</span>
-                                    <span>l</span>
-                                    <span>e</span>
-                                    <span>d</span>
-                                    <span>e</span>
-                                    &nbsp;
-                                    <span>s</span>
-                                    <span>p</span>
-                                    <span>ø</span>
-                                    <span>r</span>
-                                    <span>g</span>
-                                    <span>s</span>
-                                    <span>m</span>
-                                    <span>å</span>
-                                    <span>l</span>
-                                </div>
-                                <div className="route-pynt"><div className="route-pynt1"></div><div className="route-pynt2"></div><div className="route-pynt3"></div></div></h1>
-                            <h2 className="route-h2">Få svar på de spørgsmål du skulle sidde med vedrørende Tipsspillet. Kan du ikke finde svar på dit spørgsmål?<span className="route-h2-a">Kontakt vores team</span>.</h2>
+                            <h1 className="main-component-h1 main-gradient font-size-50">Spørgsmål og svar</h1>
+                            <h2 className="main-component-h3 text-align-left margin-0 font-size-17 padding-10-0">Få svar på de spørgsmål du skulle sidde med vedrørende Tipsspillet. Kan du ikke finde svar på dit spørgsmål? <span className="color-primary font-weight-500">Kontakt vores team</span>.</h2>
                             <br /><Link href="/kontakt"><a className="faq-btn">Skriv til os</a></Link>
                         </div>
                     </div>
@@ -80,19 +56,7 @@ function Faq () {
                     </div> */}
                 </div>
                 <div className="designer-element">
-                    <h3 className="faq-h1">FAQ - Spørgsmål og svar</h3>
-                    <h4 className="faq-h2">Har du spørgsmål? Vi er her for at hjælpe</h4>
                     <FaqSite />
-                </div>
-            </div>
-            <div className="designer-container">
-                <div className="designer-hero">
-                    <p className="designer-hero-h2">Formålet</p>
-                    <h2 className="designer-hero-h1">Tipsspillets vision</h2>
-                    <p className="designer-hero-p">Dyst mod dine venner i et verdensomspændende betting-spil, helt uden at bruge en krone. Bet mod venner og familie, eller deltag i præmiedyster.</p>
-                    <br />
-                    <p className="designer-hero-p" style={{marginBottom: "10px"}}>Dyst mod dine venner i et verdensomspændende betting-spil, helt uden at bruge en krone. Bet mod venner og familie, eller deltag i præmiedyster.</p>
-                    <br /><Link href="/signup"><a className="faq-btn-outline">Kom igang</a></Link>
                 </div>
             </div>
             {/* <div className="stage-main-container" style={{marginTop: "-100px", backgroundColor: "#fff"}}>
@@ -100,6 +64,7 @@ function Faq () {
                 <h4 className="faq-h2">Har du spørgsmål? Vi er her for at hjælpe</h4>
                 <FaqSite />
             </div> */}
+            <SpilMed />
         </>
     )
 }

@@ -129,7 +129,6 @@ function Find () {
         <>
             <div className="gruppespil-div">
                 <div className="gruppespil-top">
-                    <h1 className="gruppespil-h1">Find gruppespil</h1>
                     <div className="aktivespil-nav">
                         <button className="aktivespil-element-active" id="alleGK" onClick={() => {changeNav("alle")}}>Alle gruppespil</button>
                         <button className="aktivespil-element" id="privateGK" onClick={() => {changeNav("private")}}>Private spil</button>

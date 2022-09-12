@@ -80,47 +80,43 @@ function Faq () {
 
     return (
         <>
-            <div className="faq-fix">
-                <div className="faq-input-con">
-                    <div className="faq-input">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="faq-input-icon" viewBox="0 0 16 16">
-                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                        </svg>
-                        <input type="text" placeholder="Få svar på dine spørgsmål" className="faq-field" />
-                    </div>
+            <div className="faq-wrapper">
+                <div className="faq-fix">
+                    <h2 className="faq-head-h2">Ofte stillede spørgsmål</h2>
+                    <h3 className="faq-head-h3">Kan du ikke finde dit spørgsmål? <Link href="/kontakt"><span className="main-gradient font-weight-500 cursor-pointer">Kontakt vores support</span></Link></h3>
+                    <ul className="faq-container">
+                        {questions.map(question => {
+                            return (
+                                <li key={question.id} className="faq-element" onClick={() => {showQuestion(question.id)}}>
+                                    <div className="faq-question">
+                                        <p className="faq-q">{question.name}</p>
+                                        <svg xmlns="http://www.w3.org/2000/svg" id={question.id + "-i"} className="faq-chevron display" viewBox="0 0 16 16">
+                                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                        </svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" id={question.id + "-i2"} className="faq-chevron" viewBox="0 0 16 16">
+                                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                            <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+                                        </svg>
+                                    </div>
+                                    <ul className="faq-answer" id={question.id + "-a"}>
+                                        {question.paragraphs.map(para => {
+                                            return (
+                                                <li key={para.text} className="faq-a-p">{para.text}</li>
+                                            );
+                                        })}
+                                    </ul>
+                                </li>
+                            );
+                        })}
+                        <li key={"help"} className="faq-help">
+                            <div className="faq-question">
+                                <p className="faq-q">Kan du ikke finde din spørgsmål?</p>
+                                <br /><Link href="/kontakt"><a className="faq-btn">Skriv til os</a></Link>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
-                <ul className="faq-container">
-                    {questions.map(question => {
-                        return (
-                            <li key={question.id} className="faq-element" onClick={() => {showQuestion(question.id)}}>
-                                <div className="faq-question">
-                                    <p className="faq-q">{question.name}</p>
-                                    <svg xmlns="http://www.w3.org/2000/svg" id={question.id + "-i"} className="faq-chevron display" viewBox="0 0 16 16">
-                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-                                    </svg>
-                                    <svg xmlns="http://www.w3.org/2000/svg" id={question.id + "-i2"} className="faq-chevron" viewBox="0 0 16 16">
-                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                                        <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
-                                    </svg>
-                                </div>
-                                <ul className="faq-answer" id={question.id + "-a"}>
-                                    {question.paragraphs.map(para => {
-                                        return (
-                                            <li key={para.text} className="faq-a-p">{para.text}</li>
-                                        );
-                                    })}
-                                </ul>
-                            </li>
-                        );
-                    })}
-                    <li key={"help"} className="faq-help">
-                        <div className="faq-question">
-                            <p className="faq-q">Kan du ikke finde din spørgsmål?</p>
-                            <br /><Link href="/kontakt"><a className="faq-btn">Skriv til os</a></Link>
-                        </div>
-                    </li>
-                </ul>
             </div>
         </>
     )

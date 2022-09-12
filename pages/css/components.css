@@ -299,7 +299,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    backdrop-filter: blur(10px);
   }
   
   .side-nav-bar {
@@ -1016,6 +1015,24 @@
     animation-delay: 0.25s;
   }
 
+  .faq-head-h2 {
+    text-align: center;
+    color: var(--black);
+    font-size: 38px;
+    font-family: Inter;
+    font-weight: 500;
+  }
+
+  .faq-head-h3 {
+    text-align: center;
+    color: var(--softBlack);
+    font-size: 18px;
+    opacity: 0.8;
+    font-family: Inter;
+    font-weight: 400;
+    margin-top: 15px;
+  }
+
 .faq-input-con {
     height: 45px;
     margin-top: 25px;
@@ -1041,7 +1058,7 @@
     flex-direction: column;
     width: 75%;
     min-width: 300px;
-    max-width: 600px;
+    max-width: 800px;
 }
 
   .faq-input {
@@ -1096,6 +1113,12 @@
     opacity: 0.8;
 }
 
+.spacer {
+  height: 100px;
+  width: 100%;
+  background-color: var(--surface);
+}
+
 .faq-container {
     margin-top: 40px;
     width: 100%;
@@ -1127,7 +1150,7 @@
 .faq-question {
     height: 100%;
     width: 100%;
-    padding: clamp(16px, 2vw, 20px) 0px;
+    padding: 17px 0px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -1137,7 +1160,6 @@
 .faq-element {
     border-bottom: 1px #ebebeb solid;
     cursor: pointer;
-    border-radius: 5px;
     width: 100%;
     padding: 5px 0px;
     padding-bottom: 10px;
@@ -1166,7 +1188,7 @@
   justify-content: center;
   flex-direction: column;
   text-align: left;
-  padding-top: 200px;
+  padding-top: 60px;
   padding-bottom: 100px;
 }
 
@@ -1247,6 +1269,7 @@
   justify-content: flex-start;
   flex-direction: column;
   text-align: left;
+  margin-top: -35px;
 }
 
 .route-img {
@@ -1295,13 +1318,12 @@
 }
 
 .route-h1 {
-  font-size: 52px;
-  font-family: Inter;
-  font-weight: 400;
-  position: relative;
   color: var(--black);
+  font-size: 54px;
+  font-family: Inter;
+  font-weight: 700;
+  position: relative;
   display: inline;
-  margin-right: 50px;
 }
 
 .route-h2 {
@@ -1334,9 +1356,9 @@
 
 .faq-q {
     color: var(--black);
-    font-weight: 600;
+    font-weight: 500;
     font-family: Inter;
-    font-size: clamp(12px, 2vw, 17px);
+    font-size: 17px;
 }
 
 .kontakt-container {
@@ -1680,6 +1702,7 @@ gap: 8px;
     height: 70px;
     background-color: rgba(255, 255, 255, .90);
     position: fixed;
+    backdrop-filter: blur(10px);
     top: 0;
     box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.08);
     left: 0;
