@@ -305,6 +305,12 @@
   .height-fix {
     height: 0px !important;
   }
+  .designer-element-fixed {
+    display: none !important;
+  }
+  .designer-element {
+    width: 100% !important;
+  }
   .sticky-small {
     position: fixed !important;
     left: 0 !important;
@@ -589,6 +595,27 @@
   }
   .nav-bar {
     padding: 0px 20px !important;
+  }
+  .blog-img {
+    height: 190px !important;
+  }
+  .blog-h2 {
+    font-size: 18px !important;
+    width: 300px !important;
+  }
+  .blog-h3 {
+    font-size: 15px !important;
+    max-width: 280px !important;
+  }
+  .blog-byline-img {
+    width: 30px !important;
+    height: 30px !important;
+  }
+  .blog-byline-h1 {
+    font-size: 14px !important;
+  }
+  .blog-byline-h2 {
+    font-size: 11px !important;
   }
 }
 
@@ -1082,6 +1109,14 @@
   }
   .signup-tilbage {
     display: none !important;
+  }
+  .price-input-element {
+    padding: 4px 8px !important;
+    font-size: 12px !important;
+  }
+  .price-input-element-active {
+    padding: 5px 10px !important;
+    font-size: 12px !important;
   }
 }
 

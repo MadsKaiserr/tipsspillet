@@ -213,6 +213,7 @@ function Header () {
                                     {auth && <Link href="/stage"><a onClick={() => closeMenu()} className="sidemenu-p">Gå til betting</a></Link>}
                                     <Link href="/gruppespil"><a onClick={() => closeMenu()} className="sidemenu-p">Find gruppespil</a></Link>
                                     <Link href="/priser"><a onClick={() => closeMenu()} className="sidemenu-p">Priser - abonnement</a></Link>
+                                    <Link href="/blog"><a onClick={() => closeMenu()} className="sidemenu-p">Tipsspillet Blog</a></Link>
                                     <Link href="/faq"><a onClick={() => closeMenu()} className="sidemenu-p">FAQ - Spørgsmål og svar</a></Link>
                                 </div>
                             </div>

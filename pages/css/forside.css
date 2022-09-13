@@ -1309,6 +1309,13 @@
     font-weight: 500;
     color: var(--softBlack);
   }
+
+  .plan-element-perk-desc-active {
+    font-size: 16px;
+    font-family: Inter;
+    font-weight: 500;
+    color: var(--primary) !important;
+  }
   
   .plan-funktioner {
     width: 100%;
