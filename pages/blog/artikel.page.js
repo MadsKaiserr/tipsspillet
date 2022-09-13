@@ -93,9 +93,9 @@ function Artikel () {
                         <p className="a-blog-p">For hurtigt at komme igang, skal du oprette dig en konto, som du kan tilmelde dig gruppespil med. <Link href="/signup"><a className="a-blog-p-a">Opret en konto hos Tipsspillet.</a></Link></p>
                         <p className="a-blog-p">Her skal du blot vælge abonnement-type eller gratis profil, og herefter følge formularen, for at oprette din konto.</p>
                         <h2 className="a-blog-h2">Step 2. Vælg dine favoritter</h2>
-                        <p className="a-blog-p">Når du har oprettet en konto for første gang, bliver du mødt med siden "Hurtig Opsætning".</p>
+                        <p className="a-blog-p">Når du har oprettet en konto for første gang, bliver du mødt med siden &quot;Hurtig Opsætning&quot;.</p>
                         <p className="a-blog-p">Her kan du hurtigt og nemt finde dig et gruppespil, hvis du allerede ved hvilket et du skal være med i. Dette trin kan dog også springes over.</p>
-                        <p className="a-blog-p">Herefter kommer siden, hvor du kan vælge dine favorithold. Favoritholdene bliver vist som de første under kampene hver dag, og du vil nemt have adgang til dine favorithold under sektionen "Hold du følger".</p>
+                        <p className="a-blog-p">Herefter kommer siden, hvor du kan vælge dine favorithold. Favoritholdene bliver vist som de første under kampene hver dag, og du vil nemt have adgang til dine favorithold under sektionen &quot;Hold du følger&quot;.</p>
                         <div className="a-blog-img">
                             <Image src={Setup} width="2200" height="1156" />
                         </div>
