@@ -22,32 +22,33 @@ function StageIndstillinger () {
     const [facebook, setFacebook] = useState(false);
 
     function apiCall() {
-        const URL = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/user?user="+ localStorage.getItem("email");
-
-        const requestConfig = {
-            headers: {
-                "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
+        if (typeof window !== 'undefined') {
+            const URL = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/user?user="+ localStorage.getItem("email");
+            const requestConfig = {
+                headers: {
+                    "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
+                }
             }
+
+            axios.get(URL, requestConfig).then(response => {
+                console.log(response)
+                setUser(JSON.stringify(response.data));
+                setUsernameField(response.data["username"]);
+                setEmailField(response.data["email"]);
+                setFornavn(response.data["fornavn"]);
+                setEfternavn(response.data["efternavn"]);
+                if (response.data.type === "facebook") {
+                    setFacebook(true);
+                }
+
+                const year = new Date(response.data["oprettelse"]).getFullYear();
+                const month = new Date(response.data["oprettelse"]).getMonth();
+                const day = new Date(response.data["oprettelse"]).getDate();
+                setOprettelseText(day + "/" + month + "/" + year);
+            }).catch(error => {
+                console.log("Fejl ved indhentning af data" + error)
+            })
         }
-
-        axios.get(URL, requestConfig).then(response => {
-            console.log(response)
-            setUser(JSON.stringify(response.data));
-            setUsernameField(response.data["username"]);
-            setEmailField(response.data["email"]);
-            setFornavn(response.data["fornavn"]);
-            setEfternavn(response.data["efternavn"]);
-            if (response.data.type === "facebook") {
-                setFacebook(true);
-            }
-
-            const year = new Date(response.data["oprettelse"]).getFullYear();
-            const month = new Date(response.data["oprettelse"]).getMonth();
-            const day = new Date(response.data["oprettelse"]).getDate();
-            setOprettelseText(day + "/" + month + "/" + year);
-        }).catch(error => {
-            console.log("Fejl ved indhentning af data" + error)
-        })
     }
 
     if (dataLoad === false) {

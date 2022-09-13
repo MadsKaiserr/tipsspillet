@@ -20,6 +20,15 @@ function Gruppespil () {
                 <meta property="og:description" content="Opret gruppespil eller tilmeld præmiedyster, og dyst gratis mod venner og familie i fodbold-betting med virtuelle penge." />
             </Head>
             <Header />
+            <div className="main-modal" id="main-modal">
+                <div className="modal-box">
+                    <p className="main-modal-h1">Abonnement ikke tilgængeligt</p>
+                    <p className="main-modal-h2">Abonnement er på nuværende tidspunkt ikke tilgængeligt for køb. Prøv igen senere...</p>
+                    <div className="modal-touch">
+                        <button className="nav-btn-default" onClick={() => {document.getElementById("main-modal").classList.remove("display-flex")}}>Tilbage</button>
+                    </div>
+                </div>
+            </div>
             <div className="hero-container">
                 <div className="hero-text">
                     <p className="main-component-p animation-fadeleft">Find gruppespil og præmiedyster</p>

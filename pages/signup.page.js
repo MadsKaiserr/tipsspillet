@@ -305,7 +305,7 @@ function Signup () {
     }
 
     function access() {
-        window.open("/stage", "_self");
+        windop.open("/signup/abonnement");
     }
 
     function setPriceActive(type) {
@@ -324,11 +324,6 @@ function Signup () {
         document.getElementById(type+"-check").classList.remove("display-not");
     }
 
-    function showSignup() {
-        document.getElementById("login-priser").classList.add("display-not");
-        document.getElementById("loginForm").classList.remove("display-not");
-    }
-
     return (
         <>
             <Head>
@@ -343,11 +338,11 @@ function Signup () {
                 <meta property="og:description" content="Opret konto på Danmarks eneste gratis betting platform - Opret gratis konto, og bet for virtuelle penge mod venner og familie - Deltag i præmiedyster, og vind blandt andet billetter til fodboldkampe i parken." />
             </Head>
             <div className="route-thirds">
-                <div className="route-thirds-element-1">
+                <div className="route-thirds-element-1" id="third">
                     <Link href="/">
                         <div className="signup-tilbage">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="11px" height="11px" fill="var(--black)" viewBox="0 0 16 16">
-                                <path fillRule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25px" height="25px" fill="var(--black)" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/>
                             </svg>
                             <p className="signup-tilbage-p">Tilbage til forsiden</p>
                         </div>
@@ -358,46 +353,7 @@ function Signup () {
                         <div className="login-text">
                             <h1 className="login-text-h1">Opret din konto</h1>
                         </div>
-                        <div className="login-form" id="login-priser">
-                            <button className="login-form-btn-active" id="basic-btn" onClick={() => {setPriceActive("basic")}}>
-                                <div className="login-btn-left">
-                                    <p className="login-btn-h1">Basic version</p>
-                                    <p className="login-btn-p">Prøv dig ad med Basic abonnement helt gratis.</p>
-                                </div>
-                                <svg xmlns="http://www.w3.org/2000/svg" className="display-not" width="18px" height="18px" id="basic-icon" fill="#ebebeb" viewBox="0 0 16 16">
-                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                                </svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" id="basic-check" fill="#fff" viewBox="0 0 16 16">
-                                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
-                                </svg>
-                            </button>
-                            <button className="login-form-btn" id="plus-btn" onClick={() => {setPriceActive("plus")}}>
-                                <div className="login-btn-left">
-                                    <p className="login-btn-h1">Plus version</p>
-                                    <p className="login-btn-p">Til fodboldentusiaster og administratorere af gruppespil.</p>
-                                </div>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" id="plus-icon" fill="#ebebeb" viewBox="0 0 16 16">
-                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                                </svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" className="display-not" width="18px" height="18px" id="plus-check" fill="#fff" viewBox="0 0 16 16">
-                                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
-                                </svg>
-                            </button>
-                            <button className="login-form-btn" id="premium-btn" onClick={() => {setPriceActive("premium")}}>
-                             <div className="login-btn-left">
-                                    <p className="login-btn-h1">Premium version</p>
-                                    <p className="login-btn-p">Til bettingeksperter, dedikerede spillere og administratorere.</p>
-                                </div>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" id="premium-icon" fill="#ebebeb" viewBox="0 0 16 16">
-                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                                </svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" className="display-not" width="18px" height="18px" id="premium-check" fill="#fff" viewBox="0 0 16 16">
-                                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
-                                </svg>
-                            </button>
-                            <p className="faq-btn" onClick={() => showSignup()}>Næste</p>
-                        </div>
-                        <form onSubmit={signupHandler} className="login-form display-not" id="loginForm">
+                        <form onSubmit={signupHandler} className="login-form" id="loginForm">
                             <FacebookLogin
                                 appId="1252645385555497"
                                 autoLoad={false}

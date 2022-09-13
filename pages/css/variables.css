@@ -2,6 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500;600;700;900&display=swap');
 @import url('https://rsms.me/inter/inter.css');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
 
   :root {
     /* Primary colors */
@@ -392,6 +393,24 @@
     }
   }
 
+  @keyframes cycleSmall {
+    0% {
+      width: 250px;
+    }
+    45% {
+      width: 250px;
+    }
+    50% {
+      width: 370px;
+    }
+    95% {
+      width: 370px;
+    }
+    100% {
+      width: 250px;
+    }
+  }
+
   .main-switch-element {
     position: absolute;
   }
@@ -656,6 +675,7 @@
 
   .blog-container {
     padding: 20px 5%;
+    text-align: center;
   }
 
   .blog-element {
@@ -666,6 +686,7 @@
     transition: 0.2s;
     border-radius: 5px;
     cursor: pointer;
+    text-align: left;
     padding: 15px;
     padding-bottom: 20px !important;
   }
@@ -678,6 +699,10 @@
     border-radius: 5px;
     background-color: #fff;
     height: 250px;
+    background-color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .blog-h2 {
@@ -884,10 +909,10 @@
   }
   
   .square-btn-default {
-    padding: clamp(5px, 1.5vw, 12px) clamp(25px, 4vw, 35px);
+    padding: 12px 35px;
     color: #fff;
     font-weight: 400;
-    font-size: clamp(8px, 1.5vw, 15px);
+    font-size: 15px;
     border-radius: 5px;
     border: 0px;
     cursor: pointer;
@@ -900,10 +925,10 @@
   }
   
   .square-btn-outline {
-    padding: clamp(8px, 1.5vw, 12px) clamp(20px, 1vw, 35px);
+    padding: 12px 35px;
     color: var(--primary);
     font-weight: 400;
-    font-size: clamp(10px, 1.5vw, 15px);
+    font-size: 15px;
     border-radius: 5px;
     cursor: pointer;
     background-color: transparent;

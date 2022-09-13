@@ -1119,6 +1119,21 @@
   background-color: var(--surface);
 }
 
+.signup-abonnement {
+  background-color: var(--surface);
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 29;
+}
+
+.signup-abonnement-prices {
+  margin-top: -85px;
+  transform: scale(0.9);
+}
+
 .faq-container {
     margin-top: 40px;
     width: 100%;
@@ -1130,10 +1145,13 @@
 }
 
 .faq-chevron {
-    width: clamp(13px, 2vw, 18px);
-    height: clamp(13px, 2vw, 18px);
+    width: clamp(15px, 2vw, 18px);
+    height: clamp(15px, 2vw, 18px);
+    min-height: 15px;
+    min-width: 15px;
     fill: var(--softBlack);
     opacity: 0.8;
+    margin-left: 20px;
     display: none;
     transition: 0.2s;
 }
@@ -1365,6 +1383,7 @@
   padding-left: 6.2%;
   padding-top: 50px;
   min-height: 600px;
+  background-color: var(--surface);
 }
 
 .kontakt-h3 {
@@ -2001,4 +2020,62 @@ gap: 8px;
   .footer-btn:hover {
     opacity: 1;
     background-color: var(--primaryAccent);
+  }
+
+  .artikel-container {
+    width: 100%;
+    margin-top: 80px;
+    padding: 100px 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: -webkit-linear-gradient(-60deg, #21D4FD -10%, #B721FF 150%);
+    flex-direction: column;
+  }
+
+  .artikel-h3 {
+    font-family: Inter;
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+  }
+
+  .artikel-h1 {
+    font-family: Roboto;
+    font-size: 52px;
+    font-weight: 600;
+    color: #fff;
+    max-width: 650px;
+    line-height: 50px;
+    padding-bottom: 40px;
+    padding-top: 10px;
+  }
+
+  .artikel-byline {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+  }
+
+  .artikel-byline-divider {
+    width: 5px;
+    height: 5px;
+    background-color: #fff;
+  }
+
+  .artikel-byline-h {
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 500;
+    border-bottom: 1px rgba(255, 255, 255, 0.566) solid;
+    color: #fff;
+  }
+
+  .artikel-byline-p {
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 400;
+    opacity: 0.8;
+    color: #fff;
   }

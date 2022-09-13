@@ -3,13 +3,18 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link'
 import Head from 'next/head'
 import Header from './layout/header';
+import Image from 'next/image'
 import axios from "axios";
 import FaqComponent from './components/faq';
 import SpilMed from './components/spilmed';
 import PriserComp from './components/priser';
 import Spacer from './components/spacer';
+
+import Banner from './img/logo-white.png';
  
 function Blog () {
+
+    const [currentType, setCurrentType] = useState("alle");
 
     function setType(type) {
         if (type === "nyheder") {
@@ -17,60 +22,36 @@ function Blog () {
             document.getElementById("introduktion").className = "price-input-element";
             document.getElementById("anbefalinger").className = "price-input-element";
             document.getElementById("alle").className = "price-input-element";
+            setCurrentType("nyheder");
         } else if (type === "introduktion") {
             document.getElementById("introduktion").className = "price-input-element-active";
             document.getElementById("nyheder").className = "price-input-element";
             document.getElementById("anbefalinger").className = "price-input-element";
             document.getElementById("alle").className = "price-input-element";
+            setCurrentType("introduktion");
         } else if (type === "alle") {
             document.getElementById("alle").className = "price-input-element-active";
             document.getElementById("nyheder").className = "price-input-element";
             document.getElementById("introduktion").className = "price-input-element";
             document.getElementById("anbefalinger").className = "price-input-element";
+            setCurrentType("alle");
         } else if (type === "anbefalinger") {
             document.getElementById("alle").className = "price-input-element";
             document.getElementById("anbefalinger").className = "price-input-element-active";
             document.getElementById("nyheder").className = "price-input-element";
             document.getElementById("introduktion").className = "price-input-element";
+            setCurrentType("anbefalinger");
         }
     }
 
     const [articles, setArticles] = useState([
         {
-            h1: "Top 5 hold der kan vinde VM i Qatar",
-            h2: "VM i Qatar er lige rundt om hjørnet, og vi tager derfor 5 hurtige hold, som er favoritter til dette års VM.",
-            dato: "Søn. 11 sep.",
-            author: "Mads Kaiser"
-        },
-        {
-            h1: "Top 5 hold der kan vinde VM i Qatar",
-            h2: "VM i Qatar er lige rundt om hjørnet, og vi tager derfor 5 hurtige hold, som er favoritter til dette års VM.",
-            dato: "Søn. 11 sep.",
-            author: "Mads Kaiser"
-        },
-        {
-            h1: "Top 5 hold der kan vinde VM i Qatar",
-            h2: "VM i Qatar er lige rundt om hjørnet, og vi tager derfor 5 hurtige hold, som er favoritter til dette års VM.",
-            dato: "Søn. 11 sep.",
-            author: "Mads Kaiser"
-        },
-        {
-            h1: "Top 5 hold der kan vinde VM i Qatar",
-            h2: "VM i Qatar er lige rundt om hjørnet, og vi tager derfor 5 hurtige hold, som er favoritter til dette års VM.",
-            dato: "Søn. 11 sep.",
-            author: "Mads Kaiser"
-        },
-        {
-            h1: "Top 5 hold der kan vinde VM i Qatar",
-            h2: "VM i Qatar er lige rundt om hjørnet, og vi tager derfor 5 hurtige hold, som er favoritter til dette års VM.",
-            dato: "Søn. 11 sep.",
-            author: "Mads Kaiser"
-        },
-        {
-            h1: "Top 5 hold der kan vinde VM i Qatar",
-            h2: "VM i Qatar er lige rundt om hjørnet, og vi tager derfor 5 hurtige hold, som er favoritter til dette års VM.",
-            dato: "Søn. 11 sep.",
-            author: "Mads Kaiser"
+            id: 1,
+            h1: "Introduktion til Tipsspillet",
+            h2: "Bliv introduceret platformen, og find ud af hvordan du kommer igang",
+            dato: "Tir. 13 sep.",
+            author: "Mads Kaiser",
+            type: "introduktion"
         }
     ])
 
@@ -108,22 +89,55 @@ function Blog () {
                     </div>
                     <ul className="blog-container">
                         {articles.map((item) => {
-                            return (
-                                <li key={item.h1} className="blog-element animation-fadetop" style={{animationDelay: "0.5s"}}>
-                                    <div className="blog-img"></div>
-                                    <div className="blog-info">
-                                        <h2 className="blog-h2">{item.h1}</h2>
-                                        <h2 className="blog-h3">{item.h2}</h2>
-                                    </div>
-                                    <div className="blog-byline">
-                                        <div className="blog-byline-img"></div>
-                                        <div className="blog-byline-inline">
-                                            <p className="blog-byline-h1">{item.author}</p>
-                                            <p className="blog-byline-h2">{item.dato}</p>
-                                        </div>
-                                    </div>
-                                </li>
-                            );
+                            if (currentType === "alle") {
+                                return (
+                                    <li key={item.h1} className="blog-element animation-fadetop" style={{animationDelay: "0.5s"}}>
+                                        <Link href={"/blog/artikel?id=" + item.id}>
+                                            <div>
+                                                <div className="blog-img">
+                                                    <Image width="80" height="80" src={Banner} />
+                                                </div>
+                                                <div className="blog-info">
+                                                    <h2 className="blog-h2">{item.h1}</h2>
+                                                    <h2 className="blog-h3">{item.h2}</h2>
+                                                </div>
+                                                <div className="blog-byline">
+                                                    <div className="blog-byline-img"></div>
+                                                    <div className="blog-byline-inline">
+                                                        <p className="blog-byline-h1">{item.author}</p>
+                                                        <p className="blog-byline-h2">{item.dato}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </Link>
+                                    </li>
+                                );
+                            } else {
+                                if (item.type === currentType) {
+                                    return (
+                                        <li key={item.h1} className="blog-element animation-fadetop">
+                                            <Link href={"/blog/artikel?id=" + item.id}>
+                                                <div>
+                                                    <div className="blog-img">
+                                                        <Image width="80" height="80" src={Banner} />
+                                                    </div>
+                                                    <div className="blog-info">
+                                                        <h2 className="blog-h2">{item.h1}</h2>
+                                                        <h2 className="blog-h3">{item.h2}</h2>
+                                                    </div>
+                                                    <div className="blog-byline">
+                                                        <div className="blog-byline-img"></div>
+                                                        <div className="blog-byline-inline">
+                                                            <p className="blog-byline-h1">{item.author}</p>
+                                                            <p className="blog-byline-h2">{item.dato}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </Link>
+                                        </li>
+                                    );
+                                }
+                            }
                         })}
                     </ul>
                 </div>

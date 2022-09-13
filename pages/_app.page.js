@@ -7,6 +7,7 @@ import './css/gruppespil.css';
 import './css/priser.css';
 import './css/stage.css';
 import './css/match.css';
+import './css/blog.css';
 
 import Footer from './layout/footer';
 import Login from './components/login';

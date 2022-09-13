@@ -98,6 +98,8 @@ function Priser () {
                     console.log("Fejl ved indhentning af data" + error)
                 })
             }
+        } else {
+            window.open("/signup", "_SELF")
         }
     }
 
@@ -179,6 +181,8 @@ function Priser () {
                     console.log("Fejl ved indhentning af data" + error)
                 })
             }
+        } else {
+            window.open("/signup", "_SELF")
         }
     }
 
@@ -229,6 +233,7 @@ function Priser () {
                                     <div className="plan-prices">
                                         <p className="plan-element-prisp">kr</p>
                                         <p className="plan-element-pris">0</p>
+                                        <p className="plan-element-prisp" style={{fontSize: "15px", width: "100%", opacity: "0.9", marginTop: "auto", marginBottom: "10px"}}>/ for evigt</p>
                                     </div>
                                     <h5 className="plan-element-identifier">Basic version</h5>
                                     <p className="plan-element-binding">Prøv dig ad med Basic abonnement helt gratis.</p>

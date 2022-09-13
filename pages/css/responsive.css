@@ -271,11 +271,33 @@
   .favorit-container-match {
     display: none !important;
   }
+  .plans-con {
+    flex-direction: column !important;
+    width: 100%;
+  }
+  .plan-element {
+    width: 50% !important;
+  }
+}
+
+@media only screen and (max-width: 1165px) {
+  .nav-bar {
+    padding: 0px 50px !important;
+  }
 }
 
 @media only screen and (max-width: 1133px) {
   .team-indhold-side {
     flex-direction: column !important;
+  }
+  .route-thirds-element-2 {
+    display: none !important;
+  }
+  .route-thirds-element-1 {
+    width: 100% !important;
+  }
+  .signup-popup {
+    width: 40% !important;
   }
 }
 
@@ -288,6 +310,24 @@
     left: 0 !important;
     top: 0 !important;
     animation: stickTop 0.55s 1 !important;
+  }
+  .hero-system {
+    display: none !important;
+  }
+  .plan-element {
+    width: 75% !important;
+  }
+  .forside-stats-container {
+    padding: 0px 3% !important;
+  }
+  .forside-stats-h1 {
+    font-size: 38px !important;
+  }
+  .forside-stats-h2 {
+    font-size: 13px !important;
+  }
+  .forside-stats-element {
+    width: 250px !important;
   }
   .hero-help {
     margin-top: 100px !important;
@@ -409,6 +449,9 @@
   .stage-main-article-container {
     padding: 100px 5% !important;
   }
+  .signup-popup {
+    width: 60% !important;
+  }
   .find-div {
     width: 85% !important;
   }
@@ -418,12 +461,54 @@
   .header-fix {
     height: 50px !important;
   }
+  .forside-stats-h1 {
+    font-size: 32px !important;
+  }
+  .forside-stats-h2 {
+    font-size: 12px !important;
+  }
+  .forside-stats-element {
+    width: 200px !important;
+  }
+  .inf-h1 {
+    font-size: 40px !important;
+    padding: 0px 0px !important;
+    padding-bottom: 30px !important;
+    background: -webkit-linear-gradient(-60deg, #21D4FD -10%, #B721FF 150%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+  }
+  .main-component-h1 {
+    font-size: 48px !important;
+    line-height: 55px !important;
+  }
+  .wrap-h1 {
+    font-size: 36px !important;
+  }
+  .main-component-h3 {
+    font-size: 16px !important;
+    line-height: 23px !important;
+  }
+  .main-component-p {
+    font-size: 14px !important;
+  }
+  .main-switch {
+    min-width: 250px !important;
+    animation: cycleSmall 7s infinite !important;
+  }
+  #dash {
+    margin-top: -25px !important;
+  }
+  .hero-info-block-h1 span {
+    font-size: 32px !important;
+  }
 }
 
 @media only screen and (max-width: 785px) {
   .tabel-form {
     display: none !important;
   }
+
 }
 
 @media only screen and (max-width: 730px) {
@@ -435,6 +520,10 @@
   }
   .noti-section-error {
     flex-direction: column !important;
+  }
+  .inf-con-1 {
+    flex-direction: column !important;
+    align-items: center !important;
   }
   .gruppespil-opret-own {
     display: none !important;
@@ -482,9 +571,6 @@
     margin-top: 10px !important;
     width: clamp(212px, 50vw, 350px) !important;
   }
-  .main-btn-login {
-    width: clamp(212px, 50vw, 350px) !important;
-  }
   .match-bet {
     padding: 25px 20px !important;
   }
@@ -500,6 +586,9 @@
   .velkommen-container {
     padding: 30px !important;
     width: 80% !important;
+  }
+  .nav-bar {
+    padding: 0px 20px !important;
   }
 }
 
@@ -527,6 +616,21 @@
   }
   .tabel-4 {
     width: 35px !important;
+  }
+  .forside-stats-container {
+    flex-direction: column !important;
+  }
+  .forside-stats-element {
+    padding: 30px 0px !important;
+    width: 250px !important;
+  }
+  .forside-stats-h1 {
+    min-width: 90px !important;
+    max-width: 90px !important;
+    text-align: center !important;
+  }
+  .main-container {
+    padding: 40px 15px !important;
   }
 }
 
@@ -556,11 +660,26 @@
     width: 95% !important;
     padding: 20px 30px !important;
   }
+  .plan-element {
+    width: 90% !important;
+  }
 }
 
 @media only screen and (max-width: 550px) {
   #t3 {
     display: none !important;
+  }
+  .faq-fix {
+    width: 80% !important;
+  }
+  .faq-q {
+    font-size: 15px !important;
+  }
+  .faq-head-h2 {
+    font-size: 28px !important;
+  }
+  .faq-head-h3 {
+    font-size: 16px !important;
   }
   .match-img-con {
     width: 65px !important;
@@ -617,9 +736,6 @@
   .match-p {
     font-size: 11px !important;
   }
-  .inf-con-1 {
-    flex-direction: column !important;
-  }
   .nav-bar-stage {
     background-color: var(--black) !important;
   }
@@ -634,23 +750,6 @@
   }
   .match-info {
     border-radius: 0px !important;
-  }
-  .inf-element {
-    width: 100% !important;
-    justify-content: center !important;
-    align-items: center !important;
-    text-align: center !important;
-  }
-  .inf-element-active {
-    width: 100% !important;
-    justify-content: center !important;
-    align-items: center !important;
-    text-align: center !important;
-  }
-  .inf-top {
-    justify-content: center !important;
-    align-items: center !important;
-    text-align: center !important;
   }
 }
 
@@ -856,6 +955,13 @@
     top: 5px !important;
     right: 5px !important;
   }
+  .hero-container-2 {
+    transform: scale(0.85) !important;
+  }
+  .hero-container {
+    padding-top: 80px !important;
+    padding-bottom: 10px !important;
+  }
   #mestspillede {
     max-height: 300px !important;
     margin-left: 15px !important;
@@ -880,6 +986,9 @@
     overflow-x: auto !important;
     overflow-y: visible;
     padding-top: 15px !important;
+  }
+  .signup-popup {
+    width: 75% !important;
   }
   .stage-kampe-h1 {
     padding-bottom: 0px !important;
@@ -927,6 +1036,28 @@
   .gruppespil-container-2 {
     padding: 25px 0px !important;
   }
+  .inf-container {
+    padding: 0px !important;
+  }
+  .inf-h1 {
+    font-size: 35px !important;
+  }
+  .inf-logo {
+    width: 40px !important;
+    height: 40px !important;
+    min-height: 40px !important;
+    min-width: 40px !important;
+    padding: 10px !important;
+  }
+  .inf-h2 {
+    font-size: 16px !important;
+  }
+  .inf-p {
+    font-size: 12px !important;
+  }
+  .forside-section {
+    padding: 100px 20px !important;
+  }
 }
 
 .header-buttons {
@@ -946,11 +1077,20 @@
     width: 90% !important;
     padding: 25px 40px  !important;
   }
+  .signup-popup {
+    width: 85% !important;
+  }
+  .signup-tilbage {
+    display: none !important;
+  }
 }
 
 @media only screen and (max-width: 450px) {
   .gruppespil3-btn {
     display: none !important;
+  }
+  .plan-element {
+    width: 100% !important;
   }
   #faq-top {
     display: none !important;
@@ -990,7 +1130,7 @@
   .login-popup {
     padding: 50px 30px !important;
   }
-  .header-buttons .nav-btn-outline {
+  .logo-h1 {
     display: none !important;
   }
   .hero-help{
@@ -1024,12 +1164,6 @@
   }
 }
 
-@media only screen and (max-width: 360px) {
-  .header-buttons {
-    display: none !important;
-  }
-}
-
 @media only screen and (max-width: 340px) {
   .stage-kampe-hold-div {
     width: 100% !important;
@@ -1037,5 +1171,8 @@
   .info-figure {
     right: -140px !important;
     bottom: -20px !important;
+  }
+  .header-buttons {
+    display: none !important;
   }
 }

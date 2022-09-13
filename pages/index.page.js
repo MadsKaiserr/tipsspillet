@@ -71,6 +71,7 @@ export default function Home() {
             <link rel="canonical" href="https://www.tipsspillet.dk" />
         </Head>
         <div className="hero-container">
+            <div className="hero-container-2">
             <div className="hero-text">
                 <h1 className="main-component-h1">
                     <div className="main-component-h">
@@ -91,7 +92,7 @@ export default function Home() {
                         <span>g</span>
                     </div>
                     <div className="main-component-h-fix">
-                        <span style={{marginTop: "-15px"}}>-</span>
+                        <span id="dash" style={{marginTop: "-15px"}}>-</span>
                         &nbsp;
                         <span className="main-switch">
                             <span className="main-switch-element main-gradient" style={{top: "0px", left: "0px", animation: "cycleTop 7s infinite"}}>Helt gratis</span>
@@ -229,6 +230,7 @@ export default function Home() {
                     <Image width="200px" height="50px" src={Stars} alt="Trustpilot" className="tp-stars" />
                 </div>
             </div> */}
+            </div>
         </div>
         <div className="wrap-wrapper">
             <div className="forside-stats-container">

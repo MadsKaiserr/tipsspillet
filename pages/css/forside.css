@@ -31,7 +31,7 @@
     padding-right: 200px;
     display: inline-flex;
     padding-top: 10px;
-    padding-bottom: 20px;
+    padding-bottom: 40px;
     color: var(--softBlack);
   }
 
@@ -154,6 +154,8 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+    width: 100%;
+    padding: 0px 30px;
   }
   
   .inf-con-1 {
@@ -165,7 +167,7 @@
   
   .inf-element {
     padding: 20px;
-    width: 35%;
+    width: 100%;
     max-width: 500px;
     min-width: 250px;
     text-align: left;
@@ -173,7 +175,7 @@
 
   .inf-element-active {
     padding: 20px;
-    width: 35%;
+    width: 100%;
     max-width: 500px;
     min-width: 250px;
     text-align: left;

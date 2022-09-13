@@ -1,0 +1,136 @@
+.artikel-wrapper {
+    padding: 50px 0px;
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.artikel-content {
+    max-width: 650px;
+    position: relative;
+}
+
+.a-blog-h3 {
+    font-family: Roboto;
+    font-weight: 500;
+    font-size: 22px;
+    padding: 10px 0px;
+    color: var(--black);
+}
+
+.a-blog-p {
+    font-family: inter;
+    padding: 5px 0px;
+    font-weight: 300;
+    font-size: 17px;
+    color: var(--softBlack);
+}
+
+.a-blog-p-a {
+    font-family: inter;
+    font-weight: 300;
+    font-size: 17px;
+    color: var(--primary);
+    transition: 0.2s;
+}
+
+.artikel-shortcuts {
+    border-right: 1px #ebebeb solid;
+    padding: 10px 0px;
+    height: auto;
+    min-width: 240px;
+    max-width: 240px;
+    position: absolute;
+    left: -280px;
+    top: 0px;
+}
+
+.artikel-shorts {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.artikel-shortcuts-h1 {
+    font-family: Roboto;
+    padding: 10px 20px;
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--black);
+}
+
+.artikel-shortcuts-p {
+    font-family: Inter;
+    font-weight: 400;
+    font-size: 14px;
+    color: var(--softBlack);
+    padding: 7px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.2s;
+}
+
+.artikel-shortcuts-p:hover {
+    background-color: var(--blueStageSurface);
+}
+
+.a-blog-img {
+    margin: 30px 10px;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.05);
+}
+
+.a-blog-p-a:hover {
+    text-decoration: underline;
+}
+
+.blog-section {
+    padding: 20px 0px;
+}
+
+.a-blog-h1 {
+    font-family: Roboto;
+    font-weight: 600;
+    padding: 20px 0px;
+    font-size: 36px;
+    color: #333;
+}
+
+.a-blog-h2 {
+    font-family: Roboto;
+    font-weight: 500;
+    padding: 10px 0px;
+    padding-top: 35px !important;
+    font-size: 22px;
+    color: #333;
+}
+
+.blog-list {
+    padding: 10px 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.blog-list-element {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    vertical-align: top;
+}
+
+.blog-list-element p:first-child {
+    width: 35px;
+    font-weight: 500 !important;
+    text-align: center;
+}
+
+.blog-list-element p {
+    padding: 2px !important;
+}
+
+.artikel-sticky {
+    position: fixed !important;
+    left: 130px !important;
+    top: 122px !important;
+}
