@@ -36,9 +36,9 @@ function Header () {
                         <svg xmlns="http://www.w3.org/2000/svg" className="nav-ham1" onClick={() => {sideMenu()}} viewBox="0 0 16 16">
                             <path fillRule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
                         </svg>
-                        <div className="display-flex" style={{alignItems: "center", gap: "5px"}}>
-                            <Link href="/"><div><Image width="50px" height="50px" src={logo} alt="Tipsspillet Logo" className="main-logo" /></div></Link>
-                            <Link href="/"><a className="logo-h1">Tipsspillet</a></Link>
+                        <div className="display-flex" style={{alignItems: "center", gap: "5px"}} onClick={() => {window.open("/", "_self")}}>
+                            <div><Image width="50px" height="50px" src={logo} alt="Tipsspillet Logo" className="main-logo" /></div>
+                            <a className="logo-h1">Tipsspillet</a>
                         </div>
                         <div className="nav-link-container">
                             <div className="dropmenu" id="nav-drop"><Link href="/gruppespil"><a className="nav-p">Gruppespil</a></Link>
@@ -124,9 +124,9 @@ function Header () {
                                     <svg xmlns="http://www.w3.org/2000/svg" className="nav-ham1" onClick={() => {sideMenu()}} viewBox="0 0 16 16">
                                         <path fillRule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
                                     </svg>
-                                    <div className="display-flex" style={{alignItems: "center", gap: "5px"}}>
-                                        <Link href="/"><div><Image width="50px" height="50px" src={logo} alt="Tipsspillet Logo" className="main-logo" /></div></Link>
-                                        <Link href="/"><a className="logo-h1">Tipsspillet</a></Link>
+                                    <div className="display-flex" style={{alignItems: "center", gap: "5px"}} onClick={() => {window.open("/", "_self")}}>
+                                        <div><Image width="50px" height="50px" src={logo} alt="Tipsspillet Logo" className="main-logo" /></div>
+                                        <a className="logo-h1">Tipsspillet</a>
                                     </div>
                                     <div className="nav-link-container">
                                         <div className="dropmenu" id="nav-drop"><Link href="/gruppespil"><a className="nav-p">Gruppespil</a></Link>
