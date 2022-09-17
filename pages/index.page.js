@@ -1,60 +1,15 @@
 import Link from 'next/link'
 import Head from 'next/head'
 import Image from 'next/image'
-import {useEffect, useState} from 'react';
-import axios from "axios";
 import Header from './layout/header';
 import PriserComp from './components/priser';
 import { Gradient } from './services/Gradient.js'
 
-import red from './img/red.png';
-import blue from './img/blue.png';
-import dollar from './img/dollar.png';
-
-import Trustpilot from './img/trustpilot.png';
 import RightArrow from './img/right-arrow.png';
-import Stars from './img/stars.png';
-import Iphone from './img/Stage-Iphone.png';
 import FaqComponent from './components/faq';
 import SpilMed from './components/spilmed'
 
 export default function Home() {
-
-  const [players, setPlayers] = useState([]);
-  const [games, setGames] = useState([]);
-
-  useEffect(() => {
-
-      const URL = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/gruppespil";
-
-      const requestConfig = {
-          headers: {
-              "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
-          }
-      }
-
-      axios.get(URL, requestConfig).then(response => {
-          console.log("AWS - Gruppespil:", response)
-          setGames(response.data.allGruppespil);
-      }).catch(error => {
-          console.log("Fejl ved indhentning af data" + error)
-      })
-
-      const URLP = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/users";
-
-      const requestConfigP = {
-          headers: {
-              "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
-          }
-      }
-
-      axios.get(URLP, requestConfigP).then(response => {
-          console.log("AWS - Users:", response)
-          setPlayers(response.data.allUsers);
-      }).catch(error => {
-          console.log("Fejl ved indhentning af data" + error)
-      })
-  }, [])
 
   const gradient = new Gradient()
   gradient.initGradient('#gradient-canvas')
@@ -133,97 +88,60 @@ export default function Home() {
                 </div>
             </div> */}
             <div className="hero-info">
-                {games.length > 0 && <>
-                    {players.length > 0 && <><div className="hero-info-block">
-                        <div className="hero-info-block-h1">
-                            <div className="main-component-h">
-                            <span style={{animationDelay: "0.05s"}}>2</span>
-                            <span style={{animationDelay: "0.1s"}}>9</span>
-                            <span style={{animationDelay: "0.15s"}}>+</span>
-                        </div>
-                        </div>
-                        <div className="hero-info-block-h2"><div className="main-component-h">
-                            <span style={{animationDelay: "0.05s"}}>L</span>
-                            <span style={{animationDelay: "0.1s"}}>i</span>
-                            <span style={{animationDelay: "0.15s"}}>g</span>
-                            <span style={{animationDelay: "0.2s"}}>a</span>
-                            <span style={{animationDelay: "0.25s"}}>e</span>
-                            <span style={{animationDelay: "0.3s"}}>r</span>
-                        </div></div>
+                <div className="hero-info-block">
+                    <div className="hero-info-block-h1">
+                        <div className="main-component-h">
+                        <span style={{animationDelay: "0.05s"}}>2</span>
+                        <span style={{animationDelay: "0.1s"}}>9</span>
+                        <span style={{animationDelay: "0.15s"}}>+</span>
                     </div>
-                    <div className="hero-info-block">
-                        <div className="hero-info-block-h1">
-                            <div className="main-component-h">
-                            <span style={{animationDelay: "0.05s"}}>{players.length < 10 && <>{players.length}</>}{players.length >= 10 && <>{(players.length + "").slice(0,1)}</>}</span>
-                            <span style={{animationDelay: "0.1s"}}>{players.length >= 10 && <>{(players.length + "").slice(1,2)}</>}</span>
-                            <span style={{animationDelay: "0.15s"}}>{players.length >= 100 && <>{(players.length + "").slice(2,3)}</>}</span>
-                            <span style={{animationDelay: "0.2s"}}>+</span>
-                        </div></div>
-                        <div className="hero-info-block-h2"><div className="main-component-h">
-                            <span style={{animationDelay: "0.05s"}}>B</span>
-                            <span style={{animationDelay: "0.1s"}}>r</span>
-                            <span style={{animationDelay: "0.15s"}}>u</span>
-                            <span style={{animationDelay: "0.2s"}}>g</span>
-                            <span style={{animationDelay: "0.25s"}}>e</span>
-                            <span style={{animationDelay: "0.3s"}}>r</span>
-                            <span style={{animationDelay: "0.35s"}}>e</span>
-                        </div></div>
                     </div>
-                    <div className="hero-info-block">
-                        <div className="hero-info-block-h1">
-                            <div className="main-component-h">
-                            <span style={{animationDelay: "0.05s"}}>{games.length < 10 && <>{games.length}</>}{games.length >= 10 && <>{(games.length + "").slice(0,1)}</>}</span>
-                            <span style={{animationDelay: "0.1s"}}>{games.length >= 10 && <>{(games.length + "").slice(1,2)}</>}</span>
-                            <span style={{animationDelay: "0.15s"}}>{games.length >= 100 && <>{(games.length + "").slice(2,3)}</>}</span>
-                            <span style={{animationDelay: "0.2s"}}>+</span>
-                        </div></div>
-                        <div className="hero-info-block-h2"><div className="main-component-h">
-                            <span style={{animationDelay: "0.05s"}}>A</span>
-                            <span style={{animationDelay: "0.1s"}}>k</span>
-                            <span style={{animationDelay: "0.15s"}}>t</span>
-                            <span style={{animationDelay: "0.2s"}}>i</span>
-                            <span style={{animationDelay: "0.25s"}}>v</span>
-                            <span style={{animationDelay: "0.3s"}}>e</span>
-                            &nbsp;
-                            <span style={{animationDelay: "0.35s"}}>s</span>
-                            <span style={{animationDelay: "0.4s"}}>p</span>
-                            <span style={{animationDelay: "0.45s"}}>i</span>
-                            <span style={{animationDelay: "0.5s"}}>l</span>
-                        </div></div>
-                    </div></>}
-                    {players.length <= 0 && <div className="hero-info-block">
-                            <div className="hero-info-block-h1">
-                                <div className="main-component-h">
-                                <span style={{animationDelay: "1s"}}>2</span>
-                                <span style={{animationDelay: "1.05s"}}>9</span>
-                                <span style={{animationDelay: "1.1s"}}>+</span>
-                            </div></div>
-                            <div className="hero-info-block-h2"><div className="main-component-h">
-                                <span style={{animationDelay: "0.95s"}}>L</span>
-                                <span style={{animationDelay: "1s"}}>i</span>
-                                <span style={{animationDelay: "1.05s"}}>g</span>
-                                <span style={{animationDelay: "1.1s"}}>a</span>
-                                <span style={{animationDelay: "1.15s"}}>e</span>
-                                <span style={{animationDelay: "1.2s"}}>r</span>
-                            </div></div>
-                    </div>}
-                </>}
-                {players.length <= 0 && <div className="hero-info-block">
-                        <div className="hero-info-block-h1">
-                            <div className="main-component-h">
-                            <span style={{animationDelay: "0.05s"}}>2</span>
-                            <span style={{animationDelay: "0.1s"}}>9</span>
-                            <span style={{animationDelay: "0.15s"}}>+</span>
-                        </div></div>
-                        <div className="hero-info-block-h2"><div className="main-component-h">
-                            <span style={{animationDelay: "0.2s"}}>L</span>
-                            <span style={{animationDelay: "0.25s"}}>i</span>
-                            <span style={{animationDelay: "0.35s"}}>g</span>
-                            <span style={{animationDelay: "0.45s"}}>a</span>
-                            <span style={{animationDelay: "0.5s"}}>e</span>
-                            <span style={{animationDelay: "0.55s"}}>r</span>
-                        </div></div>
-                </div>}
+                    <div className="hero-info-block-h2"><div className="main-component-h">
+                        <span style={{animationDelay: "0.05s"}}>L</span>
+                        <span style={{animationDelay: "0.1s"}}>i</span>
+                        <span style={{animationDelay: "0.15s"}}>g</span>
+                        <span style={{animationDelay: "0.2s"}}>a</span>
+                        <span style={{animationDelay: "0.25s"}}>e</span>
+                        <span style={{animationDelay: "0.3s"}}>r</span>
+                    </div></div>
+                </div>
+                <div className="hero-info-block">
+                    <div className="hero-info-block-h1">
+                        <div className="main-component-h">
+                        <span style={{animationDelay: "0.05s"}}>1</span>
+                        <span style={{animationDelay: "0.1s"}}>5</span>
+                        <span style={{animationDelay: "0.2s"}}>+</span>
+                    </div></div>
+                    <div className="hero-info-block-h2"><div className="main-component-h">
+                        <span style={{animationDelay: "0.05s"}}>B</span>
+                        <span style={{animationDelay: "0.1s"}}>r</span>
+                        <span style={{animationDelay: "0.15s"}}>u</span>
+                        <span style={{animationDelay: "0.2s"}}>g</span>
+                        <span style={{animationDelay: "0.25s"}}>e</span>
+                        <span style={{animationDelay: "0.3s"}}>r</span>
+                        <span style={{animationDelay: "0.35s"}}>e</span>
+                    </div></div>
+                </div>
+                <div className="hero-info-block">
+                    <div className="hero-info-block-h1">
+                        <div className="main-component-h">
+                        <span style={{animationDelay: "0.05s"}}>4</span>
+                        <span style={{animationDelay: "0.2s"}}>+</span>
+                    </div></div>
+                    <div className="hero-info-block-h2"><div className="main-component-h">
+                        <span style={{animationDelay: "0.05s"}}>A</span>
+                        <span style={{animationDelay: "0.1s"}}>k</span>
+                        <span style={{animationDelay: "0.15s"}}>t</span>
+                        <span style={{animationDelay: "0.2s"}}>i</span>
+                        <span style={{animationDelay: "0.25s"}}>v</span>
+                        <span style={{animationDelay: "0.3s"}}>e</span>
+                        &nbsp;
+                        <span style={{animationDelay: "0.35s"}}>s</span>
+                        <span style={{animationDelay: "0.4s"}}>p</span>
+                        <span style={{animationDelay: "0.45s"}}>i</span>
+                        <span style={{animationDelay: "0.5s"}}>l</span>
+                    </div></div>
+                </div>
             </div>
             {/* <div className="hero-help">
                 <div className="help-container">
