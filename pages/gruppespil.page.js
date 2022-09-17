@@ -29,7 +29,7 @@ function Gruppespil () {
                     </div>
                 </div>
             </div>
-            <div className="hero-container">
+            <div className="main-block-container">
                 <div className="hero-text">
                     <p className="main-component-p animation-fadeleft">Find gruppespil og præmiedyster</p>
                     <h1 className="main-component-h1 main-gradient animation-fadeleft animation-delay-200">Gruppespil og Dyster</h1>

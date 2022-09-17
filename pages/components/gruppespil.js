@@ -160,15 +160,17 @@ function Gruppespil () {
                                         return (
                                                 <li key={item.id} className="tl-element">
                                                     <Link href={"/gruppesession?game=" + item.id}>
-                                                        <div className="tl-wrapper" id="td-navn">
-                                                            <div className="tl-img">
-                                                                {/* <Image src="" height="20px" width="20px" /> */}
+                                                        <div style={{width: "100%", height: "100%", display: "flex", alignItems: "center"}}>
+                                                            <div className="tl-wrapper" id="td-navn">
+                                                                <div className="tl-img">
+                                                                    {/* <Image src="" height="20px" width="20px" /> */}
+                                                                </div>
+                                                                <p className="td-modifier-p" style={{fontWeight: "500"}}>{item.name}</p>
                                                             </div>
-                                                            <p className="td-modifier-p" style={{fontWeight: "500"}}>{item.name}</p>
+                                                            <p className="td-modifier-p" id="td-synlighed">{item.synlighed}</p>
+                                                            <p className="td-modifier-p" id="td-spillere">{item.players.length}</p>
+                                                            <p className="td-modifier-p" id="td-admin">{item.admin}</p>
                                                         </div>
-                                                        <p className="td-modifier-p" id="td-synlighed">{item.synlighed}</p>
-                                                        <p className="td-modifier-p" id="td-spillere">{item.players.length}</p>
-                                                        <p className="td-modifier-p" id="td-admin">{item.admin}</p>
                                                     </Link>
                                                 </li>
                                         );
@@ -178,6 +180,7 @@ function Gruppespil () {
                                         return (
                                                 <li key={item.id} className="tl-element">
                                                     <Link href={"/gruppesession?game=" + item.id}>
+                                                    <div style={{width: "100%", height: "100%", display: "flex", alignItems: "center"}}>
                                                         <div className="tl-wrapper" id="td-navn">
                                                             <div className="tl-img">
                                                                 {/* <Image src="" height="20px" width="20px" /> */}
@@ -187,6 +190,7 @@ function Gruppespil () {
                                                         <p className="td-modifier-p" id="td-synlighed">{item.synlighed}</p>
                                                         <p className="td-modifier-p" id="td-spillere">{item.players.length}</p>
                                                         <p className="td-modifier-p" id="td-admin">{item.admin}</p>
+                                                        </div>
                                                     </Link>
                                                 </li>
                                         );
@@ -196,6 +200,7 @@ function Gruppespil () {
                                         return (
                                                 <li key={item.id} className="tl-element">
                                                     <Link href={"/gruppesession?game=" + item.id}>
+                                                    <div style={{width: "100%", height: "100%", display: "flex", alignItems: "center"}}>
                                                         <div className="tl-wrapper" id="td-navn">
                                                             <div className="tl-img">
                                                                 {/* <Image src="" height="20px" width="20px" /> */}
@@ -205,6 +210,7 @@ function Gruppespil () {
                                                         <p className="td-modifier-p" id="td-synlighed">{item.synlighed}</p>
                                                         <p className="td-modifier-p" id="td-spillere">{item.players.length}</p>
                                                         <p className="td-modifier-p" id="td-admin">{item.admin}</p>
+                                                        </div>
                                                     </Link>
                                                 </li>
                                         );
@@ -213,6 +219,7 @@ function Gruppespil () {
                                     return (
                                             <li key={item.id} className="tl-element">
                                                 <Link href={"/gruppesession?game=" + item.id}>
+                                                <div style={{width: "100%", height: "100%", display: "flex", alignItems: "center"}}>
                                                     <div className="tl-wrapper" id="td-navn">
                                                         <div className="tl-img">
                                                             {/* <Image src="" height="20px" width="20px" /> */}
@@ -222,6 +229,7 @@ function Gruppespil () {
                                                     <p className="td-modifier-p" id="td-synlighed">{item.synlighed}</p>
                                                     <p className="td-modifier-p" id="td-spillere">{item.players.length}</p>
                                                     <p className="td-modifier-p" id="td-admin">{item.admin}</p>
+                                                    </div>
                                                 </Link>
                                             </li>
                                     );

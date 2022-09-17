@@ -12,11 +12,11 @@ function Priser () {
         if (document.getElementById("loader2")) {
             document.getElementById("loader2").classList.add("display-not");
         }
-        window.addEventListener("scroll", function(){
-            if (document.getElementById("price-input")) {
-                document.getElementById("price-input").classList.toggle("price-fixed", window.scrollY > 305);
-            }
-        })
+        // window.addEventListener("scroll", function(){
+        //     if (document.getElementById("price-input")) {
+        //         document.getElementById("price-input").classList.toggle("price-fixed", window.scrollY > 305);
+        //     }
+        // })
     }, [])
 
     const [loading1, setLoading1] = useState(false);

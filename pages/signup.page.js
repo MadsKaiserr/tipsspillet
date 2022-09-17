@@ -15,6 +15,8 @@ function Signup () {
 
     const [box1, setBox1] = useState(false);
     const [box2, setBox2] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [loading2, setLoading2] = useState(false);
 
     useEffect(() => {
         if (box1) {
@@ -128,6 +130,7 @@ function Signup () {
 
     const signupHandler = (event) => {
         event.preventDefault();
+        setLoading(true);
 
         const requestConfig = {
             headers: {
@@ -160,7 +163,7 @@ function Signup () {
         if (fornavn !== "" && username !== "" && email !== "") {
             if (!kodeordVali) {
                 setMessage("Dit kodeord skal matche kravene")
-                document.getElementById("signupBTN").innerHTML = "Opret konto";
+                setLoading(false);
             } else {
                 if (box1) {
                     axios.post(signupURL, requestBody, requestConfig).then(response => {
@@ -190,25 +193,25 @@ function Signup () {
                         }).catch(error => {
                             console.log(error);
                             setMessage(error);
-                            document.getElementById("signupBTN").innerHTML = "Opret konto";
+                            setLoading(false);
                         })
                     }).catch(error => {
                         if (error.response.status === 401 || error.response.status === 403) {
                             setMessage(error.response.data.message);
-                            document.getElementById("signupBTN").innerHTML = "Opret konto";
+                            setLoading(false);
                         } else {
                             setMessage("Backend server is down")
-                            document.getElementById("signupBTN").innerHTML = "Opret konto";
+                            setLoading(false);
                         }
                     })
                 } else {
                     setMessage("For at oprette en konto kræver det du accepterer vores betingelser")
-                    document.getElementById("signupBTN").innerHTML = "Opret konto";
+                    setLoading(false);
                 }
             }
         } else {
             setMessage("Udfyld venligst alle felter");
-            document.getElementById("signupBTN").innerHTML = "Opret konto";
+            setLoading(false);
         }
     }
 
@@ -279,33 +282,33 @@ function Signup () {
                     }).catch(error => {
                         console.log(error);
                         setMessage(error);
-                        document.getElementById("signupBTN2").innerHTML = "Opret konto med facebook";
+                        setLoading2(false);
                     })
                 }).catch(error => {
                     if (error.response.status === 401 || error.response.status === 403) {
                         setMessage(error.response.data.message);
-                        document.getElementById("signupBTN2").innerHTML = "Opret konto med facebook";
+                        setLoading2(false);
                         if (error.response.data.message === "Der er allerede oprettet en bruger med denne email") {
                             document.getElementById("loginForm").classList.remove("display-not");
                             document.getElementById("fbForm").classList.add("display-not");
                         }
                     } else {
                         setMessage("Backend server is down")
-                        document.getElementById("signupBTN2").innerHTML = "Opret konto med facebook";
+                        setLoading2(false);
                     }
                 })
             } else {
                 setMessage("For at oprette en konto kræver det du accepterer vores betingelser")
-                document.getElementById("signupBTN2").innerHTML = "Opret konto med facebook";
+                setLoading2(false);
             }
         } else {
             setMessage("Udfyld venligst dit brugernavn");
-            document.getElementById("signupBTN2").innerHTML = "Opret konto med facebook";
+            setLoading2(false);
         }
     }
 
     function access() {
-        windop.open("/signup/abonnement");
+        window.open("/signup/abonnement", "_self");
     }
 
     function setPriceActive(type) {
@@ -416,10 +419,7 @@ function Signup () {
                             </div>
                             <div className="form-btn">
                                 {message !== "" && <p className="form-error">{message}</p>}
-                                <button value="Login" id="signupBTN" className="main-btn-login" style={{width: "100%", marginTop: "15px"}} onClick={() => {
-                                var signupBTN = document.getElementById("signupBTN");
-                                signupBTN.innerHTML = "<div className='loader'></div>";
-                            }} type="submit">Opret konto</button>
+                                <button value="Login" className="main-btn-login" style={{width: "100%", marginTop: "15px"}} type="submit">{loading && <div className="loader" id="loader"></div>}{!loading && <>Opret konto</>}</button>
                             </div>
                         </form>
                         <form onSubmit={fbSignupHandler} className="login-form display-not" id="fbForm">
@@ -443,14 +443,12 @@ function Signup () {
                             </div>
                             <div className="form-btn">
                                 {message !== "" && <p className="form-error">{message}</p>}
-                                <button value="Login" id="signupBTN2" className="main-btn-login" style={{width: "100%"}} onClick={() => {
-                                var signupBTN = document.getElementById("signupBTN2");
-                                signupBTN.innerHTML = "<div className='loader'></div>";
-                            }} type="submit">Opret konto med facebook</button>
+                                <button value="Login" className="main-btn-login" style={{width: "100%"}} type="submit">{loading2 && <div className="loader" id="loader"></div>}{!loading2 && <>Opret konto med facebook</>}</button>
                             </div>
                         </form>
                     </div>
                     <div className="signup-popup display-not" id="info2">
+                        <Link href="/"><Image className="signup-logo" src={PrimaryLogo} height="55px" width="55px" /></Link>
                         <div className="login-text" style={{paddingTop: "30px"}}>
                             <h2 className="login-text-h1">Din konto er nu oprettet!&#128640;</h2>
                         </div>

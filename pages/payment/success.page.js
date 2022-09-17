@@ -39,7 +39,7 @@ function Success () {
                 <meta name="robots" content="noindex" />
             </Head>
             <Header />
-            <div className="hero-container">
+            <div className="main-block-container">
                 <div className="hero-text">
                     <p className="main-component-p animation-fadeleft">Gennemført køb</p>
                     <h1 className="main-component-h1 main-gradient animation-fadeleft animation-delay-200">Tak for dit køb!</h1>

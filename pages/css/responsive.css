@@ -742,6 +742,49 @@
   #t3 {
     display: none !important;
   }
+  .td-container {
+    padding: 20px 3% !important;
+  }
+  .td-box {
+    padding: 20px 15px !important;
+  }
+  .td-input {
+    max-width: 180px !important;
+  }
+  .td-btn {
+    display: none !important;
+  }
+  .td-modifier {
+    padding: 7px 10px !important;
+  }
+  .tl-element {
+    padding: 10px !important;
+  }
+  #td-synlighed {
+    display: none !important;
+  }
+  .td-modifier-p {
+    font-size: 11px !important;
+  }
+  #td-spillere {
+    width: 130px !important;
+  }
+  #td-admin {
+    width: 150px !important;
+  }
+  #td-navn {
+    max-width: 150px !important;
+  }
+  .td-input-element {
+    font-size: 11px !important;
+    padding: 5px 8px !important;
+    font-weight: 400 !important;
+  }
+  .td-input-element-active {
+    font-size: 11px !important;
+    padding: 5px 8px !important;
+    font-weight: 500 !important;
+  }
   .faq-fix {
     width: 80% !important;
   }
@@ -831,8 +874,14 @@
   .nav-bar {
     height: 60px !important;
   }
+  .setup-p {
+    font-size: 11px !important;
+  }
   .hero-container {
     height: 530px !important;
+  }
+  .setup-p-fat {
+    font-size: 11px !important;
   }
   .mesh-canvas {
     max-height: 530px !important;
@@ -870,6 +919,7 @@
   .setup-h1 {
     font-size: 24px !important;
     padding-bottom: 18px !important;
+    padding-top: 5px !important;
   }
   .setup-hits {
     padding-top: 0px !important;
@@ -989,11 +1039,18 @@
   .stage-fix {
     height: 0px !important;
   }
+  .signup-abonnement {
+    position: absolute !important;
+  }
   .stage-main-article-container {
     padding-top: 15px !important;
   }
   .nav-flag-container {
     display: none !important;
+  }
+  .login-req {
+    top: -110px !important;
+    left: calc(50% - 150px) !important;
   }
   .stage-main-container {
     padding: 55px 0px !important;
@@ -1038,6 +1095,10 @@
     transform: scale(0.85) !important;
   }
   .hero-container {
+    padding-top: 80px !important;
+    padding-bottom: 10px !important;
+  }
+  .main-block-container  {
     padding-top: 80px !important;
     padding-bottom: 10px !important;
   }

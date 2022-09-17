@@ -7,6 +7,7 @@ import Link from 'next/link'
 import Head from 'next/head'
 import Image from 'next/image'
 import StageHeader from '../layout/stageheader';
+import Height from '../components/height';
  
 function StageAktiveSpil () {
 
@@ -67,7 +68,7 @@ function StageAktiveSpil () {
             console.log("AWS - Gruppespil:", response)
             var myArray = [];
             for (var q in response.data.allGruppespil) {
-                if (response.data.allGruppespil[q].players.findIndex(obj => obj.player === localStorage.getItem("email"))) {
+                if (response.data.allGruppespil[q].players.findIndex(obj => obj.player === localStorage.getItem("email")) >= 0) {
                     myArray.push(response.data.allGruppespil[q]);
                 }
             }
@@ -195,6 +196,7 @@ function StageAktiveSpil () {
                 <meta name="robots" content="noindex" />
             </Head>
             <StageHeader />
+            <Height />
             <div className="main-modal" id="main-modal">
                 <div className="modal-box">
                     <p className="main-modal-h1">{modalh1}</p>
@@ -216,6 +218,7 @@ function StageAktiveSpil () {
                     </div>
                 </div>
                 <div className="td-box animation-fadetop" style={{maxWidth: "1000px", margin: "auto"}}>
+                    <h1 className="gruppespil-h1" style={{paddingBottom: "15px"}}>Aktive gruppespil</h1>
                     <div className="td-top">
                         <div className="td-top-left">
                             <div className="td-input-con">
@@ -341,6 +344,7 @@ function StageAktiveSpil () {
                                         <div className="td-empty-cta">
                                             <p className="td-empty-h1">Ingen aktive gruppespil</p>
                                             <p className="td-empty-cta-p">Find eller opret et gruppespil for at komme igang</p>
+                                            <Link href="/gruppespil"><a className="td-empty-cta-p" style={{color: "var(--primary)"}}>Find gruppespil</a></Link>
                                         </div>
                                     </div>
                                 </>}

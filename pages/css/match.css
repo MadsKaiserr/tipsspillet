@@ -443,10 +443,10 @@
 }
 
 .match-stilling-p1-live {
-    font-family: CircularBook;
+    font-family: Inter;
     font-size: 14px;
     margin-top: 5px;
-    font-weight: 100;
+    font-weight: 500;
     color: var(--red);
 }
 

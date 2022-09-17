@@ -303,7 +303,7 @@ function Priser () {
                                             </div>
                                         </div>
                                         <Link href="/stage/setup">
-                                            <button className="square-btn-outline plan-btn">Opret Gratis Konto</button>
+                                            <button className="square-btn-outline plan-btn">Fortsæt med gratis konto</button>
                                         </Link>
                                     </div>
                                     <div className="plan-element animation-fadetop animation-delay-600">

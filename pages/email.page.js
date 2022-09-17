@@ -34,7 +34,7 @@ function Email () {
                 <meta name="robots" content="noindex" />
             </Head>
             <Header />
-            <div className="hero-container">
+            <div className="main-block-container">
                 <div className="hero-text">
                     <p className="main-component-p animation-fadeleft">Emails</p>
                     <h1 className="main-component-h1 red-gradient animation-fadeleft animation-delay-200">Send en email</h1>

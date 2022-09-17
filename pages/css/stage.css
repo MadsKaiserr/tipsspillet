@@ -48,6 +48,8 @@
     border-radius: 4px;
     padding: 25px 30px;
     background-color: #fff;
+    width: 90%;
+    margin: auto;
   }
   
   .modal-wrapper {
@@ -86,9 +88,9 @@
   
   .con-modal-h1 {
     font-size: 17px;
-    font-family: CircularBook;
+    font-family: Inter;
     color: var(--softBlack);
-    font-weight: 100;
+    font-weight: 500;
     padding-bottom: 5px;
   }
   
@@ -2949,6 +2951,7 @@
   position: absolute;
   top: 0;
 }
+
 
 .canvas-container {
   z-index: -1;

@@ -4,6 +4,8 @@ import Head from 'next/head'
 import Header from './layout/header';
 import Link from 'next/link'
 import axios from "axios";
+import jwtDecode from "jwt-decode";
+import Height from './components/height';
  
 function Gruppesession () {
 
@@ -184,6 +186,7 @@ function Gruppesession () {
                 <meta name="robots" content="noindex" />
             </Head>
             <Header />
+            <Height />
             <div className="gruppespil-container">
                 <div className={messageType} id="errorCon">
                     <svg xmlns="http://www.w3.org/2000/svg" className="triangle" viewBox="0 0 16 16" id="errorIcon">
