@@ -315,9 +315,14 @@
     position: fixed;
     left: 0;
     top: 0;
-    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 40px;
+    height: 105%;
     width: 100%;
     z-index: 28;
+    overflow-y: auto;
   }
 
   .route-thirds-img-con {
@@ -342,9 +347,12 @@
     align-items: center;
     justify-content: center;
     width: 35%;
-    height: 100%;
+    padding: 25px 0px;
     background-color: #fff;
     flex-direction: column;
+    z-index: 3;
+    border-radius: 5px;
+    height: 100%;
   }
 
   .route-thirds {
@@ -355,7 +363,6 @@
   .route-thirds-element-2 {
     width: 65%;
     height: 100%;
-    background-color: var(--stageSurface);
   }
   
   .signup-popup {
@@ -368,6 +375,7 @@
     position: absolute;
     top: 15px;
     left: 20px;
+    z-index: 4;
     display: flex;
     align-items: center;
     opacity: 0.5;

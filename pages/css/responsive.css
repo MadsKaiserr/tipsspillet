@@ -311,10 +311,23 @@
     display: none !important;
   }
   .route-thirds-element-1 {
-    width: 100% !important;
+    width: 90% !important;
+    margin-top: 45px !important;
+    height: fit-content !important;
+    padding: 0px 0px !important;
+    padding-bottom: 20px !important;
+  }
+  .footer-copyright {
+    display: none !important;
   }
   .signup-popup {
     width: 40% !important;
+  }
+  .footer-copyright {
+    color: #333 !important;
+  }
+  .signup-logo {
+    display: none !important;
   }
 }
 
@@ -1219,9 +1232,6 @@
   }
   .signup-popup {
     width: 85% !important;
-  }
-  .signup-tilbage {
-    display: none !important;
   }
   .price-input-element {
     padding: 4px 8px !important;
