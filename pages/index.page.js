@@ -69,24 +69,6 @@ export default function Home() {
             </Link><br />
             <Image width="30px" height="40px" src={RightArrow} alt="" style={{paddingTop: "10px"}} className="cursive-arrow" />
             <p className="cursive-cta">Start med at finde dig et gruppespil!</p>
-            {/* <div className="hero-system">
-                <div className="hero-system-element" id="system1">
-                    <div className="system-epillipse"></div>
-                    <div className="system-string"></div>
-                    <div className="system-epillipse-small-right"></div>
-                    <div className="system-string-right"></div>
-                    <div className="system-epillipse-small"></div>
-                    <div className="system-string-left"></div>
-                </div>
-                <div className="hero-system-element" id="system2">
-                    <div className="system-epillipse"></div>
-                    <div className="system-string"></div>
-                    <div className="system-epillipse-small-right"></div>
-                    <div className="system-string-right"></div>
-                    <div className="system-epillipse-small"></div>
-                    <div className="system-string-left"></div>
-                </div>
-            </div> */}
             <div className="hero-info">
                 <div className="hero-info-block">
                     <div className="hero-info-block-h1">
@@ -143,17 +125,6 @@ export default function Home() {
                     </div></div>
                 </div>
             </div>
-            {/* <div className="hero-help">
-                <div className="help-container">
-                    <div className="help-top">
-                        <Image width="23px" height="23px" src={Trustpilot} alt="Trustpilot stjerne" className="tp-img" onClick={() => {window.open("https://dk.trustpilot.com/review/tipsspillet.dk", "_BLANK")}} />
-                        <p className="tp-p" onClick={() => {window.open("https://dk.trustpilot.com/review/tipsspillet.dk", "_BLANK")}}>Trustpilot</p>
-                    </div>
-                    <h3 className="tp-h1">Vi underholder fodbold-interesserede landet over</h3>
-                    <p className="tp-h2" onClick={() => {window.open("https://dk.trustpilot.com/review/tipsspillet.dk", "_BLANK")}}>Se alle anmeldelser</p>
-                    <Image width="200px" height="50px" src={Stars} alt="Trustpilot" className="tp-stars" />
-                </div>
-            </div> */}
             </div>
         </div>
         <div className="wrap-wrapper">

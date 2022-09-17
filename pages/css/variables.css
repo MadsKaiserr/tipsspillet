@@ -1033,10 +1033,11 @@
     margin-left: 50px;
     border-radius: 3px;
     cursor: pointer;
+    transition: 0.2s;
   }
   
   .nav-btn-outline:hover {
-    background-color: rgb(241, 245, 255);
+    background-color: var(--third);
   }
   
   .main-btn-outline {

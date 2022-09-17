@@ -34,10 +34,10 @@ function MyApp({ Component, pageProps }) {
 
           gtag('config', 'G-6CYY86HX7R');
         }} />
+        <Script async id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="d44cf7c1-e161-4a23-b759-e15e515a068e" data-blockingmode="auto" type="text/javascript"></Script>
+        <Script async src="https://www.googletagmanager.com/gtag/js?id=G-6CYY86HX7R"></Script>
+        <Script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7071523482288616" crossOrigin="anonymous"></Script>
       <Head>
-        <script async id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="d44cf7c1-e161-4a23-b759-e15e515a068e" data-blockingmode="auto" type="text/javascript"></script>
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-6CYY86HX7R"></script>
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7071523482288616" crossOrigin="anonymous"></script>
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
@@ -77,7 +77,7 @@ function MyApp({ Component, pageProps }) {
         <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"></meta>
         <meta name="theme-color" content="#ffffff"></meta>
       </Head>
-      {/* <script id="CookieDeclaration" src="https://consent.cookiebot.com/d44cf7c1-e161-4a23-b759-e15e515a068e/cd.js" type="text/javascript" async></script> */}
+      <Script id="CookieDeclaration" src="https://consent.cookiebot.com/d44cf7c1-e161-4a23-b759-e15e515a068e/cd.js" type="text/javascript" async></Script>
       <Login />
       <Component {...pageProps} />
       <Footer />
