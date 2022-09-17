@@ -2423,7 +2423,7 @@ function StageForside () {
                             data-full-width="">
                         <div overflow=""></div>
                         </amp-ad>
-                        <ins class="adsbygoogle"
+                        <ins className="adsbygoogle"
                             style={{display: "block"}}
                             data-ad-client="ca-pub-7071523482288616"
                             data-ad-slot="8074583217"
