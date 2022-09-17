@@ -8,7 +8,7 @@ import './css/priser.css';
 import './css/stage.css';
 import './css/match.css';
 import './css/blog.css';
-
+import Script from 'next/script'
 import Footer from './layout/footer';
 import Login from './components/login';
 
@@ -17,7 +17,27 @@ import Head from 'next/head'
 function MyApp({ Component, pageProps }) {
   return (
     <>
+        <Script onLoad={() => {
+            (function(h,o,t,j,a,r){
+                h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+                h._hjSettings={hjid:2906349,hjsv:6};
+                a=o.getElementsByTagName('head')[0];
+                r=o.createElement('script');r.async=1;
+                r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+                a.appendChild(r);
+            })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+        }} />
+        <Script onLoad={() => {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-6CYY86HX7R');
+        }} />
       <Head>
+        <script async id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="d44cf7c1-e161-4a23-b759-e15e515a068e" data-blockingmode="auto" type="text/javascript"></script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-6CYY86HX7R"></script>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7071523482288616" crossOrigin="anonymous"></script>
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
@@ -57,6 +77,7 @@ function MyApp({ Component, pageProps }) {
         <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"></meta>
         <meta name="theme-color" content="#ffffff"></meta>
       </Head>
+      {/* <script id="CookieDeclaration" src="https://consent.cookiebot.com/d44cf7c1-e161-4a23-b759-e15e515a068e/cd.js" type="text/javascript" async></script> */}
       <Login />
       <Component {...pageProps} />
       <Footer />
