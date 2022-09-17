@@ -165,6 +165,11 @@
     top: 0;
     bottom: 0;
   }
+
+  .canvas-height {
+    width: 100%;
+    height: 65px;
+  }
   
   .sidemenu-top {
     width: 100%;

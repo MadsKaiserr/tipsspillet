@@ -6,12 +6,16 @@ import Link from 'next/link'
 import Head from 'next/head'
 import Image from 'next/image'
 import StageHeader from '../layout/stageheader'
+import { Gradient } from '../services/Gradient.js'
  
 function Setup () {
 
     useEffect(() => {
         apiCall();
     }, [])
+
+    const gradient = new Gradient()
+    gradient.initGradient('#gradient-canvas')
 
     const [ligasearch, setLigaSearch] = useState([]);
     const [ligasearchStr, setLigaSearchStr] = useState("");
@@ -1701,177 +1705,181 @@ function Setup () {
 
     return (
         <>
-        <Head>
-            <title>Hurtig opsætning - Tipsspillet</title>
-            <meta name="robots" content="noindex" />
-        </Head>
-        <StageHeader />
-        <div className="main-loader display-not" id="loadingScreen"><div className="main-site-loader"></div></div>
-            <div className="setup-container">
-                <div className={messageType} id="errorCon">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="triangle" viewBox="0 0 16 16" id="errorIcon">
-                        <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
-                    </svg>
-                    <div className="error-text">
-                        <p className="error-container-h1" id="errorConH">Ingen væddemål</p>
-                        <p className="error-container-p" id="errorConP">Du har ikke placeret nogle væddemål. Placer ét eller flere væddemål, for at lave din kuppon.</p>
-                    </div>
-                </div>
-                <div className="setup-text">
-                    <div className="setup-top">
-                        <div className="setup-divider"></div>
-                        <h2 className="setup-h2">Hurtig opsætning</h2>
-                    </div>
-                </div>
-                <div className="setup-wrapper display" id="gruppespil">
-                    <h1 className="setup-h1">Vælg dit første gruppespil</h1>
-                    <div className="setup-element">
-                        <div className="setup-search">
-                            <input type="text" placeholder="Søg i gruppespil" className="setup-input" onChange={event => setGruppespilSearchStr(event.target.value)} />
+            <Head>
+                <title>Hurtig opsætning - Tipsspillet</title>
+                <meta name="robots" content="noindex" />
+            </Head>
+            <StageHeader />
+            <div className="canvas-height"></div>
+            <div className="main-loader display-not" id="loadingScreen"><div className="main-site-loader"></div></div>
+            <div className="canvas-wrapper">
+                <canvas className="canvas-container" id="gradient-canvas" data-transition-in></canvas>
+                <div className="setup-container">
+                    <div className={messageType} id="errorCon">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="triangle" viewBox="0 0 16 16" id="errorIcon">
+                            <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                        </svg>
+                        <div className="error-text">
+                            <p className="error-container-h1" id="errorConH">Ingen væddemål</p>
+                            <p className="error-container-p" id="errorConP">Du har ikke placeret nogle væddemål. Placer ét eller flere væddemål, for at lave din kuppon.</p>
                         </div>
-                        <ul className="setup-hits" style={{maxHeight: "600px"}}>
-                            <div className="match-loader display" id="stage-loader1"></div>
-                            {gruppespilsearch.map((item) => {
-                                return (
-                                    <li key={item.id} className="setup-hit" id={"gruppespil-" + item.id} style={{flexDirection: "column", alignItems: "flex-start", paddingLeft: "20px"}} onClick={() => {pullGruppespil(item.id)}}>
-                                        <div className="setup-hit-wrapper">
-                                            <div className="setup-inline" id="setup-1">
-                                                <p className="setup-p-fat">{item.name}</p>
-                                                {item.synlighed === "privat" && <svg xmlns="http://www.w3.org/2000/svg" className="setup-gruppespil-icon" viewBox="0 0 16 16">
-                                                    <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>
-                                                </svg>}
-                                                {item.synlighed === "dyst" && <svg xmlns="http://www.w3.org/2000/svg" className="setup-gruppespil-icon" style={{fill: "var(--primary)"}} viewBox="0 0 16 16">
-                                                    <path d="M2.5.5A.5.5 0 0 1 3 0h10a.5.5 0 0 1 .5.5c0 .538-.012 1.05-.034 1.536a3 3 0 1 1-1.133 5.89c-.79 1.865-1.878 2.777-2.833 3.011v2.173l1.425.356c.194.048.377.135.537.255L13.3 15.1a.5.5 0 0 1-.3.9H3a.5.5 0 0 1-.3-.9l1.838-1.379c.16-.12.343-.207.537-.255L6.5 13.11v-2.173c-.955-.234-2.043-1.146-2.833-3.012a3 3 0 1 1-1.132-5.89A33.076 33.076 0 0 1 2.5.5zm.099 2.54a2 2 0 0 0 .72 3.935c-.333-1.05-.588-2.346-.72-3.935zm10.083 3.935a2 2 0 0 0 .72-3.935c-.133 1.59-.388 2.885-.72 3.935z"/>
-                                                </svg>}
-                                            </div>
-                                            <div className="setup-hit-wrapper" style={{justifyContent: "flex-end"}}>
-                                                <div className="setup-inline" id="setup-2">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" className="setup-gruppespil-icon" viewBox="0 0 16 16">
-                                                        <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816zM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275zM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/>
-                                                    </svg>
-                                                    <p className="setup-p">{item.players.length}</p>
+                    </div>
+                    <div className="setup-text">
+                        <div className="setup-top">
+                            <div className="setup-divider"></div>
+                            <h2 className="setup-h2">Hurtig opsætning</h2>
+                        </div>
+                    </div>
+                    <div className="setup-wrapper display" id="gruppespil">
+                        <h1 className="setup-h1">Vælg dit første gruppespil</h1>
+                        <div className="setup-element">
+                            <div className="setup-search">
+                                <input type="text" placeholder="Søg i gruppespil" className="setup-input" onChange={event => setGruppespilSearchStr(event.target.value)} />
+                            </div>
+                            <ul className="setup-hits" style={{maxHeight: "600px"}}>
+                                <div className="match-loader display" id="stage-loader1"></div>
+                                {gruppespilsearch.map((item) => {
+                                    return (
+                                        <li key={item.id} className="setup-hit" id={"gruppespil-" + item.id} style={{flexDirection: "column", alignItems: "flex-start", paddingLeft: "20px"}} onClick={() => {pullGruppespil(item.id)}}>
+                                            <div className="setup-hit-wrapper">
+                                                <div className="setup-inline" id="setup-1">
+                                                    <p className="setup-p-fat">{item.name}</p>
+                                                    {item.synlighed === "privat" && <svg xmlns="http://www.w3.org/2000/svg" className="setup-gruppespil-icon" viewBox="0 0 16 16">
+                                                        <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>
+                                                    </svg>}
+                                                    {item.synlighed === "dyst" && <svg xmlns="http://www.w3.org/2000/svg" className="setup-gruppespil-icon" style={{fill: "var(--primary)"}} viewBox="0 0 16 16">
+                                                        <path d="M2.5.5A.5.5 0 0 1 3 0h10a.5.5 0 0 1 .5.5c0 .538-.012 1.05-.034 1.536a3 3 0 1 1-1.133 5.89c-.79 1.865-1.878 2.777-2.833 3.011v2.173l1.425.356c.194.048.377.135.537.255L13.3 15.1a.5.5 0 0 1-.3.9H3a.5.5 0 0 1-.3-.9l1.838-1.379c.16-.12.343-.207.537-.255L6.5 13.11v-2.173c-.955-.234-2.043-1.146-2.833-3.012a3 3 0 1 1-1.132-5.89A33.076 33.076 0 0 1 2.5.5zm.099 2.54a2 2 0 0 0 .72 3.935c-.333-1.05-.588-2.346-.72-3.935zm10.083 3.935a2 2 0 0 0 .72-3.935c-.133 1.59-.388 2.885-.72 3.935z"/>
+                                                    </svg>}
                                                 </div>
-                                                <div className="setup-inline" id="setup-3">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" className="setup-gruppespil-icon" viewBox="0 0 16 16">
-                                                        <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
-                                                    </svg>
-                                                    <p className="setup-p">{item.admin}</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="setup-hit-pull" id={"pull-" + item.id}>
-                                            <div className="pull-stats">
-                                                <div className="pull-stat">
-                                                    <p className="pull-h1">{item.players.length}</p>
-                                                    <div className="pull-stat-bottom">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" className="pull-icon" viewBox="0 0 16 16">
+                                                <div className="setup-hit-wrapper" style={{justifyContent: "flex-end"}}>
+                                                    <div className="setup-inline" id="setup-2">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" className="setup-gruppespil-icon" viewBox="0 0 16 16">
                                                             <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816zM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275zM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/>
                                                         </svg>
-                                                        <p className="pull-stat-p">Tilmeldte</p>
+                                                        <p className="setup-p">{item.players.length}</p>
                                                     </div>
-                                                </div>
-                                                <div className="pull-stat">
-                                                    <p className="pull-h1">{item.admin}</p>
-                                                    <div className="pull-stat-bottom">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" className="pull-icon" viewBox="0 0 16 16">
+                                                    <div className="setup-inline" id="setup-3">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" className="setup-gruppespil-icon" viewBox="0 0 16 16">
                                                             <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
                                                         </svg>
-                                                        <p className="pull-stat-p">Administrator</p>
-                                                    </div>
-                                                </div>
-                                                <div className="pull-stat">
-                                                    <p className="pull-h1">{item.varighed}</p>
-                                                    <div className="pull-stat-bottom">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" className="pull-icon" viewBox="0 0 16 16">
-                                                            <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
-                                                        </svg>
-                                                        <p className="pull-stat-p">Slutdato</p>
+                                                        <p className="setup-p">{item.admin}</p>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <p className="setup-hit-p" style={{paddingBottom: "5px"}}>Tilmeldte</p>
-                                            <ul className="pull-tilmeldte">
-                                                {item.players.map((player) => {
-                                                    return (
-                                                        <li key={player.player} className="tilmeldte-element">
-                                                            <div className="tilmeldte-pb"></div>
-                                                            <div className="tilmeldte-wrapper">
-                                                                <p className="setup-p">{player.username}</p>
-                                                                <p className="setup-pp">{player.player}</p>
-                                                            </div>
-                                                        </li>
-                                                    );
-                                                })}
-                                            </ul>
-                                            <div className="pull-cta">
-                                                <button className="setup-btn" onClick={() => {tilmeld(item.id)}}>Tilmeld</button>
+                                            <div className="setup-hit-pull" id={"pull-" + item.id}>
+                                                <div className="pull-stats">
+                                                    <div className="pull-stat">
+                                                        <p className="pull-h1">{item.players.length}</p>
+                                                        <div className="pull-stat-bottom">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" className="pull-icon" viewBox="0 0 16 16">
+                                                                <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816zM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275zM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/>
+                                                            </svg>
+                                                            <p className="pull-stat-p">Tilmeldte</p>
+                                                        </div>
+                                                    </div>
+                                                    <div className="pull-stat">
+                                                        <p className="pull-h1">{item.admin}</p>
+                                                        <div className="pull-stat-bottom">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" className="pull-icon" viewBox="0 0 16 16">
+                                                                <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+                                                            </svg>
+                                                            <p className="pull-stat-p">Administrator</p>
+                                                        </div>
+                                                    </div>
+                                                    <div className="pull-stat">
+                                                        <p className="pull-h1">{item.varighed}</p>
+                                                        <div className="pull-stat-bottom">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" className="pull-icon" viewBox="0 0 16 16">
+                                                                <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+                                                            </svg>
+                                                            <p className="pull-stat-p">Slutdato</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <p className="setup-hit-p" style={{paddingBottom: "5px"}}>Tilmeldte</p>
+                                                <ul className="pull-tilmeldte">
+                                                    {item.players.map((player) => {
+                                                        return (
+                                                            <li key={player.player} className="tilmeldte-element">
+                                                                <div className="tilmeldte-pb"></div>
+                                                                <div className="tilmeldte-wrapper">
+                                                                    <p className="setup-p">{player.username}</p>
+                                                                    <p className="setup-pp">{player.player}</p>
+                                                                </div>
+                                                            </li>
+                                                        );
+                                                    })}
+                                                </ul>
+                                                <div className="pull-cta">
+                                                    <button className="setup-btn" onClick={() => {tilmeld(item.id)}}>Tilmeld</button>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </li>
-                                );
-                            })}
-                        </ul>
-                    </div>
-                    <div className="setup-cta">
-                        <Link href="/stage"><a className="nav-btn-outline">Forlad opsætning</a></Link>
-                        <button className="setup-btn" id="tilmeldNext" onClick={() => {next("hold")}}>Spring gruppespil over</button>
-                    </div>
-                </div>
-                <div className="setup-wrapper" id="hold">
-                    <h1 className="setup-h1">Vælg dine favorithold</h1>
-                    <div className="setup-element">
-                        <div className="setup-search">
-                            <input type="text" placeholder="Søg" className="setup-input" onChange={event => setKlubSearchStr(event.target.value)} />
+                                        </li>
+                                    );
+                                })}
+                            </ul>
                         </div>
-                        <ul className="setup-hits">
-                            {klubsearch.map((item) => {
-                                return (
-                                    <li key={item.name + item.image} className="setup-hit" onClick={() => {addFavorite(item.id, item.name, item.image, item.liga)}}>
-                                        <button className="setup-checkbox" id={"klub-" + item.id}>
-                                            <svg xmlns="http://www.w3.org/2000/svg" id={"icon-" + item.id} className="setup-icon" viewBox="0 0 16 16">
-                                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
-                                            </svg>
-                                        </button>
-                                        <div className="setup-hit-wrapper">
-                                            <Image width="25px" height="25px" src={item.image} className="setup-img" />
-                                            <p className="setup-p">{item.name}</p>
-                                        </div>
-                                    </li>
-                                );
-                            })}
-                        </ul>
-                    </div>
-                    <div className="setup-cta">
-                        <Link href="/stage"><a className="nav-btn-outline">Forlad opsætning</a></Link>
-                        <button className="setup-btn" onClick={() => {next("ligaer")}}>Fortsæt</button>
-                    </div>
-                </div>
-                <div className="setup-wrapper" id="ligaer">
-                    <h1 className="setup-h1">Vælg dine favorit ligaer</h1>
-                    <div className="setup-element">
-                        <div className="setup-search">
-                            <input type="text" placeholder="Søg" className="setup-input" onChange={event => setLigaSearchStr(event.target.value)} />
+                        <div className="setup-cta">
+                            <Link href="/stage"><a className="nav-btn-outline">Forlad opsætning</a></Link>
+                            <button className="setup-btn" id="tilmeldNext" onClick={() => {next("hold")}}>Spring gruppespil over</button>
                         </div>
-                        <ul className="setup-hits">
-                            {ligasearch.map((item) => {
-                                return (
-                                    <li key={item.name + item.image} className="setup-hit" onClick={() => {addFavorite(item.id, item.name, item.image, item.liga)}}>
-                                        <button className="setup-checkbox" id={"klub-" + item.id}>
-                                            <svg xmlns="http://www.w3.org/2000/svg" id={"icon-" + item.id} className="setup-icon" viewBox="0 0 16 16">
-                                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
-                                            </svg>
-                                        </button>
-                                        <div className="setup-hit-wrapper">
-                                            <Image width="25px" height="25px" src={item.image} className="setup-img" />
-                                            <p className="setup-p">{item.name}</p>
-                                        </div>
-                                    </li>
-                                );
-                            })}
-                        </ul>
                     </div>
-                    <div className="setup-cta">
-                        <button className="setup-btn" onClick={() => {next("done")}}>Afslut opsætning</button>
+                    <div className="setup-wrapper" id="hold">
+                        <h1 className="setup-h1">Vælg dine favorithold</h1>
+                        <div className="setup-element">
+                            <div className="setup-search">
+                                <input type="text" placeholder="Søg" className="setup-input" onChange={event => setKlubSearchStr(event.target.value)} />
+                            </div>
+                            <ul className="setup-hits">
+                                {klubsearch.map((item) => {
+                                    return (
+                                        <li key={item.name + item.image} className="setup-hit" onClick={() => {addFavorite(item.id, item.name, item.image, item.liga)}}>
+                                            <button className="setup-checkbox" id={"klub-" + item.id}>
+                                                <svg xmlns="http://www.w3.org/2000/svg" id={"icon-" + item.id} className="setup-icon" viewBox="0 0 16 16">
+                                                    <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                                                </svg>
+                                            </button>
+                                            <div className="setup-hit-wrapper">
+                                                <Image width="25px" height="25px" src={item.image} className="setup-img" />
+                                                <p className="setup-p">{item.name}</p>
+                                            </div>
+                                        </li>
+                                    );
+                                })}
+                            </ul>
+                        </div>
+                        <div className="setup-cta">
+                            <Link href="/stage"><a className="nav-btn-outline">Forlad opsætning</a></Link>
+                            <button className="setup-btn" onClick={() => {next("ligaer")}}>Fortsæt</button>
+                        </div>
+                    </div>
+                    <div className="setup-wrapper" id="ligaer">
+                        <h1 className="setup-h1">Vælg dine favorit ligaer</h1>
+                        <div className="setup-element">
+                            <div className="setup-search">
+                                <input type="text" placeholder="Søg" className="setup-input" onChange={event => setLigaSearchStr(event.target.value)} />
+                            </div>
+                            <ul className="setup-hits">
+                                {ligasearch.map((item) => {
+                                    return (
+                                        <li key={item.name + item.image} className="setup-hit" onClick={() => {addFavorite(item.id, item.name, item.image, item.liga)}}>
+                                            <button className="setup-checkbox" id={"klub-" + item.id}>
+                                                <svg xmlns="http://www.w3.org/2000/svg" id={"icon-" + item.id} className="setup-icon" viewBox="0 0 16 16">
+                                                    <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                                                </svg>
+                                            </button>
+                                            <div className="setup-hit-wrapper">
+                                                <Image width="25px" height="25px" src={item.image} className="setup-img" />
+                                                <p className="setup-p">{item.name}</p>
+                                            </div>
+                                        </li>
+                                    );
+                                })}
+                            </ul>
+                        </div>
+                        <div className="setup-cta">
+                            <button className="setup-btn" onClick={() => {next("done")}}>Afslut opsætning</button>
+                        </div>
                     </div>
                 </div>
             </div>
