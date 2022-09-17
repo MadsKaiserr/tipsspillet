@@ -2423,15 +2423,6 @@ function StageForside () {
                             data-full-width="">
                         <div overflow=""></div>
                         </amp-ad>
-                        <ins className="adsbygoogle"
-                            style={{display: "block"}}
-                            data-ad-client="ca-pub-7071523482288616"
-                            data-ad-slot="8074583217"
-                            data-ad-format="auto"
-                            data-full-width-responsive="true"></ins>
-                        <script>
-                            (adsbygoogle = window.adsbygoogle || []).push({});
-                        </script>
                         <div className="stage-main-matches-section">
                             <div className="stage-section-indhold" id="stage-main1">
                                 <div className="stage-section-top" onClick={() => {minField("kommende")}}>
