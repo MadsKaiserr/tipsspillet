@@ -111,7 +111,7 @@ function Faq () {
                         })}
                         <li key={"help"} className="faq-help">
                             <div className="faq-question">
-                                <p className="faq-q">Kan du ikke finde din spørgsmål?</p>
+                                <p className="faq-q">Kan du ikke finde dit spørgsmål?</p>
                                 <br /><Link href="/kontakt"><a className="faq-btn" style={{minWidth: "110px"}}>Skriv til os</a></Link>
                             </div>
                         </li>

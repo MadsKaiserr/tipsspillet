@@ -2292,6 +2292,8 @@ function StageForside () {
             <meta name="robots" content="noindex" />
         </Head>
         <StageHeader />
+        <div className="height-fix2">
+        </div>
         <Height />
         {getCurrentLeagues()}
         <div className="md-container" id="md-container">
@@ -2381,6 +2383,35 @@ function StageForside () {
                                 <div className="match-loader display" id="stage-loader1"></div>
                                 <ul>
                                     {getMatches("favoritter")}
+                                    {loadingText !== "Indlæser..." && <>
+                                        {favoritItems.length === 0 && <>
+                                            <div className="matches-empty">
+                                                <div className="chat-empty-element" style={{marginLeft: "-25px"}}>
+                                                    <div className="chat-empty-element-left">
+                                                        <div className="chat-empty-img-bg">
+                                                            <div className="chat-empty-img"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="chat-empty-element-right">
+                                                        <div className="chat-empty-p"></div>
+                                                        <div className="chat-empty-p" style={{width: "60%"}}></div>
+                                                    </div>
+                                                </div>
+                                                <div className="chat-empty-element" style={{marginLeft: "25px", marginTop: "-7px"}}>
+                                                    <div className="chat-empty-element-left">
+                                                        <div className="chat-empty-img-bg">
+                                                            <div className="chat-empty-img"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="chat-empty-element-right">
+                                                        <div className="chat-empty-p"></div>
+                                                        <div className="chat-empty-p" style={{width: "60%"}}></div>
+                                                    </div>
+                                                </div>
+                                                <p className="chat-empty-h1">Ingen hold du følger spiller i dag</p>
+                                            </div>
+                                        </>}
+                                    </>}
                                 </ul>
                             </div>
                         </div>
@@ -2446,7 +2477,7 @@ function StageForside () {
                         <div className="stage-main-small-section">
                             <div className="match-loader display" id="stage-loader2"></div>
                                 <div className="stage-section-indhold" id="stage-main2">
-                                    <div className="stage-kampe-top" style={{paddingTop: "10px"}}>
+                                    <div className="stage-kampe-top" style={{padding: "10px 20px"}}>
                                         <p className="stage-kampe-h1">Favoritter</p>
                                     </div>
                                     <ul>

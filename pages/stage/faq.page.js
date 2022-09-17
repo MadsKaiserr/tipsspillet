@@ -22,8 +22,6 @@ function StageFaq () {
             <StageHeader />
             <Height />
             <div className="stage-main-container" id="faqside">
-                <h1 className="faq-h1">FAQ - Spørgsmål og svar</h1>
-                <h2 className="faq-h2">Har du spørgsmål? Vi er her for at hjælpe</h2>
                 <FaqSite />
             </div>
         </>

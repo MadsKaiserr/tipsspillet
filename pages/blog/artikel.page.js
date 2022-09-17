@@ -103,7 +103,7 @@ function Artikel () {
                         <div className="a-blog-img">
                             <Image src={Follow} width="1976" height="904" />
                         </div>
-                        <p className="a-blog-p">Du kan altid fjerne et hold eller liga fra dine favoritter, enten på siden for holdet eller ligaen, eller under <Link href="/stage/profil"><a className="a-blog-p-a">din profil.</a></Link></p>
+                        <p className="a-blog-p">Du kan altid fjerne et hold eller liga fra dine favoritter, enten på siden for holdet eller ligaen, eller under <Link href="/stage/indstillinger"><a className="a-blog-p-a">din profil.</a></Link></p>
                         <h2 className="a-blog-h2">Step 3. Find gruppespil</h2>
                         <p className="a-blog-p">Så langt så godt.</p>
                         <p className="a-blog-p">For at komme igang med at bette, skal du have et gruppespil du kan bette i, og modstandere du kan bette imod.</p>

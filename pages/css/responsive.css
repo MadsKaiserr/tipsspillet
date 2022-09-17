@@ -90,6 +90,10 @@
   .match-info-half {
     width: 100% !important;
   }
+  .match-info-half-4 {
+    width: 100% !important;
+    padding: 25px 15px !important;
+  }
   .match-info-half-2 {
     padding: 20px !important;
   }
@@ -139,6 +143,9 @@
     right: 30px !important;
     top: inherit !important;
     z-index: 11 !important;
+  }
+  .error-con-error {
+    width: 94% !important;
   }
   .kupon-top2 {
     margin-top: 0px !important;
@@ -234,7 +241,7 @@
     width: 100% !important;
   }
   .gruppespil-section {
-    width: 100% !important;
+    width: 95% !important;
   }
   #faqside {
     padding-left: 10px !important;
@@ -278,6 +285,16 @@
   .plan-element {
     width: 50% !important;
   }
+  .price-fixed {
+    position: fixed !important;
+    top: 100px !important;
+    box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.2) !important;
+    transform: scale(1.2) !important;
+  }
+  .ant-container {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
 }
 
 @media only screen and (max-width: 1165px) {
@@ -302,7 +319,15 @@
 }
 
 @media only screen and (max-width: 1095px) {
+  .nav-bar-stage {
+    top: 0 !important;
+    left: 0 !important;
+    position: absolute !important;
+  }
   .height-fix {
+    height: 80px !important;
+  }
+  .height-fix2 {
     height: 0px !important;
   }
   .designer-element-fixed {
@@ -315,6 +340,7 @@
     position: fixed !important;
     left: 0 !important;
     top: 0 !important;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.05);
     animation: stickTop 0.55s 1 !important;
   }
   .hero-system {
@@ -445,6 +471,20 @@
 @media only screen and (max-width: 835px) {
   .stage-indstillinger-sidebar {
     display: none !important;
+  }
+  .gruppespil-kupon-1 {
+    margin-right: 0px !important;
+    width: 100% !important;
+  }
+  .gruppespil-kupon-2 {
+    margin-right: 0px !important;
+    width: 100% !important;
+  }
+  .gruppespil-li {
+    width: 100% !important;
+  }
+  .gruppespil-kuponer ul {
+    width: 100%;
   }
   .stage-indstillinger-main {
     padding: 0px !important;
@@ -659,6 +699,12 @@
   .main-container {
     padding: 40px 15px !important;
   }
+  .ant-container {
+    align-items: center!important;
+  }
+  .ant-element {
+    width: 100% !important;
+  }
 }
 
 @media only screen and (max-width: 616px) {
@@ -716,11 +762,14 @@
   .match-info {
     padding: 0px 10px !important;
   }
+  .match-info-wrap {
+    padding: 10px 20px !important;
+  }
   .sidemenu-click {
     top: 65px !important;
   }
   .sidemenu-fill {
-    margin-top: 65px !important;
+    margin-top: 55px !important;
   }
   .team-team {
     padding: 30px 10px !important;
@@ -763,14 +812,9 @@
   .match-p {
     font-size: 11px !important;
   }
-  .nav-bar-stage {
-    background-color: var(--black) !important;
-  }
-  .side-nav-container-top-stage {
-    background-color: var(--black) !important;
-  }
   .stage-main-article-container {
     padding: 0px !important;
+    padding-bottom: 70px !important;
   }
   .match-info-con {
     padding: 0px 10px !important;
@@ -783,6 +827,18 @@
 @media only screen and (max-width: 540px) {
   .hit-elem {
     padding: 10px 5% !important;
+  }
+  .nav-bar {
+    height: 60px !important;
+  }
+  .hero-container {
+    height: 530px !important;
+  }
+  .mesh-canvas {
+    max-height: 530px !important;
+  }
+  .canvas-overlay {
+    max-height: 530px !important;
   }
   .header-inline {
     display: flex !important;

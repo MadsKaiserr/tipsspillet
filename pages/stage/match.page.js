@@ -10,6 +10,7 @@ import lineupPitch from '../img/lineup.png';
 import goal from '../img/football.png';
 import Congrats from '../img/congrats.svg';
 import StageHeader from '../layout/stageheader';
+import Height from '../components/height';
 
 function StageMatcharticle () {
 
@@ -2349,6 +2350,7 @@ function StageMatcharticle () {
             <meta name="robots" content="noindex" />
         </Head>
         <StageHeader />
+        <Height />
         <div className="match-figure">
             <div className="info-figure1"></div>
             <div className="info-figure2"></div>

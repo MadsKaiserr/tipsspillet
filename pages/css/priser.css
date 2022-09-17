@@ -29,11 +29,52 @@
     text-align: center;
   }
 
+  .td-input-max {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    border: 3px #fff solid;
+    border-radius: 500px;
+    background-color: #fff;
+    margin-bottom: 20px;
+  }
+
+  .td-input-element-active {
+    border-radius: 500px;
+    background-color: var(--primary);
+    color: #fff;
+    padding: 6px 10px;
+    font-family: Inter;
+    font-weight: 500;
+    font-size: 13px;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+
+  .td-input-element {
+    border-radius: 500px;
+    color: var(--black);
+    padding: 6px 10px;
+    cursor: pointer;
+    font-family: Inter;
+    font-weight: 500;
+    transition: 0.2s;
+    font-size: 13px;
+  }
+
+  .td-input-element:hover {
+    background-color: var(--surface);
+  }
+
   .price-input {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    z-index: 9;
     gap: 5px;
+    position: absolute;
+    top: -30px;
     border: 3px #fff solid;
     box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.05);
     border-radius: 500px;

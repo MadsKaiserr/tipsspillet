@@ -71,6 +71,7 @@
   .set-center {
     width: 100%;
     display: flex;
+    position: relative;
     align-items: center;
     justify-content: center;
   }
@@ -346,6 +347,10 @@
     opacity: 0;
     animation: 1000ms ease 0s 1 normal none running fadeIn;
     animation-fill-mode: forwards;
+  }
+
+  .opacity-1 {
+    opacity: 0.6 !important;
   }
 
   .main-gradient {
@@ -939,6 +944,34 @@
   .square-btn-outline:hover {
     background-color: var(--primary);
     color: #fff
+  }
+
+  .td-input-con {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 15px;
+  }
+
+  .td-btn-search {
+    padding: 10px 15px;
+    color: var(--primary);
+    font-weight: 500;
+    font-family: Inter;
+    font-size: 12px;
+    border-radius: 3px;
+    border: 0px;
+    cursor: pointer;
+    background-color: var(--third);
+    transition: 0.2s;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+  }
+  
+  .td-btn-search:hover {
+    background-color: var(--primary);
+    color: #fff;
   }
   
   .nav-btn-default {

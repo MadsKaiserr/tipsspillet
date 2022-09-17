@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getUser, resetUserSession } from "../services/authService";
 import jwtDecode from "jwt-decode";
-import tlogo from './../img/logo-white.png';
+import tlogo from './../img/logo-primary.png';
 
 import Link from 'next/link'
 import Head from 'next/head'
@@ -1664,7 +1664,7 @@ function StageHeader () {
                                     </div>
                                 </div>
                                 <div className="user-divider"></div>
-                                <Link href="/stage/profil">
+                                <Link href="/stage/indstillinger">
                                     <div className="user-element">
                                         <p className="user-element-p">Din profil</p>
                                     </div>
@@ -1784,7 +1784,7 @@ function StageHeader () {
                                         <p className="sidemenu-h2">Søg i klubber, lande eller ligaer</p>
                                     </div>
                                     <div className="sidemenu-topmenu">
-                                        <Link href="/stage/profil">
+                                        <Link href="/stage/indstillinger">
                                             <svg xmlns="http://www.w3.org/2000/svg" onClick={() => closeMenu()} className="sidemenu-topmenu-icon" viewBox="0 0 16 16">
                                                 <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
                                             </svg>

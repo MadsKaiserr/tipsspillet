@@ -1,18 +1,15 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
-import { getUser } from "../services/authService";
 import axios from "axios";
-import { Router, useRouter } from 'next/router'
 import Link from 'next/link'
 import Head from 'next/head'
 import Image from 'next/image'
-import StageHeader from '../layout/stageheader';
  
-function StageAktiveSpil () {
+function Gruppespil () {
 
-    useEffect(() => {
-        getGroups();
-    }, [])
+    const [items, setItems] = useState([]);
+
+    const [loading, setLoading] = useState("Indlæser...");
 
     const [query, setQuery] = useState("");
 
@@ -33,28 +30,17 @@ function StageAktiveSpil () {
         setSearch(newDupli);
     }
 
-    const [items, setItems] = useState([]);
-    const [loading, setLoading] = useState("Indlæser...")
-
-    const user = getUser();
-    const fornavn = user !== 'undefined' && user ? user.username : '';
-
-    const [nav, setNav] = useState("alle");
-
     useEffect(() => {
         if (loading !== "Indlæser...") {
             document.getElementById("stage-loader1").classList.remove("display");
         }
     }, [loading])
 
-    function setActiveGame(id, index, name) {
-        localStorage.setItem("activeGame", id);
-        localStorage.setItem("playerIndex", index);
-        localStorage.setItem("aktive-spil-suspend", "null");
-        window.open("/stage/", "_self");
-    }
+    useEffect(() => {
+        apiCall()
+    }, [])
 
-    function getGroups() {
+    function apiCall() {
         const URL = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/gruppespil";
 
         const requestConfig = {
@@ -65,122 +51,43 @@ function StageAktiveSpil () {
 
         axios.get(URL, requestConfig).then(response => {
             console.log("AWS - Gruppespil:", response)
-            var myArray = [];
+            var newArray = [];
             for (var q in response.data.allGruppespil) {
-                if (response.data.allGruppespil[q].players.findIndex(obj => obj.player === localStorage.getItem("email"))) {
-                    myArray.push(response.data.allGruppespil[q]);
+                if (new Date(response.data.allGruppespil[q].varighed).getTime() > new Date().getTime()) {
+                    newArray.push(response.data.allGruppespil[q]);
                 }
             }
-            setItems(myArray);
-            setSearch(myArray);
+            setItems(newArray);
+            setSearch(newArray);
             setLoading("");
         }).catch(error => {
             console.log("Fejl ved indhentning af data" + error)
         })
     }
 
-    const [modalh1, setModalH1] = useState("Benyt adgangsbillet");
-    const [modalh2, setModalH2] = useState("Det ser ud til, at du ikke har noget abonnement til at oprette gruppespil. Vil du gøre brug af en af dine adgangsbilletter istedet?");
-
-    function showModal() {
-        setModalH1("Opgrader abonnement");
-        setModalH2('Opgrader dit abonnement for at få adgang til at oprette gruppespil, eller køb en adgangsbillet under "Priser".');
-        document.getElementById("main-modal").classList.add("display-flex");
-    }
-
-    function opretSpilHandler() {
-        if (JSON.parse(localStorage.getItem("auth")).rolle === "premium" || JSON.parse(localStorage.getItem("auth")).rolle === "administrator") {
-            window.open("/stage/opret-spil", "_self");
-        } else {
-            showModal();
-        }
-    }
-
-    const [messageType, setMessageType] = useState("error-con-error");
-
-    function setNotiMessage(type, heading, message) {
-    window.scrollTo(0, 0)
-        if (type === "error") {
-            setMessageType("error-con-error");
-            document.getElementById("errorIcon").classList.add("display");
-        } else if (type === "success") {
-            document.getElementById("errorIcon").classList.remove("display");
-            setMessageType("error-con-success");
-        }
-        document.getElementById("errorCon").classList.add("display");
-        document.getElementById("errorConH").innerHTML = heading;
-        document.getElementById("errorConP").innerHTML = message;
-    }
-
-    function billetHandler() {
-        const user_email = localStorage.getItem("email");
-        const URL = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/adgangsbilletter?player=" + user_email;
-        const requestConfig = {
-            headers: {
-                "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
-            }
-        }
-
-        axios.get(URL, requestConfig).then(response => {
-            console.log("AWS - Adgangsbilletter:", response);
-            if (response.data.adgangsbilletter.length > 0) {
-                var foundBillet = false;
-                var billetIndex = -1;
-                for (var i in response.data.adgangsbilletter) {
-                    if (response.data.adgangsbilletter[i].used === false && response.data.adgangsbilletter[i].type === "gruppespil") {
-                        foundBillet = true;
-                        billetIndex = parseInt(i);
-                    }
-                }
-                if (foundBillet === true && billetIndex >= 0) {
-                    const URL = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/adgangsbilletter";
-                    const requestConfig = {
-                        headers: {
-                            "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
-                        }
-                    }
-
-                    const requestBody = {
-                        "player": user_email,
-                        "index": billetIndex
-                    }
-
-                    axios.patch(URL, requestBody, requestConfig).then(response => {
-                        console.log("AWS - Adgangsbilletter:", response)
-                        document.getElementById("main-modal").classList.remove("display-flex");
-                        window.open("/stage/opret-spil", "_self");
-                    }).catch(error => {
-                        console.log("Fejl ved indhentning af data" + error)
-                        setNotiMessage("error", "Serverfejl", "Der skete en fejl ved opdatering af din billet.");
-                        document.getElementById("main-modal").classList.remove("display-flex");
-                    })
-                } else {
-                    document.getElementById("main-modal").classList.remove("display-flex");
-                    setNotiMessage("error", "Ingen billetter", "Det ser ud til, at du ikke har nogle gruppespil-adgangsbilletter. Du kan købe dem under 'Priser'.");
-                }
-            } else {
-                document.getElementById("main-modal").classList.remove("display-flex");
-                setNotiMessage("error", "Ingen billetter", "Det ser ud til, at du ikke har nogle adgangsbilletter. Du kan købe dem under 'Priser'.");
-            }
-        }).catch(error => {
-            console.log("Fejl ved indhentning af data" + error)
-        })
-    }
-
-    const [currentType, setCurrentType] = useState("offentlige");
+    const [currentType, setCurrentType] = useState("alle");
 
     function setType(type) {
         if (type === "offentlige") {
             document.getElementById("offentlige").className = "td-input-element-active";
             document.getElementById("private").className = "td-input-element";
             document.getElementById("dyster").className = "td-input-element";
+            document.getElementById("alle").className = "td-input-element";
             setCurrentType("offentlige");
         } else if (type === "private") {
             document.getElementById("private").className = "td-input-element-active";
             document.getElementById("offentlige").className = "td-input-element";
             document.getElementById("dyster").className = "td-input-element";
+            document.getElementById("alle").className = "td-input-element";
             setCurrentType("private");
+        } else if (type === "alle") {
+            document.getElementById("alle").className = "td-input-element-active";
+            document.getElementById("offentlige").className = "td-input-element";
+            document.getElementById("private").className = "td-input-element";
+            document.getElementById("dyster").className = "td-input-element";
+            setCurrentType("alle");
         } else if (type === "dyster") {
+            document.getElementById("alle").className = "td-input-element";
             document.getElementById("dyster").className = "td-input-element-active";
             document.getElementById("offentlige").className = "td-input-element";
             document.getElementById("private").className = "td-input-element";
@@ -188,34 +95,22 @@ function StageAktiveSpil () {
         }
     }
 
+    function gruppespilHandler() {
+        if (localStorage.getItem("auth")) {
+            if (JSON.parse(localStorage.getItem("auth")).rolle === "premium" || JSON.parse(localStorage.getItem("auth")).rolle === "administrator") {
+                window.open("/stage/opret-spil", "_SELF");
+            } else {
+                window.open("/priser", "_SELF");
+            }
+        } else {
+            window.open("/signup", "_SELF");
+        }
+    }
+
     return (
         <>
-            <Head>
-                <title>Aktive spil - Tipsspillet</title>
-                <meta name="robots" content="noindex" />
-            </Head>
-            <StageHeader />
-            <div className="main-modal" id="main-modal">
-                <div className="modal-box">
-                    <p className="main-modal-h1">{modalh1}</p>
-                    <p className="main-modal-h2">{modalh2}</p>
-                    <div className="modal-touch">
-                        <p className="nav-btn-outline" onClick={() => {setModalH1("");setModalH2("");document.getElementById("main-modal").classList.remove("display-flex")}}>Fortryd</p>
-                        <Link href="/priser"><button className="nav-btn-default">Se abonnementer</button></Link>
-                    </div>
-                </div>
-            </div>
-            <div className="stage-main-article-container">
-                <div className={messageType} id="errorCon">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="triangle" viewBox="0 0 16 16" id="errorIcon">
-                        <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
-                    </svg>
-                    <div className="error-text">
-                        <p className="error-container-h1" id="errorConH">Ingen væddemål</p>
-                        <p className="error-container-p" id="errorConP">Du har ikke placeret nogle væddemål. Placer ét eller flere væddemål, for at lave din kuppon.</p>
-                    </div>
-                </div>
-                <div className="td-box animation-fadetop" style={{maxWidth: "1000px", margin: "auto"}}>
+            <div className="td-container">
+                <div className="td-box animation-fadetop" style={{animationDelay: "0.5s"}}>
                     <div className="td-top">
                         <div className="td-top-left">
                             <div className="td-input-con">
@@ -228,9 +123,10 @@ function StageAktiveSpil () {
                                 <button className="td-btn-search" style={{marginLeft: "0px", borderRadius: "5px"}} onClick={() => {makeSearch()}}>Søg</button>
                             </div>
                             <div className="td-input-max">
-                                <div className="td-input-element-active" id="offentlige" onClick={() => setType("offentlige")}>Gruppespil</div>
+                                <div className="td-input-element-active" id="alle" onClick={() => setType("alle")}>Alle</div>
+                                <div className="td-input-element" id="offentlige" onClick={() => setType("offentlige")}>Offentlige</div>
+                                <div className="td-input-element" id="private" onClick={() => setType("private")}>Private</div>
                                 <div className="td-input-element" id="dyster" onClick={() => setType("dyster")}>Præmiedyster</div>
-                                <div className="td-input-element" id="private" onClick={() => setType("private")}>Afsluttede</div>
                             </div>
                         </div>
                         <div className="td-top-right">
@@ -246,7 +142,7 @@ function StageAktiveSpil () {
                                     </svg>
                                 </div>
                             </div>
-                            <a className="td-btn" onClick={() => opretSpilHandler()}>Opret gruppespil</a>
+                            <a className="td-btn" onClick={() => gruppespilHandler()}>Opret gruppespil</a>
                         </div>
                     </div>
                     <div className="td-wrapper">
@@ -259,55 +155,76 @@ function StageAktiveSpil () {
                         <div className="match-loader display" id="stage-loader1"></div>
                         <ul className="td-table">
                             {search.map((item) => {
-                                const index = item.players.findIndex(obj => obj.player === localStorage.getItem("email"));
                                 if (currentType === "offentlige") {
-                                    if ((item.synlighed === "offentlig" || item.synlighed === "privat") && new Date(item.varighed).getTime() > new Date().getTime()) {
+                                    if (item.synlighed === "offentlig") {
                                         return (
-                                            <li key={item.id} className="tl-element" onClick={() => setActiveGame(item.id, index, item.name)}>
-                                                <div className="tl-wrapper" id="td-navn">
-                                                    <div className="tl-img">
-                                                        {/* <Image src="" height="20px" width="20px" /> */}
-                                                    </div>
-                                                    <p className="td-modifier-p" style={{fontWeight: "500"}}>{item.name}</p>
-                                                </div>
-                                                <p className="td-modifier-p" id="td-synlighed">{item.synlighed}</p>
-                                                <p className="td-modifier-p" id="td-spillere">{item.players.length}</p>
-                                                <p className="td-modifier-p" id="td-admin">{item.admin}</p>
-                                            </li>
+                                                <li key={item.id} className="tl-element">
+                                                    <Link href={"/gruppesession?game=" + item.id}>
+                                                        <div className="tl-wrapper" id="td-navn">
+                                                            <div className="tl-img">
+                                                                {/* <Image src="" height="20px" width="20px" /> */}
+                                                            </div>
+                                                            <p className="td-modifier-p" style={{fontWeight: "500"}}>{item.name}</p>
+                                                        </div>
+                                                        <p className="td-modifier-p" id="td-synlighed">{item.synlighed}</p>
+                                                        <p className="td-modifier-p" id="td-spillere">{item.players.length}</p>
+                                                        <p className="td-modifier-p" id="td-admin">{item.admin}</p>
+                                                    </Link>
+                                                </li>
                                         );
                                     }
                                 } else if (currentType === "private") {
-                                    if (new Date(item.varighed).getTime() < new Date().getTime()) {
+                                    if (item.synlighed === "privat") {
                                         return (
-                                            <li key={item.id} className="tl-element" onClick={() => setActiveGame(item.id, index, item.name)}>
-                                                <div className="tl-wrapper" id="td-navn">
-                                                    <div className="tl-img">
-                                                        {/* <Image src="" height="20px" width="20px" /> */}
-                                                    </div>
-                                                    <p className="td-modifier-p" style={{fontWeight: "500"}}>{item.name}</p>
-                                                </div>
-                                                <p className="td-modifier-p" id="td-synlighed">{item.synlighed}</p>
-                                                <p className="td-modifier-p" id="td-spillere">{item.players.length}</p>
-                                                <p className="td-modifier-p" id="td-admin">{item.admin}</p>
-                                            </li>
+                                                <li key={item.id} className="tl-element">
+                                                    <Link href={"/gruppesession?game=" + item.id}>
+                                                        <div className="tl-wrapper" id="td-navn">
+                                                            <div className="tl-img">
+                                                                {/* <Image src="" height="20px" width="20px" /> */}
+                                                            </div>
+                                                            <p className="td-modifier-p" style={{fontWeight: "500"}}>{item.name}</p>
+                                                        </div>
+                                                        <p className="td-modifier-p" id="td-synlighed">{item.synlighed}</p>
+                                                        <p className="td-modifier-p" id="td-spillere">{item.players.length}</p>
+                                                        <p className="td-modifier-p" id="td-admin">{item.admin}</p>
+                                                    </Link>
+                                                </li>
                                         );
                                     }
                                 } else if (currentType === "dyster") {
-                                    if (item.synlighed === "dyst" && new Date(item.varighed).getTime() > new Date().getTime()) {
+                                    if (item.synlighed === "dyst") {
                                         return (
-                                            <li key={item.id} className="tl-element" onClick={() => setActiveGame(item.id, index, item.name)}>
-                                                <div className="tl-wrapper" id="td-navn">
-                                                    <div className="tl-img">
-                                                        {/* <Image src="" height="20px" width="20px" /> */}
-                                                    </div>
-                                                    <p className="td-modifier-p" style={{fontWeight: "500"}}>{item.name}</p>
-                                                </div>
-                                                <p className="td-modifier-p" id="td-synlighed">{item.synlighed}</p>
-                                                <p className="td-modifier-p" id="td-spillere">{item.players.length}</p>
-                                                <p className="td-modifier-p" id="td-admin">{item.admin}</p>
-                                            </li>
+                                                <li key={item.id} className="tl-element">
+                                                    <Link href={"/gruppesession?game=" + item.id}>
+                                                        <div className="tl-wrapper" id="td-navn">
+                                                            <div className="tl-img">
+                                                                {/* <Image src="" height="20px" width="20px" /> */}
+                                                            </div>
+                                                            <p className="td-modifier-p" style={{fontWeight: "500"}}>{item.name}</p>
+                                                        </div>
+                                                        <p className="td-modifier-p" id="td-synlighed">{item.synlighed}</p>
+                                                        <p className="td-modifier-p" id="td-spillere">{item.players.length}</p>
+                                                        <p className="td-modifier-p" id="td-admin">{item.admin}</p>
+                                                    </Link>
+                                                </li>
                                         );
                                     }
+                                } else if (currentType === "alle") {
+                                    return (
+                                            <li key={item.id} className="tl-element">
+                                                <Link href={"/gruppesession?game=" + item.id}>
+                                                    <div className="tl-wrapper" id="td-navn">
+                                                        <div className="tl-img">
+                                                            {/* <Image src="" height="20px" width="20px" /> */}
+                                                        </div>
+                                                        <p className="td-modifier-p" style={{fontWeight: "500"}}>{item.name}</p>
+                                                    </div>
+                                                    <p className="td-modifier-p" id="td-synlighed">{item.synlighed}</p>
+                                                    <p className="td-modifier-p" id="td-spillere">{item.players.length}</p>
+                                                    <p className="td-modifier-p" id="td-admin">{item.admin}</p>
+                                                </Link>
+                                            </li>
+                                    );
                                 }
                             })}
                             {currentType === "offentlige" && <>
@@ -339,14 +256,14 @@ function StageAktiveSpil () {
                                             <div className="td-empty-p"></div>
                                         </div>
                                         <div className="td-empty-cta">
-                                            <p className="td-empty-h1">Ingen aktive gruppespil</p>
+                                            <p className="td-empty-h1">Ingen offentlige gruppespil</p>
                                             <p className="td-empty-cta-p">Find eller opret et gruppespil for at komme igang</p>
                                         </div>
                                     </div>
                                 </>}
                             </>}
                             {currentType === "private" && <>
-                                {search.filter(function( obj ) { return new Date(obj.varighed).getTime() < new Date().getTime() }).length === 0 && <>
+                                {search.filter(function( obj ) { return obj.synlighed === 'privat' && new Date(obj.varighed).getTime() < new Date().getTime() }).length === 0 && <>
                                     <div className="td-empty-container">
                                         <div className="td-empty-bg"></div>
                                         <div className="td-empty-element" style={{marginLeft: "-50px"}}>
@@ -374,8 +291,8 @@ function StageAktiveSpil () {
                                             <div className="td-empty-p"></div>
                                         </div>
                                         <div className="td-empty-cta">
-                                            <p className="td-empty-h1">Ingen afsluttede gruppespil</p>
-                                            <p className="td-empty-cta-p">Du har ingen afsluttede gruppespil</p>
+                                            <p className="td-empty-h1">Ingen private gruppespil</p>
+                                            <p className="td-empty-cta-p">Find eller opret et gruppespil for at komme igang</p>
                                         </div>
                                     </div>
                                 </>}
@@ -415,6 +332,41 @@ function StageAktiveSpil () {
                                     </div>
                                 </>}
                             </>}
+                            {currentType === "alle" && <>
+                                {search.filter(function( obj ) { return new Date(obj.varighed).getTime() > new Date().getTime() }).length === 0 && <>
+                                    <div className="td-empty-container">
+                                        <div className="td-empty-bg"></div>
+                                        <div className="td-empty-element" style={{marginLeft: "-50px"}}>
+                                            <div className="td-empty-logo">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="#fff" viewBox="0 0 16 16">
+                                                    <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"/>
+                                                </svg>
+                                            </div>
+                                            <div className="td-empty-p"></div>
+                                        </div>
+                                        <div className="td-empty-element" style={{marginLeft: "50px"}}>
+                                            <div className="td-empty-logo">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="#fff" viewBox="0 0 16 16">
+                                                    <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"/>
+                                                </svg>
+                                            </div>
+                                            <div className="td-empty-p"></div>
+                                        </div>
+                                        <div className="td-empty-element" style={{marginLeft: "-50px"}}>
+                                            <div className="td-empty-logo">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="#fff" viewBox="0 0 16 16">
+                                                    <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"/>
+                                                </svg>
+                                            </div>
+                                            <div className="td-empty-p"></div>
+                                        </div>
+                                        <div className="td-empty-cta">
+                                            <p className="td-empty-h1">Ingen gruppespil</p>
+                                            <p className="td-empty-cta-p">Find eller opret et gruppespil for at komme igang</p>
+                                        </div>
+                                    </div>
+                                </>}
+                            </>}
                         </ul>
                     </div>
                 </div>
@@ -423,4 +375,4 @@ function StageAktiveSpil () {
     )
 }
  
-export default StageAktiveSpil;
+export default Gruppespil;

@@ -4,8 +4,17 @@
     overflow: hidden;
     padding-top: 140px;
     padding-bottom: 50px;
-    background-color: var(--surface);
+    height: 670px;
   }
+
+  #gradient-canvas {
+    width:100%;
+    height:100%;
+    --gradient-color-1: #c3e4ff; 
+    --gradient-color-2: #6ec3f4; 
+    --gradient-color-3: #eae2ff;  
+    --gradient-color-4: #b9beff;
+  }  
 
   .main-container {
     text-align: center;
@@ -265,6 +274,10 @@
     width: 100%;
     display: flex;
     flex-direction: column;
+  }
+
+  .forside-stats-container {
+    background-color: #fff;
   }
 
   .wrap-wrapper .wrap-container:nth-child(even) {
@@ -1051,6 +1064,7 @@
   .plans-container {
     text-align: center;
     display: flex;
+    padding-top: 30px;
     justify-content: space-around;
   }
   
@@ -1296,7 +1310,7 @@
 
   .faq-wrapper {
     width: 100%;
-    background-color: #fff;
+    background-color: transparent;
     padding: 80px 0px;
     display: flex;
     align-items: center;

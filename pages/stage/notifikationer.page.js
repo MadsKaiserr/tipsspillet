@@ -5,6 +5,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { getKupon, getString } from "../services/algo.js";
 import StageHeader from '../layout/stageheader';
+import Height from '../components/height';
  
 function StageNotifikationer () {
 
@@ -57,6 +58,7 @@ function StageNotifikationer () {
             <meta name="robots" content="noindex" />
         </Head>
         <StageHeader />
+        <Height />
             <div className="noti-main">
                 <h1 className="noti-h1">Notifikationer</h1>
                 <p className="nogames display left" style={{paddingTop: "15px"}}>{errorText}</p>

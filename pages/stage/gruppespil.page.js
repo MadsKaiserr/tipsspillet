@@ -6,8 +6,26 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { getKupon, getString } from "../services/algo.js";
 import StageHeader from '../layout/stageheader';
+import Height from '../components/height';
  
 function StageGruppespil () {
+
+    useEffect(() => {
+        if (document.getElementById("chat_input")) {
+            const pass = document.getElementById("chat_input");
+            pass.addEventListener('focusin', (event) => {
+                if (document.getElementById("chat-under")) {
+                    document.getElementById("chat-under").classList.add("opacity-1");
+                }
+            });
+                
+            pass.addEventListener('focusout', (event) => {
+                if (document.getElementById("chat-under")) {
+                    document.getElementById("chat-under").classList.remove("opacity-1");
+                }
+            });
+        }
+    })
 
     useEffect(() => {
         if (localStorage.getItem("activeGame")) {
@@ -16,6 +34,18 @@ function StageGruppespil () {
         const user = getUser();
         setUsername(user.username);
     }, [])
+
+    const [forbrug, setForbrug] = useState(0);
+    const [forbrugChange, setForbrugChange] = useState(0);
+    const [forbrugType, setForbrugType] = useState("none");
+
+    const [correct, setCorrect] = useState(0);
+    const [correctChange, setCorrectChange] = useState(0);
+    const [correctType, setCorrectType] = useState("none");
+
+    const [gevinstStat, setGevinstStat] = useState(0);
+    const [gevinstChange, setGevinstChange] = useState(0);
+    const [gevinstType, setGevinstType] = useState("none");
 
     const [username, setUsername] = useState("");
 
@@ -91,6 +121,61 @@ function StageGruppespil () {
                         myPlayer = response.data.players[k].odds;
                         setGameAdmin(response.data.admin);
                         localStorage.setItem("notifikationer", response.data.players[k].info.notifikationer.length);
+                        var forbrugInt = 0;
+                        var forbrugTd = 0;
+                        var forbrugYd = 0;
+
+                        var correctInt = 0;
+                        var correctTd = 0;
+                        var correctYd = 0;
+
+                        var gevinstInt = 0;
+                        var gevinstTd = 0;
+                        var gevinstYd = 0;
+                        for (var q in response.data.players[k].odds) {
+                            forbrugInt = forbrugInt + response.data.players[k].odds[q].indsats;
+                            if (response.data.players[k].odds[q].iat > (new Date().getTime() - 86400000)) {
+                                forbrugTd = forbrugTd + response.data.players[k].odds[q].indsats;
+                            } else if (response.data.players[k].odds[q].iat < (new Date().getTime() - 86400000) && response.data.players[k].odds[q].iat > (new Date().getTime() - 172800000)) {
+                                forbrugYd = forbrugYd + response.data.players[k].odds[q].indsats;
+                            }
+                            if (response.data.players[k].odds[q].iat > (new Date().getTime() - 86400000)) {
+                                forbrugTd = forbrugTd + response.data.players[k].odds[q].indsats;
+                                if (response.data.players[k].odds[q].vundet === "2") {
+                                    correctTd = correctTd + 1;
+                                }
+                            } else if (response.data.players[k].odds[q].iat < (new Date().getTime() - 86400000) && response.data.players[k].odds[q].iat > (new Date().getTime() - 172800000)) {
+                                forbrugYd = forbrugYd + response.data.players[k].odds[q].indsats;
+                                if (response.data.players[k].odds[q].vundet === "2") {
+                                    correctYd = correctYd + 1;
+                                }
+                            }
+                            if (response.data.players[k].odds[q].vundet === "2") {
+                                correctInt = correctInt + 1;
+                                gevinstInt = gevinstInt + (response.data.players[k].odds[q].indsats * response.data.players[k].odds[q].fullProb);
+                            }
+                        }
+                        setForbrug(forbrugInt)
+                        setCorrect(correctInt)
+                        setGevinstStat(gevinstInt)
+                        if (forbrugInt > 0) {
+                            setForbrugType("positive");
+                        } else {
+                            setForbrugType("negative");
+                        }
+                        if (correctInt > 0) {
+                            setCorrectType("positive");
+                        } else {
+                            setCorrectType("negative");
+                        }
+                        if (gevinstInt > 0) {
+                            setGevinstType("positive");
+                        } else {
+                            setGevinstType("negative");
+                        }
+                        setForbrugChange(forbrugTd/forbrugYd*100);
+                        setCorrectChange(correctTd/correctYd*100);
+                        setGevinstChange(gevinstTd/gevinstYd*100);
                     }
                 }
                 setBeskeder(response.data.beskeder);
@@ -328,7 +413,12 @@ function StageGruppespil () {
                 <meta name="robots" content="noindex" />
             </Head>
             <StageHeader />
-            {activeGame && <div className="gruppespil-container-2">
+            <Height />
+            <div className="match-figure">
+                <div className="info-figure1"></div>
+                <div className="info-figure2"></div>
+            </div>
+            {activeGame && <div className="stage-main-article-container">
                 <div className="gruppespil-section">
                     <Link href="/priser"><a className="gruppespil-opret-own">Opret dit eget gruppespil</a></Link>
                     <div className="gruppespil-info">
@@ -355,19 +445,229 @@ function StageGruppespil () {
                         </div>
                     </div>
                     <div className="gruppespil-info">
+                        <div className="ant-container">
+                            <div className="ant-element">
+                                {forbrug >= 0 && <>
+                                    <div className="ant-visual">
+                                        {forbrugType === "positive" && <>
+                                            <div className="ant-visual-element">
+                                                <div className="ant-visual-bar" style={{height: "20%"}}></div>
+                                            </div>
+                                            <div className="ant-visual-element">
+                                                <div className="ant-visual-bar" style={{height: "35%"}}></div>
+                                            </div>
+                                            <div className="ant-visual-element">
+                                                <div className="ant-visual-bar" style={{height: "50%"}}></div>
+                                            </div>
+                                            <div className="ant-visual-element">
+                                                <div className="ant-visual-bar" style={{height: "80%"}}></div>
+                                            </div>
+                                            <div className="ant-visual-element">
+                                                <div className="ant-visual-bar" style={{height: "100%"}}></div>
+                                            </div>
+                                        </>}
+                                        {forbrugType === "negative" && <>
+                                            <div className="ant-visual-element">
+                                                <div className="ant-visual-bar-red" style={{height: "60%"}}></div>
+                                            </div>
+                                            <div className="ant-visual-element">
+                                                <div className="ant-visual-bar-red" style={{height: "70%"}}></div>
+                                            </div>
+                                            <div className="ant-visual-element">
+                                                <div className="ant-visual-bar-red" style={{height: "50%"}}></div>
+                                            </div>
+                                            <div className="ant-visual-element">
+                                                <div className="ant-visual-bar-red" style={{height: "30%"}}></div>
+                                            </div>
+                                            <div className="ant-visual-element">
+                                                <div className="ant-visual-bar-red" style={{height: "15%"}}></div>
+                                            </div>
+                                        </>}
+                                    </div>
+                                </>}
+                                <div className="ant-info">
+                                    <p className="ant-h2">Dit forbrug</p>
+                                    <div className="ant-info-price">
+                                        <p className="ant-h1">{forbrug} kr.</p>
+                                        {forbrugChange - 100 > 0 && <>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="var(--green)" style={{marginTop: "3px", transform: "rotate(180deg)"}} viewBox="0 0 16 16">
+                                                <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+                                            </svg>
+                                            <p className="ant-small" style={{color: "var(--green)"}}>{forbrugChange - 100}%</p>
+                                        </>}
+                                        {forbrugChange - 100 < 0 && <>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="var(--red)" style={{marginTop: "3px", transform: "rotate(180deg)"}} viewBox="0 0 16 16">
+                                                <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+                                            </svg>
+                                            <p className="ant-small" style={{color: "var(--red)"}}>{forbrugChange - 100}%</p>
+                                        </>}
+                                    </div>
+                                    <p className="ant-p">Dit <span className="ant-p-a">forbrug</span> fra gruppespillets <br />start</p>
+                                </div>
+                            </div>
+                            <div className="ant-element">
+                                {correct >= 0 && <>
+                                    <div className="ant-visual">
+                                        {correctType === "positive" && <>
+                                            <div className="ant-visual-element">
+                                                <div className="ant-visual-bar" style={{height: "20%"}}></div>
+                                            </div>
+                                            <div className="ant-visual-element">
+                                                <div className="ant-visual-bar" style={{height: "35%"}}></div>
+                                            </div>
+                                            <div className="ant-visual-element">
+                                                <div className="ant-visual-bar" style={{height: "50%"}}></div>
+                                            </div>
+                                            <div className="ant-visual-element">
+                                                <div className="ant-visual-bar" style={{height: "80%"}}></div>
+                                            </div>
+                                            <div className="ant-visual-element">
+                                                <div className="ant-visual-bar" style={{height: "100%"}}></div>
+                                            </div>
+                                        </>}
+                                        {correctType === "negative" && <>
+                                            <div className="ant-visual-element">
+                                                <div className="ant-visual-bar-red" style={{height: "60%"}}></div>
+                                            </div>
+                                            <div className="ant-visual-element">
+                                                <div className="ant-visual-bar-red" style={{height: "70%"}}></div>
+                                            </div>
+                                            <div className="ant-visual-element">
+                                                <div className="ant-visual-bar-red" style={{height: "50%"}}></div>
+                                            </div>
+                                            <div className="ant-visual-element">
+                                                <div className="ant-visual-bar-red" style={{height: "30%"}}></div>
+                                            </div>
+                                            <div className="ant-visual-element">
+                                                <div className="ant-visual-bar-red" style={{height: "15%"}}></div>
+                                            </div>
+                                        </>}
+                                        {correctType === "none" && <></>}
+                                    </div>
+                                </>}
+                                <div className="ant-info">
+                                    <p className="ant-h2">Antal korrekte</p>
+                                    <div className="ant-info-price">
+                                        <p className="ant-h1">{correct}</p>
+                                        {correctChange - 100 > 0 && <>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="var(--green)" style={{marginTop: "3px", transform: "rotate(180deg)"}} viewBox="0 0 16 16">
+                                                <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+                                            </svg>
+                                            <p className="ant-small" style={{color: "var(--green)"}}>{correctChange - 100}%</p>
+                                        </>}
+                                        {correctChange - 100 < 0 && <>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="var(--red)" style={{marginTop: "3px", transform: "rotate(180deg)"}} viewBox="0 0 16 16">
+                                                <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+                                            </svg>
+                                            <p className="ant-small" style={{color: "var(--red)"}}>{correctChange - 100}%</p>
+                                        </>}
+                                    </div>
+                                    <p className="ant-p">Antal <span className="ant-p-a">korrekte</span> fra gruppespillets <br />start</p>
+                                </div>
+                            </div>
+                            <div className="ant-element">
+                                {gevinstStat >= 0 && <>
+                                    <div className="ant-visual">
+                                        {gevinstType === "positive" && <>
+                                            <div className="ant-visual-element">
+                                                <div className="ant-visual-bar" style={{height: "20%"}}></div>
+                                            </div>
+                                            <div className="ant-visual-element">
+                                                <div className="ant-visual-bar" style={{height: "35%"}}></div>
+                                            </div>
+                                            <div className="ant-visual-element">
+                                                <div className="ant-visual-bar" style={{height: "50%"}}></div>
+                                            </div>
+                                            <div className="ant-visual-element">
+                                                <div className="ant-visual-bar" style={{height: "80%"}}></div>
+                                            </div>
+                                            <div className="ant-visual-element">
+                                                <div className="ant-visual-bar" style={{height: "100%"}}></div>
+                                            </div>
+                                        </>}
+                                        {gevinstType === "negative" && <>
+                                            <div className="ant-visual-element">
+                                                <div className="ant-visual-bar-red" style={{height: "60%"}}></div>
+                                            </div>
+                                            <div className="ant-visual-element">
+                                                <div className="ant-visual-bar-red" style={{height: "70%"}}></div>
+                                            </div>
+                                            <div className="ant-visual-element">
+                                                <div className="ant-visual-bar-red" style={{height: "50%"}}></div>
+                                            </div>
+                                            <div className="ant-visual-element">
+                                                <div className="ant-visual-bar-red" style={{height: "30%"}}></div>
+                                            </div>
+                                            <div className="ant-visual-element">
+                                                <div className="ant-visual-bar-red" style={{height: "15%"}}></div>
+                                            </div>
+                                        </>}
+                                    </div>
+                                </>}
+                                <div className="ant-info">
+                                    <p className="ant-h2">Din gevinst</p>
+                                    <div className="ant-info-price">
+                                        <p className="ant-h1">{gevinstStat} kr.</p>
+                                        {gevinstChange - 100 > 0 && <>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="var(--green)" style={{marginTop: "3px", transform: "rotate(180deg)"}} viewBox="0 0 16 16">
+                                                <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+                                            </svg>
+                                            <p className="ant-small" style={{color: "var(--green)"}}>{gevinstChange - 100}%</p>
+                                        </>}
+                                        {gevinstChange - 100 < 0 && <>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="var(--red)" style={{marginTop: "3px", transform: "rotate(180deg)"}} viewBox="0 0 16 16">
+                                                <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+                                            </svg>
+                                            <p className="ant-small" style={{color: "var(--red)"}}>{gevinstChange - 100}%</p>
+                                        </>}
+                                    </div>
+                                    <p className="ant-p">Din <span className="ant-p-a">gevinst</span> fra gruppespillets <br />start</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="gruppespil-info">
                         <div className="gruppespil-title">
                             <h1 className="gruppespil-h1">Chat</h1>
                         </div>
                         <div className="chat-container">
                             <ul>
                                 {getBeskeder()}
+                                {beskeder.length === 0 && <>
+                                    <div className="chat-empty">
+                                        <div className="chat-empty-element" style={{marginLeft: "-25px"}}>
+                                            <div className="chat-empty-element-left">
+                                                <div className="chat-empty-img-bg">
+                                                    <div className="chat-empty-img"></div>
+                                                </div>
+                                            </div>
+                                            <div className="chat-empty-element-right">
+                                                <div className="chat-empty-p"></div>
+                                                <div className="chat-empty-p" style={{width: "60%"}}></div>
+                                            </div>
+                                        </div>
+                                        <div className="chat-empty-element" style={{marginLeft: "25px", marginTop: "-7px"}}>
+                                            <div className="chat-empty-element-left">
+                                                <div className="chat-empty-img-bg">
+                                                    <div className="chat-empty-img"></div>
+                                                </div>
+                                            </div>
+                                            <div className="chat-empty-element-right">
+                                                <div className="chat-empty-p"></div>
+                                                <div className="chat-empty-p" style={{width: "60%"}}></div>
+                                            </div>
+                                        </div>
+                                        <p className="chat-empty-h1">Vær den første til at skrive</p>
+                                    </div>
+                                </>}
                             </ul>
                             <form className="chat-input" onSubmit={sendBesked}>
-                                <input id="chat_input" type="text" className="chat-field" value={beskedText} placeholder="Skriv en besked" onChange={event => setBeskedText(event.target.value)} onSubmit={sendBesked} />
+                                <input id="chat_input" type="text" className="chat-field" value={beskedText} placeholder="Skriv en besked" autoComplete='off' onChange={event => setBeskedText(event.target.value)} onSubmit={sendBesked} />
                                 <svg xmlns="http://www.w3.org/2000/svg" className="chat-send" onClick={sendBesked} viewBox="0 0 16 16">
                                     <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z"/>
                                 </svg>
                             </form>
+                            <p className="chat-under-h1" id="chat-under">brug @ for at tagge folk</p>
                             <p className="chat-error">{timeText}</p>
                         </div>
                     </div>
@@ -417,10 +717,10 @@ function StageGruppespil () {
                                     }
 
                                         var today_day = new Date().getDate();
-                                        var today_month = new Date().getMonth();
+                                        var today_month = new Date().getMonth() + 1;
                                         var today_year = new Date().getFullYear();
                                         dato_day = new Date(item.iat).getDate();
-                                        dato_month = new Date(item.iat).getMonth();
+                                        dato_month = new Date(item.iat).getMonth() + 1;
                                         dato_year = new Date(item.iat).getFullYear();
                                         if (today_day === dato_day && today_month === dato_month && today_year === dato_year) {
                                             dato_string = "I dag, " + dato_time_string;
@@ -726,19 +1026,28 @@ function StageGruppespil () {
                             <h1 className="gruppespil-h1">Inviter venner</h1>
                             <p className="gruppespil-scroll">Klik for at kopiere</p>
                         </div>
-                        <div className="opret-element-input gruppespil-invite" onClick={() => {navigator.clipboard.writeText("https://tipsspillet.dk/gruppesession?game=" + activeGame + "&type=invite"); document.getElementById("copied").classList.toggle("display-not"); setTimeout(function (){
-        document.getElementById("copied").classList.toggle("display-not")
+                        <div className="inv-container">
+                            <div className="inv-element-a" onClick={() => {navigator.clipboard.writeText("https://tipsspillet.dk/gruppesession?game=" + activeGame + "&type=invite"); document.getElementById("copied").classList.remove("display-not"); setTimeout(function (){
+        document.getElementById("copied").classList.add("display-not")
     }, 1000);}}>
-                            <svg xmlns="http://www.w3.org/2000/svg" className="invite-icon" viewBox="0 0 16 16">
-                                <path d="M4.5 3a2.5 2.5 0 0 1 5 0v9a1.5 1.5 0 0 1-3 0V5a.5.5 0 0 1 1 0v7a.5.5 0 0 0 1 0V3a1.5 1.5 0 1 0-3 0v9a2.5 2.5 0 0 0 5 0V5a.5.5 0 0 1 1 0v7a3.5 3.5 0 1 1-7 0V3z"/>
-                            </svg>
-                            <p className="invite-p">invite.tipsspillet.dk/{activeGame}&type=invite</p>
-                            <div className="invite-copied display-not" id="copied">Kopieret</div>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="var(--primary)" viewBox="0 0 16 16">
+                                    <path d="M4.715 6.542 3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.002 1.002 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z"/>
+                                    <path d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 1 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 1 0-4.243-4.243L6.586 4.672z"/>
+                                </svg>
+                                <p className="inv-p-a">{activeGame}</p>
+                                <div className="invite-copied display-not" id="copied">Kopieret</div>
+                            </div>
+                            <div className="inv-element">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="var(--softBlack)" viewBox="0 0 16 16">
+                                    <path d="M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5z"/>
+                                </svg>
+                                <p className="inv-p">Del invitationslink</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>}
-            {!activeGame && <div className="gruppespil-container-2">
+            {!activeGame && <div className="stage-main-article-container">
                     <div className="gruppespil-section">
                         <div className="gruppespil-title">
                             <h1 className="gruppespil-h1">Velkommen, {username && <>{username}</>}</h1><br></br>

@@ -12,6 +12,11 @@ function Priser () {
         if (document.getElementById("loader2")) {
             document.getElementById("loader2").classList.add("display-not");
         }
+        window.addEventListener("scroll", function(){
+            if (document.getElementById("price-input")) {
+                document.getElementById("price-input").classList.toggle("price-fixed", window.scrollY > 305);
+            }
+        })
     }, [])
 
     const [loading1, setLoading1] = useState(false);
@@ -220,7 +225,7 @@ function Priser () {
             <div className="priser-container">
                 <div className="section-price">
                     <div className="set-center">
-                        <div className="price-input animation-fadeleft animation-delay-400">
+                        <div className="price-input animation-fadeleft animation-delay-400" id="price-input">
                             <div className="price-input-element" id="month" onClick={() => setType("month")}>Månedligt</div>
                             <div className="price-input-element-active" id="quarter" onClick={() => setType("quarter")}>Kvartalvis</div>
                             <div className="price-input-element" id="year" onClick={() => setType("year")}>Årligt</div>

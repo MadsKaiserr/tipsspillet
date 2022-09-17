@@ -5,6 +5,7 @@ import {useEffect, useState} from 'react';
 import axios from "axios";
 import Header from './layout/header';
 import PriserComp from './components/priser';
+import { Gradient } from './services/Gradient.js'
 
 import red from './img/red.png';
 import blue from './img/blue.png';
@@ -55,6 +56,9 @@ export default function Home() {
       })
   }, [])
 
+  const gradient = new Gradient()
+  gradient.initGradient('#gradient-canvas')
+
   return (
     <div>
         <Header />
@@ -70,6 +74,8 @@ export default function Home() {
             <meta property="og:description" content="Dyst mod dine venner i et verdensomspændende betting-spil, helt uden at bruge en krone. Bet mod venner og familie, eller deltag i præmiedyster." />
             <link rel="canonical" href="https://www.tipsspillet.dk" />
         </Head>
+        <canvas id="gradient-canvas" className="mesh-canvas" data-transition-in />
+        <div className="canvas-overlay"></div>
         <div className="hero-container">
             <div className="hero-container-2">
             <div className="hero-text">
@@ -108,7 +114,7 @@ export default function Home() {
             </Link><br />
             <Image width="30px" height="40px" src={RightArrow} alt="" style={{paddingTop: "10px"}} className="cursive-arrow" />
             <p className="cursive-cta">Start med at finde dig et gruppespil!</p>
-            <div className="hero-system">
+            {/* <div className="hero-system">
                 <div className="hero-system-element" id="system1">
                     <div className="system-epillipse"></div>
                     <div className="system-string"></div>
@@ -125,7 +131,7 @@ export default function Home() {
                     <div className="system-epillipse-small"></div>
                     <div className="system-string-left"></div>
                 </div>
-            </div>
+            </div> */}
             <div className="hero-info">
                 {games.length > 0 && <>
                     {players.length > 0 && <><div className="hero-info-block">

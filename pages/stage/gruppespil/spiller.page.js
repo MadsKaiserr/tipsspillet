@@ -7,6 +7,7 @@ import Link from 'next/link'
 import Head from 'next/head'
 import Image from 'next/image'
 import StageHeader from '../../layout/stageheader';
+import Height from '../../components/height';
  
 function StageSpiller () {
 
@@ -47,7 +48,7 @@ function StageSpiller () {
                     myPlayer = response.data.players[k].odds;
                     setGevinst(parseInt(response.data.players[k].info.money))
                     setKuponer(response.data.players[k].odds.length);
-                    setPlayer(response.data.players[k].player);
+                    setPlayer(response.data.players[k].username);
                 }
             }
             setPlayerOdds(myPlayer.reverse());
@@ -64,7 +65,8 @@ function StageSpiller () {
                 <meta name="robots" content="noindex" />
             </Head>
             <StageHeader />
-            <div className="gruppespil-container-2">
+            <Height />
+            <div className="stage-main-article-container">
                 <button className="back-btn" onClick={() => router.back()}>
                     <svg xmlns="http://www.w3.org/2000/svg" className="match-back" viewBox="0 0 16 16">
                         <path fillRule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/>
@@ -132,10 +134,10 @@ function StageSpiller () {
                                             dato_time_string = dato_hours + ":" + dato_minutes;
 
                                             var today_day = new Date().getDate();
-                                            var today_month = new Date().getMonth();
+                                            var today_month = new Date().getMonth() + 1;
                                             var today_year = new Date().getFullYear();
                                             dato_day = new Date(item.iat).getDate();
-                                            dato_month = new Date(item.iat).getMonth();
+                                            dato_month = new Date(item.iat).getMonth() + 1;
                                             dato_year = new Date(item.iat).getFullYear();
                                             if (today_day === dato_day && today_month === dato_month && today_year === dato_year) {
                                                 dato_string = "I dag, " + dato_time_string;

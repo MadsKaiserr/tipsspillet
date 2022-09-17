@@ -22,7 +22,6 @@ function Header () {
 
     function sideMenu() {
         document.getElementById("sidemenu").classList.add("display-flex");
-        document.getElementById("nav-bar-main").classList.add("nav-scrolled");
     }
 
     function closeMenu() {
@@ -106,7 +105,7 @@ function Header () {
                 <div className="nav-container-right">
                     <div className="header-buttons">
                         {auth && <Link href="/stage">
-                            <a className="nav-btn-outline">Tilbage til betting</a>
+                            <a className="nav-btn-default">Log ind</a>
                         </Link>}
                         {!auth && <div className="header-buttons">
                             <p className="nav-btn-outline" onClick={() => showLogin()}>Log ind</p>
@@ -116,7 +115,9 @@ function Header () {
                     <svg xmlns="http://www.w3.org/2000/svg" className="nav-ham-ham" style={{fill: "var(--black)"}} onClick={() => {sideMenu()}} viewBox="0 0 16 16">
                         <path fillRule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
                     </svg>
-                    <div className="sidemenu" id="sidemenu">
+                </div>
+            </div>
+            <div className="sidemenu" id="sidemenu">
                         <div className="side-nav-bar">
                             <div className="nav-container-fix">
                                 <div className="nav-container-mid">
@@ -192,7 +193,7 @@ function Header () {
                             <div className="nav-container-right">
                                 <div className="header-buttons">
                                     {auth && <Link href="/stage">
-                                        <a className="nav-btn-outline">Tilbage til betting</a>
+                                        <a className="nav-btn-default">Log ind</a>
                                     </Link>}
                                     {!auth && <div className="header-buttons">
                                         <p className="nav-btn-outline" onClick={() => showLogin()}>Log ind</p>
@@ -219,8 +220,6 @@ function Header () {
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
         </>
     )
 }

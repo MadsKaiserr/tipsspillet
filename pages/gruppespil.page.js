@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
-import FindComponent from './components/find';
+import FindComponent from './components/gruppespil';
 import Head from 'next/head'
 import Header from './layout/header';
  
