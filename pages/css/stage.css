@@ -398,9 +398,9 @@
     transition: 0.3s;
     background-color: #fff;
     border-top: 4px var(--primary) solid;
-    border-radius: 2px;
+    border-radius: 3px;
     width: 21.3%;
-    top: 210px;
+    top: 195px;
     z-index: 7;
     min-width: 325px;
     min-height: 150px;
@@ -1677,12 +1677,14 @@
   
   .stage-main-small-section {
     width: 100%;
-    border-radius: 1px;
+    border-radius: 5px;
     background-color: #fff;
     box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.05);
     display: inline-block;
     position: relative;
     vertical-align: top;
+    padding: 5px 0px;
+    padding-bottom: 10px !important;
   }
   
   .kupon-type {
@@ -2941,14 +2943,23 @@
 }
 
 .setup-container {
-  padding: 20px;
+  padding: 25px 35px;
   background-color: #fff;
   border-radius: 5px;
   width: 95%;
-  margin: 20px auto;
+  max-width: 800px;
+  margin: 50px auto;
+  margin-bottom: 100px !important;
   min-height: 450px;
   z-index: 3;
+}
+
+.canvas-container-setup {
+  z-index: -1;
+  width: 100%;
+  height: 100%;
   position: absolute;
+  left: 0;
   top: 0;
 }
 

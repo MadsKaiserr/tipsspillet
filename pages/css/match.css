@@ -462,6 +462,7 @@
     background-color: var(--stageSurface);
     padding: 100px 14%;
     position: relative;
+    min-height: 600px;
 }
 
 .match-stilling {

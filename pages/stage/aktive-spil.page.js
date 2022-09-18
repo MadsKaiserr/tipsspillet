@@ -344,7 +344,7 @@ function StageAktiveSpil () {
                                         <div className="td-empty-cta">
                                             <p className="td-empty-h1">Ingen aktive gruppespil</p>
                                             <p className="td-empty-cta-p">Find eller opret et gruppespil for at komme igang</p>
-                                            <Link href="/gruppespil"><a className="td-empty-cta-p" style={{color: "var(--primary)"}}>Find gruppespil</a></Link>
+                                            <Link href="/gruppespil"><a className="td-empty-cta-p" style={{color: "var(--primary)", fontWeight: "500"}}>Find gruppespil</a></Link>
                                         </div>
                                     </div>
                                 </>}

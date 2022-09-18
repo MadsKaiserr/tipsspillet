@@ -1719,7 +1719,7 @@ function Setup () {
             <div className="canvas-height"></div>
             <div className="main-loader display-not" id="loadingScreen"><div className="main-site-loader"></div></div>
             <div className="canvas-wrapper">
-                <canvas className="canvas-container" id="gradient-canvas" data-transition-in></canvas>
+                <canvas className="canvas-container-setup" id="gradient-canvas" data-transition-in></canvas>
                 <div className="setup-container">
                     <div className={messageType} id="errorCon">
                         <svg xmlns="http://www.w3.org/2000/svg" className="triangle" viewBox="0 0 16 16" id="errorIcon">

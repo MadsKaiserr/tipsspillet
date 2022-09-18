@@ -471,6 +471,7 @@
     flex-direction: row;
     width: 100%;
     position: relative;
+    background-color: var(--surface);
   }
   
   .mb-search {
@@ -503,12 +504,13 @@
   
   .search-input {
     border: 0px !important;
-    padding: 10px 15px;
+    padding: 35px 15px;
     outline: none !important;
     color: var(--softBlack);
     font-weight: 400;
-    font-family: Open Sans;
-    font-size: 16px;
+    background-color: var(--surface);
+    font-family: Inter;
+    font-size: 22px;
     width: 100%;
   }
   
@@ -517,22 +519,19 @@
     align-items: flex-start;
     justify-content: flex-start;
     flex-direction: column;
+    height: 500px;
+    overflow-y: auto;
+    overflow-x: hidden;
   }
   
   .nav-hits {
     width: 100%;
     user-select: none;
-    position: fixed;
-    overflow-x: hidden;
-    overflow-y: auto;
-    left: 0px;
-    top: 80px;
     background-color: #fff;
     z-index: 19;
-    max-height: 500px;
+    margin-top: 76px;
     padding-bottom: 20px;
-    display: none;
-    box-shadow: 0px 15px 15px 0px rgba(0,0,0,0.1) !important;
+    overflow: hidden;
   }
   
   .mobile-search {
@@ -1171,8 +1170,6 @@
 .faq-container {
     margin-top: 40px;
     width: 100%;
-    max-height: 400px;
-    overflow: hidden;
     max-width: 800px;
     opacity: 0;
     animation: 1000ms ease 0s 1 normal none running fadeIn;
@@ -1185,10 +1182,10 @@
   position: absolute;
   bottom: 0;
   left: 0;
-  height: 200px;
+  height: 100px;
   width: 100%;
   background: rgb(255,255,255);
-  background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
+  background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 80%);
 }
 
 .faq-chevron {
@@ -1620,13 +1617,13 @@ gap: 8px;
 
   .height-fix2 {
     width: 100%;
-    height: 80px;
+    height: 65px;
     background-color: var(--stageSurface);
   }
 
   .height-light-fix {
     width: 100%;
-    height: 80px;
+    height: 65px;
     background-color: var(--surface);
   }
   

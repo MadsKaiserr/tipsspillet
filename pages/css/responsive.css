@@ -337,8 +337,11 @@
     left: 0 !important;
     position: absolute !important;
   }
+  .nav-hits  {
+    margin-top: 0px !important;
+  }
   .height-fix {
-    height: 80px !important;
+    height: 65px !important;
   }
   .height-fix2 {
     height: 0px !important;
@@ -883,6 +886,10 @@
 @media only screen and (max-width: 540px) {
   .hit-elem {
     padding: 10px 5% !important;
+  }
+  .search-input {
+    font-size: 18px !important;
+    padding: 20px 15px !important;
   }
   .nav-bar {
     height: 60px !important;

@@ -1105,12 +1105,6 @@ function StageForside () {
         document.getElementById("errorConP").innerHTML = message;
     }
 
-    function showSearch() {
-        document.getElementById("mb-search").classList.remove("display-not")
-        document.getElementById("nav-hits").classList.add("display");
-        document.getElementById("hits-close").classList.add("display");
-    }
-
     function showModal(type, modalType) {
         if (type === "bet") {
             if (modalType === "kombination") {
@@ -2513,7 +2507,7 @@ function StageForside () {
                                                 </li>
                                             );
                                         })}
-                                        {favoritter.length <= 0 && <div className="stage-team" style={{backgroundColor: "var(--surface)", marginBottom: "15px"}} onClick={() => {showSearch()}}>
+                                        {favoritter.length <= 0 && <Link href="/stage/search"><div className="stage-team" style={{backgroundColor: "var(--surface)", marginBottom: "15px"}}>
                     <div className="stage-kampe-team2">
                         <div className="stage-kampe-teams-div">
                             <svg xmlns="http://www.w3.org/2000/svg" className="stage-teams-img" style={{opacity: "0.2"}} viewBox="0 0 16 16">
@@ -2524,11 +2518,11 @@ function StageForside () {
                             </div>
                         </div>
                     </div>
-                </div>}
+                </div></Link>}
                                     </ul>
                                 </div>
                                 <div className="stage-section-indhold" id="stage-main3">
-                                    <div className="stage-kampe-top" style={{paddingTop: "10px"}}>
+                                    <div className="stage-kampe-top" style={{padding: "10px 20px"}}>
                                         <p className="stage-kampe-h1">Populære hold</p>
                                     </div>
                                     {popular.map((team) => {
