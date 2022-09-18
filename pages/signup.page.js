@@ -465,9 +465,6 @@ function Signup () {
                     <p className="footer-copyright" style={{position: "absolute", bottom: "5px", opacity: "0.3"}}>©2022 Alle rettigheder forbeholdes | Mads Kaiser</p>
                 </div>
                 <div className="route-thirds-element-2">
-                    <div className="route-thirds-img-con">
-                        <Image className="route-thirds-img-con" src={StageImg} height="1618px" width="2940px" />
-                    </div>
                 </div>
             </div>
         </>

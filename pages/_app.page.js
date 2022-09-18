@@ -17,23 +17,27 @@ import Head from 'next/head'
 function MyApp({ Component, pageProps }) {
   return (
     <>
-        <Script onLoad={() => {
-            (function(h,o,t,j,a,r){
-                h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-                h._hjSettings={hjid:2906349,hjsv:6};
-                a=o.getElementsByTagName('head')[0];
-                r=o.createElement('script');r.async=1;
-                r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-                a.appendChild(r);
-            })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
-        }} />
-        <Script onLoad={() => {
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-
-          gtag('config', 'G-6CYY86HX7R');
-        }} />
+        <Script id="gtag"
+          dangerouslySetInnerHTML={{
+            __html: `window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+  
+            gtag('config', 'G-6CYY86HX7R');`,
+          }}
+        />
+        <Script id="hotjar"
+          dangerouslySetInnerHTML={{
+            __html: `(function(h,o,t,j,a,r){
+              h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+              h._hjSettings={hjid:2906349,hjsv:6};
+              a=o.getElementsByTagName('head')[0];
+              r=o.createElement('script');r.async=1;
+              r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+              a.appendChild(r);
+          })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');`,
+          }}
+        />
         <Script async id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="d44cf7c1-e161-4a23-b759-e15e515a068e" data-blockingmode="auto" type="text/javascript"></Script>
         <Script async src="https://www.googletagmanager.com/gtag/js?id=G-6CYY86HX7R"></Script>
         <Script async custom-element="amp-ad" src="https://cdn.ampproject.org/v0/amp-ad-0.1.js"></Script>
