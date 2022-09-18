@@ -4,6 +4,7 @@ import axios from "axios";
 import Link from 'next/link'
 import Head from 'next/head'
 import Image from 'next/image'
+import DownArrow from './../img/down-arrow.png';
  
 function Gruppespil () {
 
@@ -67,34 +68,6 @@ function Gruppespil () {
 
     const [currentType, setCurrentType] = useState("alle");
 
-    function setType(type) {
-        if (type === "offentlige") {
-            document.getElementById("offentlige").className = "td-input-element-active";
-            document.getElementById("private").className = "td-input-element";
-            document.getElementById("dyster").className = "td-input-element";
-            document.getElementById("alle").className = "td-input-element";
-            setCurrentType("offentlige");
-        } else if (type === "private") {
-            document.getElementById("private").className = "td-input-element-active";
-            document.getElementById("offentlige").className = "td-input-element";
-            document.getElementById("dyster").className = "td-input-element";
-            document.getElementById("alle").className = "td-input-element";
-            setCurrentType("private");
-        } else if (type === "alle") {
-            document.getElementById("alle").className = "td-input-element-active";
-            document.getElementById("offentlige").className = "td-input-element";
-            document.getElementById("private").className = "td-input-element";
-            document.getElementById("dyster").className = "td-input-element";
-            setCurrentType("alle");
-        } else if (type === "dyster") {
-            document.getElementById("alle").className = "td-input-element";
-            document.getElementById("dyster").className = "td-input-element-active";
-            document.getElementById("offentlige").className = "td-input-element";
-            document.getElementById("private").className = "td-input-element";
-            setCurrentType("dyster");
-        }
-    }
-
     function gruppespilHandler() {
         if (localStorage.getItem("auth")) {
             if (JSON.parse(localStorage.getItem("auth")).rolle === "premium" || JSON.parse(localStorage.getItem("auth")).rolle === "administrator") {
@@ -110,6 +83,19 @@ function Gruppespil () {
     return (
         <>
             <div className="td-container">
+                <div className="td-type">
+                    <div className="td-type-con animation-fadetop" onClick={() => {document.getElementById("type-drop").classList.toggle("display-not")}} style={{animationDelay: "0.5s"}}>
+                        Type: <span className="td-type-p">{currentType}</span>
+                        <Image width="7px" height="7px" src={DownArrow} alt="Pil ned" className="nav-icon" />
+                        <div className="td-type-drop display-not" id="type-drop">
+                            <p className="td-type-drop-p" onClick={() => setCurrentType("offentlige")}>Offentlige</p>
+                            <p className="td-type-drop-p" onClick={() => setCurrentType("private")}>Private</p>
+                            <p className="td-type-drop-p" onClick={() => setCurrentType("dyster")}>Præmiedyster</p>
+                            <div className="td-type-drop-divider"></div>
+                            <p className="td-type-drop-p" onClick={() => setCurrentType("alle")}>Alle</p>
+                        </div>
+                    </div>
+                </div>
                 <div className="td-box animation-fadetop" style={{animationDelay: "0.5s"}}>
                     <div className="td-top">
                         <div className="td-top-left">
@@ -121,12 +107,6 @@ function Gruppespil () {
                                     <input type="text" className="td-input-field" onChange={event => setQuery(event.target.value)} placeholder="Søg i gruppespil..." />
                                 </div>
                                 <button className="td-btn-search" style={{marginLeft: "0px", borderRadius: "5px"}} onClick={() => {makeSearch()}}>Søg</button>
-                            </div>
-                            <div className="td-input-max">
-                                <div className="td-input-element-active" id="alle" onClick={() => setType("alle")}>Alle</div>
-                                <div className="td-input-element" id="offentlige" onClick={() => setType("offentlige")}>Offentlige</div>
-                                <div className="td-input-element" id="private" onClick={() => setType("private")}>Private</div>
-                                <div className="td-input-element" id="dyster" onClick={() => setType("dyster")}>Præmiedyster</div>
                             </div>
                         </div>
                         <div className="td-top-right">
@@ -142,15 +122,14 @@ function Gruppespil () {
                                     </svg>
                                 </div>
                             </div>
-                            <a className="td-btn" onClick={() => gruppespilHandler()}>Opret gruppespil</a>
                         </div>
                     </div>
                     <div className="td-wrapper">
                         <div className="td-modifier">
-                            <p className="td-modifier-p" style={{fontWeight: "500"}} id="td-navn">NAVN</p>
-                            <p className="td-modifier-p" style={{fontWeight: "500"}} id="td-synlighed">SYNLIGHED</p>
-                            <p className="td-modifier-p" style={{fontWeight: "500"}} id="td-spillere">SPILLERE</p>
-                            <p className="td-modifier-p" style={{fontWeight: "500"}} id="td-admin">ADMINISTRATOR</p>
+                            <p className="td-modifier-p modifier-mod" id="td-navn">NAVN</p>
+                            <p className="td-modifier-p modifier-mod" id="td-synlighed">SYNLIGHED</p>
+                            <p className="td-modifier-p modifier-mod" id="td-spillere">SPILLERE</p>
+                            <p className="td-modifier-p modifier-mod" id="td-admin">ADMINISTRATOR</p>
                         </div>
                         <div className="match-loader display" id="stage-loader1"></div>
                         <ul className="td-table">
@@ -163,7 +142,7 @@ function Gruppespil () {
                                                         <div style={{width: "100%", height: "100%", display: "flex", alignItems: "center"}}>
                                                             <div className="tl-wrapper" id="td-navn">
                                                                 <div className="tl-img">
-                                                                    {/* <Image src="" height="20px" width="20px" /> */}
+                                                                    {item.name.slice(0,1)}
                                                                 </div>
                                                                 <p className="td-modifier-p" style={{fontWeight: "500"}}>{item.name}</p>
                                                             </div>
@@ -183,7 +162,7 @@ function Gruppespil () {
                                                     <div style={{width: "100%", height: "100%", display: "flex", alignItems: "center"}}>
                                                         <div className="tl-wrapper" id="td-navn">
                                                             <div className="tl-img">
-                                                                {/* <Image src="" height="20px" width="20px" /> */}
+                                                                {item.name.slice(0,1)}
                                                             </div>
                                                             <p className="td-modifier-p" style={{fontWeight: "500"}}>{item.name}</p>
                                                         </div>
@@ -203,7 +182,7 @@ function Gruppespil () {
                                                     <div style={{width: "100%", height: "100%", display: "flex", alignItems: "center"}}>
                                                         <div className="tl-wrapper" id="td-navn">
                                                             <div className="tl-img">
-                                                                {/* <Image src="" height="20px" width="20px" /> */}
+                                                                {item.name.slice(0,1)}
                                                             </div>
                                                             <p className="td-modifier-p" style={{fontWeight: "500"}}>{item.name}</p>
                                                         </div>
@@ -222,7 +201,7 @@ function Gruppespil () {
                                                 <div style={{width: "100%", height: "100%", display: "flex", alignItems: "center"}}>
                                                     <div className="tl-wrapper" id="td-navn">
                                                         <div className="tl-img">
-                                                            {/* <Image src="" height="20px" width="20px" /> */}
+                                                            {item.name.slice(0,1)}
                                                         </div>
                                                         <p className="td-modifier-p" style={{fontWeight: "500"}}>{item.name}</p>
                                                     </div>

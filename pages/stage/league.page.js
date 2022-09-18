@@ -1,15 +1,14 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 import axios from "axios";
-import { Router, useRouter } from 'next/router'
 import Link from 'next/link'
 import Head from 'next/head'
 import Image from 'next/image'
 import StageHeader from '../layout/stageheader';
 import Height from '../components/height';
+import Back from "../components/back.js";
  
 function StageLeague () {
-    const router = useRouter();
 
     const [loadingText, setLoadingText] = useState("Indlæser...");
     const [nav, setNav] = useState("popular");
@@ -586,11 +585,7 @@ function StageLeague () {
                         <p className="error-container-p" id="errorConP">Du har ikke placeret nogle væddemål. Placer ét eller flere væddemål, for at lave din kuppon.</p>
                     </div>
                 </div>
-                <button className="back-btn" onClick={() => router.back()}>
-                    <svg xmlns="http://www.w3.org/2000/svg" className="match-back" viewBox="0 0 16 16">
-                        <path fillRule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/>
-                    </svg>
-                </button>
+                <Back />
                 <div className="match-info">
                     {league_name !== "..." && <div className="favorit-container" onClick={() => setFavoritter()} onMouseOver={() => favoritHover()} onMouseLeave={() => favoritUnHover()}>
                         <svg xmlns="http://www.w3.org/2000/svg" className="favorit display" id="favorit-o" viewBox="0 0 16 16">

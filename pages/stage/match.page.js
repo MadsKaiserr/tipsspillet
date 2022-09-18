@@ -4,7 +4,7 @@ import Link from 'next/link'
 import Head from 'next/head'
 import Image from 'next/image'
 import { getKupon, getString } from "../services/algo.js";
-import { Router, useRouter } from 'next/router'
+import Back from "../components/back.js";
 
 import lineupPitch from '../img/lineup.png';
 import goal from '../img/football.png';
@@ -566,10 +566,8 @@ function StageMatcharticle () {
             if (result.data.time.status === "LIVE" || result.data.time.status === "HT") {
                 setlive("match-stilling-p1-live");
                 setRestTime("-");
-                setlivedisplay("match-time123");
             }
             if (result.data.time.status === "LIVE" || result.data.time.status === "FT" || result.data.time.status === "HT") {
-                setlivestilling("match-stilling-p");
                 setRestTime("-");
             }
 
@@ -2167,8 +2165,6 @@ function StageMatcharticle () {
         }
     }
 
-    const router = useRouter();
-
     function getMatchInfo() {
         var result = matchResult ? matchResult: {};
         if (result !== undefined && result !== null && Object.keys(result).length !== 0) {
@@ -2497,11 +2493,7 @@ function StageMatcharticle () {
                     <p className="error-container-p" id="errorConP">Du har ikke placeret nogle væddemål. Placer ét eller flere væddemål, for at lave din kuppon.</p>
                 </div>
             </div>
-            <button className="back-btn" onClick={() => router.back()}>
-                <svg xmlns="http://www.w3.org/2000/svg" className="match-back" viewBox="0 0 16 16">
-                    <path fillRule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/>
-                </svg>
-            </button>
+            <Back />
             {getMatchInfo()}
             <div className="match-info-con">
                 <div className="match-info-half nopadding">

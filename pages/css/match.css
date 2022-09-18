@@ -11,22 +11,9 @@
 }
 
 .match-back {
-    padding: 5px;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
+    width: 22px;
+    height: 22px;
     fill: var(--black);
-    box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.01);
-    cursor: pointer;
-    transition: 0.1s;
-    background-color: #fff;
-    opacity: 0.8;
-    margin-bottom: 15px;;
-}
-
-.match-back:hover {
-    opacity: 1;
-    transform: scale(1.07);
 }
 
 .time-con {
@@ -461,6 +448,13 @@
 .stage-main-article-container {
     background-color: var(--stageSurface);
     padding: 100px 14%;
+    position: relative;
+    min-height: 600px;
+}
+
+.gr-container {
+    background-color: var(--stageSurface);
+    padding: 120px 14%;
     position: relative;
     min-height: 600px;
 }

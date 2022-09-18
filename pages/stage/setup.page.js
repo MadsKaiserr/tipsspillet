@@ -1795,7 +1795,7 @@ function Setup () {
                                                     {item.players.map((player) => {
                                                         return (
                                                             <li key={player.player} className="tilmeldte-element">
-                                                                <div className="tilmeldte-pb"></div>
+                                                                <div className="tilmeldte-pb">{player.username !== "" && <>{(player.username).slice(0,1)}</>}</div>
                                                                 <div className="tilmeldte-wrapper">
                                                                     <p className="setup-p">{player.username}</p>
                                                                     <p className="setup-pp">{player.player}</p>

@@ -2,16 +2,14 @@ import * as React from 'react';
 import { useState, useEffect } from 'react';
 import axios from "axios";
 import { getKupon, getString } from "../../services/algo.js";
-import { Router, useRouter } from 'next/router'
 import Link from 'next/link'
 import Head from 'next/head'
 import Image from 'next/image'
 import StageHeader from '../../layout/stageheader';
 import Height from '../../components/height';
+import Back from "../../components/back.js";
  
 function StageSpiller () {
-
-    const router = useRouter();
 
     const [loadingText, setLoadingText] = useState("Indlæser...");
 
@@ -67,11 +65,7 @@ function StageSpiller () {
             <StageHeader />
             <Height />
             <div className="stage-main-article-container">
-                <button className="back-btn" onClick={() => router.back()}>
-                    <svg xmlns="http://www.w3.org/2000/svg" className="match-back" viewBox="0 0 16 16">
-                        <path fillRule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/>
-                    </svg>
-                </button>
+                <Back />
                 <div className="gruppespil-section">
                     <div className="gruppespil-info">
                         <div className="gruppespil-title">

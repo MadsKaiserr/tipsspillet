@@ -149,14 +149,14 @@ function StageHeader () {
                                 </div>
                             </Link>
                             <div className="nav-profile-btn" onClick={() => {document.getElementById("userDropdown").classList.toggle("display"); document.getElementById("profileArrow").classList.toggle("deg180");}}>
-                                <div className="nav-profile-pic"></div>
+                                <div className="nav-profile-pic">{auth !== "" && <>{(JSON.parse(auth).username).slice(0,1)}</>}</div>
                                 <svg xmlns="http://www.w3.org/2000/svg" className="profile-icon" id="profileArrow" viewBox="0 0 16 16">
                                     <path fillRule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
                                 </svg>
                             </div>
                             <div className="user-dropdown" id="userDropdown">
                                 <div className="user-info">
-                                    <div className="user-logo-tem"></div>
+                                    <div className="user-logo-tem">{auth !== "" && <>{(JSON.parse(auth).username).slice(0,1)}</>}</div>
                                     <div className="user-info-desc">
                                         <p className="user-name">{auth !== "" && <>{JSON.parse(auth).username}</>}</p>
                                         <p className="user-email">{auth !== "" && <>{JSON.parse(auth).email}</>}</p>
@@ -257,7 +257,7 @@ function StageHeader () {
                                             </div>
                                             <div className="user-dropdown" id="userDropdown">
                                                 <div className="user-info">
-                                                    <div className="user-logo-tem"></div>
+                                                    <div className="user-logo-tem">{auth !== "" && <>{(JSON.parse(auth).username).slice(0,1)}</>}</div>
                                                     <div className="user-info-desc">
                                                         <p className="user-name">{auth !== "" && <>{JSON.parse(auth).username}</>}</p>
                                                         <p className="user-email">{auth !== "" && <>{JSON.parse(auth).email}</>}</p>

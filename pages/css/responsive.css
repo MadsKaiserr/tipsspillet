@@ -511,6 +511,13 @@
   .stage-main-article-container {
     padding: 100px 5% !important;
   }
+  .gr-container {
+    padding: 120px 5% !important;
+  }
+  .td-type-drop {
+    right: 0 !important;
+    left: auto !important;
+  }
   .signup-popup {
     width: 60% !important;
   }
@@ -875,6 +882,10 @@
     padding: 0px !important;
     padding-bottom: 70px !important;
   }
+  .gr-container {
+    padding: 20px !important;
+    padding-bottom: 70px !important;
+  }
   .match-info-con {
     padding: 0px 10px !important;
   }
@@ -886,6 +897,12 @@
 @media only screen and (max-width: 540px) {
   .hit-elem {
     padding: 10px 5% !important;
+  }
+  .match-stilling {
+    width: 45% !important;
+}
+  .match-stilling-p1-live {
+    font-size: 12px !important;
   }
   .search-input {
     font-size: 18px !important;
@@ -1064,6 +1081,10 @@
   }
   .stage-main-article-container {
     padding-top: 15px !important;
+  }
+  .gr-container {
+    padding: 20px 20px !important;
+    padding-bottom: 70px !important;
   }
   .nav-flag-container {
     display: none !important;

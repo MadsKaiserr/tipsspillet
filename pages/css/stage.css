@@ -3266,8 +3266,15 @@
 .tilmeldte-pb {
   width: 25px;
   height: 25px;
-  background-color: var(--black);
+  background-color: var(--softBlack);
   border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-family: Inter;
+  font-weight: 600;
+  font-size: 11px;
 }
 
 .setup-gruppespil-icon {
