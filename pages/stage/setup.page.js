@@ -7,8 +7,11 @@ import Head from 'next/head'
 import Image from 'next/image'
 import StageHeader from '../layout/stageheader'
 import { Gradient } from '../services/Gradient.js'
+import cookie from 'js-cookie'
+import { useRouter } from 'next/router'
  
 function Setup () {
+    const router = useRouter()
 
     useEffect(() => {
         apiCall();
@@ -1601,12 +1604,12 @@ function Setup () {
                 }
                 axios.post(signupURL, requestBody, requestConfig).then(response => {
                     console.log("AWS - Favoritter:", response);
-                    window.open("/stage", "_SELF");
+                    router.push("/stage")
                 }).catch(error => {
                     console.log(error);
                 })
             } else {
-                window.open("/stage", "_SELF");
+                router.push("/stage")
             }
         } else if (index === "hold") {
             document.getElementById("gruppespil").classList.remove("display");
@@ -1677,6 +1680,7 @@ function Setup () {
                 axios.patch(tilmeldUrl, tilmeldBody, tilmeldConfig).then(response => {
                     console.log("AWS - Gruppespil:", response);
                     next("hold")
+                    cookie.set("activeGame", activeGame["id"], {expires: 24});
                     localStorage.setItem("activeGame", activeGame["id"]);
                     localStorage.setItem("playerIndex", response.data.Item.Attributes.players.findIndex(obj => obj.player === localStorage.getItem("email")));
                 }).catch(error => {
@@ -1688,7 +1692,7 @@ function Setup () {
                 } else if (varighedDate < nowDate) {
                     setNotiMessage("error", "Gruppespil slut", "Gruppespil er desværre allerede færdiggjort");
                 } else if (!localStorage.getItem("auth")) {
-                    window.open("/signup", "_SELF");
+                    router.push("/signup")
                 }
             }
         }

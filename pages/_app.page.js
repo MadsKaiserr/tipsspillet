@@ -11,37 +11,50 @@ import './css/blog.css';
 import Script from 'next/script'
 import Footer from './layout/footer';
 import Login from './components/login';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
+import Header from './layout/stageheader';
 
 import Head from 'next/head'
 
 function MyApp({ Component, pageProps }) {
+  const router = useRouter();
+  const [pageLoading, setPageLoading] = useState(false);
+    useEffect(() => {
+        const handleStart = () => { setPageLoading(true); };
+        const handleComplete = () => { setPageLoading(false); };
+    
+        router.events.on('routeChangeStart', handleStart);
+        router.events.on('routeChangeComplete', handleComplete);
+        router.events.on('routeChangeError', handleComplete);
+      }, [router]);
   return (
     <>
-        <Script id="gtag"
-          dangerouslySetInnerHTML={{
-            __html: `window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-  
-            gtag('config', 'G-6CYY86HX7R');`,
-          }}
-        />
-        <Script id="hotjar"
-          dangerouslySetInnerHTML={{
-            __html: `(function(h,o,t,j,a,r){
-              h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-              h._hjSettings={hjid:2906349,hjsv:6};
-              a=o.getElementsByTagName('head')[0];
-              r=o.createElement('script');r.async=1;
-              r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-              a.appendChild(r);
-          })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');`,
-          }}
-        />
-        <Script async id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="d44cf7c1-e161-4a23-b759-e15e515a068e" data-blockingmode="auto" type="text/javascript"></Script>
-        <Script async src="https://www.googletagmanager.com/gtag/js?id=G-6CYY86HX7R"></Script>
-        <Script async custom-element="amp-ad" src="https://cdn.ampproject.org/v0/amp-ad-0.1.js"></Script>
-        <Script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7071523482288616" crossOrigin="anonymous"></Script>
+      <Script id="gtag"
+        dangerouslySetInnerHTML={{
+          __html: `window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-6CYY86HX7R');`,
+        }}
+      />
+      <Script id="hotjar"
+        dangerouslySetInnerHTML={{
+          __html: `(function(h,o,t,j,a,r){
+            h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+            h._hjSettings={hjid:2906349,hjsv:6};
+            a=o.getElementsByTagName('head')[0];
+            r=o.createElement('script');r.async=1;
+            r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+            a.appendChild(r);
+        })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');`,
+        }}
+      />
+      <Script async id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="d44cf7c1-e161-4a23-b759-e15e515a068e" data-blockingmode="auto" type="text/javascript"></Script>
+      <Script async src="https://www.googletagmanager.com/gtag/js?id=G-6CYY86HX7R"></Script>
+      <Script async custom-element="amp-ad" src="https://cdn.ampproject.org/v0/amp-ad-0.1.js"></Script>
+      <Script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7071523482288616" crossOrigin="anonymous"></Script>
       <Head>
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -84,7 +97,10 @@ function MyApp({ Component, pageProps }) {
       </Head>
       <Script id="CookieDeclaration" src="https://consent.cookiebot.com/d44cf7c1-e161-4a23-b759-e15e515a068e/cd.js" type="text/javascript" async></Script>
       <Login />
-      <Component {...pageProps} />
+      { pageLoading 
+        ? (<div className="main-loader"><div className="main-site-loader"></div></div>)
+        : <Component {...pageProps}/>
+      }
       <Footer />
     </>
   );

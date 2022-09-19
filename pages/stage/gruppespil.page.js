@@ -8,7 +8,7 @@ import { getKupon, getString } from "../services/algo.js";
 import StageHeader from '../layout/stageheader';
 import Height from '../components/height';
  
-function StageGruppespil () {
+function StageGruppespil ({data}) {
 
     useEffect(() => {
         if (document.getElementById("chat_input")) {
@@ -103,124 +103,112 @@ function StageGruppespil () {
     }
 
     useEffect(() => {
-        const URL = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/gruppesession?game=" + localStorage.getItem("activeGame");
+        console.log("AWS - Gruppespil:", data)
+        if (data.admin !== undefined && data.admin !== null) {
+            var newTableArray = [];
+            var myPlayer = [];
+            for (var k in data.players) {
+                if (data.players[k].player === localStorage.getItem("email")) {
+                    myPlayer = data.players[k].odds;
+                    setGameAdmin(data.admin);
+                    localStorage.setItem("notifikationer", data.players[k].info.notifikationer.length);
+                    var forbrugInt = 0;
+                    var forbrugTd = 0;
+                    var forbrugYd = 0;
 
-        const requestConfig = {
-            headers: {
-                "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
+                    var correctInt = 0;
+                    var correctTd = 0;
+                    var correctYd = 0;
+
+                    var gevinstInt = 0;
+                    var gevinstTd = 0;
+                    var gevinstYd = 0;
+                    for (var q in data.players[k].odds) {
+                        forbrugInt = forbrugInt + data.players[k].odds[q].indsats;
+                        if (data.players[k].odds[q].iat > (new Date().getTime() - 86400000)) {
+                            forbrugTd = forbrugTd + data.players[k].odds[q].indsats;
+                        } else if (data.players[k].odds[q].iat < (new Date().getTime() - 86400000) && data.players[k].odds[q].iat > (new Date().getTime() - 172800000)) {
+                            forbrugYd = forbrugYd + data.players[k].odds[q].indsats;
+                        }
+                        if (data.players[k].odds[q].iat > (new Date().getTime() - 86400000)) {
+                            forbrugTd = forbrugTd + data.players[k].odds[q].indsats;
+                            if (data.players[k].odds[q].vundet === "2") {
+                                correctTd = correctTd + 1;
+                            }
+                        } else if (data.players[k].odds[q].iat < (new Date().getTime() - 86400000) && data.players[k].odds[q].iat > (new Date().getTime() - 172800000)) {
+                            forbrugYd = forbrugYd + data.players[k].odds[q].indsats;
+                            if (data.players[k].odds[q].vundet === "2") {
+                                correctYd = correctYd + 1;
+                            }
+                        }
+                        if (data.players[k].odds[q].vundet === "2") {
+                            correctInt = correctInt + 1;
+                            gevinstInt = gevinstInt + (data.players[k].odds[q].indsats * data.players[k].odds[q].fullProb);
+                        }
+                    }
+                    setForbrug(forbrugInt)
+                    setCorrect(correctInt)
+                    setGevinstStat(gevinstInt)
+                    if (forbrugInt > 0) {
+                        setForbrugType("positive");
+                    } else {
+                        setForbrugType("negative");
+                    }
+                    if (correctInt > 0) {
+                        setCorrectType("positive");
+                    } else {
+                        setCorrectType("negative");
+                    }
+                    if (gevinstInt > 0) {
+                        setGevinstType("positive");
+                    } else {
+                        setGevinstType("negative");
+                    }
+                    setForbrugChange(forbrugTd/forbrugYd*100);
+                    setCorrectChange(correctTd/correctYd*100);
+                    setGevinstChange(gevinstTd/gevinstYd*100);
+                }
+            }
+            setBeskeder(data.beskeder);
+            setBeskederLength(data.beskeder.length);
+            myPlayer.sort((a, b) => {
+                return a.iat - b.iat;
+            });
+            setPlayerOdds(myPlayer.reverse());
+            setGameName(data.name);
+            setStartAm(data.start_amount);
+
+            var startValue = parseInt(data.start_amount);
+            var gevinstVar = 0;
+            var antalKuponer = 0;
+            for (var i in data.players) {
+                var kapital = data.players[i].info.money;
+                gevinstVar = gevinstVar + (kapital - startValue);
+
+                var playerKuponer = data.players[i].odds.length;
+                antalKuponer = antalKuponer + playerKuponer;
+                var finalKuponer = antalKuponer + "";
+            }
+            var gevinstDone = gevinstVar+" kr.";
+            setGevinst(gevinstDone);
+            setKuponer(finalKuponer);
+
+            var n = data.players.length;
+            var topScorers = getTopN(data.players, n);
+            topScorers.forEach(function(item, index) {
+                if (index === 0) {
+                    setFirst(item.username+"");
+                }
+                setTableArray(newTableArray => [...newTableArray, item]);
+            });
+            setLoadingText("")
+        } else {
+            if (localStorage.getItem("activeGame")) {
+                document.getElementById("main-error").classList.add("display-flex");
+                document.getElementById("main-error-p").innerHTML = "Dit aktive spil er suspenderet.";
+                localStorage.setItem("aktive-spil-suspend", "true");
             }
         }
-
-        axios.get(URL, requestConfig).then(response => {
-            console.log("AWS - Gruppespil:", response)
-            if (response.data.admin !== undefined && response.data.admin !== null) {
-                var newTableArray = [];
-                var myPlayer = [];
-                for (var k in response.data.players) {
-                    if (response.data.players[k].player === localStorage.getItem("email")) {
-                        myPlayer = response.data.players[k].odds;
-                        setGameAdmin(response.data.admin);
-                        localStorage.setItem("notifikationer", response.data.players[k].info.notifikationer.length);
-                        var forbrugInt = 0;
-                        var forbrugTd = 0;
-                        var forbrugYd = 0;
-
-                        var correctInt = 0;
-                        var correctTd = 0;
-                        var correctYd = 0;
-
-                        var gevinstInt = 0;
-                        var gevinstTd = 0;
-                        var gevinstYd = 0;
-                        for (var q in response.data.players[k].odds) {
-                            forbrugInt = forbrugInt + response.data.players[k].odds[q].indsats;
-                            if (response.data.players[k].odds[q].iat > (new Date().getTime() - 86400000)) {
-                                forbrugTd = forbrugTd + response.data.players[k].odds[q].indsats;
-                            } else if (response.data.players[k].odds[q].iat < (new Date().getTime() - 86400000) && response.data.players[k].odds[q].iat > (new Date().getTime() - 172800000)) {
-                                forbrugYd = forbrugYd + response.data.players[k].odds[q].indsats;
-                            }
-                            if (response.data.players[k].odds[q].iat > (new Date().getTime() - 86400000)) {
-                                forbrugTd = forbrugTd + response.data.players[k].odds[q].indsats;
-                                if (response.data.players[k].odds[q].vundet === "2") {
-                                    correctTd = correctTd + 1;
-                                }
-                            } else if (response.data.players[k].odds[q].iat < (new Date().getTime() - 86400000) && response.data.players[k].odds[q].iat > (new Date().getTime() - 172800000)) {
-                                forbrugYd = forbrugYd + response.data.players[k].odds[q].indsats;
-                                if (response.data.players[k].odds[q].vundet === "2") {
-                                    correctYd = correctYd + 1;
-                                }
-                            }
-                            if (response.data.players[k].odds[q].vundet === "2") {
-                                correctInt = correctInt + 1;
-                                gevinstInt = gevinstInt + (response.data.players[k].odds[q].indsats * response.data.players[k].odds[q].fullProb);
-                            }
-                        }
-                        setForbrug(forbrugInt)
-                        setCorrect(correctInt)
-                        setGevinstStat(gevinstInt)
-                        if (forbrugInt > 0) {
-                            setForbrugType("positive");
-                        } else {
-                            setForbrugType("negative");
-                        }
-                        if (correctInt > 0) {
-                            setCorrectType("positive");
-                        } else {
-                            setCorrectType("negative");
-                        }
-                        if (gevinstInt > 0) {
-                            setGevinstType("positive");
-                        } else {
-                            setGevinstType("negative");
-                        }
-                        setForbrugChange(forbrugTd/forbrugYd*100);
-                        setCorrectChange(correctTd/correctYd*100);
-                        setGevinstChange(gevinstTd/gevinstYd*100);
-                    }
-                }
-                setBeskeder(response.data.beskeder);
-                setBeskederLength(response.data.beskeder.length);
-                myPlayer.sort((a, b) => {
-                    return a.iat - b.iat;
-                });
-                setPlayerOdds(myPlayer.reverse());
-                setGameName(response.data.name);
-                setStartAm(response.data.start_amount);
-    
-                var startValue = parseInt(response.data.start_amount);
-                var gevinstVar = 0;
-                var antalKuponer = 0;
-                for (var i in response.data.players) {
-                    var kapital = response.data.players[i].info.money;
-                    gevinstVar = gevinstVar + (kapital - startValue);
-    
-                    var playerKuponer = response.data.players[i].odds.length;
-                    antalKuponer = antalKuponer + playerKuponer;
-                    var finalKuponer = antalKuponer + "";
-                }
-                var gevinstDone = gevinstVar+" kr.";
-                setGevinst(gevinstDone);
-                setKuponer(finalKuponer);
-    
-                var n = response.data.players.length;
-                var topScorers = getTopN(response.data.players, n);
-                topScorers.forEach(function(item, index) {
-                    if (index === 0) {
-                        setFirst(item.username+"");
-                    }
-                    setTableArray(newTableArray => [...newTableArray, item]);
-                });
-                setLoadingText("")
-            } else {
-                if (localStorage.getItem("activeGame")) {
-                    document.getElementById("main-error").classList.add("display-flex");
-                    document.getElementById("main-error-p").innerHTML = "Dit aktive spil er suspenderet.";
-                    localStorage.setItem("aktive-spil-suspend", "true");
-                }
-            }
-        }).catch(error => {
-            console.log("Fejl ved indhentning af data" + error)
-        })
     }, [])
 
     function adminSettings() {
@@ -1064,6 +1052,28 @@ function StageGruppespil () {
             </div>}
         </>
     )
+}
+
+export async function getServerSideProps({ req, res }) {
+    const requestConfig = {
+        headers: {
+            "x-api-key": process.env.AWS_API
+        }
+    }
+    var resp;
+    var data = {};
+    if (req.cookies.activeGame) {
+        resp = await axios.get("https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/gruppesession?game=" + req.cookies.activeGame, requestConfig);
+        var data = resp.data;
+    }
+    if (!data) {
+        return {
+          notFound: true,
+        }
+    }
+    return {
+        props: { data },
+    }
 }
  
 export default StageGruppespil;

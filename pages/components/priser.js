@@ -2,8 +2,10 @@ import * as React from 'react';
 import { useEffect, useState } from 'react';
 import Link from 'next/link'
 import axios from "axios";
+import { useRouter } from 'next/router'
  
 function Priser () {
+    const router = useRouter()
 
     useEffect(() => {
         if (document.getElementById("loader1")) {
@@ -48,7 +50,7 @@ function Priser () {
         
                 axios.post(URL, requestBody, requestConfig).then(response => {
                     console.log(response);
-                    window.open(response.data.url, "_SELF");
+                    router.push(response.data.url)
                 }).catch(error => {
                     console.log("Fejl ved indhentning af data" + error)
                 })
@@ -73,7 +75,7 @@ function Priser () {
     
                 axios.post(URL, requestBody, requestConfig).then(response => {
                     console.log(response);
-                    window.open(response.data.url, "_SELF");
+                    router.push(response.data.url)
                 }).catch(error => {
                     console.log("Fejl ved indhentning af data" + error)
                 })
@@ -98,13 +100,13 @@ function Priser () {
     
                 axios.post(URL, requestBody, requestConfig).then(response => {
                     console.log(response);
-                    window.open(response.data.url, "_SELF");
+                    router.push(response.data.url)
                 }).catch(error => {
                     console.log("Fejl ved indhentning af data" + error)
                 })
             }
         } else {
-            window.open("/signup", "_SELF")
+            router.push("/signup")
         }
     }
 
@@ -131,7 +133,7 @@ function Priser () {
         
                 axios.post(URL, requestBody, requestConfig).then(response => {
                     console.log(response);
-                    window.open(response.data.url, "_SELF");
+                    router.push(response.data.url)
                 }).catch(error => {
                     console.log("Fejl ved indhentning af data" + error)
                 })
@@ -156,7 +158,7 @@ function Priser () {
     
                 axios.post(URL, requestBody, requestConfig).then(response => {
                     console.log(response);
-                    window.open(response.data.url, "_SELF");
+                    router.push(response.data.url)
                 }).catch(error => {
                     console.log("Fejl ved indhentning af data" + error)
                 })
@@ -181,13 +183,13 @@ function Priser () {
     
                 axios.post(URL, requestBody, requestConfig).then(response => {
                     console.log(response);
-                    window.open(response.data.url, "_SELF");
+                    router.push(response.data.url)
                 }).catch(error => {
                     console.log("Fejl ved indhentning af data" + error)
                 })
             }
         } else {
-            window.open("/signup", "_SELF")
+            router.push("/signup")
         }
     }
 

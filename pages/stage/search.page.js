@@ -6,8 +6,10 @@ import Image from 'next/image'
 import { getKupon, getString } from "../services/algo.js";
 import StageHeader from '../layout/stageheader';
 import Height from '../components/height';
+import { useRouter } from 'next/router'
  
 function Search () {
+    const router = useRouter()
 
     // eslint-disable-next-line
     const [items, setItems] = useState([
@@ -1495,7 +1497,7 @@ function Search () {
                         {search.map((item) => {
                             return (
                                 <li key={item.klub + item.url} className="display" style={{width: "100%"}}>
-                                    <div className="hit-elem" style={{width: "100%"}} onClick={() => {window.open(item.url, "_SELF")}}>
+                                    <div className="hit-elem" style={{width: "100%"}} onClick={() => router.push(item.url)}>
                                         <div className="hit-con">
                                             <Image width="27px" height="27px" alt="." src={item.img} className="hit-img" />
                                         </div>

@@ -12,10 +12,9 @@ import Congrats from '../img/congrats.svg';
 import StageHeader from '../layout/stageheader';
 import Height from '../components/height';
 
-function StageMatcharticle () {
+function StageMatcharticle ({data}) {
 
     useEffect(() => {
-        gameCall();
         getGame();
         if (window.innerWidth < 1020) {
             if (document.getElementById("match-kupon")) {
@@ -682,35 +681,23 @@ function StageMatcharticle () {
         }
     }
 
-    function gameCall() {
-        var activeGame = localStorage.getItem("activeGame");
-        const URL = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/gruppesession?game=" + activeGame;
-
-        const requestConfigen = {
-            headers: {
-                "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
+    useEffect(() => {
+        console.log("AWS - Active game:", data);
+        setSelectedGame(data);
+        setSlutdato(data.varighed);
+        for (var x in data.players) {
+            if (data.players[x].player === localStorage.getItem("email")) {
+                setCurrentMoney(data.players[x].info.money);
             }
         }
-        axios.get(URL, requestConfigen).then(response => {
-            console.log("AWS - Active game:", response);
-            setSelectedGame(response.data);
-            setSlutdato(response.data.varighed);
-            for (var x in response.data.players) {
-                if (response.data.players[x].player === localStorage.getItem("email")) {
-                    setCurrentMoney(response.data.players[x].info.money);
+        for (var u in data.players) {
+            if (data.players[u].player === localStorage.getItem("email")) {
+                if (data.players[u].player === localStorage.getItem("email")) {
+                    localStorage.setItem("notifikationer", data.players[u].info.notifikationer.length);
                 }
             }
-            for (var u in response.data.players) {
-                if (response.data.players[u].player === localStorage.getItem("email")) {
-                    if (response.data.players[u].player === localStorage.getItem("email")) {
-                        localStorage.setItem("notifikationer", response.data.players[u].info.notifikationer.length);
-                    }
-                }
-            }
-        }).catch(error => {
-            console.log("Fejl ved indhentning af data" + error)
-        })
-    }
+        }
+    }, [])
 
     const [messageType, setMessageType] = useState("error-con-error");
     function setNotiMessage(type, heading, message) {
@@ -4292,6 +4279,28 @@ function StageMatcharticle () {
         </div>
         </>
     )
+}
+
+export async function getServerSideProps({ req, res }) {
+    const requestConfig = {
+        headers: {
+            "x-api-key": process.env.AWS_API
+        }
+    }
+    var resp;
+    var data = {};
+    if (req.cookies.activeGame) {
+        resp = await axios.get("https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/gruppesession?game=" + req.cookies.activeGame, requestConfig);
+        var data = resp.data;
+    }
+    if (!data) {
+        return {
+          notFound: true,
+        }
+    }
+    return {
+        props: { data },
+    }
 }
  
 export default StageMatcharticle; 

@@ -1,3 +1,4 @@
+import cookie from 'js-cookie'
 module.exports = {
     getUser: function() {
         if (typeof window !== 'undefined') {
@@ -15,6 +16,7 @@ module.exports = {
 
     setUserSession: function(user, token) {
         user.auth_token = token;
+        cookie.set("email", user.email, {expires: 24});
         localStorage.setItem("auth", JSON.stringify(user));
         localStorage.setItem("email", user.email);
         localStorage.removeItem("favoritter");
@@ -24,5 +26,6 @@ module.exports = {
     resetUserSession: function() {
         localStorage.clear();
         sessionStorage.clear();
+        cookie.remove("activeGame");
     }
 }

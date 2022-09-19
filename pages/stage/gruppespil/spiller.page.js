@@ -9,7 +9,7 @@ import StageHeader from '../../layout/stageheader';
 import Height from '../../components/height';
 import Back from "../../components/back.js";
  
-function StageSpiller () {
+function StageSpiller ({ data }) {
 
     const [loadingText, setLoadingText] = useState("Indlæser...");
 
@@ -28,32 +28,22 @@ function StageSpiller () {
     const [playerOdds, setPlayerOdds] = useState([]);
 
     useEffect(() => {
-        const queryString = window.location.search;
-        const urlParams = new URLSearchParams(queryString);
-        const URL = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/gruppesession?game=" + urlParams.get("game");
-
-        const requestConfig = {
-            headers: {
-                "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
-            }
-        }
-
-        axios.get(URL, requestConfig).then(response => {
-            console.log("AWS - Gruppespil:", response)
+        if (data) {
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            console.log("AWS - Gruppespil:", data)
             var myPlayer = [];
-            for (var k in response.data.players) {
-                if (response.data.players[k].player === urlParams.get("spiller")) {
-                    myPlayer = response.data.players[k].odds;
-                    setGevinst(parseInt(response.data.players[k].info.money))
-                    setKuponer(response.data.players[k].odds.length);
-                    setPlayer(response.data.players[k].username);
+            for (var k in data.players) {
+                if (data.players[k].player === urlParams.get("spiller")) {
+                    myPlayer = data.players[k].odds;
+                    setGevinst(parseInt(data.players[k].info.money))
+                    setKuponer(data.players[k].odds.length);
+                    setPlayer(data.players[k].username);
                 }
             }
             setPlayerOdds(myPlayer.reverse());
             setLoadingText("");
-        }).catch(error => {
-            console.log("Fejl ved indhentning af data" + error)
-        })
+        }
     }, [])
 
     return (
@@ -367,6 +357,26 @@ function StageSpiller () {
             </div>
         </>
     )
+}
+
+export async function getServerSideProps({ query }) {
+    const category = query.game;
+
+    const requestConfig = {
+        headers: {
+            "x-api-key": process.env.AWS_API
+        }
+    }
+    const resp = await axios.get('https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/gruppesession?game=' + category, requestConfig);
+    const data = resp.data;
+    if (!data) {
+        return {
+          notFound: true,
+        }
+    }
+    return {
+        props: { data },
+    }
 }
  
 export default StageSpiller;

@@ -10,9 +10,7 @@ import Bin from '../img/bin.png';
 import Height from '../components/heightLight';
 import Heart from '../img/heart.png';
  
-function StageIndstillinger () {
-
-    const [dataLoad, setDataLoad] = useState(false);
+function StageIndstillinger ({data}) {
 
     const [user, setUser] = useState("");
     const [usernameField, setUsernameField] = useState("Indlæser...");
@@ -27,43 +25,21 @@ function StageIndstillinger () {
         setFavorites(JSON.parse(localStorage.getItem("favoritter")));
     }, []);
 
-    function apiCall() {
-        if (typeof window !== 'undefined') {
-            const URL = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/user?user="+ localStorage.getItem("email");
-            const requestConfig = {
-                headers: {
-                    "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
-                }
-            }
-
-            axios.get(URL, requestConfig).then(response => {
-                console.log(response)
-                setUser(JSON.stringify(response.data));
-                setUsernameField(response.data["username"]);
-                setEmailField(response.data["email"]);
-                setFornavn(response.data["fornavn"]);
-                setEfternavn(response.data["efternavn"]);
-                if (response.data.type === "facebook") {
-                    setFacebook(true);
-                }
-
-                const year = new Date(response.data["oprettelse"]).getFullYear();
-                const month = new Date(response.data["oprettelse"]).getMonth();
-                const day = new Date(response.data["oprettelse"]).getDate();
-                setOprettelseText(day + "/" + month + "/" + year);
-            }).catch(error => {
-                console.log("Fejl ved indhentning af data" + error)
-            })
+    useEffect(() => {
+        setUser(JSON.stringify(data));
+        setUsernameField(data["username"]);
+        setEmailField(data["email"]);
+        setFornavn(data["fornavn"]);
+        setEfternavn(data["efternavn"]);
+        if (data.type === "facebook") {
+            setFacebook(true);
         }
-    }
 
-    if (dataLoad === false) {
-        setTimeout(function (){
-            apiCall();
-            console.log("API: Called");
-        }, 500);
-        setDataLoad(true);
-    }
+        const year = new Date(data["oprettelse"]).getFullYear();
+        const month = new Date(data["oprettelse"]).getMonth();
+        const day = new Date(data["oprettelse"]).getDate();
+        setOprettelseText(day + "/" + month + "/" + year);
+    }, [])
 
     function setNav(type) {
         if (type === "personlig") {
@@ -242,6 +218,32 @@ function StageIndstillinger () {
             </div>
         </>
     )
+}
+
+export async function getServerSideProps({ req, res }) {
+    res.setHeader(
+        'Cache-Control',
+        'public, s-maxage=10, stale-while-revalidate=59'
+    )
+    const requestConfig = {
+        headers: {
+            "x-api-key": process.env.AWS_API
+        }
+    }
+    var resp;
+    var data = {};
+    if (req.cookies.email) {
+        resp = await axios.get("https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/user?user=" + req.cookies.email, requestConfig);
+        var data = resp.data;
+    }
+    if (!data) {
+        return {
+          notFound: true,
+        }
+    }
+    return {
+        props: { data },
+    }
 }
  
 export default StageIndstillinger;

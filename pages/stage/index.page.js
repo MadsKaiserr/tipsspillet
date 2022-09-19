@@ -12,8 +12,10 @@ import Head from 'next/head'
 import Image from 'next/image'
 import StageHeader from '../layout/stageheader';
 import Height from '../components/height';
+import { useRouter } from 'next/router'
  
-function StageForside () {
+function StageForside ({gruppespil_data, spiller_data}) {
+    const router = useRouter()
 
     useEffect(() => {
         if (window.innerWidth < 1020) {
@@ -21,11 +23,6 @@ function StageForside () {
                 document.getElementById("kupon").classList.add("kupon-min");
                 document.getElementById("kupon-title").innerHTML = "Tryk for at åbne kupon";
             }
-        }
-
-        getSpiller();
-        if (localStorage.getItem("activeGame")) {
-            gameCall();
         }
 
         if (odds !== null && odds !== undefined) {
@@ -913,30 +910,17 @@ function StageForside () {
         return clone.slice(0, n);
     }
 
-    function getSpiller() {
-        var email = localStorage.getItem("email");
-        const URL = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/user?user=" + email;
-
-        const requestConfigen = {
-            headers: {
-                "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
+    useEffect(() => {
+        console.log("AWS - User:", spiller_data);
+        var favorit = [];
+        if (spiller_data.favoritter.length > 0) {
+            for (var y in spiller_data.favoritter) {
+                favorit.push(spiller_data.favoritter[y]);
             }
         }
-
-        axios.get(URL, requestConfigen).then(response => {
-            console.log("AWS - User:", response);
-            var favorit = [];
-            if (response.data.favoritter.length > 0) {
-                for (var y in response.data.favoritter) {
-                    favorit.push(response.data.favoritter[y]);
-                }
-            }
-            setFavoritter(favorit);
-            localStorage.setItem("favoritter", JSON.stringify(favorit));
-        }).catch(error => {
-            console.log("Fejl ved indhentning af data" + error)
-        })
-    }
+        setFavoritter(favorit);
+        localStorage.setItem("favoritter", JSON.stringify(favorit));
+   }, [])
 
     function getIndskydelse(data) {
         var nowDate = new Date().getTime();
@@ -979,83 +963,67 @@ function StageForside () {
         }
     }
 
-    function gameCall() {
-        if (typeof window !== 'undefined') {
-            var activeGame = localStorage.getItem("activeGame");
-            const URL = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/gruppesession?game=" + activeGame;
-    
-            const requestConfigen = {
-                headers: {
-                    "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
+    useEffect(() => {
+        if (gruppespil_data.admin !== undefined && gruppespil_data.admin !== null) {
+            setActiveGameName(gruppespil_data.name);
+            setSelectedGame(gruppespil_data);
+            var slutStringDay = new Date(gruppespil_data.varighed).getDate();
+            var slutStringMonth = new Date(gruppespil_data.varighed).getMonth() + 1;
+            var slutStringYear = new Date(gruppespil_data.varighed).getFullYear();
+            setSlutdatoStr(slutStringDay + "/" + slutStringMonth + "/" + slutStringYear);
+            setSlutdato(gruppespil_data.varighed);
+
+            for (var k in gruppespil_data.players) {
+                if (gruppespil_data.players[k].player === localStorage.getItem("email")) {
+                    localStorage.setItem("notifikationer", gruppespil_data.players[k].info.notifikationer.length);
                 }
-            }
-    
-            axios.get(URL, requestConfigen).then(response => {
-                console.log("AWS - Gruppespil:", response)
-                if (response.data.admin !== undefined && response.data.admin !== null) {
-                    setActiveGameName(response.data.name);
-                    setSelectedGame(response.data);
-                    var slutStringDay = new Date(response.data.varighed).getDate();
-                    var slutStringMonth = new Date(response.data.varighed).getMonth() + 1;
-                    var slutStringYear = new Date(response.data.varighed).getFullYear();
-                    setSlutdatoStr(slutStringDay + "/" + slutStringMonth + "/" + slutStringYear);
-                    setSlutdato(response.data.varighed);
-        
-                    for (var k in response.data.players) {
-                        if (response.data.players[k].player === localStorage.getItem("email")) {
-                            localStorage.setItem("notifikationer", response.data.players[k].info.notifikationer.length);
-                        }
-                        for (var l in response.data.players[k].odds) {
-                            var calcUdbetaling = parseFloat(response.data.players[k].odds[l].fullProb) * parseFloat(response.data.players[k].odds[l].indsats);
-                            const newDate = new Date().getTime();
-                            if (response.data.players[k].odds[l].calculated === "false" && response.data.players[k].odds[l].last_date <  parseInt((newDate.toString()).slice(0, -3))) {
-                                var odd_ids = "";
-                                var checkArray = [];
-                                for (var y in response.data.players[k].odds[l].bets) {
-                                    var oddId = response.data.players[k].odds[l].bets[y].game;
-                                    var resultId = response.data.players[k].odds[l].bets[y].result;
-                                    var type = response.data.players[k].odds[l].bets[y].betType;
-                                    var bettype = response.data.players[k].odds[l].type;
-                                    checkArray.push({
-                                        "game": oddId,
-                                        "result": resultId,
-                                        "type": type
-                                    })
-                                    if (odd_ids === "") {
-                                        odd_ids = oddId;
-                                    } else {
-                                        odd_ids = odd_ids + "," + oddId;
-                                    }
-                                }
-                                var kupon = response.data.players[k].odds[l];
-                                multiFetch(l,checkArray,calcUdbetaling,odd_ids,k,kupon,bettype);
+                for (var l in gruppespil_data.players[k].odds) {
+                    var calcUdbetaling = parseFloat(gruppespil_data.players[k].odds[l].fullProb) * parseFloat(gruppespil_data.players[k].odds[l].indsats);
+                    const newDate = new Date().getTime();
+                    if (gruppespil_data.players[k].odds[l].calculated === "false" && gruppespil_data.players[k].odds[l].last_date <  parseInt((newDate.toString()).slice(0, -3))) {
+                        var odd_ids = "";
+                        var checkArray = [];
+                        for (var y in gruppespil_data.players[k].odds[l].bets) {
+                            var oddId = gruppespil_data.players[k].odds[l].bets[y].game;
+                            var resultId = gruppespil_data.players[k].odds[l].bets[y].result;
+                            var type = gruppespil_data.players[k].odds[l].bets[y].betType;
+                            var bettype = gruppespil_data.players[k].odds[l].type;
+                            checkArray.push({
+                                "game": oddId,
+                                "result": resultId,
+                                "type": type
+                            })
+                            if (odd_ids === "") {
+                                odd_ids = oddId;
+                            } else {
+                                odd_ids = odd_ids + "," + oddId;
                             }
                         }
-                    }
-    
-                    getIndskydelse(response.data);
-        
-                    var n = response.data.players.length;
-                    setPositionCount(n);
-                    var topScorers = getTopN(response.data.players, n);
-                    topScorers.forEach(function(gameItem, index) {
-                        if (gameItem.player === localStorage.getItem("email")) {
-                            setCurrentMoney(gameItem.info.money)
-                            setPosition(index + 1);
-                        }
-                    });
-                } else {
-                    if (localStorage.getItem("activeGame")) {
-                        document.getElementById("main-error").classList.add("display-flex");
-                        document.getElementById("main-error-p").innerHTML = "Dit aktive spil er suspenderet.";
-                        localStorage.setItem("aktive-spil-suspend", "true");
+                        var kupon = gruppespil_data.players[k].odds[l];
+                        multiFetch(l,checkArray,calcUdbetaling,odd_ids,k,kupon,bettype);
                     }
                 }
-            }).catch(error => {
-                console.log("Fejl ved indhentning af data" + error)
-            })
+            }
+
+            getIndskydelse(gruppespil_data);
+
+            var n = gruppespil_data.players.length;
+            setPositionCount(n);
+            var topScorers = getTopN(gruppespil_data.players, n);
+            topScorers.forEach(function(gameItem, index) {
+                if (gameItem.player === localStorage.getItem("email")) {
+                    setCurrentMoney(gameItem.info.money)
+                    setPosition(index + 1);
+                }
+            });
+        } else {
+            if (localStorage.getItem("activeGame")) {
+                document.getElementById("main-error").classList.add("display-flex");
+                document.getElementById("main-error-p").innerHTML = "Dit aktive spil er suspenderet.";
+                localStorage.setItem("aktive-spil-suspend", "true");
+            }
         }
-    }
+    }, [])
 
     function setSingleIndsatser(indsats, id) {
         var tempIndsats = 0;
@@ -1540,7 +1508,7 @@ function StageForside () {
             return (
                 <>
                     <li key={league.season + league.name} className="stage-kampe-section">
-                        <div className="stage-kampe-head" onClick={() => {window.open("/stage/league?id=" + league.season, "_SELF")}}>
+                        <div className="stage-kampe-head" onClick={() => router.push("/stage/league?id=" + league.season)}>
                             <p className="stage-league"><Image width="18px" height="18px" className="inline-img" src={league.img} alt="" />{league.name}{league.round !== undefined && <> | Runde {league.round}</>}</p>
                         </div>
                         <div className="stage-kampe">
@@ -2667,6 +2635,23 @@ function StageForside () {
         </div>
         </>
     )
+}
+
+export async function getServerSideProps({ req, res }) {
+    const requestConfig = {
+        headers: {
+            "x-api-key": process.env.AWS_API
+        }
+    }
+    const gruppespil_resp = await axios.get("https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/gruppesession?game=" + req.cookies.activeGame, requestConfig);
+    const gruppespil_data = gruppespil_resp.data;
+
+    const spiller_resp = await axios.get("https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/user?user=" + req.cookies.email, requestConfig);
+    const spiller_data = spiller_resp.data;
+
+    return {
+        props: { gruppespil_data,spiller_data },
+    }
 }
  
 export default StageForside;

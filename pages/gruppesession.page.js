@@ -6,15 +6,11 @@ import Link from 'next/link'
 import axios from "axios";
 import jwtDecode from "jwt-decode";
 import Height from './components/height';
+import cookie from 'js-cookie'
+import Router, { useRouter } from 'next/router'
  
-function Gruppesession () {
-
-    useEffect(() => {
-        window.scrollTo(0, 0)
-        apiCall();
-    }, [])
-
-
+function Gruppesession ({data}) {
+    const router = useRouter()
     const [tableArray, setTableArray] = useState([]);
 
     const [activeGame, setActiveGame] = useState([]);
@@ -27,71 +23,55 @@ function Gruppesession () {
     const [synlighed, setSynlighed] = useState("");
     const [startAm, setStartAm] = useState(0);
 
-    function apiCall() {
-        if (typeof window !== 'undefined') {
-            const queryString = window.location.search;
-            const urlParams = new URLSearchParams(queryString);
-            const URL = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/gruppesession?game="+ urlParams.get('game');
-    
-            const requestConfig = {
-                headers: {
-                    "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
+    useEffect(() => {
+        console.log("AWS - Gruppesession:", data)
+        setActiveGame(data);
+        setGameName(data.name);
+        setGamePlayers(data.players.length);
+        setGameStart(data.start_amount + " kr.");
+        setSynlighed(data.synlighed);
+        setVarighed(data.varighed);
+        setStartAm(data.start_amount);
+
+        function getTopN(arr, n) {
+            var clone = arr.slice(0);
+            clone.sort(function(x, y) {
+                if (x.info.money === y.info.money) return 0;
+                else if (parseInt(x.info.money) < parseInt(y.info.money)) return 1;
+                else return -1;
+            });
+            return clone.slice(0, n);
+        }
+
+        var n = data.players.length;
+        var topScorers = getTopN(data.players, n);
+        topScorers.forEach(function(item) {
+            setTableArray(tableArray => [...tableArray, item]);
+        });
+        for (var u in data.players) {
+            if (data.players[u].player === localStorage.getItem("email")) {
+                if (data.players[u].player === localStorage.getItem("email")) {
+                    localStorage.setItem("notifikationer", data.players[u].info.notifikationer.length);
                 }
             }
-    
-            axios.get(URL, requestConfig).then(response => {
-                console.log("AWS - Gruppesession:", response)
-                setActiveGame(response.data);
-                setGameName(response.data.name);
-                setGamePlayers(response.data.players.length);
-                setGameStart(response.data.start_amount + " kr.");
-                setSynlighed(response.data.synlighed);
-                setVarighed(response.data.varighed);
-                setStartAm(response.data.start_amount);
-    
-                function getTopN(arr, n) {
-                    var clone = arr.slice(0);
-                    clone.sort(function(x, y) {
-                        if (x.info.money === y.info.money) return 0;
-                        else if (parseInt(x.info.money) < parseInt(y.info.money)) return 1;
-                        else return -1;
-                    });
-                    return clone.slice(0, n);
-                }
-    
-                var n = response.data.players.length;
-                var topScorers = getTopN(response.data.players, n);
-                topScorers.forEach(function(item) {
-                    setTableArray(tableArray => [...tableArray, item]);
-                });
-                for (var u in response.data.players) {
-                    if (response.data.players[u].player === localStorage.getItem("email")) {
-                        if (response.data.players[u].player === localStorage.getItem("email")) {
-                            localStorage.setItem("notifikationer", response.data.players[u].info.notifikationer.length);
-                        }
-                    }
-                }
-    
-                var startValue = parseInt(response.data.start_amount);
-                var gevinstVar = 0;
-                var antalKuponer = 0;
-                for (var i in response.data.players) {
-                    var kapital = response.data.players[i].info.money;
-                    gevinstVar = gevinstVar + (kapital - startValue);
-    
-                    var playerKuponer = response.data.players[i].odds.length;
-                    antalKuponer = antalKuponer + playerKuponer;
-                    var finalKuponer = antalKuponer + "";
-                    if (response.data.players[i].player === localStorage.getItem("email")) {
-                        localStorage.setItem("notifikationer", response.data.players[i].info.notifikationer.length);
-                    }
-                }
-                setKuponer(finalKuponer);
-            }).catch(error => {
-                console.log("Fejl ved indhentning af data" + error)
-            })
         }
-    }
+
+        var startValue = parseInt(data.start_amount);
+        var gevinstVar = 0;
+        var antalKuponer = 0;
+        for (var i in data.players) {
+            var kapital = data.players[i].info.money;
+            gevinstVar = gevinstVar + (kapital - startValue);
+
+            var playerKuponer = data.players[i].odds.length;
+            antalKuponer = antalKuponer + playerKuponer;
+            var finalKuponer = antalKuponer + "";
+            if (data.players[i].player === localStorage.getItem("email")) {
+                localStorage.setItem("notifikationer", data.players[i].info.notifikationer.length);
+            }
+        }
+        setKuponer(finalKuponer);
+    }, [])
 
     function tilmeld() {
         var yourIndex = activeGame["players"].findIndex(obj => obj.player === localStorage.getItem("email"));
@@ -146,9 +126,10 @@ function Gruppesession () {
 
             axios.patch(tilmeldUrl, tilmeldBody, tilmeldConfig).then(response => {
                 console.log("AWS - Gruppespil:", response)
+                cookie.set("activeGame", activeGame["id"], {expires: 24});
                 localStorage.setItem("activeGame", activeGame["id"]);
-                localStorage.setItem("playerIndex", response.data.Item.Attributes.players.findIndex(obj => obj.player === localStorage.getItem("email")));
-                window.open("/stage", "_self");
+                localStorage.setItem("playerIndex", data.Item.Attributes.players.findIndex(obj => obj.player === localStorage.getItem("email")));
+                router.push("/stage");
             }).catch(error => {
                 console.log(error);
             })
@@ -158,7 +139,7 @@ function Gruppesession () {
             } else if (varighedDate < nowDate) {
                 setNotiMessage("error", "Gruppespil slut", "Gruppespil er desværre allerede færdiggjort");
             } else if (!localStorage.getItem("auth")) {
-                window.open("/signup", "_SELF");
+                router.push("/signup");
             }
         }
     }
@@ -294,6 +275,29 @@ function Gruppesession () {
             </div>
         </>
     )
+}
+
+export async function getServerSideProps({ req, res, query }) {
+    const category = query.game;
+    const requestConfig = {
+        headers: {
+            "x-api-key": process.env.AWS_API
+        }
+    }
+    var resp;
+    var data = {};
+    if (category) {
+        resp = await axios.get("https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/gruppesession?game=" + category, requestConfig);
+        var data = resp.data;
+    }
+    if (!data) {
+        return {
+          notFound: true,
+        }
+    }
+    return {
+        props: { data },
+    }
 }
  
 export default Gruppesession;

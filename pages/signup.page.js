@@ -9,8 +9,10 @@ import FacebookLogin from 'react-facebook-login';
 import StageImg from './img/stage.png';
 import PrimaryLogo from './img/logo-primary.png';
 import { Gradient } from './services/Gradient.js'
+import { useRouter } from 'next/router'
  
 function Signup () {
+    const router = useRouter()
 
     const [message, setMessage] = useState("");
 
@@ -309,7 +311,7 @@ function Signup () {
     }
 
     function access() {
-        window.open("/signup/abonnement", "_self");
+        router.push("/signup/abonnement");
     }
 
     function setPriceActive(type) {
@@ -345,7 +347,7 @@ function Signup () {
                 <meta property="og:description" content="Opret konto på Danmarks eneste gratis betting platform - Opret gratis konto, og bet for virtuelle penge mod venner og familie - Deltag i præmiedyster, og vind blandt andet billetter til fodboldkampe i parken." />
             </Head>
             <div className="route-thirds">
-                <div className="signup-tilbage" onClick={() => {window.open("/", "_self")}}>
+                <div className="signup-tilbage" onClick={() => window.open("/", "_SELF")}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="25px" height="25px" fill="var(--black)" viewBox="0 0 16 16">
                     <path fillRule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/>
                     </svg>

@@ -9,11 +9,22 @@ import Image from 'next/image'
 import StageHeader from '../layout/stageheader';
 import Height from '../components/height';
 import DownArrow from './../img/down-arrow.png';
+import cookie from 'js-cookie'
  
-function StageAktiveSpil () {
+function StageAktiveSpil ({ data }) {
+    const router = useRouter()
 
     useEffect(() => {
-        getGroups();
+        console.log("AWS - Gruppespil:", data)
+        var myArray = [];
+        for (var q in data.allGruppespil) {
+            if (data.allGruppespil[q].players.findIndex(obj => obj.player === localStorage.getItem("email")) >= 0) {
+                myArray.push(data.allGruppespil[q]);
+            }
+        }
+        setItems(myArray);
+        setSearch(myArray);
+        setLoading("");
     }, [])
 
     const [query, setQuery] = useState("");
@@ -50,35 +61,11 @@ function StageAktiveSpil () {
     }, [loading])
 
     function setActiveGame(id, index, name) {
+        cookie.set("activeGame", id, {expires: 24});
         localStorage.setItem("activeGame", id);
         localStorage.setItem("playerIndex", index);
         localStorage.setItem("aktive-spil-suspend", "null");
-        window.open("/stage/", "_self");
-    }
-
-    function getGroups() {
-        const URL = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/gruppespil";
-
-        const requestConfig = {
-            headers: {
-                "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
-            }
-        }
-
-        axios.get(URL, requestConfig).then(response => {
-            console.log("AWS - Gruppespil:", response)
-            var myArray = [];
-            for (var q in response.data.allGruppespil) {
-                if (response.data.allGruppespil[q].players.findIndex(obj => obj.player === localStorage.getItem("email")) >= 0) {
-                    myArray.push(response.data.allGruppespil[q]);
-                }
-            }
-            setItems(myArray);
-            setSearch(myArray);
-            setLoading("");
-        }).catch(error => {
-            console.log("Fejl ved indhentning af data" + error)
-        })
+        router.push("/stage")
     }
 
     const [modalh1, setModalH1] = useState("Benyt adgangsbillet");
@@ -92,7 +79,7 @@ function StageAktiveSpil () {
 
     function opretSpilHandler() {
         if (JSON.parse(localStorage.getItem("auth")).rolle === "premium" || JSON.parse(localStorage.getItem("auth")).rolle === "administrator") {
-            window.open("/stage/opret-spil", "_self");
+            router.push("/stage/opret-spil")
         } else {
             showModal();
         }
@@ -150,7 +137,7 @@ function StageAktiveSpil () {
                     axios.patch(URL, requestBody, requestConfig).then(response => {
                         console.log("AWS - Adgangsbilletter:", response)
                         document.getElementById("main-modal").classList.remove("display-flex");
-                        window.open("/stage/opret-spil", "_self");
+                        router.push("/stage/opret-spil")
                     }).catch(error => {
                         console.log("Fejl ved indhentning af data" + error)
                         setNotiMessage("error", "Serverfejl", "Der skete en fejl ved opdatering af din billet.");
@@ -470,6 +457,24 @@ function StageAktiveSpil () {
             </div>
         </>
     )
+}
+
+export async function getServerSideProps({ query }) {
+    const requestConfig = {
+        headers: {
+            "x-api-key": process.env.AWS_API
+        }
+    }
+    const resp = await axios.get('https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/gruppespil', requestConfig);
+    const data = resp.data;
+    if (!data) {
+        return {
+          notFound: true,
+        }
+    }
+    return {
+        props: { data },
+    }
 }
  
 export default StageAktiveSpil;
