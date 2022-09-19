@@ -10,6 +10,7 @@ import StageImg from './img/stage.png';
 import PrimaryLogo from './img/logo-primary.png';
 import { Gradient } from './services/Gradient.js'
 import { useRouter } from 'next/router'
+import { getUser } from "./services/authService";
  
 function Signup () {
     const router = useRouter()

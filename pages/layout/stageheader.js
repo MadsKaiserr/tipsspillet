@@ -40,34 +40,10 @@ function StageHeader () {
     const [auth, setAuth] = useState("");
 
     useEffect(() => {
-        setAuth(localStorage.getItem("auth"));
+        setAuth(getUser() ? getUser() : {});
     }, [])
 
     const [notifikationer, sestNotifikationer] = useState("");
-
-    function getAdmin() {
-        if (typeof window !== 'undefined') {
-            if (localStorage.getItem("auth")) {
-                const authToken = JSON.parse(localStorage.getItem("auth")).auth_token;
-            
-                var decodedToken = jwtDecode(authToken);
-                var todayTime = new Date().getTime();
-                var todayMS = todayTime/1000;
-                
-                if (decodedToken.exp > todayMS && decodedToken.rolle === "administrator") {
-                    return (
-                        <Link href="/admin/hjem">
-                            <div className="user-element">
-                                <p className="user-element-p">Admin-Panel</p>
-                            </div>
-                        </Link>
-                    );
-                } else {
-                    return;
-                }
-            }
-        }
-    }
 
     function logout() {
         resetUserSession();
@@ -149,17 +125,17 @@ function StageHeader () {
                                 </div>
                             </Link>
                             <div className="nav-profile-btn" onClick={() => {document.getElementById("userDropdown").classList.toggle("display"); document.getElementById("profileArrow").classList.toggle("deg180");}}>
-                                <div className="nav-profile-pic">{auth !== "" && <>{(JSON.parse(auth).username).slice(0,1)}</>}</div>
+                                <div className="nav-profile-pic">{auth !== "" && <>{(auth.username).slice(0,1)}</>}</div>
                                 <svg xmlns="http://www.w3.org/2000/svg" className="profile-icon" id="profileArrow" viewBox="0 0 16 16">
                                     <path fillRule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
                                 </svg>
                             </div>
                             <div className="user-dropdown" id="userDropdown">
                                 <div className="user-info">
-                                    <div className="user-logo-tem">{auth !== "" && <>{(JSON.parse(auth).username).slice(0,1)}</>}</div>
+                                    <div className="user-logo-tem">{auth !== "" && <>{(auth.username).slice(0,1)}</>}</div>
                                     <div className="user-info-desc">
-                                        <p className="user-name">{auth !== "" && <>{JSON.parse(auth).username}</>}</p>
-                                        <p className="user-email">{auth !== "" && <>{JSON.parse(auth).email}</>}</p>
+                                        <p className="user-name">{auth !== "" && <>{auth.username}</>}</p>
+                                        <p className="user-email">{auth !== "" && <>{auth.email}</>}</p>
                                     </div>
                                 </div>
                                 <div className="user-divider"></div>
@@ -168,7 +144,6 @@ function StageHeader () {
                                         <p className="user-element-p">Din profil</p>
                                     </div>
                                 </Link>
-                                {getAdmin()}
                                 <div className="user-element" onClick={() => logout()}>
                                     <p className="user-element-p">Log ud</p>
                                 </div>
@@ -257,17 +232,16 @@ function StageHeader () {
                                             </div>
                                             <div className="user-dropdown" id="userDropdown">
                                                 <div className="user-info">
-                                                    <div className="user-logo-tem">{auth !== "" && <>{(JSON.parse(auth).username).slice(0,1)}</>}</div>
+                                                    <div className="user-logo-tem">{auth !== "" && <>{(auth.username).slice(0,1)}</>}</div>
                                                     <div className="user-info-desc">
-                                                        <p className="user-name">{auth !== "" && <>{JSON.parse(auth).username}</>}</p>
-                                                        <p className="user-email">{auth !== "" && <>{JSON.parse(auth).email}</>}</p>
+                                                        <p className="user-name">{auth !== "" && <>{auth.username}</>}</p>
+                                                        <p className="user-email">{auth !== "" && <>{auth.email}</>}</p>
                                                     </div>
                                                 </div>
                                                 <div className="user-divider"></div>
                                                 <div className="user-element">
                                                     <p className="user-element-p">Din profil</p>
                                                 </div>
-                                                {getAdmin()}
                                                 <div className="user-element" onClick={() => logout()}>
                                                     <p className="user-element-p">Log ud</p>
                                                 </div>

@@ -5,12 +5,14 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { getKupon, getString } from "../services/algo.js";
 import Back from "../components/back.js";
+import cookie from 'js-cookie'
 
 import lineupPitch from '../img/lineup.png';
 import goal from '../img/football.png';
 import Congrats from '../img/congrats.svg';
 import StageHeader from '../layout/stageheader';
 import Height from '../components/height';
+import { getUser } from "../services/authService";
 
 function StageMatcharticle ({data}) {
 
@@ -686,13 +688,13 @@ function StageMatcharticle ({data}) {
         setSelectedGame(data);
         setSlutdato(data.varighed);
         for (var x in data.players) {
-            if (data.players[x].player === localStorage.getItem("email")) {
+            if (data.players[x].player === getUser() ? getUser().email : "") {
                 setCurrentMoney(data.players[x].info.money);
             }
         }
         for (var u in data.players) {
-            if (data.players[u].player === localStorage.getItem("email")) {
-                if (data.players[u].player === localStorage.getItem("email")) {
+            if (data.players[u].player === getUser() ? getUser().email : "") {
+                if (data.players[u].player === getUser() ? getUser().email : "") {
                     localStorage.setItem("notifikationer", data.players[u].info.notifikationer.length);
                 }
             }
@@ -719,11 +721,11 @@ function StageMatcharticle ({data}) {
             var nowDate = new Date().getTime();
             var varighedDate = new Date(slutdato).getTime();
             var placeBetBTN = document.getElementById("placeBetBTN");
-            if (!(odds.length > 0) || !(localStorage.getItem("activeGame")) || indsats <= 0) {
+            if (!(odds.length > 0) || !(cookie.get("activeGame")) || indsats <= 0) {
                 if (!(odds.length > 0)) {
                     setNotiMessage("error", "Ingen væddemål", "Du har ikke placeret nogle væddemål. Placer ét eller flere væddemål, for at lave din kuppon.");
                     placeBetBTN.innerHTML = "Placér bet";
-                } else if (!(localStorage.getItem("activeGame"))) {
+                } else if (!(cookie.get("activeGame"))) {
                     setNotiMessage("error", "Intet aktivt gruppespil", "For at placere et væddemål, skal du være tilmeldt et gruppespil, og sætte det som aktivt.");
                     placeBetBTN.innerHTML = "Placér bet";
                 } else if (indsats <= 0) {
@@ -756,7 +758,7 @@ function StageMatcharticle ({data}) {
                             placeBetBTN.innerHTML = "Placér bet";
                         } else {
                             const placeBetUrl = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/bet";
-                    const userEmail = localStorage.getItem("email");
+                    const userEmail = getUser() ? getUser().email : "";
             
                     const betConfig = {
                         headers: {
@@ -764,7 +766,7 @@ function StageMatcharticle ({data}) {
                         }
                     }
         
-                    const localGame = localStorage.getItem("activeGame");
+                    const localGame = cookie.get("activeGame");
                     const localIndex = parseInt(localStorage.getItem("playerIndex"));
         
                     var last_date = 0;
@@ -840,11 +842,11 @@ function StageMatcharticle ({data}) {
             var nowDate = new Date().getTime();
         var varighedDate = new Date(slutdato).getTime();
         var placeBetBTN = document.getElementById("placeBetBTN");
-        if (!(odds.length > 0) || !(localStorage.getItem("activeGame")) || singleIndsats <= 0) {
+        if (!(odds.length > 0) || !(cookie.get("activeGame")) || singleIndsats <= 0) {
             if (!(odds.length > 0)) {
                 setNotiMessage("error", "Ingen væddemål", "Du har ikke placeret nogle væddemål. Placer ét eller flere væddemål, for at lave din kuppon.");
                 placeBetBTN.innerHTML = "Placér bet";
-            } else if (!(localStorage.getItem("activeGame"))) {
+            } else if (!(cookie.get("activeGame"))) {
                 setNotiMessage("error", "Intet aktivt gruppespil", "For at placere et væddemål, skal du være tilmeldt et gruppespil, og sætte det som aktivt.");
                 placeBetBTN.innerHTML = "Placér bet";
             } else if (singleIndsats <= 0) {
@@ -877,7 +879,7 @@ function StageMatcharticle ({data}) {
                         placeBetBTN.innerHTML = "Placér bet";
                     } else {
                         const placeBetUrl = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/bet";
-                const userEmail = localStorage.getItem("email");
+                const userEmail = getUser() ? getUser().email : "";
         
                 const betConfig = {
                     headers: {
@@ -885,7 +887,7 @@ function StageMatcharticle ({data}) {
                     }
                 }
     
-                const localGame = localStorage.getItem("activeGame");
+                const localGame = cookie.get("activeGame");
                 const localIndex = parseInt(localStorage.getItem("playerIndex"));
     
                 var last_date = 0;
@@ -1687,7 +1689,7 @@ function StageMatcharticle ({data}) {
 
                     const requestBody = {
                         "data": storage,
-                        "email": localStorage.getItem("email")
+                        "email": getUser() ? getUser().email : ""
                     }
                     axios.post(signupURL, requestBody, requestConfig).then(response => {
                         console.log("AWS - Favoritter:", response);
@@ -1715,7 +1717,7 @@ function StageMatcharticle ({data}) {
 
                     const requestBody = {
                         "data": storageDiv,
-                        "email": localStorage.getItem("email")
+                        "email": getUser() ? getUser().email : ""
                     }
                     axios.post(signupURL, requestBody, requestConfig).then(response => {
                         console.log("AWS - Favoritter:", response);
@@ -1744,7 +1746,7 @@ function StageMatcharticle ({data}) {
 
                     const requestBody = {
                         "data": storage,
-                        "email": localStorage.getItem("email")
+                        "email": getUser() ? getUser().email : ""
                     }
                     axios.post(signupURL, requestBody, requestConfig).then(response => {
                         console.log("AWS - Favoritter:", response);
@@ -1783,7 +1785,7 @@ function StageMatcharticle ({data}) {
 
                     const requestBody = {
                         "data": storage,
-                        "email": localStorage.getItem("email")
+                        "email": getUser() ? getUser().email : ""
                     }
                     axios.post(signupURL, requestBody, requestConfig).then(response => {
                         console.log("AWS - Favoritter:", response);
@@ -1811,7 +1813,7 @@ function StageMatcharticle ({data}) {
 
                     const requestBody = {
                         "data": storageDiv,
-                        "email": localStorage.getItem("email")
+                        "email": getUser() ? getUser().email : ""
                     }
                     axios.post(signupURL, requestBody, requestConfig).then(response => {
                         console.log("AWS - Favoritter:", response);
@@ -1840,7 +1842,7 @@ function StageMatcharticle ({data}) {
 
                     const requestBody = {
                         "data": storage,
-                        "email": localStorage.getItem("email")
+                        "email": getUser() ? getUser().email : ""
                     }
                     axios.post(signupURL, requestBody, requestConfig).then(response => {
                         console.log("AWS - Favoritter:", response);
@@ -1913,10 +1915,10 @@ function StageMatcharticle ({data}) {
             if (modalType === "kombination") {
                 var nowDate = new Date().getTime();
             var varighedDate = new Date(slutdato).getTime();
-            if (!(odds.length > 0) || !(localStorage.getItem("activeGame")) || indsats <= 0) {
+            if (!(odds.length > 0) || !(cookie.get("activeGame")) || indsats <= 0) {
                 if (!(odds.length > 0)) {
                     setNotiMessage("error", "Ingen væddemål", "Du har ikke placeret nogle væddemål. Placer ét eller flere væddemål, for at lave din kuppon.");
-                } else if (!(localStorage.getItem("activeGame"))) {
+                } else if (!(cookie.get("activeGame"))) {
                     setNotiMessage("error", "Intet aktivt gruppespil", "For at placere et væddemål, skal du være tilmeldt et gruppespil, og sætte det som aktivt.");
                 } else if (indsats <= 0) {
                     setNotiMessage("error", "Positivt beløb", "Din indsats på dit væddemål skal være positiv.");
@@ -1958,10 +1960,10 @@ function StageMatcharticle ({data}) {
             } else {
                 var nowDate = new Date().getTime();
             var varighedDate = new Date(slutdato).getTime();
-            if (!(odds.length > 0) || !(localStorage.getItem("activeGame")) || singleIndsats <= 0) {
+            if (!(odds.length > 0) || !(cookie.get("activeGame")) || singleIndsats <= 0) {
                 if (!(odds.length > 0)) {
                     setNotiMessage("error", "Ingen væddemål", "Du har ikke placeret nogle væddemål. Placer ét eller flere væddemål, for at lave din kuppon.");
-                } else if (!(localStorage.getItem("activeGame"))) {
+                } else if (!(cookie.get("activeGame"))) {
                     setNotiMessage("error", "Intet aktivt gruppespil", "For at placere et væddemål, skal du være tilmeldt et gruppespil, og sætte det som aktivt.");
                 } else if (singleIndsats <= 0) {
                     setNotiMessage("error", "Positivt beløb", "Din indsats på dit væddemål skal være positiv.");
@@ -4282,6 +4284,16 @@ function StageMatcharticle ({data}) {
 }
 
 export async function getServerSideProps({ req, res }) {
+    const sendRedirectLocation = (location) => {
+        res.writeHead(302, {
+            Location: location,
+        });
+        res.end();
+        return { props: {} };
+    };
+    if (!req.cookies.auth) {
+        sendRedirectLocation('/signup')
+    }
     const requestConfig = {
         headers: {
             "x-api-key": process.env.AWS_API

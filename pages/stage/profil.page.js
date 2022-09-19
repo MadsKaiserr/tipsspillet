@@ -8,6 +8,7 @@ import StageHeader from '../layout/stageheader';
 import axios from "axios";
 import Heart from '../img/heart.png';
 import Height from '../components/height';
+import { getUser } from "../services/authService";
  
 function StageProfil () {
 
@@ -27,7 +28,7 @@ function StageProfil () {
     }, [])
 
     function apiCall() {
-        const URL = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/user?user="+ localStorage.getItem("email");
+        const URL = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/user?user="+ getUser() ? getUser().email : "";
 
         const requestConfig = {
             headers: {

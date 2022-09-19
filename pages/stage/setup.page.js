@@ -9,6 +9,7 @@ import StageHeader from '../layout/stageheader'
 import { Gradient } from '../services/Gradient.js'
 import cookie from 'js-cookie'
 import { useRouter } from 'next/router'
+import { getUser } from "../services/authService";
  
 function Setup () {
     const router = useRouter()
@@ -1600,7 +1601,7 @@ function Setup () {
     
                 const requestBody = {
                     "data": favorites,
-                    "email": localStorage.getItem("email")
+                    "email": getUser() ? getUser().email : ""
                 }
                 axios.post(signupURL, requestBody, requestConfig).then(response => {
                     console.log("AWS - Favoritter:", response);
@@ -1627,12 +1628,12 @@ function Setup () {
         var activeGame = gruppespil[activeIndex];
         if (activeIndex >= 0) {
             console.log("INNDEE")
-            var yourIndex = activeGame["players"].findIndex(obj => obj.player === localStorage.getItem("email"));
+            var yourIndex = activeGame["players"].findIndex(obj => obj.player === getUser() ? getUser().email : "");
 
             var varighedDate = new Date(gruppespil[activeIndex].varighed).getTime();
             var nowDate = new Date().getTime();
     
-            if ((yourIndex === -1 && varighedDate > nowDate) && localStorage.getItem("auth")) {
+            if ((yourIndex === -1 && varighedDate > nowDate) && getUser() ? getUser().email : "") {
                 console.log(activeGame)
                 const tilmeldUrl = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/gruppesession";
     
@@ -1646,17 +1647,11 @@ function Setup () {
                 var medlemsskab;
                 var userEmail;
                 var username;
-    
-                const authToken = JSON.parse(localStorage.getItem("auth")).auth_token;
-            
-                var decodedToken = jwtDecode(authToken);
-                var todayTime = new Date().getTime();
-                var todayMS = todayTime/1000;
                 
-                if (decodedToken["exp"] > todayMS) {
-                    medlemsskab = decodedToken["rolle"];
-                    userEmail = decodedToken["email"];
-                    username = decodedToken["username"];
+                if (getUser() ? getUser().email : "") {
+                    medlemsskab = getUser() ? getUser().rolle : "";
+                    userEmail = getUser() ? getUser().email : "";
+                    username = getUser() ? getUser().username : "";
                 } else {
                     medlemsskab = "none";
                     userEmail = "Ukendt";
@@ -1682,7 +1677,7 @@ function Setup () {
                     next("hold")
                     cookie.set("activeGame", activeGame["id"], {expires: 24});
                     localStorage.setItem("activeGame", activeGame["id"]);
-                    localStorage.setItem("playerIndex", response.data.Item.Attributes.players.findIndex(obj => obj.player === localStorage.getItem("email")));
+                    localStorage.setItem("playerIndex", response.data.Item.Attributes.players.findIndex(obj => obj.player === getUser() ? getUser().email : ""));
                 }).catch(error => {
                     console.log(error);
                 })
@@ -1691,7 +1686,7 @@ function Setup () {
                     setNotiMessage("error", "Deltager allerede", "Det ser ud til, at du allerede deltager i dette gruppespil.");
                 } else if (varighedDate < nowDate) {
                     setNotiMessage("error", "Gruppespil slut", "Gruppespil er desværre allerede færdiggjort");
-                } else if (!localStorage.getItem("auth")) {
+                } else if (!getUser() ? getUser().email : "") {
                     router.push("/signup")
                 }
             }

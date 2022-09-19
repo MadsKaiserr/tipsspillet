@@ -5,6 +5,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import cookie from 'js-cookie'
 import { useRouter } from 'next/router'
+import { getUser } from "../services/authService";
  
 function StageGruppesession ({data}) {
     const router = useRouter()
@@ -46,8 +47,8 @@ function StageGruppesession ({data}) {
             setTableArray(tableArray => [...tableArray, item]);
         });
         for (var u in data.players) {
-            if (data.players[u].player === localStorage.getItem("email")) {
-                if (data.players[u].player === localStorage.getItem("email")) {
+            if (data.players[u].player === getUser() ? getUser().email : "") {
+                if (data.players[u].player === getUser() ? getUser().email : "") {
                     localStorage.setItem("notifikationer", data.players[u].info.notifikationer.length);
                 }
             }
@@ -63,7 +64,7 @@ function StageGruppesession ({data}) {
             var playerKuponer = data.players[i].odds.length;
             antalKuponer = antalKuponer + playerKuponer;
             var finalKuponer = antalKuponer + "";
-            if (data.players[i].player === localStorage.getItem("email")) {
+            if (data.players[i].player === getUser() ? getUser().email : "") {
                 localStorage.setItem("notifikationer", data.players[i].info.notifikationer.length);
             }
         }
@@ -71,12 +72,12 @@ function StageGruppesession ({data}) {
     }, [])
 
     function tilmeld() {
-        var yourIndex = activeGame["players"].findIndex(obj => obj.player === localStorage.getItem("email"));
+        var yourIndex = activeGame["players"].findIndex(obj => obj.player === getUser() ? getUser().email : "");
 
         var varighedDate = new Date(varighed).getTime();
         var nowDate = new Date().getTime();
 
-        if ((yourIndex === -1 && varighedDate > nowDate) && localStorage.getItem("auth")) {
+        if ((yourIndex === -1 && varighedDate > nowDate) && getUser() ? getUser().email : "") {
             console.log(activeGame)
             const tilmeldUrl = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/gruppesession";
 
@@ -90,17 +91,11 @@ function StageGruppesession ({data}) {
             var medlemsskab;
             var userEmail;
             var username;
-
-            const authToken = JSON.parse(localStorage.getItem("auth")).auth_token;
-        
-            var decodedToken = jwtDecode(authToken);
-            var todayTime = new Date().getTime();
-            var todayMS = todayTime/1000;
             
-            if (decodedToken["exp"] > todayMS) {
-                medlemsskab = decodedToken["rolle"];
-                userEmail = decodedToken["email"];
-                username = decodedToken["username"];
+            if (getUser() ? getUser().email : "") {
+                medlemsskab = getUser() ? getUser().rolle : "";
+                userEmail = getUser() ? getUser().email : "";
+                username = getUser() ? getUser().username : "";
             } else {
                 medlemsskab = "none";
                 userEmail = "Ukendt";
@@ -125,7 +120,7 @@ function StageGruppesession ({data}) {
                 console.log("AWS - Gruppespil:", response)
                 cookie.set("activeGame", activeGame["id"], {expires: 24});
                 localStorage.setItem("activeGame", activeGame["id"]);
-                localStorage.setItem("playerIndex", data.Item.Attributes.players.findIndex(obj => obj.player === localStorage.getItem("email")));
+                localStorage.setItem("playerIndex", data.Item.Attributes.players.findIndex(obj => obj.player === getUser() ? getUser().email : ""));
                 router.push("/stage")
             }).catch(error => {
                 console.log(error);
@@ -135,7 +130,7 @@ function StageGruppesession ({data}) {
                 setNotiMessage("error", "Deltager allerede", "Det ser ud til, at du allerede deltager i dette gruppespil.");
             } else if (varighedDate < nowDate) {
                 setNotiMessage("error", "Gruppespil slut", "Gruppespil er desværre allerede færdiggjort");
-            } else if (!localStorage.getItem("auth")) {
+            } else if (!getUser() ? getUser().email : "") {
                 router.push("/signup")
             }
         }
@@ -328,7 +323,7 @@ function StageGruppesession ({data}) {
                                     }
 
                                     var showMe = "";
-                                        if (item.player === localStorage.getItem("email")) {
+                                        if (item.player === getUser() ? getUser().email : "") {
                                             showMe = " gruppespil-row-active";
                                         }
 
@@ -356,6 +351,16 @@ function StageGruppesession ({data}) {
 }
 
 export async function getServerSideProps({ req, res, query }) {
+    const sendRedirectLocation = (location) => {
+        res.writeHead(302, {
+            Location: location,
+        });
+        res.end();
+        return { props: {} };
+    };
+    if (!req.cookies.auth) {
+        sendRedirectLocation('/signup')
+    }
     const category = query.game;
     const requestConfig = {
         headers: {

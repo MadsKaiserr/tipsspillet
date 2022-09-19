@@ -5,6 +5,7 @@ import Image from 'next/image'
 
 import DownArrow from './../img/down-arrow.png';
 import logo from './../img/logo-primary.png';
+import { getUser } from "../services/authService";
  
 function Header () {
 
@@ -17,7 +18,9 @@ function Header () {
                 header.classList.toggle("nav-scrolled", window.scrollY >250);
             }
         })
-        setAuth(JSON.parse(localStorage.getItem("auth")));
+        if (getUser()) {
+            setAuth(JSON.parse(JSON.stringify(getUser())));
+        }
     }, [])
 
     function sideMenu() {
@@ -104,10 +107,10 @@ function Header () {
                 </div>
                 <div className="nav-container-right">
                     <div className="header-buttons">
-                        {auth && <Link href="/stage">
+                        {Object.keys(auth).length > 0 && <Link href="/stage">
                             <a className="nav-btn-default">Log ind</a>
                         </Link>}
-                        {!auth && <div className="header-buttons">
+                        {Object.keys(auth).length === 0 && <div className="header-buttons">
                             <p className="nav-btn-outline" onClick={() => showLogin()}>Log ind</p>
                             <Link href="/signup"><button className="nav-btn-default">Opret Profil<div className="nav-in-before"></div><span className="nav-in">Det gratis</span></button></Link>
                         </div>}

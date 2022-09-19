@@ -221,6 +221,16 @@ function StageIndstillinger ({data}) {
 }
 
 export async function getServerSideProps({ req, res }) {
+    const sendRedirectLocation = (location) => {
+        res.writeHead(302, {
+            Location: location,
+        });
+        res.end();
+        return { props: {} };
+    };
+    if (!req.cookies.auth) {
+        sendRedirectLocation('/signup')
+    }
     res.setHeader(
         'Cache-Control',
         'public, s-maxage=10, stale-while-revalidate=59'

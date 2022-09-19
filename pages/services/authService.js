@@ -1,24 +1,25 @@
 import cookie from 'js-cookie'
+import jwtDecode from "jwt-decode";
 module.exports = {
     getUser: function() {
-        if (typeof window !== 'undefined') {
-            const user = localStorage.getItem("auth");
-            if (user === "undefined" || !user) {
-                return null
-            } else {
-                return JSON.parse(user);
+        if (cookie.get("auth")) {
+            const authToken = JSON.parse(cookie.get("auth")).auth_token;
+            const decodedToken = jwtDecode(authToken);
+            const todayTime = new Date().getTime();
+            const todayMS = todayTime/1000;
+            if (decodedToken["exp"] > todayMS) {
+                return decodedToken;
             }
-        }
+        } else return;
     },
     getToken: function() {
-        return JSON.parse(localStorage.getItem("auth")).token;
+        return JSON.parse(JSON.stringify(getUser())).token;
     },
 
     setUserSession: function(user, token) {
         user.auth_token = token;
         cookie.set("email", user.email, {expires: 24});
-        localStorage.setItem("auth", JSON.stringify(user));
-        localStorage.setItem("email", user.email);
+        cookie.set("auth", JSON.stringify(user), {expires: 24});
         localStorage.removeItem("favoritter");
         localStorage.removeItem("aktive-spil-suspend");
     },
@@ -27,5 +28,7 @@ module.exports = {
         localStorage.clear();
         sessionStorage.clear();
         cookie.remove("activeGame");
+        cookie.remove("email");
+        cookie.remove("auth");
     }
 }

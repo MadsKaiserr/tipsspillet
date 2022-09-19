@@ -8,6 +8,7 @@ import jwtDecode from "jwt-decode";
 import Height from './components/height';
 import cookie from 'js-cookie'
 import Router, { useRouter } from 'next/router'
+import { getUser } from "./services/authService";
  
 function Gruppesession ({data}) {
     const router = useRouter()
@@ -49,8 +50,8 @@ function Gruppesession ({data}) {
             setTableArray(tableArray => [...tableArray, item]);
         });
         for (var u in data.players) {
-            if (data.players[u].player === localStorage.getItem("email")) {
-                if (data.players[u].player === localStorage.getItem("email")) {
+            if (data.players[u].player === getUser() ? getUser().email : "") {
+                if (data.players[u].player === getUser() ? getUser().email : "") {
                     localStorage.setItem("notifikationer", data.players[u].info.notifikationer.length);
                 }
             }
@@ -66,7 +67,7 @@ function Gruppesession ({data}) {
             var playerKuponer = data.players[i].odds.length;
             antalKuponer = antalKuponer + playerKuponer;
             var finalKuponer = antalKuponer + "";
-            if (data.players[i].player === localStorage.getItem("email")) {
+            if (data.players[i].player === getUser() ? getUser().rolle : "") {
                 localStorage.setItem("notifikationer", data.players[i].info.notifikationer.length);
             }
         }
@@ -74,73 +75,71 @@ function Gruppesession ({data}) {
     }, [])
 
     function tilmeld() {
-        var yourIndex = activeGame["players"].findIndex(obj => obj.player === localStorage.getItem("email"));
+        if (getUser()) {
+            var yourIndex = activeGame["players"].findIndex(obj => obj.player === getUser().email);
 
-        var varighedDate = new Date(varighed).getTime();
-        var nowDate = new Date().getTime();
-
-        if ((yourIndex === -1 && varighedDate > nowDate) && localStorage.getItem("auth")) {
-            console.log(activeGame)
-            const tilmeldUrl = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/gruppesession";
-
-            const tilmeldConfig = {
-                headers: {
-                    "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
+            var varighedDate = new Date(varighed).getTime();
+            var nowDate = new Date().getTime();
+    
+            if ((yourIndex === -1 && varighedDate > nowDate) && getUser().rolle) {
+                console.log(activeGame)
+                const tilmeldUrl = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/gruppesession";
+    
+                const tilmeldConfig = {
+                    headers: {
+                        "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
+                    }
                 }
-            }
-
-            var moneys = parseInt(activeGame["start_amount"]);
-            var medlemsskab;
-            var userEmail;
-            var username;
-
-            const authToken = JSON.parse(localStorage.getItem("auth")).auth_token;
-        
-            var decodedToken = jwtDecode(authToken);
-            var todayTime = new Date().getTime();
-            var todayMS = todayTime/1000;
-            
-            if (decodedToken["exp"] > todayMS) {
-                medlemsskab = decodedToken["rolle"];
-                userEmail = decodedToken["email"];
-                username = decodedToken["username"];
+    
+                var moneys = parseInt(activeGame["start_amount"]);
+                var medlemsskab;
+                var userEmail;
+                var username;
+                
+                if (getUser() ? getUser().rolle : "") {
+                    medlemsskab = getUser() ? getUser().rolle : "";
+                    userEmail = getUser() ? getUser().email : "";
+                    username = getUser() ? getUser().username : "";
+                } else {
+                    medlemsskab = "none";
+                    userEmail = "Ukendt";
+                    username = "Ukendt";
+                }
+    
+                const tilmeldBody = {
+                    "tilmeldId": activeGame["id"],
+                    "updateItValue": {
+                        "player": userEmail,
+                        "username": username,
+                        "info": {
+                            "money": moneys,
+                            "notifikationer": [],
+                            "medlemsskab": medlemsskab
+                        }, 
+                        "odds": []
+                    }
+                }
+    
+                axios.patch(tilmeldUrl, tilmeldBody, tilmeldConfig).then(response => {
+                    console.log("AWS - Gruppespil:", response)
+                    cookie.set("activeGame", activeGame["id"], {expires: 24});
+                    localStorage.setItem("activeGame", activeGame["id"]);
+                    localStorage.setItem("playerIndex", response.data.Item.Attributes.players.findIndex(obj => obj.player === getUser() ? getUser().email : ""));
+                    router.push("/stage");
+                }).catch(error => {
+                    console.log(error);
+                })
             } else {
-                medlemsskab = "none";
-                userEmail = "Ukendt";
-                username = "Ukendt";
-            }
-
-            const tilmeldBody = {
-                "tilmeldId": activeGame["id"],
-                "updateItValue": {
-                    "player": userEmail,
-                    "username": username,
-                    "info": {
-                        "money": moneys,
-                        "notifikationer": [],
-                        "medlemsskab": medlemsskab
-                    }, 
-                    "odds": []
+                if (yourIndex !== -1) {
+                    setNotiMessage("error", "Deltager allerede", "Det ser ud til, at du allerede deltager i dette gruppespil.");
+                } else if (varighedDate < nowDate) {
+                    setNotiMessage("error", "Gruppespil slut", "Gruppespil er desværre allerede færdiggjort");
+                } else if (!getUser().rolle) {
+                    router.push("/signup");
                 }
             }
-
-            axios.patch(tilmeldUrl, tilmeldBody, tilmeldConfig).then(response => {
-                console.log("AWS - Gruppespil:", response)
-                cookie.set("activeGame", activeGame["id"], {expires: 24});
-                localStorage.setItem("activeGame", activeGame["id"]);
-                localStorage.setItem("playerIndex", data.Item.Attributes.players.findIndex(obj => obj.player === localStorage.getItem("email")));
-                router.push("/stage");
-            }).catch(error => {
-                console.log(error);
-            })
         } else {
-            if (yourIndex !== -1) {
-                setNotiMessage("error", "Deltager allerede", "Det ser ud til, at du allerede deltager i dette gruppespil.");
-            } else if (varighedDate < nowDate) {
-                setNotiMessage("error", "Gruppespil slut", "Gruppespil er desværre allerede færdiggjort");
-            } else if (!localStorage.getItem("auth")) {
-                router.push("/signup");
-            }
+            router.push("/signup");
         }
     }
 
@@ -246,7 +245,7 @@ function Gruppesession ({data}) {
                                     }
 
                                     var showMe = "";
-                                    if (item.player === localStorage.getItem("email")) {
+                                    if (item.player === getUser() ? getUser().email : "") {
                                         showMe = " gruppespil-row-active";
                                     }
 

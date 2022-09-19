@@ -5,6 +5,7 @@ import Head from 'next/head'
 import Header from '../layout/header';
 import FaqComponent from '../components/faq';
 import axios from "axios";
+import { getUser } from "../services/authService";
 
 function Success () {
 
@@ -22,7 +23,7 @@ function Success () {
 
         const requestBody = {
             "session_key": session_id,
-            "email": localStorage.getItem("email")
+            "email": getUser() ? getUser().email : ""
         }
 
         axios.post(URL, requestBody, requestConfig).then(response => {

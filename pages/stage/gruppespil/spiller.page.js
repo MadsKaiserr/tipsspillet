@@ -359,7 +359,17 @@ function StageSpiller ({ data }) {
     )
 }
 
-export async function getServerSideProps({ query }) {
+export async function getServerSideProps({ res, req, query }) {
+    const sendRedirectLocation = (location) => {
+        res.writeHead(302, {
+            Location: location,
+        });
+        res.end();
+        return { props: {} };
+    };
+    if (!req.cookies.auth) {
+        sendRedirectLocation('/signup')
+    }
     const category = query.game;
 
     const requestConfig = {

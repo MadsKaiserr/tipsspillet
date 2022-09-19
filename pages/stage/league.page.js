@@ -7,6 +7,7 @@ import Image from 'next/image'
 import StageHeader from '../layout/stageheader';
 import Height from '../components/height';
 import Back from "../components/back.js";
+import { getUser } from "../services/authService";
  
 function StageLeague () {
 
@@ -479,7 +480,7 @@ function StageLeague () {
 
                     const requestBody = {
                         "data": storage,
-                        "email": localStorage.getItem("email")
+                        "email": getUser() ? getUser().email : ""
                     }
                     axios.post(signupURL, requestBody, requestConfig).then(response => {
                         console.log("AWS - Favoritter:", response);
@@ -507,7 +508,7 @@ function StageLeague () {
 
                     const requestBody = {
                         "data": storageDiv,
-                        "email": localStorage.getItem("email")
+                        "email": getUser() ? getUser().email : ""
                     }
                     axios.post(signupURL, requestBody, requestConfig).then(response => {
                         console.log("AWS - Favoritter:", response);
@@ -536,7 +537,7 @@ function StageLeague () {
 
                     const requestBody = {
                         "data": storage,
-                        "email": localStorage.getItem("email")
+                        "email": getUser() ? getUser().email : ""
                     }
                     axios.post(signupURL, requestBody, requestConfig).then(response => {
                         console.log("AWS - Favoritter:", response);

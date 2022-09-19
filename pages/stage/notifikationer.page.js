@@ -6,6 +6,8 @@ import Image from 'next/image'
 import { getKupon, getString } from "../services/algo.js";
 import StageHeader from '../layout/stageheader';
 import Height from '../components/height';
+import { getUser } from "../services/authService";
+import cookie from 'js-cookie'
  
 function StageNotifikationer () {
 
@@ -15,8 +17,8 @@ function StageNotifikationer () {
     const [errorText, setErrorText] = useState("Der blev ikke fundet nogle notifikationer...")
 
     useEffect(() => {
-        if (localStorage.getItem("activeGame") && localStorage.getItem("activeGame") !== "") {
-            var activeGame = localStorage.getItem("activeGame");
+        if (cookie.get("activeGame") && cookie.get("activeGame") !== "") {
+            var activeGame = cookie.get("activeGame");
             const URL = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/gruppesession?game=" + activeGame;
     
             const requestConfigen = {
@@ -27,7 +29,7 @@ function StageNotifikationer () {
             axios.get(URL, requestConfigen).then(response => {
                 console.log("AWS - Gruppespil:", response);
                 for (var i in response.data.players) {
-                    if (response.data.players[i].player === localStorage.getItem("email")) {
+                    if (response.data.players[i].player === getUser() ? getUser().email : "") {
                         setItems(response.data.players[i].info.notifikationer);
                         if (response.data.players[i].info.notifikationer.length > 0) {
                             setErrorText("");

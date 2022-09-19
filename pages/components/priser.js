@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link'
 import axios from "axios";
 import { useRouter } from 'next/router'
+import { getUser } from "../services/authService";
  
 function Priser () {
     const router = useRouter()
@@ -28,7 +29,7 @@ function Priser () {
     const [premiumPrice, setPremiumPrice] = useState(39);
 
     const handlePlus = async e => {
-        if (localStorage.getItem("auth")) {
+        if (JSON.parse(JSON.stringify(getUser()))) {
             if (plusPrice === 39) {
                 setLoading1(true);
                 const URL = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/payment";
@@ -111,7 +112,7 @@ function Priser () {
     }
 
     const handlePremium = async e => {
-        if (localStorage.getItem("auth")) {
+        if (JSON.parse(JSON.stringify(getUser()))) {
             if (premiumPrice === 59) {
                 setLoading2(true);
                 const URL = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/payment";

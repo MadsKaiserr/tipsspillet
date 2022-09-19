@@ -7,6 +7,7 @@ import Image from 'next/image'
 import { getKupon, getString } from "../services/algo.js";
 import StageHeader from '../layout/stageheader';
 import Height from '../components/height';
+import cookie from 'js-cookie'
  
 function StageGruppespil ({data}) {
 
@@ -28,11 +29,10 @@ function StageGruppespil ({data}) {
     })
 
     useEffect(() => {
-        if (localStorage.getItem("activeGame")) {
-            setActiveGame(localStorage.getItem("activeGame"));
+        if (cookie.get("activeGame")) {
+            setActiveGame(cookie.get("activeGame"));
         }
-        const user = getUser();
-        setUsername(user.username);
+        setUsername(getUser() ? getUser().username : "");
     }, [])
 
     const [forbrug, setForbrug] = useState(0);
@@ -108,7 +108,7 @@ function StageGruppespil ({data}) {
             var newTableArray = [];
             var myPlayer = [];
             for (var k in data.players) {
-                if (data.players[k].player === localStorage.getItem("email")) {
+                if (data.players[k].player === getUser() ? getUser().email : "") {
                     myPlayer = data.players[k].odds;
                     setGameAdmin(data.admin);
                     localStorage.setItem("notifikationer", data.players[k].info.notifikationer.length);
@@ -203,7 +203,7 @@ function StageGruppespil ({data}) {
             });
             setLoadingText("")
         } else {
-            if (localStorage.getItem("activeGame")) {
+            if (cookie.get("activeGame")) {
                 document.getElementById("main-error").classList.add("display-flex");
                 document.getElementById("main-error-p").innerHTML = "Dit aktive spil er suspenderet.";
                 localStorage.setItem("aktive-spil-suspend", "true");
@@ -212,7 +212,7 @@ function StageGruppespil ({data}) {
     }, [])
 
     function adminSettings() {
-        if (gameAdmin === localStorage.getItem("email")){
+        if (gameAdmin === getUser() ? getUser().email : ""){
             return (
                 <Link href="">
                     <button className="gruppespil3-btn">Indstillinger</button>
@@ -237,7 +237,7 @@ function StageGruppespil ({data}) {
                 }
             }
     
-            const auth = JSON.parse(localStorage.getItem("auth"));
+            const auth = JSON.parse(JSON.stringify(getUser()));
 
             var beskedArray = beskeder;
             beskedArray.push({
@@ -253,7 +253,7 @@ function StageGruppespil ({data}) {
                     name: auth.username,
                     besked: beskedText
                 },
-                game: localStorage.getItem("activeGame")
+                game: cookie.get("activeGame")
             }
 
     
@@ -275,7 +275,7 @@ function StageGruppespil ({data}) {
         if (beskederLength >= 5) {
             return beskeder.slice(beskederLength - 5,beskederLength).map((item) => {
             var nameVar = "chat-name";
-            if (item.name === JSON.parse(localStorage.getItem("auth")).username) {
+            if (item.name === getUser() ? getUser().username : "") {
                 nameVar = "chat-name-active";
             }
 
@@ -334,7 +334,7 @@ function StageGruppespil ({data}) {
         )} else {
             return beskeder.slice(0,5).map((item) => {
                 var nameVar = "chat-name";
-                if (item.name === JSON.parse(localStorage.getItem("auth")).username) {
+                if (item.name === getUser() ? getUser().username : "") {
                     nameVar = "chat-name-active";
                 }
     
@@ -986,7 +986,7 @@ function StageGruppespil ({data}) {
                                     }
 
                                     var showMe = "";
-                                    if (item.player === localStorage.getItem("email")) {
+                                    if (item.player === getUser() ? getUser().email : "") {
                                         showMe = " gruppespil-row-active";
                                     }
 
@@ -1055,6 +1055,16 @@ function StageGruppespil ({data}) {
 }
 
 export async function getServerSideProps({ req, res }) {
+    const sendRedirectLocation = (location) => {
+        res.writeHead(302, {
+            Location: location,
+        });
+        res.end();
+        return { props: {} };
+    };
+    if (!req.cookies.auth) {
+        sendRedirectLocation('/signup')
+    }
     const requestConfig = {
         headers: {
             "x-api-key": process.env.AWS_API

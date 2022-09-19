@@ -13,6 +13,7 @@ import Image from 'next/image'
 import StageHeader from '../layout/stageheader';
 import Height from '../components/height';
 import { useRouter } from 'next/router'
+import cookie from 'js-cookie'
  
 function StageForside ({gruppespil_data, spiller_data}) {
     const router = useRouter()
@@ -114,8 +115,8 @@ function StageForside ({gruppespil_data, spiller_data}) {
     const [activeGame, setActiveGame] = useState("");
 
     useEffect(() => {
-        setAuth(localStorage.getItem("auth"));
-        setActiveGame(localStorage.getItem("activeGame"));
+        setAuth(getUser() ? getUser() : {});
+        setActiveGame(cookie.get("activeGame"));
     }, [])
 
     const [selected, setSelected] = useState(new Date());
@@ -389,11 +390,11 @@ function StageForside ({gruppespil_data, spiller_data}) {
             var nowDate = new Date().getTime();
             var varighedDate = new Date(slutdato).getTime();
             var placeBetBTN = document.getElementById("placeBetBTN");
-            if (!(odds.length > 0) || !(localStorage.getItem("activeGame")) || indsats <= 0) {
+            if (!(odds.length > 0) || !(cookie.get("activeGame")) || indsats <= 0) {
                 if (!(odds.length > 0)) {
                     setNotiMessage("error", "Ingen væddemål", "Du har ikke placeret nogle væddemål. Placer ét eller flere væddemål, for at lave din kuppon.");
                     placeBetBTN.innerHTML = "Placér bet";
-                } else if (!(localStorage.getItem("activeGame"))) {
+                } else if (!(cookie.get("activeGame"))) {
                     setNotiMessage("error", "Intet aktivt gruppespil", "For at placere et væddemål, skal du være tilmeldt et gruppespil, og sætte det som aktivt.");
                     placeBetBTN.innerHTML = "Placér bet";
                 } else if (indsats <= 0) {
@@ -426,7 +427,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
                             placeBetBTN.innerHTML = "Placér bet";
                         } else {
                             const placeBetUrl = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/bet";
-                    const userEmail = localStorage.getItem("email");
+                    const userEmail = getUser() ? getUser().email : "";
             
                     const betConfig = {
                         headers: {
@@ -434,7 +435,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
                         }
                     }
         
-                    const localGame = localStorage.getItem("activeGame");
+                    const localGame = cookie.get("activeGame");
                     const localIndex = parseInt(localStorage.getItem("playerIndex"));
         
                     var last_date = 0;
@@ -510,11 +511,11 @@ function StageForside ({gruppespil_data, spiller_data}) {
             var nowDate = new Date().getTime();
         var varighedDate = new Date(slutdato).getTime();
         var placeBetBTN = document.getElementById("placeBetBTN");
-        if (!(odds.length > 0) || !(localStorage.getItem("activeGame")) || singleIndsats <= 0) {
+        if (!(odds.length > 0) || !(cookie.get("activeGame")) || singleIndsats <= 0) {
             if (!(odds.length > 0)) {
                 setNotiMessage("error", "Ingen væddemål", "Du har ikke placeret nogle væddemål. Placer ét eller flere væddemål, for at lave din kuppon.");
                 placeBetBTN.innerHTML = "Placér bet";
-            } else if (!(localStorage.getItem("activeGame"))) {
+            } else if (!(cookie.get("activeGame"))) {
                 setNotiMessage("error", "Intet aktivt gruppespil", "For at placere et væddemål, skal du være tilmeldt et gruppespil, og sætte det som aktivt.");
                 placeBetBTN.innerHTML = "Placér bet";
             } else if (singleIndsats <= 0) {
@@ -547,7 +548,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
                         placeBetBTN.innerHTML = "Placér bet";
                     } else {
                         const placeBetUrl = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/bet";
-                const userEmail = localStorage.getItem("email");
+                const userEmail = getUser() ? getUser().email : "";
         
                 const betConfig = {
                     headers: {
@@ -555,7 +556,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
                     }
                 }
     
-                const localGame = localStorage.getItem("activeGame");
+                const localGame = cookie.get("activeGame");
                 const localIndex = parseInt(localStorage.getItem("playerIndex"));
     
                 var last_date = 0;
@@ -736,7 +737,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
 
     function multiFetch(l,checkArray, calcUdbetaling, odd_ids, k, kupon, type) {
         if (type === "kombination") {
-            var activeGame = localStorage.getItem("activeGame");
+            var activeGame = cookie.get("activeGame");
             const requestConfig = {
                 headers: {
                     "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
@@ -816,7 +817,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
                 })
                 .catch(error => console.log('error', error));
         } else {
-            var activeGame = localStorage.getItem("activeGame");
+            var activeGame = cookie.get("activeGame");
         const requestConfig = {
             headers: {
                 "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
@@ -930,7 +931,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
             var weeks = data.indskydelse_int;
             var weekSince = (new Date().getTime() / (1000*60*60*24*7)) - oprettelse_weeks;
             if (weekSince - weeks >= 1) {
-                var activeGame = localStorage.getItem("activeGame");
+                var activeGame = cookie.get("activeGame");
                 const betCalcURL = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/updateindskydelse";
         
                 const winBody = {
@@ -948,7 +949,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
                 axios.patch(betCalcURL, winBody, requestConfig).then(responseTem => {
                     console.log("AWS - Indskydelse:", responseTem, winBody);
                     for (var i in responseTem.data.players) {
-                        if (responseTem.data.players[i].player === localStorage.getItem("email")) {
+                        if (responseTem.data.players[i].player === getUser() ? getUser().email : "") {
                             setCurrentMoney(responseTem.data.players[i].info.money);
                         }
                     }
@@ -974,7 +975,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
             setSlutdato(gruppespil_data.varighed);
 
             for (var k in gruppespil_data.players) {
-                if (gruppespil_data.players[k].player === localStorage.getItem("email")) {
+                if (gruppespil_data.players[k].player === getUser() ? getUser().email : "") {
                     localStorage.setItem("notifikationer", gruppespil_data.players[k].info.notifikationer.length);
                 }
                 for (var l in gruppespil_data.players[k].odds) {
@@ -1011,13 +1012,13 @@ function StageForside ({gruppespil_data, spiller_data}) {
             setPositionCount(n);
             var topScorers = getTopN(gruppespil_data.players, n);
             topScorers.forEach(function(gameItem, index) {
-                if (gameItem.player === localStorage.getItem("email")) {
+                if (gameItem.player === getUser() ? getUser().email : "") {
                     setCurrentMoney(gameItem.info.money)
                     setPosition(index + 1);
                 }
             });
         } else {
-            if (localStorage.getItem("activeGame")) {
+            if (cookie.get("activeGame")) {
                 document.getElementById("main-error").classList.add("display-flex");
                 document.getElementById("main-error-p").innerHTML = "Dit aktive spil er suspenderet.";
                 localStorage.setItem("aktive-spil-suspend", "true");
@@ -1078,10 +1079,10 @@ function StageForside ({gruppespil_data, spiller_data}) {
             if (modalType === "kombination") {
                 var nowDate = new Date().getTime();
             var varighedDate = new Date(slutdato).getTime();
-            if (!(odds.length > 0) || !(localStorage.getItem("activeGame")) || indsats <= 0) {
+            if (!(odds.length > 0) || !(cookie.get("activeGame")) || indsats <= 0) {
                 if (!(odds.length > 0)) {
                     setNotiMessage("error", "Ingen væddemål", "Du har ikke placeret nogle væddemål. Placer ét eller flere væddemål, for at lave din kuppon.");
-                } else if (!(localStorage.getItem("activeGame"))) {
+                } else if (!(cookie.get("activeGame"))) {
                     setNotiMessage("error", "Intet aktivt gruppespil", "For at placere et væddemål, skal du være tilmeldt et gruppespil, og sætte det som aktivt.");
                 } else if (indsats <= 0) {
                     setNotiMessage("error", "Positivt beløb", "Din indsats på dit væddemål skal være positiv.");
@@ -1123,10 +1124,10 @@ function StageForside ({gruppespil_data, spiller_data}) {
             } else {
                 var nowDate = new Date().getTime();
             var varighedDate = new Date(slutdato).getTime();
-            if (!(odds.length > 0) || !(localStorage.getItem("activeGame")) || singleIndsats <= 0) {
+            if (!(odds.length > 0) || !(cookie.get("activeGame")) || singleIndsats <= 0) {
                 if (!(odds.length > 0)) {
                     setNotiMessage("error", "Ingen væddemål", "Du har ikke placeret nogle væddemål. Placer ét eller flere væddemål, for at lave din kuppon.");
-                } else if (!(localStorage.getItem("activeGame"))) {
+                } else if (!(cookie.get("activeGame"))) {
                     setNotiMessage("error", "Intet aktivt gruppespil", "For at placere et væddemål, skal du være tilmeldt et gruppespil, og sætte det som aktivt.");
                 } else if (singleIndsats <= 0) {
                     setNotiMessage("error", "Positivt beløb", "Din indsats på dit væddemål skal være positiv.");
@@ -2307,7 +2308,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
             </div>
             <div className="stage-main">
                 {activeGame && <div className="info-section">
-                    <p className="info-h1">Velkommen, {auth !== "" && <>{JSON.parse(auth).username}</>}</p>
+                    <p className="info-h1">Velkommen, {auth && <>{auth.username}</>}</p>
                     <p className="info-p">Valgte spil: <span className="info-p-span">{activeGameName}
                         <Link href="/stage/aktive-spil">
                             <button className="gruppespil2-btn" style={{marginTop: "0px"}}>Skift</button>
@@ -2322,7 +2323,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
                     </div>
                 </div>}
                 {!activeGame && <div className="info-section">
-                    <p className="info-h1">Velkommen, {auth !== "" && <>{JSON.parse(auth).username}</>}</p>
+                    <p className="info-h1">Velkommen, {auth && <>{auth.username}</>}</p>
                     <p className="info-p">Du har ikke noget valgt spil.</p>
                     <Link href="/stage/aktive-spil">
                         <button className="gruppespil-btn">Vælg spil</button>
@@ -2638,6 +2639,17 @@ function StageForside ({gruppespil_data, spiller_data}) {
 }
 
 export async function getServerSideProps({ req, res }) {
+    const sendRedirectLocation = (location) => {
+        res.writeHead(302, {
+            Location: location,
+        });
+        res.end();
+        return { props: {} };
+    };
+    if (!req.cookies.auth) {
+        sendRedirectLocation('/signup')
+    }
+
     const requestConfig = {
         headers: {
             "x-api-key": process.env.AWS_API
@@ -2646,7 +2658,7 @@ export async function getServerSideProps({ req, res }) {
     const gruppespil_resp = await axios.get("https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/gruppesession?game=" + req.cookies.activeGame, requestConfig);
     const gruppespil_data = gruppespil_resp.data;
 
-    const spiller_resp = await axios.get("https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/user?user=" + req.cookies.email, requestConfig);
+    const spiller_resp = await axios.get("https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/user?user=" + JSON.parse(req.cookies.auth).email, requestConfig);
     const spiller_data = spiller_resp.data;
 
     return {

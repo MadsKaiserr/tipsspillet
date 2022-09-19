@@ -18,7 +18,7 @@ function StageAktiveSpil ({ data }) {
         console.log("AWS - Gruppespil:", data)
         var myArray = [];
         for (var q in data.allGruppespil) {
-            if (data.allGruppespil[q].players.findIndex(obj => obj.player === localStorage.getItem("email")) >= 0) {
+            if (data.allGruppespil[q].players.findIndex(obj => obj.player === getUser() ? getUser().email : "") >= 0) {
                 myArray.push(data.allGruppespil[q]);
             }
         }
@@ -49,9 +49,6 @@ function StageAktiveSpil ({ data }) {
     const [items, setItems] = useState([]);
     const [loading, setLoading] = useState("Indlæser...")
 
-    const user = getUser();
-    const fornavn = user !== 'undefined' && user ? user.username : '';
-
     const [nav, setNav] = useState("alle");
 
     useEffect(() => {
@@ -78,7 +75,7 @@ function StageAktiveSpil ({ data }) {
     }
 
     function opretSpilHandler() {
-        if (JSON.parse(localStorage.getItem("auth")).rolle === "premium" || JSON.parse(localStorage.getItem("auth")).rolle === "administrator") {
+        if (getUser() ? getUser().rolle : "" === "premium" || getUser() ? getUser().rolle : "" === "administrator") {
             router.push("/stage/opret-spil")
         } else {
             showModal();
@@ -102,7 +99,7 @@ function StageAktiveSpil ({ data }) {
     }
 
     function billetHandler() {
-        const user_email = localStorage.getItem("email");
+        const user_email = getUser() ? getUser().email : "";
         const URL = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/adgangsbilletter?player=" + user_email;
         const requestConfig = {
             headers: {
@@ -242,7 +239,7 @@ function StageAktiveSpil ({ data }) {
                         <div className="match-loader display" id="stage-loader1"></div>
                         <ul className="td-table">
                             {search.map((item) => {
-                                const index = item.players.findIndex(obj => obj.player === localStorage.getItem("email"));
+                                const index = item.players.findIndex(obj => obj.player === getUser() ? getUser().email : "");
                                 if (currentType === "alle") {
                                     if (new Date(item.varighed).getTime() > new Date().getTime()) {
                                         return (
@@ -459,7 +456,17 @@ function StageAktiveSpil ({ data }) {
     )
 }
 
-export async function getServerSideProps({ query }) {
+export async function getServerSideProps({ res, req, query }) {
+    const sendRedirectLocation = (location) => {
+        res.writeHead(302, {
+            Location: location,
+        });
+        res.end();
+        return { props: {} };
+    };
+    if (!req.cookies.auth) {
+        sendRedirectLocation('/signup')
+    }
     const requestConfig = {
         headers: {
             "x-api-key": process.env.AWS_API

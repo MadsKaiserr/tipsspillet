@@ -7,6 +7,7 @@ import Image from 'next/image'
 import DownArrow from './img/down-arrow.png';
 import Header from './layout/header';
 import Router, { useRouter } from 'next/router'
+import { getUser } from "./services/authService";
  
 function Gruppespil ({data}) {
     const router = useRouter()
@@ -55,8 +56,8 @@ function Gruppespil ({data}) {
     const [currentType, setCurrentType] = useState("alle");
 
     function gruppespilHandler() {
-        if (localStorage.getItem("auth")) {
-            if (JSON.parse(localStorage.getItem("auth")).rolle === "premium" || JSON.parse(localStorage.getItem("auth")).rolle === "administrator") {
+        if (getUser() ? getUser().email : "") {
+            if (getUser() ? getUser().rolle : "" === "premium" || getUser() ? getUser().rolle : "" === "administrator") {
                 router.push("/stage/opret-spil");
             } else {
                 router.push("/priser");
