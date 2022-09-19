@@ -4,6 +4,7 @@ import Header from './layout/header';
 import { getQuestions } from "./components/faqQ.js";
 import Head from 'next/head'
 import Link from 'next/link'
+import withAuth from './services/withAuth';
 
 import SpilMed from './components/spilmed';
  

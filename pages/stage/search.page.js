@@ -1516,5 +1516,21 @@ function Search () {
         </>
     )
 }
+
+export async function getServerSideProps({ res, req }) {
+    const sendRedirectLocation = (location) => {
+        res.writeHead(302, {
+            Location: location,
+        });
+        res.end();
+        return { props: {} };
+    };
+    if (!req.cookies.auth) {
+        sendRedirectLocation('/signup')
+    }
+    return {
+        props: { },
+    }
+}
  
 export default Search;
