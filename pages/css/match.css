@@ -90,7 +90,7 @@
 
 .match-info-con {
     display: flex;
-    background-color: #fff;
+    background-color: transparent;
     z-index: 3;
     align-items: flex-start;
     gap: 15px;
