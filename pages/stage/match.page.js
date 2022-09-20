@@ -37,7 +37,7 @@ function StageMatcharticle ({data}) {
                 for (var p in JSON.parse(sessionStorage.getItem("notUsableBtn"))) {
                     var buttonOffValue = document.getElementById(JSON.parse(sessionStorage.getItem("notUsableBtn"))[p]);
                     if (buttonOffValue !== undefined && buttonOffValue !== null) {
-                        buttonOffValue.classList.add("odd-off");
+                        buttonOffValue.classList.add("odd-used");
                     }
                 }
                 setKuponBtn("kupon-btn");
@@ -61,6 +61,17 @@ function StageMatcharticle ({data}) {
         const matchIDGet = urlParams.get("game");
         setMatchID(matchIDGet);
     }, [])
+
+    useEffect(() => {
+        if (start !== "...") {
+            if (new Date().getTime() > new Date(start).getTime()) {
+                var slides = document.getElementsByClassName("odd-used");
+                for (var i = 0; i < slides.length; i++) {
+                    slides[i].classList.add("odd-off");
+                }
+            }
+        }
+    })
 
     const [goals, setGoals] = useState("4");
     const [goalsOdds, setGoalsOdds] = useState("3.20");
@@ -650,7 +661,7 @@ function StageMatcharticle ({data}) {
                 const betIdIndex = odds[y].odds_type+matchId+"-"+odds[y].odds_result;
                 const el = document.getElementById(betIdIndex);
                 if (document.getElementById(betIdIndex)) {
-                    el.classList.remove("odd-off");
+                    el.classList.remove("odd-used");
                 }
 
                 var index = notUsableBtn.indexOf(betIdIndex);
@@ -982,7 +993,7 @@ function StageMatcharticle ({data}) {
             for (var l in notUsableBtn) {
                 const el = document.getElementById(notUsableBtn[l]);
                 if (el !== undefined && el !== null) {
-                    el.classList.remove("odd-off");
+                    el.classList.remove("odd-used");
                 }
             }
     
@@ -994,7 +1005,7 @@ function StageMatcharticle ({data}) {
 
     function chooseOdd(btnId, type, row, result) {
         if (!notUsableBtn.includes(btnId) && matchAllowed !== false && odds.length < 5) {
-            document.getElementById(btnId).classList.add("odd-off");
+            document.getElementById(btnId).classList.add("odd-used");
             setNotUsableBtn([...notUsableBtn, btnId]);
             sessionStorage.setItem("notUsableBtn", JSON.stringify([...notUsableBtn, btnId]));
     
@@ -1083,13 +1094,13 @@ function StageMatcharticle ({data}) {
                 for (var q = 0; q < buttonshere3.length; q++) {
                     if (buttonshere3[q] !== undefined) {
                         notUsableArray.push(buttonshere3[q].id);
-                        buttonshere3[q].classList.add("odd-off");
+                        buttonshere3[q].classList.add("odd-used");
                     }
                 }
                 for (var y = 0; y < buttonshere2.length; y++) {
                     if (buttonshere2[y] !== undefined) {
                         notUsableArray.push(buttonshere2[y].id);
-                        buttonshere2[y].classList.add("odd-off");
+                        buttonshere2[y].classList.add("odd-used");
                     }
                 }
                 setNotUsableBtn(notUsableArray);
@@ -2209,7 +2220,7 @@ function StageMatcharticle ({data}) {
                                 {result["time"].status === "FT_PEN" && <p className="match-stilling-box">Efter straffespark: ({result["scores"].ps_score})</p>}
                                 {result["aggregate"] && <p className="match-stilling-box">Resultat af første kamp ({result["aggregate"].data.result})</p>}
                                 {!result["aggregate"] && <>{result["weather_report"] && <p className="match-stilling-box">Temperatur - {result["weather_report"].temperature_celcius.temp}°</p>}</>}
-                                {!result["aggregate"] && <>{!result["weather_report"] && <>{result["round"].data.name && <p className="match-stilling-box">Runde {result["round"].data.name}</p>}</>}</>}
+                                {!result["aggregate"] && <>{!result["weather_report"] && <>{result["round"] && <p className="match-stilling-box">Runde {result["round"].data.name}</p>}</>}</>}
                                 <div className="match-live-oversigt">
                                     <div className="oversigt-section">
                                         <ul>
@@ -2292,14 +2303,14 @@ function StageMatcharticle ({data}) {
                                 </svg>
                                 <p className="match-yder-p">{result["time"].starting_at.date_time}</p>
                             </div>}
-                            {result["venue"].data.name && <div className="match-yder-element">
+                            {result["venue"] && <div className="match-yder-element">
                                 <svg xmlns="http://www.w3.org/2000/svg" className="match-yder-icon" viewBox="0 0 16 16">
                                     <path fillRule="evenodd" d="M14.763.075A.5.5 0 0 1 15 .5v15a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5V14h-1v1.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V10a.5.5 0 0 1 .342-.474L6 7.64V4.5a.5.5 0 0 1 .276-.447l8-4a.5.5 0 0 1 .487.022zM6 8.694 1 10.36V15h5V8.694zM7 15h2v-1.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5V15h2V1.309l-7 3.5V15z"/>
                                     <path d="M2 11h1v1H2v-1zm2 0h1v1H4v-1zm-2 2h1v1H2v-1zm2 0h1v1H4v-1zm4-4h1v1H8V9zm2 0h1v1h-1V9zm-2 2h1v1H8v-1zm2 0h1v1h-1v-1zm2-2h1v1h-1V9zm0 2h1v1h-1v-1zM8 7h1v1H8V7zm2 0h1v1h-1V7zm2 0h1v1h-1V7zM8 5h1v1H8V5zm2 0h1v1h-1V5zm2 0h1v1h-1V5zm0-2h1v1h-1V3z"/>
                                 </svg>
                                 <p className="match-yder-p">{result["venue"].data.name}</p>
                             </div>}
-                            {result["referee"].data.fullname && <div className="match-yder-element">
+                            {result["referee"] && <div className="match-yder-element">
                                 <svg xmlns="http://www.w3.org/2000/svg" className="match-yder-icon" viewBox="0 0 16 16">
                                     <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
                                 </svg>
@@ -2522,9 +2533,9 @@ function StageMatcharticle ({data}) {
                                         var thistime = (nowDate.toString()).slice(0, -3);
                                         if (items["time"].starting_at.timestamp < thistime) {
                                             if (item.type_length === 3) {
-                                                oddofforon0 = "match-odds-offer-element-3 odd-off";
-                                                oddofforon1 = "match-odds-offer-element-3 odd-off";
-                                                oddofforon2 = "match-odds-offer-element-3 odd-off";
+                                                oddofforon0 = "match-odds-offer-element-3 odd-used";
+                                                oddofforon1 = "match-odds-offer-element-3 odd-used";
+                                                oddofforon2 = "match-odds-offer-element-3 odd-used";
                                                 return (
                                                     <li key={item.type + matchID}>
                                                         <div className="match-bet">
@@ -2549,8 +2560,8 @@ function StageMatcharticle ({data}) {
                                                     </li>
                                                 );
                                             } else if (item.type_length === 2) {
-                                                oddofforon20 = "match-odds-offer-element-2 odd-off";
-                                                oddofforon21 = "match-odds-offer-element-2 odd-off";
+                                                oddofforon20 = "match-odds-offer-element-2 odd-used";
+                                                oddofforon21 = "match-odds-offer-element-2 odd-used";
                                                 return (
                                                     <li key={item.type}>
                                                         <div className="match-bet">
@@ -2580,11 +2591,11 @@ function StageMatcharticle ({data}) {
                                                     const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + i);
                                                     if (repliceIndex >= 0) {
                                                         if (i === 0) {
-                                                            oddofforon0 = "match-odds-offer-element-3 odd-off";
+                                                            oddofforon0 = "match-odds-offer-element-3 odd-used";
                                                         } else if (i === 1) {
-                                                            oddofforon1 = "match-odds-offer-element-3 odd-off";
+                                                            oddofforon1 = "match-odds-offer-element-3 odd-used";
                                                         } else if (i === 2) {
-                                                            oddofforon2 = "match-odds-offer-element-3 odd-off";
+                                                            oddofforon2 = "match-odds-offer-element-3 odd-used";
                                                         }
                                                     }
                                                 }
@@ -2619,9 +2630,9 @@ function StageMatcharticle ({data}) {
                                                     const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + o);
                                                     if (repliceIndex >= 0) {
                                                         if (o === 0) {
-                                                            oddofforon20 = "match-odds-offer-element-2 odd-off";
+                                                            oddofforon20 = "match-odds-offer-element-2 odd-used";
                                                         } else if (o === 1) {
-                                                            oddofforon21 = "match-odds-offer-element-2 odd-off";
+                                                            oddofforon21 = "match-odds-offer-element-2 odd-used";
                                                         }
                                                     }
                                                 }
@@ -2650,7 +2661,7 @@ function StageMatcharticle ({data}) {
                                                 const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
                                                 const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + goals);
                                                 if (repliceIndex >= 0) {
-                                                    oddofforon10 = "match-odds-offer-element-1 odd-off";
+                                                    oddofforon10 = "match-odds-offer-element-1 odd-used";
                                                 }
                                             }
                                             return(
@@ -2692,9 +2703,9 @@ function StageMatcharticle ({data}) {
                                         var thistime = (nowDate.toString()).slice(0, -3);
                                         if (items["time"].starting_at.timestamp < thistime) {
                                             if (item.type_length === 3) {
-                                                oddofforon0 = "match-odds-offer-element-3 odd-off";
-                                                oddofforon1 = "match-odds-offer-element-3 odd-off";
-                                                oddofforon2 = "match-odds-offer-element-3 odd-off";
+                                                oddofforon0 = "match-odds-offer-element-3 odd-used";
+                                                oddofforon1 = "match-odds-offer-element-3 odd-used";
+                                                oddofforon2 = "match-odds-offer-element-3 odd-used";
                                                 return (
                                                     <li key={item.type + matchID}>
                                                         <div className="match-bet">
@@ -2719,8 +2730,8 @@ function StageMatcharticle ({data}) {
                                                     </li>
                                                 );
                                             } else if (item.type_length === 2) {
-                                                oddofforon20 = "match-odds-offer-element-2 odd-off";
-                                                oddofforon21 = "match-odds-offer-element-2 odd-off";
+                                                oddofforon20 = "match-odds-offer-element-2 odd-used";
+                                                oddofforon21 = "match-odds-offer-element-2 odd-used";
                                                 return (
                                                     <li key={item.type}>
                                                         <div className="match-bet">
@@ -2750,11 +2761,11 @@ function StageMatcharticle ({data}) {
                                                     const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + i);
                                                     if (repliceIndex >= 0) {
                                                         if (i === 0) {
-                                                            oddofforon0 = "match-odds-offer-element-3 odd-off";
+                                                            oddofforon0 = "match-odds-offer-element-3 odd-used";
                                                         } else if (i === 1) {
-                                                            oddofforon1 = "match-odds-offer-element-3 odd-off";
+                                                            oddofforon1 = "match-odds-offer-element-3 odd-used";
                                                         } else if (i === 2) {
-                                                            oddofforon2 = "match-odds-offer-element-3 odd-off";
+                                                            oddofforon2 = "match-odds-offer-element-3 odd-used";
                                                         }
                                                     }
                                                 }
@@ -2787,9 +2798,9 @@ function StageMatcharticle ({data}) {
                                                 const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
                                                 for (var o in btnReplica) {
                                                     if (btnReplica[o] === item.type + matchID + "-" + item.result0) {
-                                                        oddofforon20 = "match-odds-offer-element-2 odd-off";
+                                                        oddofforon20 = "match-odds-offer-element-2 odd-used";
                                                     } else if (btnReplica[o] === item.type + matchID + "-" + item.result1) {
-                                                        oddofforon21 = "match-odds-offer-element-2 odd-off";
+                                                        oddofforon21 = "match-odds-offer-element-2 odd-used";
                                                     }
                                                 }
                                             }
@@ -2835,9 +2846,9 @@ function StageMatcharticle ({data}) {
                                         var thistime = (nowDate.toString()).slice(0, -3);
                                         if (items["time"].starting_at.timestamp < thistime) {
                                             if (item.type_length === 3) {
-                                                oddofforon0 = "match-odds-offer-element-3 odd-off";
-                                                oddofforon1 = "match-odds-offer-element-3 odd-off";
-                                                oddofforon2 = "match-odds-offer-element-3 odd-off";
+                                                oddofforon0 = "match-odds-offer-element-3 odd-used";
+                                                oddofforon1 = "match-odds-offer-element-3 odd-used";
+                                                oddofforon2 = "match-odds-offer-element-3 odd-used";
                                                 return (
                                                     <li key={item.type + matchID}>
                                                         <div className="match-bet">
@@ -2862,8 +2873,8 @@ function StageMatcharticle ({data}) {
                                                     </li>
                                                 );
                                             } else if (item.type_length === 2) {
-                                                oddofforon20 = "match-odds-offer-element-2 odd-off";
-                                                oddofforon21 = "match-odds-offer-element-2 odd-off";
+                                                oddofforon20 = "match-odds-offer-element-2 odd-used";
+                                                oddofforon21 = "match-odds-offer-element-2 odd-used";
                                                 return (
                                                     <li key={item.type}>
                                                         <div className="match-bet">
@@ -2893,11 +2904,11 @@ function StageMatcharticle ({data}) {
                                                     const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + i);
                                                     if (repliceIndex >= 0) {
                                                         if (i === 0) {
-                                                            oddofforon0 = "match-odds-offer-element-3 odd-off";
+                                                            oddofforon0 = "match-odds-offer-element-3 odd-used";
                                                         } else if (i === 1) {
-                                                            oddofforon1 = "match-odds-offer-element-3 odd-off";
+                                                            oddofforon1 = "match-odds-offer-element-3 odd-used";
                                                         } else if (i === 2) {
-                                                            oddofforon2 = "match-odds-offer-element-3 odd-off";
+                                                            oddofforon2 = "match-odds-offer-element-3 odd-used";
                                                         }
                                                     }
                                                 }
@@ -2932,9 +2943,9 @@ function StageMatcharticle ({data}) {
                                                     const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + o);
                                                     if (repliceIndex >= 0) {
                                                         if (o === 0) {
-                                                            oddofforon20 = "match-odds-offer-element-2 odd-off";
+                                                            oddofforon20 = "match-odds-offer-element-2 odd-used";
                                                         } else if (o === 1) {
-                                                            oddofforon21 = "match-odds-offer-element-2 odd-off";
+                                                            oddofforon21 = "match-odds-offer-element-2 odd-used";
                                                         }
                                                     }
                                                 }
@@ -2981,9 +2992,9 @@ function StageMatcharticle ({data}) {
                                         var thistime = (nowDate.toString()).slice(0, -3);
                                         if (items["time"].starting_at.timestamp < thistime) {
                                             if (item.type_length === 3) {
-                                                oddofforon0 = "match-odds-offer-element-3 odd-off";
-                                                oddofforon1 = "match-odds-offer-element-3 odd-off";
-                                                oddofforon2 = "match-odds-offer-element-3 odd-off";
+                                                oddofforon0 = "match-odds-offer-element-3 odd-used";
+                                                oddofforon1 = "match-odds-offer-element-3 odd-used";
+                                                oddofforon2 = "match-odds-offer-element-3 odd-used";
                                                 return (
                                                     <li key={item.type + matchID}>
                                                         <div className="match-bet">
@@ -3008,8 +3019,8 @@ function StageMatcharticle ({data}) {
                                                     </li>
                                                 );
                                             } else if (item.type_length === 2) {
-                                                oddofforon20 = "match-odds-offer-element-2 odd-off";
-                                                oddofforon21 = "match-odds-offer-element-2 odd-off";
+                                                oddofforon20 = "match-odds-offer-element-2 odd-used";
+                                                oddofforon21 = "match-odds-offer-element-2 odd-used";
                                                 return (
                                                     <li key={item.type}>
                                                         <div className="match-bet">
@@ -3039,11 +3050,11 @@ function StageMatcharticle ({data}) {
                                                     const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + i);
                                                     if (repliceIndex >= 0) {
                                                         if (i === 0) {
-                                                            oddofforon0 = "match-odds-offer-element-3 odd-off";
+                                                            oddofforon0 = "match-odds-offer-element-3 odd-used";
                                                         } else if (i === 1) {
-                                                            oddofforon1 = "match-odds-offer-element-3 odd-off";
+                                                            oddofforon1 = "match-odds-offer-element-3 odd-used";
                                                         } else if (i === 2) {
-                                                            oddofforon2 = "match-odds-offer-element-3 odd-off";
+                                                            oddofforon2 = "match-odds-offer-element-3 odd-used";
                                                         }
                                                     }
                                                 }
@@ -3078,9 +3089,9 @@ function StageMatcharticle ({data}) {
                                                     const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + o);
                                                     if (repliceIndex >= 0) {
                                                         if (o === 0) {
-                                                            oddofforon20 = "match-odds-offer-element-2 odd-off";
+                                                            oddofforon20 = "match-odds-offer-element-2 odd-used";
                                                         } else if (o === 1) {
-                                                            oddofforon21 = "match-odds-offer-element-2 odd-off";
+                                                            oddofforon21 = "match-odds-offer-element-2 odd-used";
                                                         }
                                                     }
                                                 }
@@ -3127,9 +3138,9 @@ function StageMatcharticle ({data}) {
                                         var thistime = (nowDate.toString()).slice(0, -3);
                                         if (items["time"].starting_at.timestamp < thistime) {
                                             if (item.type_length === 3) {
-                                                oddofforon0 = "match-odds-offer-element-3 odd-off";
-                                                oddofforon1 = "match-odds-offer-element-3 odd-off";
-                                                oddofforon2 = "match-odds-offer-element-3 odd-off";
+                                                oddofforon0 = "match-odds-offer-element-3 odd-used";
+                                                oddofforon1 = "match-odds-offer-element-3 odd-used";
+                                                oddofforon2 = "match-odds-offer-element-3 odd-used";
                                                 return (
                                                     <li key={item.type + matchID}>
                                                         <div className="match-bet">
@@ -3154,8 +3165,8 @@ function StageMatcharticle ({data}) {
                                                     </li>
                                                 );
                                             } else if (item.type_length === 2) {
-                                                oddofforon20 = "match-odds-offer-element-2 odd-off";
-                                                oddofforon21 = "match-odds-offer-element-2 odd-off";
+                                                oddofforon20 = "match-odds-offer-element-2 odd-used";
+                                                oddofforon21 = "match-odds-offer-element-2 odd-used";
                                                 return (
                                                     <li key={item.type}>
                                                         <div className="match-bet">
@@ -3185,11 +3196,11 @@ function StageMatcharticle ({data}) {
                                                     const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + i);
                                                     if (repliceIndex >= 0) {
                                                         if (i === 0) {
-                                                            oddofforon0 = "match-odds-offer-element-3 odd-off";
+                                                            oddofforon0 = "match-odds-offer-element-3 odd-used";
                                                         } else if (i === 1) {
-                                                            oddofforon1 = "match-odds-offer-element-3 odd-off";
+                                                            oddofforon1 = "match-odds-offer-element-3 odd-used";
                                                         } else if (i === 2) {
-                                                            oddofforon2 = "match-odds-offer-element-3 odd-off";
+                                                            oddofforon2 = "match-odds-offer-element-3 odd-used";
                                                         }
                                                     }
                                                 }
@@ -3224,9 +3235,9 @@ function StageMatcharticle ({data}) {
                                                     const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + o);
                                                     if (repliceIndex >= 0) {
                                                         if (o === 0) {
-                                                            oddofforon20 = "match-odds-offer-element-2 odd-off";
+                                                            oddofforon20 = "match-odds-offer-element-2 odd-used";
                                                         } else if (o === 1) {
-                                                            oddofforon21 = "match-odds-offer-element-2 odd-off";
+                                                            oddofforon21 = "match-odds-offer-element-2 odd-used";
                                                         }
                                                     }
                                                 }
@@ -3273,9 +3284,9 @@ function StageMatcharticle ({data}) {
                                         var thistime = (nowDate.toString()).slice(0, -3);
                                         if (items["time"].starting_at.timestamp < thistime) {
                                             if (item.type_length === 3) {
-                                                oddofforon0 = "match-odds-offer-element-3 odd-off";
-                                                oddofforon1 = "match-odds-offer-element-3 odd-off";
-                                                oddofforon2 = "match-odds-offer-element-3 odd-off";
+                                                oddofforon0 = "match-odds-offer-element-3 odd-used";
+                                                oddofforon1 = "match-odds-offer-element-3 odd-used";
+                                                oddofforon2 = "match-odds-offer-element-3 odd-used";
                                                 return (
                                                     <li key={item.type + matchID}>
                                                         <div className="match-bet">
@@ -3300,8 +3311,8 @@ function StageMatcharticle ({data}) {
                                                     </li>
                                                 );
                                             } else if (item.type_length === 2) {
-                                                oddofforon20 = "match-odds-offer-element-2 odd-off";
-                                                oddofforon21 = "match-odds-offer-element-2 odd-off";
+                                                oddofforon20 = "match-odds-offer-element-2 odd-used";
+                                                oddofforon21 = "match-odds-offer-element-2 odd-used";
                                                 return (
                                                     <li key={item.type}>
                                                         <div className="match-bet">
@@ -3331,11 +3342,11 @@ function StageMatcharticle ({data}) {
                                                     const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + i);
                                                     if (repliceIndex >= 0) {
                                                         if (i === 0) {
-                                                            oddofforon0 = "match-odds-offer-element-3 odd-off";
+                                                            oddofforon0 = "match-odds-offer-element-3 odd-used";
                                                         } else if (i === 1) {
-                                                            oddofforon1 = "match-odds-offer-element-3 odd-off";
+                                                            oddofforon1 = "match-odds-offer-element-3 odd-used";
                                                         } else if (i === 2) {
-                                                            oddofforon2 = "match-odds-offer-element-3 odd-off";
+                                                            oddofforon2 = "match-odds-offer-element-3 odd-used";
                                                         }
                                                     }
                                                 }
@@ -3370,9 +3381,9 @@ function StageMatcharticle ({data}) {
                                                     const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + o);
                                                     if (repliceIndex >= 0) {
                                                         if (o === 0) {
-                                                            oddofforon20 = "match-odds-offer-element-2 odd-off";
+                                                            oddofforon20 = "match-odds-offer-element-2 odd-used";
                                                         } else if (o === 1) {
-                                                            oddofforon21 = "match-odds-offer-element-2 odd-off";
+                                                            oddofforon21 = "match-odds-offer-element-2 odd-used";
                                                         }
                                                     }
                                                 }
@@ -3419,9 +3430,9 @@ function StageMatcharticle ({data}) {
                                         var thistime = (nowDate.toString()).slice(0, -3);
                                         if (items["time"].starting_at.timestamp < thistime) {
                                             if (item.type_length === 3) {
-                                                oddofforon0 = "match-odds-offer-element-3 odd-off";
-                                                oddofforon1 = "match-odds-offer-element-3 odd-off";
-                                                oddofforon2 = "match-odds-offer-element-3 odd-off";
+                                                oddofforon0 = "match-odds-offer-element-3 odd-used";
+                                                oddofforon1 = "match-odds-offer-element-3 odd-used";
+                                                oddofforon2 = "match-odds-offer-element-3 odd-used";
                                                 return (
                                                     <li key={item.type + matchID}>
                                                         <div className="match-bet">
@@ -3446,8 +3457,8 @@ function StageMatcharticle ({data}) {
                                                     </li>
                                                 );
                                             } else if (item.type_length === 2) {
-                                                oddofforon20 = "match-odds-offer-element-2 odd-off";
-                                                oddofforon21 = "match-odds-offer-element-2 odd-off";
+                                                oddofforon20 = "match-odds-offer-element-2 odd-used";
+                                                oddofforon21 = "match-odds-offer-element-2 odd-used";
                                                 return (
                                                     <li key={item.type}>
                                                         <div className="match-bet">
@@ -3477,11 +3488,11 @@ function StageMatcharticle ({data}) {
                                                     const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + i);
                                                     if (repliceIndex >= 0) {
                                                         if (i === 0) {
-                                                            oddofforon0 = "match-odds-offer-element-3 odd-off";
+                                                            oddofforon0 = "match-odds-offer-element-3 odd-used";
                                                         } else if (i === 1) {
-                                                            oddofforon1 = "match-odds-offer-element-3 odd-off";
+                                                            oddofforon1 = "match-odds-offer-element-3 odd-used";
                                                         } else if (i === 2) {
-                                                            oddofforon2 = "match-odds-offer-element-3 odd-off";
+                                                            oddofforon2 = "match-odds-offer-element-3 odd-used";
                                                         }
                                                     }
                                                 }
@@ -3516,9 +3527,9 @@ function StageMatcharticle ({data}) {
                                                     const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + o);
                                                     if (repliceIndex >= 0) {
                                                         if (o === 0) {
-                                                            oddofforon20 = "match-odds-offer-element-2 odd-off";
+                                                            oddofforon20 = "match-odds-offer-element-2 odd-used";
                                                         } else if (o === 1) {
-                                                            oddofforon21 = "match-odds-offer-element-2 odd-off";
+                                                            oddofforon21 = "match-odds-offer-element-2 odd-used";
                                                         }
                                                     }
                                                 }

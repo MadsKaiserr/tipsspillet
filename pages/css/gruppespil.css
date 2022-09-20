@@ -22,6 +22,11 @@
     overflow: hidden;
 }
 
+.td-btns {
+  display: flex;
+  gap: 10px;
+}
+
 .dyst-table-row {
     border-radius: 3px;
     background-color: #fff;

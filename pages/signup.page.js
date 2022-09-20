@@ -331,8 +331,10 @@ function Signup () {
         document.getElementById(type+"-check").classList.remove("display-not");
     }
 
-    const gradient = new Gradient()
-    gradient.initGradient('#gradient-canvas')
+    useEffect(() => {
+        const gradient = new Gradient()
+        gradient.initGradient('#gradient-canvas')
+    }, [])
 
     return (
         <>
@@ -354,37 +356,18 @@ function Signup () {
                     </svg>
                     <p className="signup-tilbage-p">Tilbage til forsiden</p>
                 </div>
-                <canvas className="canvas-container-signup" id="gradient-canvas" data-transition-in></canvas>
                 <div className="route-thirds-element-1" id="third">
                     <div className="signup-popup" id="info1">
                         {message !== "" && <p className="form-error">{message}</p>}
-                        <Link href="/"><Image className="signup-logo" src={PrimaryLogo} height="55px" width="55px" /></Link>
-                        <div className="login-text">
-                            <h1 className="login-text-h1">Opret din konto</h1>
+                        <div className="cg-info">
+                            <h1 className="cg-h1">Opret din konto</h1>
+                            <h2 className="cg-h2">Kom igang på Tipsspillet</h2>
                         </div>
-                        <form onSubmit={signupHandler} className="login-form" id="loginForm">
-                            <FacebookLogin
-                                appId="1252645385555497"
-                                autoLoad={false}
-                                fields="name,email"
-                                callback={fbResponse}
-                                disableMobileRedirect={true}
-                                version="2.5"
-                                textButton="Opret konto med Facebook"
-                                redirectUri="https://www.tipsspillet.dk/"
-                                cssClass="facebook-button-class"
-                                icon={<svg xmlns="http://www.w3.org/2000/svg" className="facebook-icon" viewBox="0 0 16 16">
-                                <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/>
-                            </svg>}
-                            />
-                            <p className="signup-eller">Eller</p>
-                            <p className="login-form-p">Navn</p>
-                            <input value={fornavn} onChange={event => setFornavn(event.target.value)} type="text" className="login-form-input" required/>
-                            <p className="login-form-p">Brugernavn</p>
-                            <input value={username} onChange={event => setUsername(event.target.value)} type="text" className="login-form-input" required/>
-                            <p className="login-form-p">Email</p>
-                            <input value={email} onChange={event => setEmail(event.target.value)} type="email" className="login-form-input" required />
-                            <div className="login-form-p">Kodeord
+                        <form onSubmit={signupHandler} className="cg-form" id="loginForm">
+                            <input type="text" className="cg-input" onChange={event => setFornavn(event.target.value)} placeholder="Fulde navn" />
+                            <input type="text" className="cg-input" onChange={event => setUsername(event.target.value)} placeholder="Brugernavn" />
+                            <input type="text" className="cg-input" onChange={event => setEmail(event.target.value)} placeholder="Email" />
+                            <div className="login-form-p">
                                 <div className="login-req" id="login-req">
                                     <div className="login-req-element" id="passTegn">
                                         <svg xmlns="http://www.w3.org/2000/svg" className="login-req-check" viewBox="0 0 16 16">
@@ -406,7 +389,7 @@ function Signup () {
                                     </div>
                                 </div>
                             </div>
-                            <input value={kodeord} id="kodeord" style={{marginBottom: "15px"}} onChange={event => setKodeord(event.target.value)} type="password" className="login-form-input" required/>
+                            <input type="text" className="cg-input" id="kodeord" onChange={event => setKodeord(event.target.value)} placeholder="Kodeord" />
                             <div className="signup-check">
                                 <div className="signup-checkbox" id="box1" onClick={() => {if (box1) {setBox1(false)}else{setBox1(true)}}}>
                                     <svg xmlns="http://www.w3.org/2000/svg" id={"box1-icon"} className="setup-icon" viewBox="0 0 16 16">
@@ -427,6 +410,20 @@ function Signup () {
                                 {message !== "" && <p className="form-error">{message}</p>}
                                 <button value="Login" className="main-btn-login" style={{width: "100%", marginTop: "15px"}} type="submit">{loading && <div className="loader" id="loader"></div>}{!loading && <>Opret konto</>}</button>
                             </div>
+                            <FacebookLogin
+                                appId="1252645385555497"
+                                autoLoad={false}
+                                fields="name,email"
+                                callback={fbResponse}
+                                disableMobileRedirect={true}
+                                version="2.5"
+                                textButton="Opret konto med Facebook"
+                                redirectUri="https://www.tipsspillet.dk/"
+                                cssClass="facebook-button-class"
+                                icon={<svg xmlns="http://www.w3.org/2000/svg" className="facebook-icon" viewBox="0 0 16 16">
+                                <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/>
+                            </svg>}
+                            />
                         </form>
                         <form onSubmit={fbSignupHandler} className="login-form display-not" id="fbForm">
                             <p className="login-form-p">Brugernavn<span className="signup-form-p red-color">*</span></p>
@@ -468,6 +465,7 @@ function Signup () {
                     <p className="footer-copyright" style={{position: "absolute", bottom: "5px", opacity: "0.3"}}>©2022 Alle rettigheder forbeholdes | Mads Kaiser</p>
                 </div>
                 <div className="route-thirds-element-2">
+                    <canvas className="canvas-container-signup" id="gradient-canvas" data-transition-in></canvas>
                 </div>
             </div>
         </>

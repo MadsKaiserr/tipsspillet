@@ -471,6 +471,21 @@ function StageGruppespil ({data}) {
                                                 <div className="ant-visual-bar-red" style={{height: "15%"}}></div>
                                             </div>
                                         </>}
+                                        {forbrugType === "none" && <><div className="ant-visual-element">
+                                                <div className="ant-visual-bar" style={{height: "5%"}}></div>
+                                            </div>
+                                            <div className="ant-visual-element">
+                                                <div className="ant-visual-bar" style={{height: "5%"}}></div>
+                                            </div>
+                                            <div className="ant-visual-element">
+                                                <div className="ant-visual-bar" style={{height: "5%"}}></div>
+                                            </div>
+                                            <div className="ant-visual-element">
+                                                <div className="ant-visual-bar" style={{height: "5%"}}></div>
+                                            </div>
+                                            <div className="ant-visual-element">
+                                                <div className="ant-visual-bar" style={{height: "5%"}}></div>
+                                            </div></>}
                                     </div>
                                 </>}
                                 <div className="ant-info">
@@ -484,7 +499,7 @@ function StageGruppespil ({data}) {
                                             <p className="ant-small" style={{color: "var(--green)"}}>{forbrugChange - 100}%</p>
                                         </>}
                                         {forbrugChange - 100 < 0 && <>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="var(--red)" style={{marginTop: "3px", transform: "rotate(180deg)"}} viewBox="0 0 16 16">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="var(--red)" style={{marginTop: "3px"}} viewBox="0 0 16 16">
                                                 <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
                                             </svg>
                                             <p className="ant-small" style={{color: "var(--red)"}}>{forbrugChange - 100}%</p>
@@ -530,7 +545,21 @@ function StageGruppespil ({data}) {
                                                 <div className="ant-visual-bar-red" style={{height: "15%"}}></div>
                                             </div>
                                         </>}
-                                        {correctType === "none" && <></>}
+                                        {correctType === "none" && <><div className="ant-visual-element">
+                                                <div className="ant-visual-bar" style={{height: "5%"}}></div>
+                                            </div>
+                                            <div className="ant-visual-element">
+                                                <div className="ant-visual-bar" style={{height: "5%"}}></div>
+                                            </div>
+                                            <div className="ant-visual-element">
+                                                <div className="ant-visual-bar" style={{height: "5%"}}></div>
+                                            </div>
+                                            <div className="ant-visual-element">
+                                                <div className="ant-visual-bar" style={{height: "5%"}}></div>
+                                            </div>
+                                            <div className="ant-visual-element">
+                                                <div className="ant-visual-bar" style={{height: "5%"}}></div>
+                                            </div></>}
                                     </div>
                                 </>}
                                 <div className="ant-info">
@@ -544,7 +573,7 @@ function StageGruppespil ({data}) {
                                             <p className="ant-small" style={{color: "var(--green)"}}>{correctChange - 100}%</p>
                                         </>}
                                         {correctChange - 100 < 0 && <>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="var(--red)" style={{marginTop: "3px", transform: "rotate(180deg)"}} viewBox="0 0 16 16">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="var(--red)" style={{marginTop: "3px"}} viewBox="0 0 16 16">
                                                 <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
                                             </svg>
                                             <p className="ant-small" style={{color: "var(--red)"}}>{correctChange - 100}%</p>
@@ -590,6 +619,21 @@ function StageGruppespil ({data}) {
                                                 <div className="ant-visual-bar-red" style={{height: "15%"}}></div>
                                             </div>
                                         </>}
+                                        {gevinstType === "none" && <><div className="ant-visual-element">
+                                                <div className="ant-visual-bar" style={{height: "5%"}}></div>
+                                            </div>
+                                            <div className="ant-visual-element">
+                                                <div className="ant-visual-bar" style={{height: "5%"}}></div>
+                                            </div>
+                                            <div className="ant-visual-element">
+                                                <div className="ant-visual-bar" style={{height: "5%"}}></div>
+                                            </div>
+                                            <div className="ant-visual-element">
+                                                <div className="ant-visual-bar" style={{height: "5%"}}></div>
+                                            </div>
+                                            <div className="ant-visual-element">
+                                                <div className="ant-visual-bar" style={{height: "5%"}}></div>
+                                            </div></>}
                                     </div>
                                 </>}
                                 <div className="ant-info">
@@ -603,7 +647,7 @@ function StageGruppespil ({data}) {
                                             <p className="ant-small" style={{color: "var(--green)"}}>{gevinstChange - 100}%</p>
                                         </>}
                                         {gevinstChange - 100 < 0 && <>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="var(--red)" style={{marginTop: "3px", transform: "rotate(180deg)"}} viewBox="0 0 16 16">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="var(--red)" style={{marginTop: "3px"}} viewBox="0 0 16 16">
                                                 <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
                                             </svg>
                                             <p className="ant-small" style={{color: "var(--red)"}}>{gevinstChange - 100}%</p>

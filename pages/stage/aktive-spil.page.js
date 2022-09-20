@@ -18,7 +18,7 @@ function StageAktiveSpil ({ data }) {
         console.log("AWS - Gruppespil:", data)
         var myArray = [];
         for (var q in data.allGruppespil) {
-            if (data.allGruppespil[q].players.findIndex(obj => obj.player === getUser() ? getUser().email : "") >= 0) {
+            if (data.allGruppespil[q].players.findIndex(obj => obj.player === getUser().email) >= 0) {
                 myArray.push(data.allGruppespil[q]);
             }
         }
@@ -75,10 +75,10 @@ function StageAktiveSpil ({ data }) {
     }
 
     function opretSpilHandler() {
-        if (getUser() ? getUser().rolle : "" === "premium" || getUser() ? getUser().rolle : "" === "administrator") {
-            router.push("/stage/opret-spil")
+        if (getUser().rolle !== "none") {
+            router.push("/stage/opret")
         } else {
-            showModal();
+            router.push("/priser")
         }
     }
 
@@ -189,15 +189,18 @@ function StageAktiveSpil ({ data }) {
                 </div>
                 <div className="td-type">
                     <h1 className="td-h1">Dine gruppespil</h1>
-                    <div className="td-type-con animation-fadetop" onClick={() => {document.getElementById("type-drop").classList.toggle("display-not")}}>
-                        Type: <span className="td-type-p">{currentType}</span>
-                        <Image width="7px" height="7px" src={DownArrow} alt="Pil ned" className="nav-icon" />
-                        <div className="td-type-drop display-not" id="type-drop">
-                            <p className="td-type-drop-p" onClick={() => setCurrentType("gruppespil")}>Gruppespil</p>
-                            <p className="td-type-drop-p" onClick={() => setCurrentType("afsluttede")}>Afsluttede</p>
-                            <p className="td-type-drop-p" onClick={() => setCurrentType("dyster")}>Præmiedyster</p>
-                            <div className="td-type-drop-divider"></div>
-                            <p className="td-type-drop-p" onClick={() => setCurrentType("alle")}>Alle</p>
+                    <div className="td-btns">
+                    <div className="td-type-con animation-fadetop" style={{background: "var(--primary"}} onClick={() => opretSpilHandler()}><span className="td-type-p" style={{color: "#fff"}}>Opret gruppespil</span></div>
+                        <div className="td-type-con animation-fadetop" onClick={() => {document.getElementById("type-drop").classList.toggle("display-not")}}>
+                            Type: <span className="td-type-p">{currentType}</span>
+                            <Image width="7px" height="7px" src={DownArrow} alt="Pil ned" className="nav-icon" />
+                            <div className="td-type-drop display-not" id="type-drop">
+                                <p className="td-type-drop-p" onClick={() => setCurrentType("gruppespil")}>Gruppespil</p>
+                                <p className="td-type-drop-p" onClick={() => setCurrentType("afsluttede")}>Afsluttede</p>
+                                <p className="td-type-drop-p" onClick={() => setCurrentType("dyster")}>Præmiedyster</p>
+                                <div className="td-type-drop-divider"></div>
+                                <p className="td-type-drop-p" onClick={() => setCurrentType("alle")}>Alle</p>
+                            </div>
                         </div>
                     </div>
                 </div>

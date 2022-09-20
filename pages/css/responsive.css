@@ -278,6 +278,11 @@
   .favorit-container-match {
     display: none !important;
   }
+  .odd-off {
+    background-color: #ebebeb !important;
+    color: var(--black) !important;
+    cursor: not-allowed !important;
+  }
   .plans-con {
     flex-direction: column !important;
     width: 100%;
@@ -927,9 +932,6 @@
     max-height: 530px !important;
   }
   .header-inline {
-    display: flex !important;
-  }
-  .md-container {
     display: flex !important;
   }
   .ab-left {

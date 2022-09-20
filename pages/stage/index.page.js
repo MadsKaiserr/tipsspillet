@@ -115,7 +115,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
     const [activeGame, setActiveGame] = useState("");
 
     useEffect(() => {
-        setAuth(getUser() ? getUser() : {});
+        setAuth(getUser());
         setActiveGame(cookie.get("activeGame"));
     }, [])
 
@@ -260,7 +260,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
 
     function place3wayBet(btnId, matchId, homeTeam, visitorTeam, probability, oddsResult, oddsDate) {
         if (!notUsableBtn.includes(btnId) && odds.length < 6) {
-            document.getElementById(btnId).classList.add("odd-off");
+            document.getElementById(btnId).classList.add("odd-used");
             setNotUsableBtn([...notUsableBtn, "3Way Result"+btnId]);
             sessionStorage.setItem("notUsableBtn", JSON.stringify([...notUsableBtn, "3Way Result"+btnId]))
     
@@ -427,7 +427,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
                             placeBetBTN.innerHTML = "Placér bet";
                         } else {
                             const placeBetUrl = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/bet";
-                    const userEmail = getUser() ? getUser().email : "";
+                    const userEmail = getUser().email;
             
                     const betConfig = {
                         headers: {
@@ -548,7 +548,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
                         placeBetBTN.innerHTML = "Placér bet";
                     } else {
                         const placeBetUrl = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/bet";
-                const userEmail = getUser() ? getUser().email : "";
+                const userEmail = getUser().email;
         
                 const betConfig = {
                     headers: {
@@ -653,7 +653,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
             for (var l in notUsableBtn) {
                 var removedPart = JSON.parse(sessionStorage.getItem("notUsableBtn"))[l].slice(11)
                 const el = document.getElementById(removedPart);
-                el.classList.remove("odd-off");
+                el.classList.remove("odd-used");
             }
         }
     }
@@ -949,7 +949,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
                 axios.patch(betCalcURL, winBody, requestConfig).then(responseTem => {
                     console.log("AWS - Indskydelse:", responseTem, winBody);
                     for (var i in responseTem.data.players) {
-                        if (responseTem.data.players[i].player === getUser() ? getUser().email : "") {
+                        if (responseTem.data.players[i].player === getUser().email) {
                             setCurrentMoney(responseTem.data.players[i].info.money);
                         }
                     }
@@ -965,6 +965,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
     }
 
     useEffect(() => {
+        console.log("AWS - Gruppespil:", gruppespil_data)
         if (gruppespil_data.admin !== undefined && gruppespil_data.admin !== null) {
             setActiveGameName(gruppespil_data.name);
             setSelectedGame(gruppespil_data);
@@ -975,7 +976,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
             setSlutdato(gruppespil_data.varighed);
 
             for (var k in gruppespil_data.players) {
-                if (gruppespil_data.players[k].player === getUser() ? getUser().email : "") {
+                if (gruppespil_data.players[k].player === getUser().email) {
                     localStorage.setItem("notifikationer", gruppespil_data.players[k].info.notifikationer.length);
                 }
                 for (var l in gruppespil_data.players[k].odds) {
@@ -1012,7 +1013,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
             setPositionCount(n);
             var topScorers = getTopN(gruppespil_data.players, n);
             topScorers.forEach(function(gameItem, index) {
-                if (gameItem.player === getUser() ? getUser().email : "") {
+                if (gameItem.player === getUser().email) {
                     setCurrentMoney(gameItem.info.money)
                     setPosition(index + 1);
                 }
@@ -1661,22 +1662,22 @@ function StageForside ({gruppespil_data, spiller_data}) {
                                         betButton2 = <button className="stage-kampe-odds-btn" id={item.id + "-" + "1"} onClick={() => place3wayBet(item.id + "-" + "1", item.id, item.localTeam.data.name, item.visitorTeam.data.name, item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[1].value, "1", item.time.starting_at.timestamp)}><p className="odd-data-p">X</p><p className="odd-data-h1">{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[1].value}</p></button>;
                                         betButton3 = <button className="stage-kampe-odds-btn" id={item.id + "-" + "2"} onClick={() => place3wayBet(item.id + "-" + "2", item.id, item.localTeam.data.name, item.visitorTeam.data.name, item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[2].value, "2", item.time.starting_at.timestamp)}><p className="odd-data-p">2</p><p className="odd-data-h1">{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[2].value}</p></button>;
                                     } else {
-                                        betButton1 = <button className="stage-kampe-odds-btn odd-off" onClick={() => rem3wayBet(item.id, "3Way Result", "0")}>{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[0].value}</button>;
-                                        betButton2 = <button className="stage-kampe-odds-btn odd-off" onClick={() => rem3wayBet(item.id, "3Way Result", "1")}>{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[1].value}</button>;
-                                        betButton3 = <button className="stage-kampe-odds-btn odd-off" onClick={() => rem3wayBet(item.id, "3Way Result", "2")}>{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[2].value}</button>;
+                                        betButton1 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "0")}>{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[0].value}</button>;
+                                        betButton2 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "1")}>{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[1].value}</button>;
+                                        betButton3 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "2")}>{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[2].value}</button>;
                                         }
                     
                                         if (sessionStorage.getItem("notUsableBtn") !== "" && sessionStorage.getItem("notUsableBtn") !== null && sessionStorage.getItem("notUsableBtn") !== undefined) {
                                             for (var p in JSON.parse(sessionStorage.getItem("notUsableBtn"))) {
                                                 var removedPart = JSON.parse(sessionStorage.getItem("notUsableBtn"))[p].slice(11)
                                                 if (removedPart === item.id + "-" + "0") {
-                                                    betButton1 = <button className="stage-kampe-odds-btn odd-off" onClick={() => rem3wayBet(item.id, "3Way Result", "0")}><p className="odd-data-p">1</p><p className="odd-data-h1">{item.odds.data[0].bookmaker.data[0].odds.data[0].value}</p></button>;
+                                                    betButton1 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "0")}><p className="odd-data-p">1</p><p className="odd-data-h1">{item.odds.data[0].bookmaker.data[0].odds.data[0].value}</p></button>;
                                                 }
                                                 if (removedPart === item.id + "-" + "1") {
-                                                    betButton2 = <button className="stage-kampe-odds-btn odd-off" onClick={() => rem3wayBet(item.id, "3Way Result", "1")}><p className="odd-data-p">X</p><p className="odd-data-h1">{item.odds.data[0].bookmaker.data[0].odds.data[1].value}</p></button>;
+                                                    betButton2 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "1")}><p className="odd-data-p">X</p><p className="odd-data-h1">{item.odds.data[0].bookmaker.data[0].odds.data[1].value}</p></button>;
                                                 }
                                                 if (removedPart === item.id + "-" + "2") {
-                                                    betButton3 = <button className="stage-kampe-odds-btn odd-off" onClick={() => rem3wayBet(item.id, "3Way Result", "2")}><p className="odd-data-p">2</p><p className="odd-data-h1">{item.odds.data[0].bookmaker.data[0].odds.data[2].value}</p></button>;
+                                                    betButton3 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "2")}><p className="odd-data-p">2</p><p className="odd-data-h1">{item.odds.data[0].bookmaker.data[0].odds.data[2].value}</p></button>;
                                                 }
                                             }
                                         }
@@ -1826,22 +1827,22 @@ function StageForside ({gruppespil_data, spiller_data}) {
                                         betButton2 = <button className="stage-kampe-odds-btn" id={item.id + "-" + "1"} onClick={() => place3wayBet(item.id + "-" + "1", item.id, item.localTeam.data.name, item.visitorTeam.data.name, item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[1].value, "1", item.time.starting_at.timestamp)}><p className="odd-data-p">X</p><p className="odd-data-h1">{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[1].value}</p></button>;
                                         betButton3 = <button className="stage-kampe-odds-btn" id={item.id + "-" + "2"} onClick={() => place3wayBet(item.id + "-" + "2", item.id, item.localTeam.data.name, item.visitorTeam.data.name, item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[2].value, "2", item.time.starting_at.timestamp)}><p className="odd-data-p">2</p><p className="odd-data-h1">{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[2].value}</p></button>;
                                     } else {
-                                        betButton1 = <button className="stage-kampe-odds-btn odd-off" onClick={() => rem3wayBet(item.id, "3Way Result", "0")}>{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[0].value}</button>;
-                                        betButton2 = <button className="stage-kampe-odds-btn odd-off" onClick={() => rem3wayBet(item.id, "3Way Result", "1")}>{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[1].value}</button>;
-                                        betButton3 = <button className="stage-kampe-odds-btn odd-off" onClick={() => rem3wayBet(item.id, "3Way Result", "2")}>{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[2].value}</button>;
+                                        betButton1 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "0")}>{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[0].value}</button>;
+                                        betButton2 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "1")}>{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[1].value}</button>;
+                                        betButton3 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "2")}>{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[2].value}</button>;
                                         }
                     
                                         if (sessionStorage.getItem("notUsableBtn") !== "" && sessionStorage.getItem("notUsableBtn") !== null && sessionStorage.getItem("notUsableBtn") !== undefined) {
                                             for (var p in JSON.parse(sessionStorage.getItem("notUsableBtn"))) {
                                                 var removedPart = JSON.parse(sessionStorage.getItem("notUsableBtn"))[p].slice(11)
                                                 if (removedPart === item.id + "-" + "0") {
-                                                    betButton1 = <button className="stage-kampe-odds-btn odd-off" onClick={() => rem3wayBet(item.id, "3Way Result", "0")}><p className="odd-data-p">1</p><p className="odd-data-h1">{item.odds.data[0].bookmaker.data[0].odds.data[0].value}</p></button>;
+                                                    betButton1 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "0")}><p className="odd-data-p">1</p><p className="odd-data-h1">{item.odds.data[0].bookmaker.data[0].odds.data[0].value}</p></button>;
                                                 }
                                                 if (removedPart === item.id + "-" + "1") {
-                                                    betButton2 = <button className="stage-kampe-odds-btn odd-off" onClick={() => rem3wayBet(item.id, "3Way Result", "1")}><p className="odd-data-p">X</p><p className="odd-data-h1">{item.odds.data[0].bookmaker.data[0].odds.data[1].value}</p></button>;
+                                                    betButton2 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "1")}><p className="odd-data-p">X</p><p className="odd-data-h1">{item.odds.data[0].bookmaker.data[0].odds.data[1].value}</p></button>;
                                                 }
                                                 if (removedPart === item.id + "-" + "2") {
-                                                    betButton3 = <button className="stage-kampe-odds-btn odd-off" onClick={() => rem3wayBet(item.id, "3Way Result", "2")}><p className="odd-data-p">2</p><p className="odd-data-h1">{item.odds.data[0].bookmaker.data[0].odds.data[2].value}</p></button>;
+                                                    betButton3 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "2")}><p className="odd-data-p">2</p><p className="odd-data-h1">{item.odds.data[0].bookmaker.data[0].odds.data[2].value}</p></button>;
                                                 }
                                             }
                                         }
@@ -1991,22 +1992,22 @@ function StageForside ({gruppespil_data, spiller_data}) {
                                             betButton2 = <button className="stage-kampe-odds-btn" id={item.id + "-" + "1"} onClick={() => place3wayBet(item.id + "-" + "1", item.id, item.localTeam.data.name, item.visitorTeam.data.name, item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[1].value, "1", item.time.starting_at.timestamp)}><p className="odd-data-p">X</p><p className="odd-data-h1">{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[1].value}</p></button>;
                                             betButton3 = <button className="stage-kampe-odds-btn" id={item.id + "-" + "2"} onClick={() => place3wayBet(item.id + "-" + "2", item.id, item.localTeam.data.name, item.visitorTeam.data.name, item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[2].value, "2", item.time.starting_at.timestamp)}><p className="odd-data-p">2</p><p className="odd-data-h1">{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[2].value}</p></button>;
                                         } else {
-                                            betButton1 = <button className="stage-kampe-odds-btn odd-off" onClick={() => rem3wayBet(item.id, "3Way Result", "0")}>{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[0].value}</button>;
-                                            betButton2 = <button className="stage-kampe-odds-btn odd-off" onClick={() => rem3wayBet(item.id, "3Way Result", "1")}>{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[1].value}</button>;
-                                            betButton3 = <button className="stage-kampe-odds-btn odd-off" onClick={() => rem3wayBet(item.id, "3Way Result", "2")}>{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[2].value}</button>;
+                                            betButton1 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "0")}>{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[0].value}</button>;
+                                            betButton2 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "1")}>{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[1].value}</button>;
+                                            betButton3 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "2")}>{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[2].value}</button>;
                                         }
                 
                                     if (sessionStorage.getItem("notUsableBtn") !== "" && sessionStorage.getItem("notUsableBtn") !== null && sessionStorage.getItem("notUsableBtn") !== undefined) {
                                         for (var p in JSON.parse(sessionStorage.getItem("notUsableBtn"))) {
                                             var removedPart = JSON.parse(sessionStorage.getItem("notUsableBtn"))[p].slice(11)
                                             if (removedPart === item.id + "-" + "0") {
-                                                betButton1 = <button className="stage-kampe-odds-btn odd-off" onClick={() => rem3wayBet(item.id, "3Way Result", "0")}><p className="odd-data-p">1</p><p className="odd-data-h1">{item.odds.data[0].bookmaker.data[0].odds.data[0].value}</p></button>;
+                                                betButton1 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "0")}><p className="odd-data-p">1</p><p className="odd-data-h1">{item.odds.data[0].bookmaker.data[0].odds.data[0].value}</p></button>;
                                             }
                                             if (removedPart === item.id + "-" + "1") {
-                                                betButton2 = <button className="stage-kampe-odds-btn odd-off" onClick={() => rem3wayBet(item.id, "3Way Result", "1")}><p className="odd-data-p">X</p><p className="odd-data-h1">{item.odds.data[0].bookmaker.data[0].odds.data[1].value}</p></button>;
+                                                betButton2 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "1")}><p className="odd-data-p">X</p><p className="odd-data-h1">{item.odds.data[0].bookmaker.data[0].odds.data[1].value}</p></button>;
                                             }
                                             if (removedPart === item.id + "-" + "2") {
-                                                betButton3 = <button className="stage-kampe-odds-btn odd-off" onClick={() => rem3wayBet(item.id, "3Way Result", "2")}><p className="odd-data-p">2</p><p className="odd-data-h1">{item.odds.data[0].bookmaker.data[0].odds.data[2].value}</p></button>;
+                                                betButton3 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "2")}><p className="odd-data-p">2</p><p className="odd-data-h1">{item.odds.data[0].bookmaker.data[0].odds.data[2].value}</p></button>;
                                             }
                                         }
                                     }
@@ -2259,9 +2260,6 @@ function StageForside ({gruppespil_data, spiller_data}) {
         </div>
         <Height />
         {getCurrentLeagues()}
-        <div className="md-container" id="md-container">
-            {getDates()}
-        </div>
         <div className="modal-test display-not" id="bet-modal">
             <div className="modal-con">
                 <p className="con-modal-p">Er du sikker på, at du vil placere din kupon, med en indsats på {indsats},00 kr? Dette beløb er ikke refunderbart.</p>
@@ -2439,6 +2437,9 @@ function StageForside ({gruppespil_data, spiller_data}) {
                              <p className="stage-kampe-h1">Kampe idag</p>
                         </div>
                         <p className="nogames" id="nogames">Der kunne ikke findes nogen kampe d. {new Date(selected).getDate()}/{new Date(selected).getMonth() + 1}/{new Date(selected).getFullYear()}...</p>
+                        <div className="md-header">
+                            {getDates()}
+                        </div>
                         <ul>
                             {getMatches("dagens")}
                         </ul>
