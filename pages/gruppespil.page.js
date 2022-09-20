@@ -42,15 +42,17 @@ function Gruppespil ({data}) {
 
     useEffect(() => {
         console.log("AWS - Gruppespil:", data)
-        var newArray = [];
-        for (var q in data.allGruppespil) {
-            if (new Date(data.allGruppespil[q].varighed).getTime() > new Date().getTime()) {
-                newArray.push(data.allGruppespil[q]);
+        if (!data.notFound) {
+            var newArray = [];
+            for (var q in data.allGruppespil) {
+                if (new Date(data.allGruppespil[q].varighed).getTime() > new Date().getTime()) {
+                    newArray.push(data.allGruppespil[q]);
+                }
             }
+            setItems(newArray);
+            setSearch(newArray);
+            setLoading("");
         }
-        setItems(newArray);
-        setSearch(newArray);
-        setLoading("");
     }, [])
 
     const [currentType, setCurrentType] = useState("alle");
