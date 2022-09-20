@@ -2652,7 +2652,7 @@ export async function getServerSideProps({ req, res }) {
 
     const requestConfig = {
         headers: {
-            "x-api-key": process.env.AWS_API
+            "x-api-key": process.env._AWS_API
         }
     }
     const gruppespil_resp = await axios.get("https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/gruppesession?game=" + req.cookies.activeGame, requestConfig);
