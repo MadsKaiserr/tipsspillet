@@ -364,7 +364,7 @@ export async function getServerSideProps({ req, res, query }) {
     const category = query.game;
     const requestConfig = {
         headers: {
-            "x-api-key": process.env._AWS_API
+            "x-api-key": process.env."utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
         }
     }
     var resp;

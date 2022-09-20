@@ -382,7 +382,7 @@ function Gruppespil ({data}) {
 export async function getServerSideProps({ req, res }) {
     const requestConfig = {
         headers: {
-            "x-api-key": process.env._AWS_API
+            "x-api-key": process.env."utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
         }
     }
     var resp = await axios.get("https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/gruppespil", requestConfig);;
