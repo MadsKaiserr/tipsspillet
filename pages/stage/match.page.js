@@ -4307,7 +4307,7 @@ export async function getServerSideProps({ req, res }) {
     }
     const requestConfig = {
         headers: {
-            "x-api-key": process.env."utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
+            "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
         }
     }
     var resp;
