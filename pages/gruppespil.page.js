@@ -396,5 +396,4 @@ export async function getServerSideProps({ req, res }) {
         props: { data },
     }
 }
- 
 export default Gruppespil;
