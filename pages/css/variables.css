@@ -5,13 +5,28 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
 
 @font-face {
-  font-family: BienalleBold;
-  src: url("./fonts/bold.otf") format("opentype");
+  font-family: Mark;
+  src: url("./fonts/Mark.ttf") format("truetype");
 }
 
 @font-face {
-  font-family: Mark;
-  src: url("./fonts/Mark.ttf") format("truetype");
+  font-family: Neue;
+  src: url("./fonts/Neue.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: NeueMedium;
+  src: url("./fonts/NeueMedium.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: NeueLight;
+  src: url("./fonts/NeueLight.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: NormalF;
+  src: url("./fonts/Normal.otf") format("opentype");
 }
 
   :root {

@@ -6,7 +6,6 @@ import Header from './layout/header';
 import Image from 'next/image'
 import axios from "axios";
 import FaqComponent from './components/faq';
-import SpilMed from './components/spilmed';
 import PriserComp from './components/priser';
 import Spacer from './components/spacer';
 
@@ -143,7 +142,6 @@ function Blog () {
                 </div>
             </div>
             <FaqComponent />
-            <SpilMed />
         </>
     )
 }

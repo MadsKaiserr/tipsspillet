@@ -5,7 +5,6 @@ import Head from 'next/head'
 import Header from './layout/header';
 import axios from "axios";
 import FaqComponent from './components/faq';
-import SpilMed from './components/spilmed';
 import PriserComp from './components/priser';
 import Spacer from './components/spacer';
  
@@ -28,7 +27,6 @@ function Priser () {
             <Spacer />
             <PriserComp />
             <FaqComponent />
-            <SpilMed />
         </>
     )
 }

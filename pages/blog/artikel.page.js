@@ -5,7 +5,6 @@ import Image from 'next/image'
 import Head from 'next/head'
 import Header from '../layout/header';
 import axios from "axios";
-import SpilMed from '../components/spilmed';
 import Spacer from '../components/spacer';
 
 import Setup from '../img/setup.png';

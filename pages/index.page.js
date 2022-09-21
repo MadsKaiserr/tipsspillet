@@ -6,8 +6,9 @@ import PriserComp from './components/priser';
 import { Gradient } from './services/Gradient.js'
 
 import RightArrow from './img/right-arrow.png';
+import Money from './img/money.png';
+import Chart from './img/bar-chart.png';
 import FaqComponent from './components/faq';
-import SpilMed from './components/spilmed'
 import { useEffect } from 'react';
 
 export default function Home() {
@@ -147,13 +148,47 @@ export default function Home() {
                 </div>
             </div>
         </div>
-        <div className="forside-black"></div>
-        <div className="forside-section">
-            
+        <div className="forside-black">
+            <h2 className="fs-wrapper-h1">Liveodds fra<br/>verdens førende<br/>betting sider</h2>
+            <div className="fs-wrapper-h2">Tag betting til nye højde med vores Livebetting. Placér væddemål i realtid, og forstår chancen for udbytte!</div>
+            <div className="fs-container">
+                <div className="fs-element">
+                    <div className="fs-element-img" style={{marginTop: "3px"}}>
+                        <Image src={Money} />
+                    </div>
+                    <p className="fs-element-p">50% Flere penge</p>
+                </div>
+                <div className="fs-element">
+                    <div className="fs-element-img">
+                        <Image src={Chart} />
+                    </div>
+                    <p className="fs-element-p">100% Flere væddemål</p>
+                </div>
+            </div>
+            <div className="forside-black-blob"></div>
+        </div>
+        <div className="forside-db" style={{marginTop: "50px"}}>
+            <div className="db-fill"></div>
+            <div className="db-section">
+                <div className="db-info">
+                    <p className="db-h1">Spil helt gratis.<br/><span className="db-h1 main-gradient">Virtuelle penge.</span></p>
+                    <p className="db-h2">Hos Tipsspillet spiller du med virtuelle penge, og eliminerer derved risikioen for tab af penge på betting.</p>
+                    <p className="db-h2">Løbet tør for penge? Intet problem! I de fleste gruppespil får du et beløb hver uge, som du kan bruge på at bette dig til større fortjeneste &#128640;</p>
+                </div>
+            </div>
+        </div>
+        <div className="forside-db">
+            <div className="db-section">
+                <div className="db-info">
+                    <p className="db-h1">Opret dit eget<br/><span className="db-h1 main-gradient">gruppespil.</span></p>
+                    <p className="db-h2">Opret dit eget gruppespil i din klasse, på din arbejde, med din familie eller lav et offentligt gruppespil.</p>
+                    <p className="db-h2">Med Plus- og Premium abonnement kan du oprette gruppespil, og styre ligaer, startbeløb, beløb hver uge, deltagere og meget mere!</p>
+                </div>
+            </div>
+            <div className="db-fill-inverted"></div>
         </div>
         <PriserComp />
         <FaqComponent />
-        <SpilMed />
     </div>
   )
 }

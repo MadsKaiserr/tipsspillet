@@ -42,8 +42,113 @@
 
   .forside-black {
     width: 100%;
+    position: relative;
     background-color: #1b1b1b;
     height: 700px;
+    background-image: radial-gradient(circle farthest-corner at 100% -30%,#0e0e0e,rgba(14,14,14,0) 56%);
+  }
+
+  .fs-wrapper-h1 {
+    font-family: Inter;
+    font-size: 82px;
+    color: #fff;
+    position: relative;
+    font-weight: 600;
+    display: inline-flex;
+    margin-left: 100px;
+    margin-top: 100px;
+    opacity: 0.95;
+    line-height: 95px;
+  }
+
+  .fs-wrapper-h2 {
+    font-family: Inter;
+    font-size: 18px;
+    color: #fff;
+    opacity: 0.7;
+    max-width: 600px;
+    font-weight: 300;
+    margin-left: 100px;
+    margin-top: 40px;
+  }
+
+  .fs-container {
+    padding-left: 100px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding-top: 30px;
+  }
+
+  .fs-element-img {
+    width: 20px;
+    height: 20px;
+  }
+
+  .fs-element {
+    width: 220px;
+    padding: 8px 20px;
+    background-color: #fff;
+    border-radius: 500px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .forside-db {
+    padding: 60px 0px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .db-fill {
+    width: 45%;
+    height: 520px;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    background-color: var(--primary);
+  }
+
+  .db-fill-inverted {
+    width: 45%;
+    height: 520px;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+    background-color: var(--primary);
+  }
+
+  .db-section {
+    width: 55%;
+    padding: 0px 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .db-h1 {
+    font-family: NeueMedium;
+    font-size: 60px;
+    letter-spacing: 2px;
+    line-height: 65px;
+    font-weight: 100;
+    color: var(--kul);
+    padding-bottom: 20px;
+  }
+
+  .db-h2 {
+    font-family: NeueLight;
+    font-size: 16px;
+    letter-spacing: 0.5px;
+    font-weight: 100;
+    color: var(--softBlack);
+    padding-bottom: 20px;
+  }
+
+  .fs-element-p {
+    font-family: Inter;
+    font-weight: 400;
+    color: #333;
+    font-size: 14px;
   }
 
   .forside-blob {
@@ -642,6 +747,30 @@
     position: absolute;
     right: 20px;
     top: 0px;
+  }
+
+  .forside-live-pulse {
+    border-radius: 50%;
+    background-color: var(--primary);
+    height: 20px;
+    width: 20px;
+    box-shadow: 0 0 0 0 rgba(61, 109, 235, 1);
+    transform: scale(1);
+    animation: pulse 2s infinite;
+    position: absolute;
+    left: -13px;
+    top: -7px;
+  }
+
+  .forside-black-blob {
+    width: 600px;
+    height: 600px;
+    background-color: #888;
+    opacity: 0.15;
+    border-radius: 30px;
+    position: absolute;
+    right: 20px;
+    top: 50px;
   }
   
   @keyframes pulse {
