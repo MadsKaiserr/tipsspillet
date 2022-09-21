@@ -2454,28 +2454,53 @@ function StageForside ({gruppespil_data, spiller_data}) {
                                     </div>
                                     <ul>
                                         {favoritter.length > 0 && favoritter.map((item) => {
-                                            return (
-                                                <li key={item.name + item.image} className="display" style={{width: "100%"}}>
-                                                    <div className="stage-team">
-                                                        <Link href={"/stage/team?team=" + item.id}>
-                                                            <div className="stage-kampe-team2">
-                                                                <div className="stage-kampe-teams-div">
-                                                                    <div className="stage-kampe-team">
-                                                                        <Image width="22px" height="22px" alt="." src={item.image} className="stage-img" />
-                                                                        <div className="stage-teams-element">
-                                                                            <p className="stage-teams-h1">{item.name}</p>
-                                                                            <p className="stage-teams-h2">{item.liga}</p>
+                                            if (item.name === item.name) {
+                                                return (
+                                                    <li key={item.name + item.image} className="display" style={{width: "100%"}}>
+                                                        <div className="stage-team">
+                                                            <Link href={"/stage/league?id=" + item.id}>
+                                                                <div className="stage-kampe-team2">
+                                                                    <div className="stage-kampe-teams-div">
+                                                                        <div className="stage-kampe-team">
+                                                                            <Image width="22px" height="22px" alt="." src={item.image} className="stage-img" />
+                                                                            <div className="stage-teams-element">
+                                                                                <p className="stage-teams-h1">{item.name}</p>
+                                                                                <p className="stage-teams-h2">{item.liga}</p>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" className="team-icon" viewBox="0 0 16 16">
+                                                                        <path fillRule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+                                                                    </svg>
                                                                 </div>
-                                                                <svg xmlns="http://www.w3.org/2000/svg" className="team-icon" viewBox="0 0 16 16">
-                                                                    <path fillRule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
-                                                                </svg>
-                                                            </div>
-                                                        </Link>
-                                                    </div>
-                                                </li>
-                                            );
+                                                            </Link>
+                                                        </div>
+                                                    </li>
+                                                );
+                                            } else {
+                                                return (
+                                                    <li key={item.name + item.image} className="display" style={{width: "100%"}}>
+                                                        <div className="stage-team">
+                                                            <Link href={"/stage/team?team=" + item.id}>
+                                                                <div className="stage-kampe-team2">
+                                                                    <div className="stage-kampe-teams-div">
+                                                                        <div className="stage-kampe-team">
+                                                                            <Image width="22px" height="22px" alt="." src={item.image} className="stage-img" />
+                                                                            <div className="stage-teams-element">
+                                                                                <p className="stage-teams-h1">{item.name}</p>
+                                                                                <p className="stage-teams-h2">{item.liga}</p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" className="team-icon" viewBox="0 0 16 16">
+                                                                        <path fillRule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+                                                                    </svg>
+                                                                </div>
+                                                            </Link>
+                                                        </div>
+                                                    </li>
+                                                );
+                                            }
                                         })}
                                         {favoritter.length <= 0 && <Link href="/stage/search"><div className="stage-team" style={{backgroundColor: "var(--surface)", marginBottom: "15px"}}>
                     <div className="stage-kampe-team2">
