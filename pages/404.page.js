@@ -2,8 +2,8 @@ import * as React from 'react';
 import { useEffect, useState } from 'react';
 import Link from 'next/link'
 import Head from 'next/head'
-import Header from '../layout/header';
-import FaqComponent from '../components/faq';
+import Header from './layout/header';
+import FaqComponent from './components/faq';
  
 function _404 () {
 
