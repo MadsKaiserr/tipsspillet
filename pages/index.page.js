@@ -168,7 +168,7 @@ export default function Home() {
             <div className="forside-black-blob"></div>
         </div>
         <div className="forside-db" style={{marginTop: "50px"}}>
-            <div className="db-fill"></div>
+            <div className="db-fill" id="fill-1"></div>
             <div className="db-section">
                 <div className="db-info">
                     <p className="db-h1">Spil helt gratis.<br/><span className="db-h1 main-gradient">Virtuelle penge.</span></p>
@@ -176,6 +176,7 @@ export default function Home() {
                     <p className="db-h2">Løbet tør for penge? Intet problem! I de fleste gruppespil får du et beløb hver uge, som du kan bruge på at bette dig til større fortjeneste &#128640;</p>
                 </div>
             </div>
+            <div className="db-fill" id="fill-2"></div>
         </div>
         <div className="forside-db">
             <div className="db-section">

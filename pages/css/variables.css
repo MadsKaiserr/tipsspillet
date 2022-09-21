@@ -332,7 +332,7 @@
   }
   
   .hero-text .main-component-h1 {
-    line-height: 75px !important;
+    line-height: 75px;
   }
 
   .main-component-h-fix {
