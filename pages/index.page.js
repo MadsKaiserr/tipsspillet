@@ -56,7 +56,7 @@ export default function Home() {
                         <span>g</span>
                     </div>
                     <div className="main-component-h-fix">
-                        <span id="dash" style={{marginTop: "-5px"}}>-</span>
+                        <span id="dash" style={{marginTop: "-12px"}}>-</span>
                         &nbsp;
                         <span className="main-switch">
                             <span className="main-switch-element main-gradient" style={{top: "0px", left: "0px", animation: "cycleTop 7s infinite"}}>Helt gratis</span>

@@ -4,21 +4,6 @@
 @import url('https://rsms.me/inter/inter.css');
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
 
-@font-face {
-  font-family: Neue;
-  src: url("./fonts/Neue.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: NeueMedium;
-  src: url("./fonts/NeueMedium.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: NeueLight;
-  src: url("./fonts/NeueLight.ttf") format("truetype");
-}
-
   :root {
     /* Primary colors */
     --primary: #3d6deb;
@@ -344,6 +329,10 @@
     text-transform: uppercase;
     color: #fff;
     opacity: 0.8;
+  }
+  
+  .hero-text .main-component-h1 {
+    line-height: 75px !important;
   }
 
   .main-component-h-fix {
@@ -676,17 +665,12 @@
   
   .main-component-h1 {
     color: var(--kul);
-    font-size: 74px;
+    font-size: 70px;
     display: inline-flex;
     flex-direction: column;
-    font-family: NeueMedium;
+    font-family: Inter;
     font-weight: 600;
     line-height: 60px;
-    letter-spacing: 1px;
-  }
-
-  .main-component-h1 span {
-    font-family: NeueMedium;
   }
 
   #dash {
