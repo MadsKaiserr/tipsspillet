@@ -321,7 +321,7 @@
   
   .nav-bar {
     width: 100%;
-    height: 70px;
+    height: 100px;
     background: rgba(255, 255, 255, 0.5);
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
@@ -1787,9 +1787,10 @@ gap: 8px;
   
   .nav-scrolled {
     position: fixed;
+    height: 70px;
     background-color: rgba(255,255,255,.85);
     backdrop-filter: blur(8px);
-    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.05);
+    box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.1);
     -webkit-backdrop-filter: blur(8px);
     top: 0;
     left: 0;
@@ -1892,7 +1893,7 @@ gap: 8px;
     position: relative;
     align-items: center;
     flex-direction: column;
-    background-color: var(--kul);
+    background-color: #1b1b1b;
   }
   
   .footer-copyright {
@@ -1953,7 +1954,7 @@ gap: 8px;
   .footer-h2 {
     font-family: Inter;
     font-weight: 500;
-    color: var(--onBlack);
+    color: #fff;
     font-size: clamp(14px, 2vw, 17px);
   }
   
@@ -1961,7 +1962,7 @@ gap: 8px;
     font-family: Inter;
     font-weight: 500;
     opacity: 0.9;
-    color: #fff;
+    color: #888;
     font-size: 15px;
     transition: 0.2s;
     border-radius: 1px;
@@ -1986,7 +1987,7 @@ gap: 8px;
   .footer-bytext {
     font-family: Inter;
     font-weight: 300;
-    color: var(--stageSurface);
+    color: #888;
     opacity: 0.7;
     font-size: 14px;
   }

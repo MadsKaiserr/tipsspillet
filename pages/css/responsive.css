@@ -553,8 +553,21 @@
     -webkit-text-fill-color: transparent !important;
   }
   .main-component-h1 {
-    font-size: 48px !important;
-    line-height: 55px !important;
+    font-size: 52px !important;
+    line-height: 60px !important;
+  }
+  .main-switch {
+    height: 65px !important;
+    line-height: 60px !important;
+  }
+  .main-component-h1-h2 {
+    font-size: 16px !important;
+    padding-top: 15px !important;
+    max-width: 380px !important;
+  }
+  .forside-blob {
+    margin: 30px 25px !important;
+    width: calc(100% - 50px) !important;
   }
   .wrap-h1 {
     font-size: 36px !important;
@@ -571,7 +584,7 @@
     animation: cycleSmall 7s infinite !important;
   }
   #dash {
-    margin-top: -25px !important;
+    margin-top: -8px !important;
   }
   .hero-info-block-h1 span {
     font-size: 32px !important;
@@ -909,6 +922,14 @@
   .match-stilling-p1-live {
     font-size: 12px !important;
   }
+  .md-header {
+    position: absolute;
+    top: 65px;
+    left: 0px;
+    margin-top: 0px !important;
+    box-shadow: none !important;
+    border-bottom: 1px #ebebeb solid !important;
+  }
   .search-input {
     font-size: 18px !important;
     padding: 20px 15px !important;
@@ -918,9 +939,6 @@
   }
   .setup-p {
     font-size: 11px !important;
-  }
-  .hero-container {
-    height: 530px !important;
   }
   .setup-p-fat {
     font-size: 11px !important;
@@ -1096,7 +1114,7 @@
     left: calc(50% - 150px) !important;
   }
   .stage-main-container {
-    padding: 55px 0px !important;
+    padding: 60px 0px !important;
   }
   .stage-main {
     padding-right: 0px !important;
@@ -1138,7 +1156,7 @@
     transform: scale(0.85) !important;
   }
   .hero-container {
-    padding-top: 80px !important;
+    padding-top: 90px !important;
     padding-bottom: 10px !important;
   }
   .main-block-container  {

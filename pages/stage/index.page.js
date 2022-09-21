@@ -2437,7 +2437,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
                              <p className="stage-kampe-h1">Kampe idag</p>
                         </div>
                         <p className="nogames" id="nogames">Der kunne ikke findes nogen kampe d. {new Date(selected).getDate()}/{new Date(selected).getMonth() + 1}/{new Date(selected).getFullYear()}...</p>
-                        <div className="md-header">
+                        <div className="md-header" id="md-container">
                             {getDates()}
                         </div>
                         <ul>

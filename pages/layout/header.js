@@ -40,7 +40,7 @@ function Header () {
                             <path fillRule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
                         </svg>
                         <div className="display-flex" style={{alignItems: "center", gap: "5px"}} onClick={() => {window.open("/", "_self")}}>
-                            <div><Image width="50px" height="50px" src={logo} alt="Tipsspillet Logo" className="main-logo" /></div>
+                            <div><Image width="55px" height="55px" src={logo} alt="Tipsspillet Logo" className="main-logo" /></div>
                             <a className="logo-h1">Tipsspillet</a>
                         </div>
                         <div className="nav-link-container">

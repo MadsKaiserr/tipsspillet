@@ -4,6 +4,16 @@
 @import url('https://rsms.me/inter/inter.css');
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
 
+@font-face {
+  font-family: BienalleBold;
+  src: url("./fonts/bold.otf") format("opentype");
+}
+
+@font-face {
+  font-family: Mark;
+  src: url("./fonts/Mark.ttf") format("truetype");
+}
+
   :root {
     /* Primary colors */
     --primary: #3d6deb;
@@ -334,12 +344,12 @@
   .main-component-h-fix {
     display: flex;
     align-items: center;
-    justify-content: center;
     animation: 1000ms ease 0s 1 normal none running fadeIn;
     opacity: 0;
     animation-delay: 0.45s;
     animation-fill-mode: forwards;
     width: 100%;
+    font-weight: 700 !important;
   }
   
   .main-component-h span {
@@ -371,48 +381,49 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 80px;
+    height: 90px;
     gap: 10px;
     overflow: hidden;
     position: relative;
-    min-width: 325px;
+    line-height: 90px !important;
+    min-width: 365px;
     white-space: nowrap;
     animation: cycleMain 7s infinite;
   }
 
   @keyframes cycleMain {
     0% {
-      width: 325px;
+      width: 365px;
     }
     45% {
-      width: 325px;
+      width: 365px;
     }
     50% {
-      width: 482px;
+      width: 540px;
     }
     95% {
-      width: 482px;
+      width: 540px;
     }
     100% {
-      width: 325px;
+      width: 365px;
     }
   }
 
   @keyframes cycleSmall {
     0% {
-      width: 250px;
+      width: 265px;
     }
     45% {
-      width: 250px;
+      width: 265px;
     }
     50% {
-      width: 370px;
+      width: 390px;
     }
     95% {
-      width: 370px;
+      width: 390px;
     }
     100% {
-      width: 250px;
+      width: 265px;
     }
   }
 
@@ -659,13 +670,22 @@
   }
   
   .main-component-h1 {
-    color: var(--black);
-    font-size: 64px;
+    color: var(--kul);
+    font-size: 74px;
     display: inline-flex;
     flex-direction: column;
-    font-family: Inter;
-    font-weight: 700;
-    line-height: 75px;
+    font-family: Mark;
+    font-weight: 600;
+    line-height: 60px;
+    letter-spacing: -3px;
+  }
+
+  .main-component-h1 span {
+    font-family: Mark;
+  }
+
+  #dash {
+    font-family: Inter !important;
   }
 
   .main-component-p {
@@ -760,12 +780,14 @@
   }
   
   .main-component-h1-h2 {
-    color: var(--onBackground);
-    font-size: clamp(17px, 3vw, 20px);
-    font-weight: 500;
-    padding: 10px 0px;
-    text-align: center;
+    color: #333;
+    font-size: 18px;
+    font-weight: 400;
+    padding: 15px 0px;
+    padding-top: 35px !important;
+    line-height: 1.5;
     opacity: 0;
+    max-width: 580px;
     font-family: Inter;
     animation: 1000ms ease 0s 1 normal none running fadeLeft;
     animation-fill-mode: forwards;
@@ -913,10 +935,14 @@
   }
   
   .hero-btn {
-    border-radius: 4px !important;
-    padding: clamp(8px, 2vw, 12px) clamp(20px, 3vw, 25px) !important;
+    border-radius: 10px !important;
+    padding: 15px 50px !important;
     animation: 1000ms ease 0s 1 normal none running fadeInUp;
     animation-fill-mode: forwards;
+    font-size: 15px;
+    font-weight: 300;
+    margin-top: 20px;
+    margin-bottom: 15px;
     animation-delay: 0.9s;
     opacity: 0;
     z-index: 9;
