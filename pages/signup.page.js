@@ -339,7 +339,7 @@ function Signup () {
     return (
         <>
             <Head>
-                <title>Opret din konto på Tipsspillet | Gratis Fodbold Betting</title>
+                <title>Opret konto på Tipsspillet</title>
                 <link rel="canonical" href="https://www.tipsspillet.dk/signup" />
                 <meta name="description" content="Opret konto på Danmarks eneste gratis betting platform - Opret gratis konto, og bet for virtuelle penge mod venner og familie - Deltag i præmiedyster, og vind blandt andet billetter til fodboldkampe i parken." />
                 <meta name="author" content="Mads Kaiser" />
