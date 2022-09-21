@@ -5,11 +5,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
 
 @font-face {
-  font-family: Mark;
-  src: url("./fonts/Mark.ttf") format("truetype");
-}
-
-@font-face {
   font-family: Neue;
   src: url("./fonts/Neue.ttf") format("truetype");
 }
@@ -22,11 +17,6 @@
 @font-face {
   font-family: NeueLight;
   src: url("./fonts/NeueLight.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: NormalF;
-  src: url("./fonts/Normal.otf") format("opentype");
 }
 
   :root {
@@ -689,14 +679,14 @@
     font-size: 74px;
     display: inline-flex;
     flex-direction: column;
-    font-family: Mark;
+    font-family: NeueMedium;
     font-weight: 600;
     line-height: 60px;
-    letter-spacing: -3px;
+    letter-spacing: 1px;
   }
 
   .main-component-h1 span {
-    font-family: Mark;
+    font-family: NeueMedium;
   }
 
   #dash {
