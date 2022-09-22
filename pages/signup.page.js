@@ -389,7 +389,7 @@ function Signup () {
                                     </div>
                                 </div>
                             </div>
-                            <input type="text" className="cg-input" id="kodeord" onChange={event => setKodeord(event.target.value)} placeholder="Kodeord" />
+                            <input className="cg-input" id="kodeord" type="password" onChange={event => setKodeord(event.target.value)} placeholder="Kodeord" />
                             <div className="signup-check">
                                 <div className="signup-checkbox" id="box1" onClick={() => {if (box1) {setBox1(false)}else{setBox1(true)}}}>
                                     <svg xmlns="http://www.w3.org/2000/svg" id={"box1-icon"} className="setup-icon" viewBox="0 0 16 16">

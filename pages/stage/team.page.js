@@ -898,53 +898,55 @@ function StageTeam () {
                                 </div>
                             </div>
                             <div className="team-indhold-side">
-                                <div className="team-kampe-section" style={{marginBottom: "0px"}}>
-                                    <div className="tabel-top" style={{padding: "10px 25px"}}>
-                                        <p className="stat-p-h1">Topscorere</p>
-                                        <div className="stat-ends">
-                                            <p className="stat-p-p">M</p>
-                                            <p className="stat-p-p">S</p>
-                                            <p className="stat-p-p">A</p>
+                                {getUser().rolle !== "none" && <>
+                                    <div className="team-kampe-section" style={{marginBottom: "0px"}}>
+                                        <div className="tabel-top" style={{padding: "10px 25px"}}>
+                                            <p className="stat-p-h1">Topscorere</p>
+                                            <div className="stat-ends">
+                                                <p className="stat-p-p">M</p>
+                                                <p className="stat-p-p">S</p>
+                                                <p className="stat-p-p">A</p>
+                                            </div>
+                                        </div>
+                                        <div className="stage-kampe" id="latest">
+                                            <ul>
+                                            {mostgoals.slice(0,5).map((item, index) => {
+                                                var assists = item.assists;
+                                                if (assists === undefined) {
+                                                    assists = 0;
+                                                }
+                                                return (
+                                                    <li key={item.player.data.player_id + item.player.data.fullname}>
+                                                        <Link href={"/stage/spiller?id=" + item.player.data.player_id}>
+                                                            <div className="stat-player-element">
+                                                                <div className="stat-player">
+                                                                    <p className="stat-player-h1">{index + 1}.</p>
+                                                                    <Image width="30" height="30" src={item.player.data.image_path} alt="" className="bench-img-image" />
+                                                                    <Image width="18px" height="18px" src={item.team.data.logo_path} alt="" className="top-img-logo" />
+                                                                    <div className="bench-info" style={{paddingLeft: "11px"}}>
+                                                                        <p className="bench-h1">{item.player.data.display_name}</p>
+                                                                        <p className="bench-h2">{item.player.data.nationality}</p>
+                                                                    </div>
+                                                                </div>
+                                                                <div className="stat-int">
+                                                                    <div className="stat-text">
+                                                                        <p className="stat-player-p">{item.goals}</p>
+                                                                        <p className="stat-player-p">{"(" + item.penalty_goals + ")"}</p>
+                                                                        <p className="stat-player-p">{assists}</p>
+                                                                    </div>
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" className="team-icon" viewBox="0 0 16 16">
+                                                                        <path fillRule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+                                                                    </svg>
+                                                                </div>
+                                                            </div>
+                                                        </Link>
+                                                    </li>
+                                                );
+                                            })}
+                                        </ul>
                                         </div>
                                     </div>
-                                    <div className="stage-kampe" id="latest">
-                                        <ul>
-                                        {mostgoals.slice(0,5).map((item, index) => {
-                                            var assists = item.assists;
-                                            if (assists === undefined) {
-                                                assists = 0;
-                                            }
-                                            return (
-                                                <li key={item.player.data.player_id + item.player.data.fullname}>
-                                                    <Link href={"/stage/spiller?id=" + item.player.data.player_id}>
-                                                        <div className="stat-player-element">
-                                                            <div className="stat-player">
-                                                                <p className="stat-player-h1">{index + 1}.</p>
-                                                                <Image width="30" height="30" src={item.player.data.image_path} alt="" className="bench-img-image" />
-                                                                <Image width="18px" height="18px" src={item.team.data.logo_path} alt="" className="top-img-logo" />
-                                                                <div className="bench-info" style={{paddingLeft: "11px"}}>
-                                                                    <p className="bench-h1">{item.player.data.display_name}</p>
-                                                                    <p className="bench-h2">{item.player.data.nationality}</p>
-                                                                </div>
-                                                            </div>
-                                                            <div className="stat-int">
-                                                                <div className="stat-text">
-                                                                    <p className="stat-player-p">{item.goals}</p>
-                                                                    <p className="stat-player-p">{"(" + item.penalty_goals + ")"}</p>
-                                                                    <p className="stat-player-p">{assists}</p>
-                                                                </div>
-                                                                <svg xmlns="http://www.w3.org/2000/svg" className="team-icon" viewBox="0 0 16 16">
-                                                                    <path fillRule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
-                                                                </svg>
-                                                            </div>
-                                                        </div>
-                                                    </Link>
-                                                </li>
-                                            );
-                                        })}
-                                    </ul>
-                                    </div>
-                                </div>
+                                </>}
                                 <div className="team-kampe-section" style={{marginBottom: "0px"}}>
                                     {getGroups()}
                                 </div>
@@ -1508,6 +1510,17 @@ function StageTeam () {
                             {/* <div className="team-kampe-section" id="seneste">
                                 <p className="team-kampe-h1">Statistikker</p>
                             </div> */}
+                            {getUser().rolle === "none" && <div style={{width: "100%"}}>
+                                <div className="locked-wrapper">
+                                    <div className="lock">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="var(--primary)" viewBox="0 0 16 16">
+                                            <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <p className="lock-p">Dette er en abonnement funktion</p>
+                            </div>}
+                            {getUser().rolle !== "none" && <>
                             <div className="team-kampe-section" id="startopstilling-div">
                                 <div className="tabel-top" style={{padding: "10px 25px"}}>
                                     <p className="stat-p-h1">Topscorere</p>
@@ -1555,6 +1568,7 @@ function StageTeam () {
                                 </ul>
                                 </div>
                             </div>
+                            </>}
                         </div>
                         <div className="team-indhold" id="tabel">
                             <div className="team-indhold-side">

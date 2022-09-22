@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 import axios from "axios";
-import { getUser } from "../services/authService";
+import { getUser, resetUserSession } from "../services/authService";
 import { getKupon, getString } from "../services/algo.js";
 import { DayPicker } from 'react-day-picker';
 import da from 'date-fns/locale/da';
@@ -911,16 +911,25 @@ function StageForside ({gruppespil_data, spiller_data}) {
         return clone.slice(0, n);
     }
 
+    function logout() {
+        resetUserSession();
+        window.open("/", "_self");
+    }
+
     useEffect(() => {
         console.log("AWS - User:", spiller_data);
-        var favorit = [];
-        if (spiller_data.favoritter.length > 0) {
-            for (var y in spiller_data.favoritter) {
-                favorit.push(spiller_data.favoritter[y]);
+        if (spiller_data) {
+            var favorit = [];
+            if (spiller_data.favoritter.length > 0) {
+                for (var y in spiller_data.favoritter) {
+                    favorit.push(spiller_data.favoritter[y]);
+                }
             }
+            setFavoritter(favorit);
+            localStorage.setItem("favoritter", JSON.stringify(favorit));
+        } else {
+            logout();
         }
-        setFavoritter(favorit);
-        localStorage.setItem("favoritter", JSON.stringify(favorit));
    }, [])
 
     function getIndskydelse(data) {
@@ -1528,26 +1537,14 @@ function StageForside ({gruppespil_data, spiller_data}) {
                                 var scoreVisitor = "stage-stilling-p";
                                 var teamNameLocal = "stage-kampe-p";
                                 var teamNameVisitor = "stage-kampe-p";
-                                var getTime = <div className="time-con">
-                                    <p className="stage-kampe-minut">{liveView}</p>
-                                    <p className={yearClass}>I morgen</p>
-                                </div>;
                                 if (item.time.status === "LIVE") {
                                     liveView = item.time.minute;
-                                    getTime = <div className="live-con">
-                                        <p className="stage-kampe-minut stage-kampe-minut-active">{liveView}</p>
-                                        <p className="stage-blink">&apos;</p>
-                                    </div>;
                                 } else if (item.time.status === "NS") {
                                     scoreLocal = "stage-stilling-p-none";
                                     scoreVisitor = "stage-stilling-p-none";
                                     var calcTime = item.time.starting_at.time;
                                     calcTime = calcTime.slice(0,-3);
                                     liveView = calcTime;
-                                    getTime = <div className="time-con">
-                                    <p className="stage-kampe-minut">{liveView}</p>
-                                    <p className={yearClass}>I morgen</p>
-                                </div>;
                                 } else if (item.time.status === "FT") {
                                     if (item.winner_team_id === item.localteam_id) {
                                         scoreLocal = "stage-stilling-p-fat";
@@ -1556,100 +1553,36 @@ function StageForside ({gruppespil_data, spiller_data}) {
                                         scoreVisitor = "stage-stilling-p-fat";
                                         teamNameVisitor = "stage-kampe-p-fat";
                                     }
-                                    getTime = <div className="time-con">
-                                        <p className="stage-kampe-minut">{liveView}</p>
-                                        <p className={yearClass}>I morgen</p>
-                                    </div>;
                                 } else if (item.time.status === "CANCL") {
                                     liveView = "AFLYST";
-                                    getTime = <div className="time-con">
-                                        <p className="stage-kampe-minut">{liveView}</p>
-                                        <p className={yearClass}>I morgen</p>
-                                    </div>;
                                 } else if (item.time.status === "HT") {
                                     liveView = "Pause";
-                                    getTime = <div className="time-con">
-                                        <p className="stage-kampe-minut">{liveView}</p>
-                                        <p className={yearClass}>I morgen</p>
-                                    </div>;
                                 } else if (item.time.status === "ET") {
                                     liveView = "EX. TID";
-                                    getTime = <div className="time-con">
-                                        <p className="stage-kampe-minut">{liveView}</p>
-                                        <p className={yearClass}>I morgen</p>
-                                    </div>;
                                 } else if (item.time.status === "PEN_LIVE") {
                                     liveView = "STR.";
-                                    getTime = <div className="time-con">
-                                        <p className="stage-kampe-minut">{liveView}</p>
-                                        <p className={yearClass}>I morgen</p>
-                                    </div>;
                                 } else if (item.time.status === "BREAK") {
                                     liveView = "Pause";
-                                    getTime = <div className="time-con">
-                                        <p className="stage-kampe-minut">{liveView}</p>
-                                        <p className={yearClass}>I morgen</p>
-                                    </div>;
                                 } else if (item.time.status === "POSTP") {
                                     liveView = "Udskudt";
-                                    getTime = <div className="time-con">
-                                        <p className="stage-kampe-minut">{liveView}</p>
-                                        <p className={yearClass}>I morgen</p>
-                                    </div>;
                                 } else if (item.time.status === "INT") {
                                     liveView = "Afbrudt";
-                                    getTime = <div className="time-con">
-                                        <p className="stage-kampe-minut">{liveView}</p>
-                                        <p className={yearClass}>I morgen</p>
-                                    </div>;
                                 } else if (item.time.status === "ABAN") {
                                     liveView = "Forladt";
-                                    getTime = <div className="time-con">
-                                        <p className="stage-kampe-minut">{liveView}</p>
-                                        <p className={yearClass}>I morgen</p>
-                                    </div>;
                                 } else if (item.time.status === "ABAN") {
                                     liveView = "Forladt";
-                                    getTime = <div className="time-con">
-                                        <p className="stage-kampe-minut">{liveView}</p>
-                                        <p className={yearClass}>I morgen</p>
-                                    </div>;
                                 } else if (item.time.status === "SUSP") {
                                     liveView = "SUSP.";
-                                    getTime = <div className="time-con">
-                                        <p className="stage-kampe-minut">{liveView}</p>
-                                        <p className={yearClass}>I morgen</p>
-                                    </div>;
                                 } else if (item.time.status === "TBA") {
                                     liveView = "TBA";
-                                    getTime = <div className="time-con">
-                                        <p className="stage-kampe-minut">{liveView}</p>
-                                        <p className={yearClass}>I morgen</p>
-                                    </div>;
                                 } else if (item.time.status === "DELAYED") {
                                     liveView = "Forsinket";
-                                    getTime = <div className="time-con">
-                                        <p className="stage-kampe-minut">{liveView}</p>
-                                        <p className={yearClass}>I morgen</p>
-                                    </div>;
                                 } else if (item.time.status === "WO") {
                                     liveView = "WO";
-                                    getTime = <div className="time-con">
-                                        <p className="stage-kampe-minut">{liveView}</p>
-                                        <p className={yearClass}>I morgen</p>
-                                    </div>;
                                 } else if (item.time.status === "AU") {
                                     liveView = "Afventer";
-                                    getTime = <div className="time-con">
-                                        <p className="stage-kampe-minut">{liveView}</p>
-                                        <p className={yearClass}>I morgen</p>
-                                    </div>;
                                 } else if (item.time.status === "Deleted") {
                                     liveView = "Slettet";
-                                    getTime = <div className="time-con">
-                                        <p className="stage-kampe-minut">{liveView}</p>
-                                        <p className={yearClass}>I morgen</p>
-                                    </div>;
                                 }
 
                                 if (type === "kommende") {

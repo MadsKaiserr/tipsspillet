@@ -553,17 +553,27 @@
     -webkit-text-fill-color: transparent !important;
   }
   .main-component-h1 {
-    font-size: 52px !important;
-    line-height: 60px !important;
+    font-size: 40px !important;
+    line-height: 40px !important;
+    padding-top: 30px;
   }
   .main-switch {
     height: 65px !important;
     line-height: 60px !important;
   }
+  .hero-container-2 {
+    min-width: 100% !important;
+  }
   .main-component-h1-h2 {
-    font-size: 16px !important;
-    padding-top: 15px !important;
-    max-width: 380px !important;
+    font-size: 13px !important;
+    padding-top: 8px !important;
+    max-width: 280px !important;
+    margin: auto !important;
+    line-height: 1.3 !important;
+  }
+  .hero-btn {
+    font-size: 13px !important;
+    padding: 12px 40px !important;
   }
   .forside-blob {
     margin: 30px 25px !important;
@@ -580,8 +590,8 @@
     font-size: 14px !important;
   }
   .main-switch {
-    min-width: 250px !important;
     animation: cycleSmall 7s infinite !important;
+    min-width: 180px;
   }
   #dash {
     margin-top: -8px !important;
@@ -732,6 +742,31 @@
     padding: 30px 0px !important;
     width: 250px !important;
   }
+  .setup-hit {
+    padding: 10px 8px !important;
+    gap: 13px !important;
+  }
+  .setup-content {
+    padding-top: 0px !important;
+  }
+  .setup-mobile-cta {
+    display: flex !important;
+  }
+  .setup-checkbox {
+    height: 18px !important;
+    width: 18px !important;
+    min-width: 18px !important;
+  }
+  .setup-img {
+    width: 20px !important;
+    height: 20px !important;
+  }
+  .setup-hit-wrapper {
+    gap: 7px !important;
+  }
+  .setup-cta {
+    display: none !important;
+  }
   .forside-stats-h1 {
     min-width: 90px !important;
     max-width: 90px !important;
@@ -739,6 +774,13 @@
   }
   .main-container {
     padding: 40px 15px !important;
+    padding-bottom: 10px !important;
+  }
+  .plans-container {
+    padding-top: 0px !important;
+  }
+  .main-container .main-component-h1 {
+    padding-top: 5px !important;
   }
   .ant-container {
     align-items: center!important;
@@ -811,8 +853,8 @@
     display: none !important;
   }
   .fs-wrapper-h1 {
-    font-size: 50px !important;
-    line-height: 55px !important;
+    font-size: 46px !important;
+    line-height: 50px !important;
     margin-left: 50px !important;
     margin-top: 70px !important;
   }
@@ -820,13 +862,14 @@
     padding-left: 50px !important;
     padding-right: 50px !important;
     width: 100% !important;
-    font-size: 16px !important;
+    font-size: 15px !important;
+    margin-top: 25px !important;
   }
   .fs-container {
     padding-left: 50px !important;
   }
   .forside-black {
-    height: 600px !important
+    height: 550px !important
   }
   .forside-blob {
     border-radius: 30px !important;
@@ -849,12 +892,23 @@
     margin-top: 30px;
   }
   .db-h1 {
-    font-size: 44px !important;
-    line-height: 50px !important;
+    font-size: 35px !important;
+    line-height: 43px !important;
   }
   .db-section {
     padding: 0px 40px !important;
     width: 100% !important;
+  }
+  .db-h2 {
+    font-size: 14px !important;
+  }
+  .facebook-button-class {
+    font-size: 14px !important;
+    padding: 10px 0px !important;
+  }
+  .faq-a-p {
+    font-size: 14px !important;
+    font-weight: 300 !important;
   }
   .td-input {
     max-width: 180px !important;
@@ -1218,9 +1272,6 @@
     position: absolute !important;
     top: 5px !important;
     right: 5px !important;
-  }
-  .hero-container-2 {
-    transform: scale(0.85) !important;
   }
   .hero-container {
     padding-top: 90px !important;

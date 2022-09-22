@@ -227,7 +227,7 @@ function Priser () {
                 <meta property="og:description" content="Premium: 79kr - Opret egne gruppespil, deltag i præmiedyster, få udvidet statistikker, gratis betting tips og meget mere. Eller køb adgangsbillet til præmiedyster for 9 kr. - Eller gruppespilsbillet, som giver adgang til at oprette eget gruppespil til 37 kr." />
             </Head>
             <div className="signup-abonnement">
-                <div className="main-container" style={{transform: "scale(0.8)", marginTop: "-30px", }}>
+                <div className="main-container">
                     <div className="hero-text">
                         <p className="main-component-p animation-fadeleft">Vælg et abonnement</p>
                         <h1 className="main-component-h1 main-gradient animation-fadeleft animation-delay-200">Vælg et abonnement</h1>
@@ -261,7 +261,7 @@ function Priser () {
                                                 <svg xmlns="http://www.w3.org/2000/svg" className="plan-element-perk-icon" viewBox="0 0 16 16">
                                                     <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
                                                 </svg>
-                                                <p className="plan-element-perk-desc">Deltag i 2 spil</p>
+                                                <p className="plan-element-perk-desc">Deltag i 2 spil ad gangen</p>
                                             </div>
                                             <div className="plan-element-perk">
                                                 <svg xmlns="http://www.w3.org/2000/svg" className="plan-element-perk-icon" viewBox="0 0 16 16">
@@ -326,7 +326,7 @@ function Priser () {
                                                 <svg xmlns="http://www.w3.org/2000/svg" className="plan-element-perk-icon" viewBox="0 0 16 16">
                                                     <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
                                                 </svg>
-                                                <p className="plan-element-perk-desc">Deltag i 5 spil</p>
+                                                <p className="plan-element-perk-desc">Deltag i 5 spil ad gangen</p>
                                             </div>
                                             <div className="plan-element-perk">
                                                 <svg xmlns="http://www.w3.org/2000/svg" className="plan-element-perk-icon" viewBox="0 0 16 16">

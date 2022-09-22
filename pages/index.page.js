@@ -64,8 +64,8 @@ export default function Home() {
                         </span>
                     </div>
                 </h1>
-                <h2 className="main-component-h1-h2">Dyst mod venner og familie i fodbold betting uden risiko. Spil med virtuelle penge, og find den bedste better iblandt jer. &#128640;</h2>
             </div>
+            <h2 className="main-component-h1-h2">Dyst mod venner og familie i fodbold betting uden risiko. Spil med virtuelle penge, og find den bedste better iblandt jer. &#128640;</h2>
             <Link href="/gruppespil">
                 <button className="main-btn-default hero-btn">Find gruppespil</button>
             </Link><br />

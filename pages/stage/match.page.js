@@ -4085,6 +4085,17 @@ function StageMatcharticle ({data}) {
                             </div>
                         </div>
                         <div className="match-indhold" id="startopstilling">
+                            {getUser().rolle === "none" && <>
+                                <div className="locked-wrapper">
+                                    <div className="lock">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="var(--primary)" viewBox="0 0 16 16">
+                                            <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <p className="lock-p">Dette er en abonnement funktion</p>
+                            </>}
+                            {getUser().rolle !== "none" && <>
                             <p className="nogames display" id="startopstilling-error">Startopstillingen er endnu ikke blevet opgivet.</p>
                             <div id="startopstilling2">
                             <div className="startopstilling-pitch">
@@ -4192,6 +4203,7 @@ function StageMatcharticle ({data}) {
                                 </div>
                             </div>
                             </div>
+                            </>}
                         </div>
                         <div className="match-indhold" id="H2H">
                             <div className="team-kampe-section" id="seneste">
@@ -4278,7 +4290,19 @@ function StageMatcharticle ({data}) {
                         </div>
                         <div className="match-indhold" id="statistikker">
                             <p className="nogames display">{statText}</p>
-                            {getStats()}
+                            {getUser().rolle === "none" && <>
+                                <div className="locked-wrapper">
+                                    <div className="lock">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="var(--primary)" viewBox="0 0 16 16">
+                                            <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <p className="lock-p">Dette er en abonnement funktion</p>
+                            </>}
+                            {getUser().rolle !== "none" && <>
+                                {getStats()}
+                            </>}
                         </div>
                         <div className="match-indhold" id="tabel">
                             <div className="team-kampe-section" id="seneste">

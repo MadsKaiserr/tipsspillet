@@ -405,19 +405,19 @@
 
   @keyframes cycleSmall {
     0% {
-      width: 265px;
+      width: 205px;
     }
     45% {
-      width: 265px;
+      width: 205px;
     }
     50% {
-      width: 390px;
+      width: 305px;
     }
     95% {
-      width: 390px;
+      width: 305px;
     }
     100% {
-      width: 265px;
+      width: 205px;
     }
   }
 
