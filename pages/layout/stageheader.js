@@ -132,7 +132,12 @@ function StageHeader () {
                             </div>
                             <div className="user-dropdown" id="userDropdown">
                                 <div className="user-info">
-                                    <div className="user-logo-tem">{auth !== "" && <>{(auth.username).slice(0,1)}</>}</div>
+                                    <div className="user-logo-tem">
+                                        {typeof window !== 'undefined' && <>
+                                            {localStorage.getItem("fbLogin") && <Image layout="fill" src={"http://graph.facebook.com/"+ JSON.parse(localStorage.getItem("fbLogin")).id +"/picture?type=square"} />}
+                                            {!localStorage.getItem("fbLogin") && <>{auth !== "" && <>{(auth.username).slice(0,1)}</>}</>}
+                                        </>}
+                                    </div>
                                     <div className="user-info-desc">
                                         <p className="user-name">{auth !== "" && <>{auth.username}</>}</p>
                                         <p className="user-email">{auth !== "" && <>{auth.email}</>}</p>
@@ -232,7 +237,12 @@ function StageHeader () {
                                             </div>
                                             <div className="user-dropdown" id="userDropdown">
                                                 <div className="user-info">
-                                                    <div className="user-logo-tem">{auth !== "" && <>{(auth.username).slice(0,1)}</>}</div>
+                                                    <div className="user-logo-tem">
+                                                        {typeof window !== 'undefined' && <>
+                                                            {localStorage.getItem("fbLogin") && <Image layout="fill" src={"http://graph.facebook.com/"+ JSON.parse(localStorage.getItem("fbLogin")).id +"/picture?type=square"} />}
+                                                            {!localStorage.getItem("fbLogin") && <>{auth !== "" && <>{(auth.username).slice(0,1)}</>}</>}
+                                                        </>}
+                                                    </div>
                                                     <div className="user-info-desc">
                                                         <p className="user-name">{auth !== "" && <>{auth.username}</>}</p>
                                                         <p className="user-email">{auth !== "" && <>{auth.email}</>}</p>

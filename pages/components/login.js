@@ -56,7 +56,6 @@ function Login () {
     }
 
     const fbResponse = (event) => {
-
         console.log(event);
         localStorage.setItem("fbLogin", JSON.stringify(event));
 

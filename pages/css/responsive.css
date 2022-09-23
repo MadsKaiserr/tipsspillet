@@ -994,6 +994,11 @@
   .team-kampe-section {
     padding: 0px 10px !important;
   }
+  .md-sticky {
+    position: fixed !important;
+    animation: stickTop 0.55s 1 !important;
+    animation-delay: 0.55s;
+  }
   .match-title {
     padding: 30px 10px !important;
   }

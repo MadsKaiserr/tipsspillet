@@ -858,6 +858,7 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    position: relative;
     color: #fff;
     font-family: Inter;
     font-weight: 600;
