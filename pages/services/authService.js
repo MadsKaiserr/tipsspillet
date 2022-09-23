@@ -10,7 +10,11 @@ module.exports = {
             if (decodedToken["exp"] > todayMS) {
                 return decodedToken;
             } else {
-                this.resetUserSession();
+                localStorage.clear();
+                sessionStorage.clear();
+                cookie.remove("activeGame");
+                cookie.remove("email");
+                cookie.remove("auth");
                 window.open("/", "_self")
             }
         } else return undefined;
