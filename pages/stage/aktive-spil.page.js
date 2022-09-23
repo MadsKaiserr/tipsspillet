@@ -242,7 +242,7 @@ function StageAktiveSpil ({ data }) {
                         <div className="match-loader display" id="stage-loader1"></div>
                         <ul className="td-table">
                             {search.map((item) => {
-                                const index = item.players.findIndex(obj => obj.player === getUser() ? getUser().email : "");
+                                const index = item.players.findIndex(obj => obj.player === getUser().email);
                                 if (currentType === "alle") {
                                     if (new Date(item.varighed).getTime() > new Date().getTime()) {
                                         return (

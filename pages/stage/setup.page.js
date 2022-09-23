@@ -232,7 +232,7 @@ function Setup () {
         var activeGame = gruppespil[activeIndex];
         if (activeIndex >= 0) {
             console.log("INNDEE")
-            var yourIndex = activeGame["players"].findIndex(obj => obj.player === getUser() ? getUser().email : "");
+            var yourIndex = activeGame["players"].findIndex(obj => obj.player === getUser().email);
 
             var varighedDate = new Date(gruppespil[activeIndex].varighed).getTime();
             var nowDate = new Date().getTime();
@@ -343,6 +343,95 @@ function Setup () {
                             <div className="setup-search">
                                 <input type="text" placeholder="Søg i gruppespil" className="setup-input" onChange={event => setGruppespilSearchStr(event.target.value)} />
                             </div>
+                            <div className="td-wrapper" style={{paddingTop: "15px"}}>
+                                <div className="td-modifier">
+                                    <p className="td-modifier-p modifier-mod" id="td-navn">NAVN</p>
+                                    <p className="td-modifier-p modifier-mod" id="td-synlighed">SYNLIGHED</p>
+                                    <p className="td-modifier-p modifier-mod" id="td-spillere">SPILLERE</p>
+                                    <p className="td-modifier-p modifier-mod" id="td-admin">ADMINISTRATOR</p>
+                                </div>
+                                <div className="match-loader display" id="stage-loader1"></div>
+                                <ul className="td-table">
+                                    {gruppespilsearch.map((item) => {
+                                        return (
+                                            <li key={item.id} className="tl-element" id={"gruppespil-" + item.id} style={{flexDirection: "column", alignItems: "flex-start", paddingLeft: "20px"}} onClick={() => {pullGruppespil(item.id)}}>
+                                                <div style={{width: "100%", height: "100%", display: "flex", alignItems: "center"}}>
+                                                    <div className="tl-wrapper" id="td-navn">
+                                                        <div className="tl-img">
+                                                            {item.name.slice(0,1)}
+                                                        </div>
+                                                        <p className="td-modifier-p" style={{fontWeight: "500"}}>{item.name}</p>
+                                                    </div>
+                                                    <p className="td-modifier-p" id="td-synlighed">{item.synlighed}</p>
+                                                    <p className="td-modifier-p" id="td-spillere">{item.players.length}</p>
+                                                    <p className="td-modifier-p" id="td-admin">{item.admin}</p>
+                                                </div>
+                                                <div className="setup-hit-pull" id={"pull-" + item.id}>
+                                                    <div className="pull-stats">
+                                                        <div className="pull-stat">
+                                                            <p className="pull-h1">{item.players.length}</p>
+                                                            <div className="pull-stat-bottom">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" className="pull-icon" viewBox="0 0 16 16">
+                                                                    <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816zM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275zM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/>
+                                                                </svg>
+                                                                <p className="pull-stat-p">Tilmeldte</p>
+                                                            </div>
+                                                        </div>
+                                                        <div className="pull-stat">
+                                                            <p className="pull-h1">{item.admin}</p>
+                                                            <div className="pull-stat-bottom">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" className="pull-icon" viewBox="0 0 16 16">
+                                                                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+                                                                </svg>
+                                                                <p className="pull-stat-p">Administrator</p>
+                                                            </div>
+                                                        </div>
+                                                        <div className="pull-stat">
+                                                            <p className="pull-h1">{item.varighed}</p>
+                                                            <div className="pull-stat-bottom">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" className="pull-icon" viewBox="0 0 16 16">
+                                                                    <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+                                                                </svg>
+                                                                <p className="pull-stat-p">Slutdato</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <p className="setup-hit-p" style={{paddingBottom: "5px"}}>Tilmeldte</p>
+                                                    <ul className="pull-tilmeldte">
+                                                        {item.players.map((player) => {
+                                                            return (
+                                                                <li key={player.player} className="tilmeldte-element">
+                                                                    <div className="tilmeldte-pb">{player.username !== "" && <>{(player.username).slice(0,1)}</>}</div>
+                                                                    <div className="tilmeldte-wrapper">
+                                                                        <p className="setup-p">{player.username}</p>
+                                                                        <p className="setup-pp">{player.player}</p>
+                                                                    </div>
+                                                                </li>
+                                                            );
+                                                        })}
+                                                    </ul>
+                                                    <div className="pull-cta">
+                                                        <button className="setup-btn" onClick={() => {tilmeld(item.id)}}>Tilmeld</button>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        );
+                                    })}
+                                </ul>
+                            </div>
+                            {/* <div className="setup-hit-wrapper">
+                                <div className="setup-inline" id="setup-1">
+                                    <p className="setup-p-fat">NAVN</p>
+                                </div>
+                                <div className="setup-hit-wrapper" style={{justifyContent: "flex-end"}}>
+                                    <div className="setup-inline" id="setup-2">
+                                        <p className="setup-p">SPILLERE</p>
+                                    </div>
+                                    <div className="setup-inline" id="setup-3">
+                                        <p className="setup-p">ADMIN</p>
+                                    </div>
+                                </div>
+                            </div>
                             <ul className="setup-hits" style={{maxHeight: "600px"}}>
                                 <div className="match-loader display" id="stage-loader1"></div>
                                 {gruppespilsearch.map((item) => {
@@ -412,14 +501,14 @@ function Setup () {
                                         </li>
                                     );
                                 })}
-                            </ul>
+                            </ul> */}
                         </div>
                         <div className="setup-cta">
                             <Link href="/stage"><a className="nav-btn-outline">Forlad opsætning</a></Link>
                             <button className="setup-btn" id="tilmeldNext" onClick={() => {next("hold")}}>Spring gruppespil over</button>
                         </div>
                         <div className="setup-mobile-cta">
-                            <button className="main-btn-default" style={{width: "100%", borderRadius: "300px", padding: "12px 0px"}} onClick={() => {next("hold")}}>Fortsæt</button>
+                            <button className="main-btn-default" style={{width: "100%", borderRadius: "300px", padding: "12px 0px", backgroundColor: "var(--third)", color: "var(--primary)"}} onClick={() => {next("hold")}}>Spring over</button>
                         </div>
                     </div>
                     <div className="setup-wrapper" id="hold">

@@ -32,7 +32,7 @@ function StageGruppespil ({data}) {
         if (cookie.get("activeGame")) {
             setActiveGame(cookie.get("activeGame"));
         }
-        setUsername(getUser() ? getUser().username : "");
+        setUsername(getUser().username);
     }, [])
 
     const [forbrug, setForbrug] = useState(0);
@@ -108,7 +108,7 @@ function StageGruppespil ({data}) {
             var newTableArray = [];
             var myPlayer = [];
             for (var k in data.players) {
-                if (data.players[k].player === getUser() ? getUser().email : "") {
+                if (data.players[k].player === getUser().email) {
                     myPlayer = data.players[k].odds;
                     setGameAdmin(data.admin);
                     localStorage.setItem("notifikationer", data.players[k].info.notifikationer.length);
@@ -212,7 +212,7 @@ function StageGruppespil ({data}) {
     }, [])
 
     function adminSettings() {
-        if (gameAdmin === getUser() ? getUser().email : ""){
+        if (gameAdmin === getUser().email){
             return (
                 <Link href="">
                     <button className="gruppespil3-btn">Indstillinger</button>
@@ -275,7 +275,7 @@ function StageGruppespil ({data}) {
         if (beskederLength >= 5) {
             return beskeder.slice(beskederLength - 5,beskederLength).map((item) => {
             var nameVar = "chat-name";
-            if (item.name === getUser() ? getUser().username : "") {
+            if (item.name === getUser().username) {
                 nameVar = "chat-name-active";
             }
 
@@ -334,7 +334,7 @@ function StageGruppespil ({data}) {
         )} else {
             return beskeder.slice(0,5).map((item) => {
                 var nameVar = "chat-name";
-                if (item.name === getUser() ? getUser().username : "") {
+                if (item.name === getUser().username) {
                     nameVar = "chat-name-active";
                 }
     
@@ -1030,7 +1030,7 @@ function StageGruppespil ({data}) {
                                     }
 
                                     var showMe = "";
-                                    if (item.player === getUser() ? getUser().email : "") {
+                                    if (item.player === getUser().email) {
                                         showMe = " gruppespil-row-active";
                                     }
 

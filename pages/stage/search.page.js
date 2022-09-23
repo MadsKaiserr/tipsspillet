@@ -146,7 +146,7 @@ function Search () {
                                 <li key={item.name + item.url} className="display" style={{width: "100%"}}>
                                     <div className="hit-elem" style={{width: "100%"}} onClick={() => router.push(item.url)}>
                                         <div className="hit-con">
-                                            <Image width="27px" height="27px" alt="." src={item.logo_path} className="hit-img" />
+                                            <Image layout="fill" alt="." src={item.logo_path} className="hit-img" />
                                         </div>
                                         <div className="hit-info">
                                             <p className="hit-h1">{item.name}</p>

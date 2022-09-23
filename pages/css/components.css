@@ -396,7 +396,7 @@
   
   .nav-bar-stage {
     width: 100%;
-    z-index: 9;
+    z-index: 12;
     position: relative;
     display: block;
     background-color: #fff;

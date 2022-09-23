@@ -387,6 +387,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
 
     function placeBet(type) {
         if (type === "kombination") {
+            document.getElementById("bet-modal").classList.add("display-not");
             var nowDate = new Date().getTime();
             var varighedDate = new Date(slutdato).getTime();
             var placeBetBTN = document.getElementById("placeBetBTN");
@@ -490,19 +491,19 @@ function StageForside ({gruppespil_data, spiller_data}) {
                         }
                 
                         axios.patch(placeBetUrl, betBody, betConfig).then(response => {
-                            document.getElementById("bet-modal").classList.add("display-not");
-                            // document.getElementById("singler-modal").classList.add("display-not")
                             document.getElementById("placed-modal").classList.remove("display-not");
+                            // document.getElementById("singler-modal").classList.add("display-not")
                             console.log("AWS - Oprettet:", betBody, response)
                             setCurrentMoney(currentMoney - indsats);
+                            emptyBets();
+                            setNotiMessage("success", "Væddemål placeret", "Dit væddemål er nu placeret. Gå til 'Mine gruppespil' for at se dine væddemål.");
+                            var placeBetBTN2 = document.getElementById("placeBetBTN");
+                            placeBetBTN2.innerHTML = "Placér bet";
                         }).catch(error => {
+                            setNotiMessage("error", "Fejl ved oprettelse af væddemål", error.message);
+                            placeBetBTN.innerHTML = "Placér bet";
                             console.log(error);
-                            setNotiMessage("error", "Fejl ved oprettelse af væddemål", error);
                         })
-                        emptyBets();
-                        setNotiMessage("success", "Væddemål placeret", "Dit væddemål er nu placeret. Gå til 'Mine gruppespil' for at se dine væddemål.");
-                        var placeBetBTN2 = document.getElementById("placeBetBTN");
-                        placeBetBTN2.innerHTML = "Placér bet";
                     }
                         }
                 }
@@ -538,6 +539,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
                     placeBetBTN.innerHTML = "Placér bet";
                 }
             } else {
+                document.getElementById("bet-modal").classList.add("display-not");
                 var newDiv = JSON.parse(sessionStorage.getItem("odds"));
                 var valueArr = newDiv.map(function(item){ return item.id });
                     var isDuplicate = valueArr.some(function(item, idx){ 
@@ -611,14 +613,14 @@ function StageForside ({gruppespil_data, spiller_data}) {
                     }
             
                     axios.patch(placeBetUrl, betBody, betConfig).then(response => {
-                        document.getElementById("bet-modal").classList.add("display-not");
                         // document.getElementById("singler-modal").classList.add("display-not")
                         document.getElementById("placed-modal").classList.remove("display-not");
                         console.log("AWS - Oprettet:", betBody, response)
                         setCurrentMoney(currentMoney - indsats);
                     }).catch(error => {
+                        setNotiMessage("error", "Fejl ved oprettelse af væddemål", error.message);
+                        placeBetBTN.innerHTML = "Placér bet";
                         console.log(error);
-                        setNotiMessage("error", "Fejl ved oprettelse af væddemål", error);
                     })
                     emptyBets();
                     setNotiMessage("success", "Væddemål placeret", "Dit væddemål er nu placeret. Gå til 'Mine gruppespil' for at se dine væddemål.");
@@ -2201,17 +2203,6 @@ function StageForside ({gruppespil_data, spiller_data}) {
                         placeBetBTN.innerHTML = "<div className='loader'></div>";
                         placeBet("kombination");}}>Placér kupon</button>
                     <button className="con-modal-afbryd" onClick={() => {document.getElementById("bet-modal").classList.add("display-not")}}>Afbryd</button>
-                </div>
-            </div>
-        </div>
-        <div className="modal-test display-not" id="singler-modal">
-            <div className="modal-con">
-                <p className="con-modal-p">Er du sikker på, at du vil placere din kupon, med en indsats på {singleIndsats},00 kr? Dette beløb er ikke refunderbart.</p>
-                <div className="modal-wrapper">
-                    <button className="con-modal-btn" id="placeBetBTN1" onClick={() => {var placeBetBTN1 = document.getElementById("placeBetBTN1");
-                        placeBetBTN1.innerHTML = "<div className='loader'></div>";
-                        placeBet("singler");}}>Placér kupon</button>
-                    <button className="con-modal-afbryd" onClick={() => {document.getElementById("singler-modal").classList.add("display-not")}}>Afbryd</button>
                 </div>
             </div>
         </div>

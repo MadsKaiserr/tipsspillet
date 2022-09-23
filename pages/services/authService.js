@@ -9,8 +9,11 @@ module.exports = {
             const todayMS = todayTime/1000;
             if (decodedToken["exp"] > todayMS) {
                 return decodedToken;
+            } else {
+                this.resetUserSession();
+                window.open("/", "_self")
             }
-        } else return;
+        } else return undefined;
     },
     getToken: function() {
         return JSON.parse(JSON.stringify(getUser())).token;

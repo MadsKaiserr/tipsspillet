@@ -2482,11 +2482,21 @@
     color: var(--black);
     margin-bottom: 10px;
   }
+
+  .hit-con {
+    width: 27px;
+    height: 27px;
+    position: relative;
+    border-radius: 50%;
+    overflow: hidden;
+  }
   
   .info-p {
     font-size: 15px;
     font-family: Inter;
     font-weight: 300;
+    z-index: 2;
+    position: relative;
     color: var(--softBlack);
     margin-top: 10px;
     display: inline-block;
@@ -3084,8 +3094,10 @@
   display: none;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   padding-top: 10px;
   position: absolute;
+  gap: 10px;
   width: 100%;
   padding: 0px 15px;
   bottom: 30px;
@@ -3230,6 +3242,7 @@
 .setup-hit-pull {
   display: none;
   width: 100%;
+  padding-top: 15px;
 }
 
 .setup-wrapper {

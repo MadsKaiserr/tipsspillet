@@ -120,7 +120,7 @@ function StageGruppesession ({data}) {
                 console.log("AWS - Gruppespil:", response)
                 cookie.set("activeGame", activeGame["id"], {expires: 24});
                 localStorage.setItem("activeGame", activeGame["id"]);
-                localStorage.setItem("playerIndex", data.Item.Attributes.players.findIndex(obj => obj.player === getUser() ? getUser().email : ""));
+                localStorage.setItem("playerIndex", data.Item.Attributes.players.findIndex(obj => obj.player === getUser().email));
                 router.push("/stage")
             }).catch(error => {
                 console.log(error);

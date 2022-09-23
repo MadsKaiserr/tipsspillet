@@ -13,6 +13,7 @@ import Congrats from '../img/congrats.svg';
 import StageHeader from '../layout/stageheader';
 import Height from '../components/height';
 import { getUser } from "../services/authService";
+import { set } from 'date-fns';
 
 function StageMatcharticle ({data}) {
 
@@ -76,6 +77,7 @@ function StageMatcharticle ({data}) {
     const [goals, setGoals] = useState("4");
     const [goalsOdds, setGoalsOdds] = useState("3.20");
     const [goalOddArray, setGoalOddArray] = useState([]);
+    const [matchUpdated, setMatchUpdated] = useState(true);
 
     useEffect(() => {
         if (goalOddArray.length > 0) {
@@ -287,7 +289,9 @@ function StageMatcharticle ({data}) {
                 document.getElementById("startopstilling-error").classList.remove("display");
                 setPositions([result.data.lineup.data]);
             } else {
-                document.getElementById("startopstilling2").classList.add("display-not");
+                if (document.getElementById("startopstilling2")) {
+                    document.getElementById("startopstilling2").classList.add("display-not");
+                }
             }
             sethomeTeamId(result.data.localteam_id);
             setvisitorTeamId(result.data.visitorteam_id);
@@ -322,7 +326,9 @@ function StageMatcharticle ({data}) {
                 var nowTime = new Date().getTime();
                 var nowStart = new Date(result.data.time.starting_at.date_time).getTime();
                 if (nowStart > nowTime) {
-                    document.getElementById("navOversigt").className = "match-odds-nav-element-off";
+                    if (document.getElementById("navOversigt")) {
+                        document.getElementById("navOversigt").className = "match-odds-nav-element-off";
+                    }
                     setOversigtAllowed(false);
                     setNav("kampinfo")
                 } else {
@@ -442,9 +448,9 @@ function StageMatcharticle ({data}) {
             const availOddsReplica = [];
             for (var r in wants) {
                 if (result.data.odds.data.length === 0) {
-                    document.getElementById("matchOddsUpdated").classList.add("display-flex");
+                    setMatchUpdated(false);
                 } else {
-                    document.getElementById("matchOddsUpdated").classList.remove("display-flex");
+                    setMatchUpdated(true);
                     for (var m in result.data.odds.data) {
                         if (result.data.odds.data[m].name === wants[r]) {
                             var n0 = result.data.odds.data[m].bookmaker.data[0].odds.data[0].value;
@@ -694,18 +700,21 @@ function StageMatcharticle ({data}) {
         }
     }
 
+    const [userRolle, setUserRolle] = useState("none");
+
     useEffect(() => {
         console.log("AWS - Active game:", data);
+        setUserRolle(getUser().rolle);
         setSelectedGame(data);
         setSlutdato(data.varighed);
         for (var x in data.players) {
-            if (data.players[x].player === getUser() ? getUser().email : "") {
+            if (data.players[x].player === getUser().email) {
                 setCurrentMoney(data.players[x].info.money);
             }
         }
         for (var u in data.players) {
-            if (data.players[u].player === getUser() ? getUser().email : "") {
-                if (data.players[u].player === getUser() ? getUser().email : "") {
+            if (data.players[u].player === getUser().email) {
+                if (data.players[u].player === getUser().email) {
                     localStorage.setItem("notifikationer", data.players[u].info.notifikationer.length);
                 }
             }
@@ -729,6 +738,7 @@ function StageMatcharticle ({data}) {
 
     function placeBet(type) {
         if (type === "kombination") {
+            document.getElementById("bet-modal").classList.add("display-not");
             var nowDate = new Date().getTime();
             var varighedDate = new Date(slutdato).getTime();
             var placeBetBTN = document.getElementById("placeBetBTN");
@@ -769,7 +779,7 @@ function StageMatcharticle ({data}) {
                             placeBetBTN.innerHTML = "Placér bet";
                         } else {
                             const placeBetUrl = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/bet";
-                    const userEmail = getUser() ? getUser().email : "";
+                    const userEmail = getUser().email;
             
                     const betConfig = {
                         headers: {
@@ -832,19 +842,19 @@ function StageMatcharticle ({data}) {
                         }
                 
                         axios.patch(placeBetUrl, betBody, betConfig).then(response => {
-                            document.getElementById("bet-modal").classList.add("display-not");
-                            // document.getElementById("singler-modal").classList.add("display-not")
                             document.getElementById("placed-modal").classList.remove("display-not");
-                            console.log("AWS - Oprettelse:", betBody, response)
+                            // document.getElementById("singler-modal").classList.add("display-not")
+                            console.log("AWS - Oprettet:", betBody, response)
                             setCurrentMoney(currentMoney - indsats);
+                            emptyBets();
+                            setNotiMessage("success", "Væddemål placeret", "Dit væddemål er nu placeret. Gå til 'Mine gruppespil' for at se dine væddemål.");
+                            var placeBetBTN2 = document.getElementById("placeBetBTN");
+                            placeBetBTN2.innerHTML = "Placér bet";
                         }).catch(error => {
+                            setNotiMessage("error", "Fejl ved oprettelse af væddemål", error.message);
+                            placeBetBTN.innerHTML = "Placér bet";
                             console.log(error);
-                            setNotiMessage("error", "Fejl ved oprettelse af væddemål", error);
                         })
-                        emptyBets();
-                        setNotiMessage("success", "Væddemål placeret", "Dit væddemål er nu placeret. Gå til 'Mine gruppespil' for at se dine væddemål.");
-                        var placeBetBTN2 = document.getElementById("placeBetBTN");
-                        placeBetBTN2.innerHTML = "Placér bet";
                     }
                         }
                 }
@@ -890,7 +900,7 @@ function StageMatcharticle ({data}) {
                         placeBetBTN.innerHTML = "Placér bet";
                     } else {
                         const placeBetUrl = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/bet";
-                const userEmail = getUser() ? getUser().email : "";
+                const userEmail = getUser().email;
         
                 const betConfig = {
                     headers: {
@@ -1700,7 +1710,7 @@ function StageMatcharticle ({data}) {
 
                     const requestBody = {
                         "data": storage,
-                        "email": getUser() ? getUser().email : ""
+                        "email": getUser().email
                     }
                     axios.post(signupURL, requestBody, requestConfig).then(response => {
                         console.log("AWS - Favoritter:", response);
@@ -1728,7 +1738,7 @@ function StageMatcharticle ({data}) {
 
                     const requestBody = {
                         "data": storageDiv,
-                        "email": getUser() ? getUser().email : ""
+                        "email": getUser().email
                     }
                     axios.post(signupURL, requestBody, requestConfig).then(response => {
                         console.log("AWS - Favoritter:", response);
@@ -1757,7 +1767,7 @@ function StageMatcharticle ({data}) {
 
                     const requestBody = {
                         "data": storage,
-                        "email": getUser() ? getUser().email : ""
+                        "email": getUser().email
                     }
                     axios.post(signupURL, requestBody, requestConfig).then(response => {
                         console.log("AWS - Favoritter:", response);
@@ -1796,7 +1806,7 @@ function StageMatcharticle ({data}) {
 
                     const requestBody = {
                         "data": storage,
-                        "email": getUser() ? getUser().email : ""
+                        "email": getUser().email
                     }
                     axios.post(signupURL, requestBody, requestConfig).then(response => {
                         console.log("AWS - Favoritter:", response);
@@ -1824,7 +1834,7 @@ function StageMatcharticle ({data}) {
 
                     const requestBody = {
                         "data": storageDiv,
-                        "email": getUser() ? getUser().email : ""
+                        "email": getUser().email
                     }
                     axios.post(signupURL, requestBody, requestConfig).then(response => {
                         console.log("AWS - Favoritter:", response);
@@ -1853,7 +1863,7 @@ function StageMatcharticle ({data}) {
 
                     const requestBody = {
                         "data": storage,
-                        "email": getUser() ? getUser().email : ""
+                        "email": getUser().email
                     }
                     axios.post(signupURL, requestBody, requestConfig).then(response => {
                         console.log("AWS - Favoritter:", response);
@@ -2169,7 +2179,7 @@ function StageMatcharticle ({data}) {
         var result = matchResult ? matchResult: {};
         if (result !== undefined && result !== null && Object.keys(result).length !== 0) {
             return (
-                <div className="match-info" style={{padding: "0px"}}>
+                <div className="match-info match-exc" style={{padding: "0px"}}>
                     <Link href={"/stage/league?id=" + result["league"].data.current_season_id}>
                         <div className="match-league">
                             <Image height="18px" width="18px" src={result["league"].data.country.data.image_path && result["league"].data.country.data.image_path} alt="" className="match-league-i" />
@@ -2362,17 +2372,6 @@ function StageMatcharticle ({data}) {
                 </div>
             </div>
         </div>
-        <div className="modal-test display-not" id="singler-modal">
-            <div className="modal-con">
-                <p className="con-modal-p">Er du sikker på, at du vil placere din kupon, med en indsats på {singleIndsats},00 kr? Dette beløb er ikke refunderbart.</p>
-                <div className="modal-wrapper">
-                    <button className="con-modal-btn" onClick={() => {var placeBetBTN = document.getElementById("placeBetBTN");
-                        placeBetBTN.innerHTML = "<div className='loader'></div>";
-                        placeBet("singler");}}>Placér kupon</button>
-                    <button className="con-modal-afbryd" onClick={() => {document.getElementById("singler-modal").classList.add("display-not")}}>Afbryd</button>
-                </div>
-            </div>
-        </div>
         <div className="modal-test display-not" id="placed-modal" style={{textAlign: "center"}}>
             <div className="modal-con">
                 <div className="con-modal-img-con">
@@ -2512,7 +2511,7 @@ function StageMatcharticle ({data}) {
                         <div className="match-odds-show">
                         <div className="match-odds-container">
                             <div className="match-odds-section">
-                                <p className="match-odds-error" id="matchOddsUpdated">Odds ikke opdateret</p>
+                                {!matchUpdated && <p className="match-odds-error">Odds ikke opdateret</p>}
                                 <ul className="match-odds-cont show-nav" id="popular">
                                     {availPopular.map((item) => {
                                         var label0 = getLabel(item, 0);
@@ -4085,17 +4084,17 @@ function StageMatcharticle ({data}) {
                             </div>
                         </div>
                         <div className="match-indhold" id="startopstilling">
-                            {getUser().rolle === "none" && <>
-                                <div className="locked-wrapper">
-                                    <div className="lock">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="var(--primary)" viewBox="0 0 16 16">
-                                            <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>
-                                        </svg>
-                                    </div>
+                            {userRolle === "none" && <>
+                            <div className="locked-wrapper">
+                                <div className="lock">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="var(--primary)" viewBox="0 0 16 16">
+                                        <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>
+                                    </svg>
                                 </div>
-                                <p className="lock-p">Dette er en abonnement funktion</p>
+                            </div>
+                            <p className="lock-p">Dette er en abonnement funktion</p>
                             </>}
-                            {getUser().rolle !== "none" && <>
+                            {userRolle !== "none" && <>
                             <p className="nogames display" id="startopstilling-error">Startopstillingen er endnu ikke blevet opgivet.</p>
                             <div id="startopstilling2">
                             <div className="startopstilling-pitch">
@@ -4289,8 +4288,7 @@ function StageMatcharticle ({data}) {
                             </div>
                         </div>
                         <div className="match-indhold" id="statistikker">
-                            <p className="nogames display">{statText}</p>
-                            {getUser().rolle === "none" && <>
+                            {userRolle === "none" && <>
                                 <div className="locked-wrapper">
                                     <div className="lock">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="var(--primary)" viewBox="0 0 16 16">
@@ -4300,7 +4298,8 @@ function StageMatcharticle ({data}) {
                                 </div>
                                 <p className="lock-p">Dette er en abonnement funktion</p>
                             </>}
-                            {getUser().rolle !== "none" && <>
+                            {userRolle !== "none" && <>
+                                <p className="nogames display">{statText}</p>
                                 {getStats()}
                             </>}
                         </div>
