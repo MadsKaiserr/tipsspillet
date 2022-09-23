@@ -29,7 +29,7 @@ function StageNotifikationer () {
             axios.get(URL, requestConfigen).then(response => {
                 console.log("AWS - Gruppespil:", response);
                 for (var i in response.data.players) {
-                    if (response.data.players[i].player === getUser() ? getUser().email : "") {
+                    if (response.data.players[i].player === getUser().email) {
                         setItems(response.data.players[i].info.notifikationer);
                         if (response.data.players[i].info.notifikationer.length > 0) {
                             setErrorText("");
