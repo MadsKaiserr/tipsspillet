@@ -67,7 +67,7 @@ function Login () {
         }
 
         const requestBody = {
-            email: email,
+            email: event.email,
             type: "facebook"
         }
 

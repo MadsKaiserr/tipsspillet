@@ -286,7 +286,9 @@ function StageMatcharticle ({data}) {
             setAG2(awaygoal2 + awaygoal1);
             setEvents(result.data.events.data);
             if (result.data.lineup.data.length > 0) {
-                document.getElementById("startopstilling-error").classList.remove("display");
+                if (document.getElementById("startopstilling-error")) {
+                    document.getElementById("startopstilling-error").classList.remove("display");
+                }
                 setPositions([result.data.lineup.data]);
             } else {
                 if (document.getElementById("startopstilling2")) {
