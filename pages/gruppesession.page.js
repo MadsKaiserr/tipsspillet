@@ -105,12 +105,17 @@ function Gruppesession ({data}) {
                     userEmail = "Ukendt";
                     username = "Ukendt";
                 }
+                var fbLogo = "";
+                if (cookie.get("fbLogin")) {
+                    fbLogo = JSON.parse(cookie.get("fbLogin")).id;
+                }
     
                 const tilmeldBody = {
                     "tilmeldId": activeGame["id"],
                     "updateItValue": {
                         "player": userEmail,
                         "username": username,
+                        "fb_logo_id": fbLogo,
                         "info": {
                             "money": moneys,
                             "notifikationer": [],

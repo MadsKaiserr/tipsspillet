@@ -504,6 +504,10 @@
     margin-right: 0px !important;
     width: 100% !important;
   }
+  .gruppespil-kupon {
+    margin-right: 0px !important;
+    width: 94% !important;
+  }
   .gruppespil-li {
     width: 100% !important;
   }
@@ -1056,6 +1060,9 @@
 }
   .match-stilling-p1-live {
     font-size: 12px !important;
+  }
+  .faq-wrapper {
+    padding-top: 0px !important;
   }
   .md-header {
     position: absolute;

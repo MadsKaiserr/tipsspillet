@@ -261,12 +261,18 @@ function Setup () {
                     userEmail = "Ukendt";
                     username = "Ukendt";
                 }
+
+                var fbLogo = "";
+                if (cookie.get("fbLogin")) {
+                    fbLogo = JSON.parse(cookie.get("fbLogin")).id;
+                }
     
                 const tilmeldBody = {
                     "tilmeldId": activeGame["id"],
                     "updateItValue": {
                         "player": userEmail,
                         "username": username,
+                        "fb_logo_id": fbLogo,
                         "info": {
                             "money": moneys,
                             "notifikationer": [],
@@ -401,7 +407,10 @@ function Setup () {
                                                         {item.players.map((player) => {
                                                             return (
                                                                 <li key={player.player} className="tilmeldte-element">
-                                                                    <div className="tilmeldte-pb">{player.username !== "" && <>{(player.username).slice(0,1)}</>}</div>
+                                                                    <div className="tilmeldte-pb">
+                                                                        {!player.fb_logo_id && <>{player.username !== "" && <>{(player.username).slice(0,1)}</>}</>}
+                                                                        {player.fb_logo_id && <Image src={"http://graph.facebook.com/"+player.fb_logo_id+"/picture?type=square"} layout="fill" />}
+                                                                    </div>
                                                                     <div className="tilmeldte-wrapper">
                                                                         <p className="setup-p">{player.username}</p>
                                                                         <p className="setup-pp">{player.player}</p>

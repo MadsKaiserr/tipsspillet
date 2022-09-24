@@ -135,7 +135,7 @@ function StageHeader () {
 
     return (
         <>
-            <div className="nav-bar-stage" id="nav-small-bar">
+            <header className="nav-bar-stage" id="nav-small-bar">
                 <div className="nav-container-top-stage">
                     <div className="nav-flag-container">
                         <div className="nav-flag-section">
@@ -181,7 +181,7 @@ function StageHeader () {
                                 <Link href="#"><a className="nav-error-a">Find ud af hvorfor</a></Link>
                             </div>
                             <div className="nav-error">
-                                <p className="nav-info-p">Alpha - V. 1.1.0</p>
+                                <p className="nav-info-p">Alpha - V. 1.1.1</p>
                             </div>
                             <Link href="/stage/indstillinger">
                                 <div className="nav-link">
@@ -222,8 +222,8 @@ function StageHeader () {
                             <div className="nav-profile-btn" onClick={() => {document.getElementById("userDropdown").classList.toggle("display"); document.getElementById("profileArrow").classList.toggle("deg180");}}>
                                 <div className="nav-profile-pic">
                                     {typeof window !== 'undefined' && <>
-                                        {localStorage.getItem("fbLogin") && <Image layout="fill" src={"http://graph.facebook.com/"+ JSON.parse(localStorage.getItem("fbLogin")).id +"/picture?type=square"} />}
-                                        {!localStorage.getItem("fbLogin") && <>{auth !== "" && <>{(auth.username).slice(0,1)}</>}</>}
+                                        {cookie.get("fbLogin") && <Image layout="fill" src={"http://graph.facebook.com/"+ JSON.parse(cookie.get("fbLogin")).id +"/picture?type=square"} />}
+                                        {!cookie.get("fbLogin") && <>{auth !== "" && <>{(auth.username).slice(0,1)}</>}</>}
                                     </>}
                                 </div>
                                 <svg xmlns="http://www.w3.org/2000/svg" className="profile-icon" id="profileArrow" viewBox="0 0 16 16">
@@ -234,8 +234,8 @@ function StageHeader () {
                                 <div className="user-info">
                                     <div className="user-logo-tem">
                                         {typeof window !== 'undefined' && <>
-                                            {localStorage.getItem("fbLogin") && <Image layout="fill" src={"http://graph.facebook.com/"+ JSON.parse(localStorage.getItem("fbLogin")).id +"/picture?type=square"} />}
-                                            {!localStorage.getItem("fbLogin") && <>{auth !== "" && <>{(auth.username).slice(0,1)}</>}</>}
+                                            {cookie.get("fbLogin") && <Image layout="fill" src={"http://graph.facebook.com/"+ JSON.parse(cookie.get("fbLogin")).id +"/picture?type=square"} />}
+                                            {!cookie.get("fbLogin") && <>{auth !== "" && <>{(auth.username).slice(0,1)}</>}</>}
                                         </>}
                                     </div>
                                     <div className="user-info-desc">
@@ -311,7 +311,7 @@ function StageHeader () {
                                                 <Link href="#"><a className="nav-error-a">Find ud af hvorfor</a></Link>
                                             </div>
                                             <div className="nav-error">
-                                                <p className="nav-info-p">Alpha - V. 1.1.0</p>
+                                                <p className="nav-info-p">Alpha - V. 1.1.1</p>
                                             </div>
                                             <Link href="/stage/indstillinger">
                                                 <div className="nav-link">
@@ -352,8 +352,8 @@ function StageHeader () {
                                             <div className="nav-profile-btn" onClick={() => {document.getElementById("userDropdown").classList.toggle("display"); document.getElementById("profileArrow").classList.toggle("deg180");}}>
                                                 <div className="nav-profile-pic">
                                                     {typeof window !== 'undefined' && <>
-                                                        {localStorage.getItem("fbLogin") && <Image layout="fill" src={"http://graph.facebook.com/"+ JSON.parse(localStorage.getItem("fbLogin")).id +"/picture?type=square"} />}
-                                                        {!localStorage.getItem("fbLogin") && <>{auth !== "" && <>{(auth.username).slice(0,1)}</>}</>}
+                                                        {cookie.get("fbLogin") && <Image layout="fill" src={"http://graph.facebook.com/"+ JSON.parse(cookie.get("fbLogin")).id +"/picture?type=square"} />}
+                                                        {!cookie.get("fbLogin") && <>{auth !== "" && <>{(auth.username).slice(0,1)}</>}</>}
                                                     </>}
                                                 </div>
                                                 <svg xmlns="http://www.w3.org/2000/svg" className="profile-icon" id="profileArrow" viewBox="0 0 16 16">
@@ -364,8 +364,8 @@ function StageHeader () {
                                                 <div className="user-info">
                                                     <div className="user-logo-tem">
                                                         {typeof window !== 'undefined' && <>
-                                                            {localStorage.getItem("fbLogin") && <Image layout="fill" src={"http://graph.facebook.com/"+ JSON.parse(localStorage.getItem("fbLogin")).id +"/picture?type=square"} />}
-                                                            {!localStorage.getItem("fbLogin") && <>{auth !== "" && <>{(auth.username).slice(0,1)}</>}</>}
+                                                            {cookie.get("fbLogin") && <Image layout="fill" src={"http://graph.facebook.com/"+ JSON.parse(cookie.get("fbLogin")).id +"/picture?type=square"} />}
+                                                            {!cookie.get("fbLogin") && <>{auth !== "" && <>{(auth.username).slice(0,1)}</>}</>}
                                                         </>}
                                                     </div>
                                                     <div className="user-info-desc">
@@ -428,7 +428,7 @@ function StageHeader () {
                         </div>
                     </div>
                 </div>
-                <div className="nav-container-bottom" id="nav-bar">
+                <nav className="nav-container-bottom" id="nav-bar">
                     <div className="nav-link-container">
                         <Link href="/stage/"><a className="nav-p-stage">Lav kupon</a></Link>
                     </div>
@@ -441,8 +441,8 @@ function StageHeader () {
                     <div className="nav-link-container">
                         <Link href="/priser"><a className="nav-p-stage">Abonnement</a></Link>
                     </div>
-                </div>
-            </div>
+                </nav>
+            </header>
         </>
     )
 }

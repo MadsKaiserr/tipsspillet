@@ -7,7 +7,7 @@ import tlogo from './../img/logo-white.png';
 
 export default function Footer()  {
     return (
-        <div className="footer-container">
+        <footer className="footer-container">
             <div className="footer-sections">
                 <div className="footer-section">
                     <Link className="footer-by" href="/">
@@ -30,26 +30,26 @@ export default function Footer()  {
                     </div>
                 </div>
                 <div className="footer-section-nav">
-                    <div className="footer-element">
+                    <nav className="footer-element">
                         <p className="footer-h2">Virksomhed</p>
                         <a href="https://www.linkedin.com/in/mads-kaiser-90036b236/" target="_blank" rel="noreferrer" className="footer-h3">LinkedIn</a>
                         <Link href="/blog"><a className="footer-h3">Blog</a></Link>
                         <Link href="/kontakt" className="footer-h3"><a className="footer-h3">Kontakt os</a></Link>
-                    </div>
-                    <div className="footer-element">
+                    </nav>
+                    <nav className="footer-element">
                         <p className="footer-h2">Platform</p>
                         <Link href="/gruppespil"><a className="footer-h3">Gruppespil</a></Link>
                         <Link href="/priser"><a className="footer-h3">Priser</a></Link>
                         <Link href="/gruppespil"><a className="footer-h3">Præmiedyster</a></Link>
                         <Link href="/blog"><a className="footer-h3">Blog</a></Link>
-                    </div>
-                    <div className="footer-element">
+                    </nav>
+                    <nav className="footer-element">
                         <p className="footer-h2">Resurser</p>
                         <Link href="/betingelser"><a className="footer-h3">Betingelser</a></Link>
                         <Link href="/privatliv"><a className="footer-h3">Privatlivspolitik</a></Link>
                         <Link href="/faq"><a className="footer-h3">FAQ</a></Link>
                         <Link href="/signup"><a className="footer-h3">Opret konto</a></Link>
-                    </div>
+                    </nav>
                 </div>
                 <div className="footer-section" id="footer-nyhedsbrev">
                     <p className="footer-h2">Tilmeld nyhedsbrev</p>
@@ -66,6 +66,6 @@ export default function Footer()  {
                 <a href="https://www.stopspillet.dk/" target="_blank" rel="noreferrer" ><Image width="100px" height="50px" src={stopspillet} alt="Stopsspillet" className="footer-certs" /></a>
             </div>
             <p className="footer-copyright">©2022 Alle rettigheder forbeholdes | Mads Kaiser | +45 23 96 58 58</p>
-        </div>
+        </footer>
     );
 }
