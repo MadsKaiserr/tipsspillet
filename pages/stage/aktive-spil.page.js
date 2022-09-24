@@ -163,10 +163,10 @@ function StageAktiveSpil ({ data }) {
             </Head>
             <StageHeader />
             <Height />
-            <div className="match-figure">
+            {/* <div className="match-figure" id="">
                 <div className="info-figure1"></div>
                 <div className="info-figure2"></div>
-            </div>
+            </div> */}
             <div className="main-modal" id="main-modal">
                 <div className="modal-box">
                     <p className="main-modal-h1">{modalh1}</p>
@@ -453,6 +453,20 @@ function StageAktiveSpil ({ data }) {
                             </>}
                         </ul>
                     </div>
+                </div>
+                <div className="td-spacer animation-fadetop"></div>
+                <div className="td-box animation-fadetop" style={{margin: "auto"}}>
+                    <p className="find-h1">Find nye gruppespil</p>
+                    <p className="find-p">Tilmeld dig offentlige eller private gruppespil, og spil mod venner og familie.</p>
+                    <button className="find-btn">Find gruppespil</button>
+                    <div className="td-divider">
+                        <div className="td-line"></div>
+                            <p className="td-or">Eller</p>
+                        <div className="td-line"></div>
+                    </div>
+                    <p className="find-h1">Opret et gruppespil</p>
+                        <p className="find-p">Opret dit eget gruppespil, og inviter venner og familie til kamp.</p>
+                    <button className="find-btn">Opret gruppespil</button>
                 </div>
             </div>
         </>

@@ -147,6 +147,11 @@
     font-size: 14px;
   }
 
+  .forside-blob #gradient-canvas {
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+  }
+
   .forside-blob {
     margin-bottom: 30px !important;
     background-color: var(--primary);

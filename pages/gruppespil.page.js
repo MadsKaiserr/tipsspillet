@@ -113,7 +113,7 @@ function Gruppespil ({data}) {
                         </div>
                     </div>
                 </div>
-                <div className="td-box animation-fadetop" style={{animationDelay: "0.5s"}}>
+                <div className="td-box animation-fadetop" style={{margin: "auto"}}>
                     <div className="td-top">
                         <div className="td-top-left">
                             <div className="td-input-con">
@@ -373,6 +373,20 @@ function Gruppespil ({data}) {
                             </>}
                         </ul>
                     </div>
+                </div>
+                <div className="td-spacer animation-fadetop"></div>
+                <div className="td-box animation-fadetop" style={{margin: "auto"}}>
+                    <p className="find-h1">Find nye gruppespil</p>
+                    <p className="find-p">Tilmeld dig offentlige eller private gruppespil, og spil mod venner og familie.</p>
+                    <button className="find-btn">Find gruppespil</button>
+                    <div className="td-divider">
+                        <div className="td-line"></div>
+                            <p className="td-or">Eller</p>
+                        <div className="td-line"></div>
+                    </div>
+                    <p className="find-h1">Opret et gruppespil</p>
+                        <p className="find-p">Opret dit eget gruppespil, og inviter venner og familie til kamp.</p>
+                    <button className="find-btn">Opret gruppespil</button>
                 </div>
             </div>
         </>

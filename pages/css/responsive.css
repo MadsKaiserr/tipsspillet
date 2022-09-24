@@ -530,6 +530,9 @@
     right: 0 !important;
     left: auto !important;
   }
+  .td-type {
+    padding: 0px 10px;
+  }
   .signup-popup {
     width: 60% !important;
   }
@@ -590,8 +593,8 @@
     font-size: 36px !important;
   }
   .main-component-h3 {
-    font-size: 16px !important;
-    line-height: 23px !important;
+    font-size: 14px !important;
+    line-height: 17px !important;
   }
   .main-component-p {
     font-size: 14px !important;
@@ -837,7 +840,7 @@
     display: none !important;
   }
   .td-container {
-    padding: 20px 3% !important;
+    padding: 20px 0px !important;
   }
   .td-box {
     padding: 20px 15px !important;
@@ -882,6 +885,9 @@
     border-radius: 30px !important;
     position: relative !important;
     top: 0px !important;
+  }
+  .forside-blob #gradient-canvas {
+    border-radius: 30px !important;
   }
   .main-component-h-fix {
     justify-content: center !important;
@@ -1245,10 +1251,18 @@
     padding-top: 15px !important;
   }
   .gr-container {
-    padding: 20px 20px !important;
+    padding: 20px 0px !important;
     padding-bottom: 70px !important;
   }
+  .td-box {
+    border-radius: 0px !important;
+    margin: 0px !important;
+    margin-bottom: 0px !important;
+  }
   .nav-flag-container {
+    display: none !important;
+  }
+  .td-btns div:first-child {
     display: none !important;
   }
   .login-req {

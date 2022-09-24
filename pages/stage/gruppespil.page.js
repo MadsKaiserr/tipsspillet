@@ -73,7 +73,7 @@ function StageGruppespil ({data}) {
     const [beskedText, setBeskedText] = useState("");
 
     const [gameAdmin, setGameAdmin] = useState("");
-
+    const [gameType, setGameType] = useState("");
     const [activeGame, setActiveGame] = useState("");
 
     const [loadingText, setLoadingText] = useState("Indlæser...");
@@ -117,6 +117,7 @@ function StageGruppespil ({data}) {
                 if (data.players[k].player === getUser().email) {
                     myPlayer = data.players[k].odds;
                     setGameAdmin(data.admin);
+                    setGameType(data.synlighed);
                     localStorage.setItem("notifikationer", data.players[k].info.notifikationer.length);
                     var forbrugInt = 0;
                     var forbrugTd = 0;
@@ -413,6 +414,25 @@ function StageGruppespil ({data}) {
                 <div className="info-figure2"></div>
             </div>
             <div className="stage-main-article-container">
+                {activeGame && <>{gameType === "dyst" && <><div className="rw-container">
+                    <div className="rw-content">
+                        <div className="rw-tip"><p className="rw-p main-gradient">Præmier</p></div>
+                        <div className="rw-wrapper">
+                            <div className="rw-element">
+                                <p className="rw-wrapper-p">Førsteplads:</p>
+                                <p className="rw-wrapper-h1">300 kr. til Intersport</p>
+                            </div>
+                            <div className="rw-element">
+                                <p className="rw-wrapper-p">Andenplads:</p>
+                                <p className="rw-wrapper-h1">3 mdr. Premium</p>
+                            </div>
+                            <div className="rw-element">
+                                <p className="rw-wrapper-p">Tredjeplads:</p>
+                                <p className="rw-wrapper-h1">1 måned Plus</p>
+                            </div>
+                        </div>
+                    </div>
+                </div></>}</>}
                 {activeGame && <div className="gruppespil-section">
                         <Link href="/priser"><a className="gruppespil-opret-own">Opret dit eget gruppespil</a></Link>
                         <div className="gruppespil-info">
@@ -995,38 +1015,16 @@ function StageGruppespil ({data}) {
                                 <h1 className="gruppespil-h1">Spildeltagere</h1>
                             </div>
                             <div className="spil-loader display" id="stage-loader2"></div>
-                            <div className="gruppespil-table">
-                                <div className="gruppespil-table-top">
-                                    <p className="gruppespil-table-title gruppetable-navn">NAVN</p>
-                                    <p className="gruppespil-table-title gruppetable-number" id="table-anv">VÆDDEMÅL</p>
-                                    <p className="gruppespil-table-title gruppetable-kapital">KAPITAL</p>
-                                    <p className="gruppespil-table-title gruppetable-number" id="table-av">AKTIVE VÆDDEMÅL</p>
+                            <div className="gr-table">
+                                <div className="gr-table-modifier">
+                                    <p className="gr-table-h1" id="gr-pos">Pos</p>
+                                    <p className="gr-table-h1" id="gr-navn">Navn</p>
+                                    <p className="gr-table-h1" id="gr-kapital">Kapital</p>
                                 </div>
-                                <ul>
+                                <ul className="gr-table-data">
                                     {tableArray.map((item, index) => {
                                         var profit = parseInt(item.info.money) - startAm;
                                         var kapital = item.info.money;
-                                        var profitHtml = <></>;
-                                        if (profit >= 0) {
-                                            profitHtml = <p className="gruppespil-table-p gruppetable-kapital gruppetable-win"><svg xmlns="http://www.w3.org/2000/svg" className="gruppetable-icon-win" viewBox="0 0 16 16">
-                                            <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
-                                        </svg>{profit},00 kr.<span className="gruppetable-span">({kapital},00 kr.)</span></p>;
-                                        } else {
-                                            profitHtml = <p className="gruppespil-table-p gruppetable-kapital gruppetable-loss"><svg xmlns="http://www.w3.org/2000/svg" className="gruppetable-icon-loss" viewBox="0 0 16 16">
-                                            <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
-                                        </svg>{profit},00 kr.<span className="gruppetable-span">({kapital},00 kr.)</span></p>;
-                                        }
-
-                                        var medlemsskab = item.info.medlemsskab;
-                                        if (medlemsskab === "plus") {
-                                            medlemsskab = "gruppespil-table-medlemsskab-primary";
-                                        } else if (medlemsskab === "premium") {
-                                            medlemsskab = "gruppespil-table-medlemsskab-gold";
-                                        } else if (medlemsskab === "administrator") {
-                                            medlemsskab = "gruppespil-table-medlemsskab-special";
-                                        } else {
-                                            medlemsskab = "gruppespil-table-medlemsskab-silver";
-                                        }
 
                                         var aktive = 0;
                                         for (var w in item.odds) {
@@ -1040,20 +1038,30 @@ function StageGruppespil ({data}) {
                                             showMe = " gruppespil-row-active";
                                         }
 
-                                        return (
-                                            <li key={item.player}>
-                                                <Link href={"/stage/gruppespil/spiller?spiller="+item.player+"&game="+activeGame}>
-                                                    <div className={"gruppespil-table-row"+showMe}>
-                                                        <p className="gruppespil-table-place gruppetable-place">{index + 1}</p>
-                                                        <div className={medlemsskab}></div>
-                                                        <p className="gruppespil-table-h1 gruppetable-el-navn">{item.username}</p>
-                                                        <p className="gruppespil-table-p gruppetable-number" id="table-anv-data">{item.odds.length}</p>
-                                                        {profitHtml}
-                                                        <p className="gruppespil-table-p gruppetable-number" id="table-av-data">{aktive}</p>
-                                                    </div>
-                                                </Link>
-                                            </li>
+                                        var profitHtml = <></>;
+                                        if (profit >= 0) {
+                                            profitHtml = <p className="gr-table-p gr-table-green" id="gr-kapital"><svg xmlns="http://www.w3.org/2000/svg" className="gruppetable-icon-win" viewBox="0 0 16 16">
+                                            <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
+                                        </svg>{profit},00 kr.<span className="gruppetable-span">({kapital},00 kr.)</span></p>;
+                                        } else {
+                                            profitHtml = <p className="gr-table-p gr-table-red" id="gr-kapital"><svg xmlns="http://www.w3.org/2000/svg" className="gruppetable-icon-loss" viewBox="0 0 16 16">
+                                            <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+                                        </svg>{profit},00 kr.<span className="gruppetable-span">({kapital},00 kr.)</span></p>;
+                                        }
+
+                                        if (!document.getElementById(item.player)) {
+                                            return (
+                                                <li key={item.player} className={"gr-table-element" + showMe} id={item.player}>
+                                                    <Link href={"/stage/gruppespil/spiller?spiller="+item.player+"&game="+activeGame}>
+                                                        <div className="gr-table-content">
+                                                            <p className="gr-table-h2" id="gr-pos">{index + 1}</p>
+                                                            <p className="gr-table-h2" id="gr-navn">{item.username}</p>
+                                                            {profitHtml}
+                                                        </div>
+                                                    </Link>
+                                                </li>
                                             );
+                                        }
                                         }
                                     )}
                                 </ul>

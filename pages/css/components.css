@@ -639,6 +639,7 @@
     border-radius: 50%;
     position: relative;
     display: inline-flex;
+    overflow: hidden;
     align-items: center;
     justify-content: center;
     color: #fff;
