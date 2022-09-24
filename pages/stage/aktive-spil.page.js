@@ -458,7 +458,7 @@ function StageAktiveSpil ({ data }) {
                 <div className="td-box animation-fadetop" style={{margin: "auto"}}>
                     <p className="find-h1">Find nye gruppespil</p>
                     <p className="find-p">Tilmeld dig offentlige eller private gruppespil, og spil mod venner og familie.</p>
-                    <button className="find-btn">Find gruppespil</button>
+                    <Link href="/gruppespil"><button className="find-btn">Find gruppespil</button></Link>
                     <div className="td-divider">
                         <div className="td-line"></div>
                             <p className="td-or">Eller</p>
@@ -466,7 +466,7 @@ function StageAktiveSpil ({ data }) {
                     </div>
                     <p className="find-h1">Opret et gruppespil</p>
                         <p className="find-p">Opret dit eget gruppespil, og inviter venner og familie til kamp.</p>
-                    <button className="find-btn">Opret gruppespil</button>
+                        <button className="find-btn" onClick={() => opretSpilHandler()}>Opret gruppespil</button>
                 </div>
             </div>
         </>

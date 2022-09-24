@@ -428,8 +428,7 @@ function Signup () {
                             />
                         </form>
                         <form onSubmit={fbSignupHandler} className="login-form display-not" id="fbForm">
-                            <p className="login-form-p">Brugernavn<span className="signup-form-p red-color">*</span></p>
-                            <input value={username} onChange={event => setUsername(event.target.value)} type="text" className="login-form-input" required/>
+                            <input type="text" className="cg-input" onChange={event => setUsername(event.target.value)} placeholder="Brugernavn" />
                             <div className="signup-check">
                                 <div className="signup-checkbox" id="box3" onClick={() => {if (box3) {setBox3(false)}else{setBox3(true)}}}>
                                     <svg xmlns="http://www.w3.org/2000/svg" id={"box3-icon"} className="setup-icon" viewBox="0 0 16 16">
