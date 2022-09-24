@@ -94,26 +94,27 @@ function Login () {
                     }).catch(error => {
                         console.log(error);
                     })
-                } else if (response.data.user.fb_logo_id !== event.fb_logo_id) {
-                    const loginURL2 = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/user";
-                    const requestConfig2 = {
-                        headers: {
-                            "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
-                        }
-                    }
+                } 
+                // else if (response.data.user.fb_logo_id !== event.fb_logo_id) {
+                //     const loginURL2 = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/user";
+                //     const requestConfig2 = {
+                //         headers: {
+                //             "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
+                //         }
+                //     }
             
-                    const requestBody2 = {
-                        fb_logo_id: event.id,
-                        name: event.name,
-                        email: event.email
-                    }
+                //     const requestBody2 = {
+                //         fb_logo_id: event.id,
+                //         name: event.name,
+                //         email: event.email
+                //     }
             
-                    axios.patch(loginURL2, requestBody2, requestConfig2).then(response => {
-                        console.log("AWS - Update user:", response);
-                    }).catch(error => {
-                        console.log(error);
-                    })
-                }
+                //     axios.patch(loginURL2, requestBody2, requestConfig2).then(response => {
+                //         console.log("AWS - Update user:", response);
+                //     }).catch(error => {
+                //         console.log(error);
+                //     })
+                // }
             }
             window.open("/stage", "_self");
         }).catch(error => {

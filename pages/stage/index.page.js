@@ -196,6 +196,11 @@ function StageForside ({gruppespil_data, spiller_data}) {
     const [singleIndsats, setSingleIndsats] = useState(0);
     const [singleUdbetaling, setSingleUdbetaling] = useState(0);
     const [indsats, setIndsats] = useState(0);
+    useEffect(() => {
+        if (!indsats) {
+            setIndsats(0);
+        }
+    }, [indsats])
     const [udbetaling, setUdbetaling] = useState(0);
     const [currentMoney, setCurrentMoney] = useState(0);
 
@@ -337,7 +342,11 @@ function StageForside ({gruppespil_data, spiller_data}) {
     function updateUdbetaling(type, oddsSend, indsats) {
         if (type === "kombination") {
             var indsatsValue = document.getElementById("indsatsInput").value;
-            setUdbetaling(returnOdds * parseInt(indsatsValue));
+            if (!indsatsValue) {
+                setUdbetaling(0);
+            } else {
+                setUdbetaling(returnOdds * parseInt(indsatsValue));
+            }
         } else {
             var totalUdbetaling = 0;
             for (var q in odds) {
@@ -1408,7 +1417,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
         );
     }
 
-    const [kuponState, setKuponState] = useState("closed");
+    const [kuponState, setKuponState] = useState("");
 
     function switchKupon() {
         if (kuponState === "closed") {
@@ -1421,6 +1430,11 @@ function StageForside ({gruppespil_data, spiller_data}) {
             document.getElementById("kuponRev").classList.add("deg180");
             setKuponState("closed");
             document.getElementById("kupon-title").innerHTML = "Tryk for at åbne kupon";
+        } else {
+            document.getElementById("kupon").classList.remove("kupon-min");
+            document.getElementById("kuponRev").classList.remove("deg180");
+            setKuponState("open");
+            document.getElementById("kupon-title").innerHTML = kuponType;
         }
     }
 
@@ -2485,11 +2499,11 @@ function StageForside ({gruppespil_data, spiller_data}) {
                 </div>
             </div>
             <div className="stage-kupon" id="kupon">
-                <div className="kupon-top-match">
-                    <svg xmlns="http://www.w3.org/2000/svg" id="kuponRev" onClick={() => {switchKupon()}} className="kupon-minimize deg180" viewBox="0 0 16 16">
+                <div className="kupon-top-match" onClick={() => {switchKupon()}}>
+                    <svg xmlns="http://www.w3.org/2000/svg" id="kuponRev" className="kupon-minimize deg180" viewBox="0 0 16 16">
                         <path fillRule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
                     </svg>
-                    <p className="kupon-header-p" id="kupon-title" onClick={() => {switchKupon()}}>{kuponType}</p>
+                    <p className="kupon-header-p" id="kupon-title">{kuponType}</p>
                     <p className="kupon-blue-match-p" onClick={() => emptyBets()}>Ryd alle</p>
                 </div>
                 <div className="kupon-type" id="kuponType">
