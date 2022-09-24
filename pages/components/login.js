@@ -5,6 +5,7 @@ import { setUserSession } from "../services/authService";
 import axios from "axios";
 import FacebookLogin from 'react-facebook-login';
 import Link from 'next/link'
+import cookie from 'js-cookie'
  
 function Login () {
 
@@ -57,7 +58,7 @@ function Login () {
 
     const fbResponse = (event) => {
         console.log(event);
-        localStorage.setItem("fbLogin", JSON.stringify(event));
+        cookie.set("fbLogin", JSON.stringify(event))
 
         const requestConfig = {
             headers: {
@@ -73,7 +74,48 @@ function Login () {
         axios.post(loginURL, requestBody, requestConfig).then(response => {
             console.log("AWS - Login:", response);
             setUserSession(response.data.user, response.data.token);
-            window.open("/stage", "_self");
+            // window.open("/stage", "_self");
+            if (response.data.user.type === "facebook") {
+                if (!response.data.user.fb_logo_id) {
+                    const loginURL2 = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/user";
+                    const requestConfig2 = {
+                        headers: {
+                            "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
+                        }
+                    }
+            
+                    const requestBody2 = {
+                        fb_logo_id: event.id,
+                        name: event.name,
+                        email: event.email
+                    }
+            
+                    axios.patch(loginURL2, requestBody2, requestConfig2).then(response => {
+                        console.log("AWS - Update user:", response);
+                    }).catch(error => {
+                        console.log(error);
+                    })
+                } else if (response.data.user.fb_logo_id !== event.fb_logo_id) {
+                    const loginURL2 = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/user";
+                    const requestConfig2 = {
+                        headers: {
+                            "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
+                        }
+                    }
+            
+                    const requestBody2 = {
+                        fb_logo_id: event.id,
+                        name: event.name,
+                        email: event.email
+                    }
+            
+                    axios.patch(loginURL2, requestBody2, requestConfig2).then(response => {
+                        console.log("AWS - Update user:", response);
+                    }).catch(error => {
+                        console.log(error);
+                    })
+                }
+            }
         }).catch(error => {
             console.log(error);
         })

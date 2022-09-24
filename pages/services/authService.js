@@ -37,5 +37,6 @@ module.exports = {
         cookie.remove("activeGame");
         cookie.remove("email");
         cookie.remove("auth");
+        cookie.remove("fbLogin");
     }
 }

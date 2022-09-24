@@ -1266,11 +1266,122 @@
 .gruppespil-table-top {
     border-bottom: #87889747 1px solid;
     padding: 5px 0px;
+    display: flex;
+}
+
+.dy-content {
+  z-index: 3;
+  position: relative;
+  display: flex;
+  height: 100%;
+  width: 100%;
+  padding: 0px 130px;
+  align-items: center;
+  justify-content: center;
+}
+
+.dy-container {
+  min-height: 600px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.dyst-section {
+  background-color: #fff;
+  padding: 50px 20%;
+  margin: 0px auto;
+  z-index: 2;
+  overflow: hidden;
+  width: 100%;
+  position: relative;
+  box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.05);
+}
+
+.dy-nav {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  left: 0;
+  right: 0;
+  padding-bottom: 7px;
+  justify-content: center;
+}
+
+.dy-nav-p {
+  font-family: Inter;
+  color: #fff;
+  padding: 10px 15px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.dy-nav-p-active {
+  font-family: Inter;
+  color: var(--softBlack);
+  padding: 8px 15px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #fff;
+}
+
+.dy-h2 {
+  font-family: Inter;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 400;
+  opacity: 0.8;
+}
+
+.dy-h1 {
+  font-family: Inter;
+  color: #fff;
+  font-size: 58px;
+  font-weight: 700;
+}
+
+.dy-h3 {
+  font-family: Inter;
+  color: #fff;
+  opacity: 0.9;
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.dy-h2-con {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.dy-img {
+  width: 140px;
+  height: 140px;
+  position: relative;
+}
+
+.dy-top {
+  width: 100%;
+  background-color: var(--primary);
+  height: 250px;
+  position: relative;
+  z-index: 3;
+  margin-top: 65px;
+  border-radius: 5px;
+  overflow: hidden;
 }
 
 .gruppespil-table-row {
-    padding: 10px 10px;
-    border-bottom: #87889747 1px solid;
+  padding: 10px 10px;
+  border-bottom: #87889747 1px solid;
 }
 
 .gruppetable-navn {

@@ -637,6 +637,7 @@
     height: 35px;
     background-color: var(--softBlack);
     border-radius: 50%;
+    position: relative;
     display: inline-flex;
     align-items: center;
     justify-content: center;

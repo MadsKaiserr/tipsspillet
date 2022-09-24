@@ -240,7 +240,8 @@ function Signup () {
 
         var requestBody = {
             username: username,
-            fornavn: fornavn,
+            navn: event.name,
+            fb_logo_id: event.id,
             email: email.toLowerCase(),
             rolle: "none",
             nyhedsbrev: false,
@@ -250,7 +251,8 @@ function Signup () {
         if (box2) {
             requestBody = {
                 username: username,
-                fornavn: fornavn,
+                navn: event.name,
+                fb_logo_id: event.id,
                 email: email.toLowerCase(),
                 rolle: "none",
                 nyhedsbrev: true,

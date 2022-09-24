@@ -212,7 +212,7 @@ function Header () {
                         <div className="sidemenu-fill">
                             <div className="sidemenu-div">
                                 <div className="sidemenu-element">
-                                    {Object.keys(auth).length > 0 && <p onClick={() => {showLogin();closeMenu()}} className="sidemenu-p">Log ind</p>}
+                                    {Object.keys(auth).length === 0 && <p onClick={() => {showLogin();closeMenu()}} className="sidemenu-p">Log ind</p>}
                                     {Object.keys(auth).length === 0 && <Link href="/signup"><a onClick={() => closeMenu()} className="sidemenu-p">Opret profil</a></Link>}
                                     {Object.keys(auth).length > 0 && <Link href="/stage"><a onClick={() => closeMenu()} className="sidemenu-p">Log ind</a></Link>}
                                     <Link href="/gruppespil"><a onClick={() => closeMenu()} className="sidemenu-p">Find gruppespil</a></Link>
