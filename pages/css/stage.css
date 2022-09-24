@@ -2679,7 +2679,7 @@
   }
 
   .noti-main {
-    background-color: var(--stageSurface);
+    background-color: var(--surface);
     padding: 125px 25%;
     min-height: 650px;
 }

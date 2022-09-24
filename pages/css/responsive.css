@@ -73,7 +73,7 @@
     padding-right: 100px !important;
   }
   .noti-main {
-    padding: 50px 15% !important;
+    padding: 30px 20px !important;
   }
   .billet-element {
     width: clamp(355px, 40vw, 500px) !important;
@@ -186,6 +186,9 @@
   .user-dropdown{
     display: none !important;
   }
+  .noti-dropdown{
+    display: none !important;
+  }
 }
 
 @media only screen and (max-width: 943px) {
@@ -248,7 +251,7 @@
     padding-right: 10px !important;
   }
   .noti-main {
-    padding: 50px 5% !important;
+    padding: 15px 10px !important;
   }
   .team-trup-section {
     flex-direction: column !important;
