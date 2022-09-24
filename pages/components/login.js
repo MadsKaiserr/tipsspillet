@@ -118,6 +118,7 @@ function Login () {
             window.open("/stage", "_self");
         }).catch(error => {
             console.log(error);
+            window.open("/signup", "_self");
         })
     }
 

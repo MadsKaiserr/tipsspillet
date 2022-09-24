@@ -150,7 +150,7 @@ export default function Home() {
         </div>
         <div className="forside-black">
             <h2 className="fs-wrapper-h1">Liveodds fra<br/>verdens førende<br/>betting sider</h2>
-            <div className="fs-wrapper-h2">Tag betting til nye højde med vores Livebetting. Placér væddemål i realtid, og forstår chancen for udbytte!</div>
+            <div className="fs-wrapper-h2">Tag betting til nye højde med vores Livebetting. Placér væddemål i realtid, og forstør chancen for udbytte!</div>
             <div className="fs-container">
                 <div className="fs-element">
                     <div className="fs-element-img" style={{marginTop: "3px"}}>
