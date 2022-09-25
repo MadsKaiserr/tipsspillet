@@ -20,6 +20,7 @@ function Kontakt() {
                 <meta itemProp="name" content="Tipsspillet Kontakt" />
                 <meta itemProp="description" content="Kontaktside for Tipsspillet - Få svar på spørgsmål du ikke finder på siden, anmeld fejl eller kom i kontakt med os." />
                 <meta property="og:title" content="Kontakt - Tipsspillet" />
+                <meta property="og:url" content="https://www.tipsspillet.dk/kontakt" />
                 <meta property="og:description" content="Kontaktside for Tipsspillet - Få svar på spørgsmål du ikke finder på siden, anmeld fejl eller kom i kontakt med os." />
             </Head>
             <Header />

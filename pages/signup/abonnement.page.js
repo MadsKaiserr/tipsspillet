@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link'
 import Head from 'next/head'
 import axios from "axios";
-import PriserComp from '../components/priser';
 import { useRouter } from 'next/router'
 import { getUser } from "../services/authService";
  

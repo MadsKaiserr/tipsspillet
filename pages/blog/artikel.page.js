@@ -96,11 +96,11 @@ function Artikel () {
                         <p className="a-blog-p">Her kan du hurtigt og nemt finde dig et gruppespil, hvis du allerede ved hvilket et du skal være med i. Dette trin kan dog også springes over.</p>
                         <p className="a-blog-p">Herefter kommer siden, hvor du kan vælge dine favorithold. Favoritholdene bliver vist som de første under kampene hver dag, og du vil nemt have adgang til dine favorithold under sektionen &quot;Hold du følger&quot;.</p>
                         <div className="a-blog-img">
-                            <Image src={Setup} width="2200" height="1156" />
+                            <Image src={Setup} width="2200" height="1156" alt="Hurtig opsætning side" />
                         </div>
                         <p className="a-blog-p">Ligeså vil favoritligaer komme før andre ligaer, for at gøre det nemmere at finde dine yndlingsligaer.</p>
                         <div className="a-blog-img">
-                            <Image src={Follow} width="1976" height="904" />
+                            <Image src={Follow} width="1976" height="904" alt="Hold du følger side" />
                         </div>
                         <p className="a-blog-p">Du kan altid fjerne et hold eller liga fra dine favoritter, enten på siden for holdet eller ligaen, eller under <Link href="/stage/indstillinger"><a className="a-blog-p-a">din profil.</a></Link></p>
                         <h2 className="a-blog-h2">Step 3. Find gruppespil</h2>

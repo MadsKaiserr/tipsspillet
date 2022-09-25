@@ -13,13 +13,14 @@ function Privat () {
             <Head>
                 <title>Privatlivspolitik - Tipsspillet</title>
                 <link rel="canonical" href="https://www.tipsspillet.dk/privatliv" />
-                <meta name="description" content="Følgende politik er gældende i forbindelse med anvendelsen af internetsiden. Ved at gå ind på denne internetside anerkender og tiltræder du følgende privatlivspolitik. Såfremt du ikke kan acceptere disse vilkår, skal du ikke benytte denne internetside" />
+                <meta name="description" content="Følgende politik er gældende i forbindelse med anvendelsen af internetsiden. Ved at gå ind på denne internetside anerkender og tiltræder du følgende privatlivspolitik." />
                 <meta name="author" content="Mads Kaiser" />
                 <meta name="keywords" content="tipsspillet privatliv,privatlivspolitik,privatlivsbetingelser,privatlivs betingelser,privatlivs politik,betingelser" />
                 <meta itemProp="name" content="Tipsspillet Privatlivspolitik" />
-                <meta itemProp="description" content="Følgende politik er gældende i forbindelse med anvendelsen af internetsiden. Ved at gå ind på denne internetside anerkender og tiltræder du følgende privatlivspolitik. Såfremt du ikke kan acceptere disse vilkår, skal du ikke benytte denne internetside" />
+                <meta itemProp="description" content="Følgende politik er gældende i forbindelse med anvendelsen af internetsiden. Ved at gå ind på denne internetside anerkender og tiltræder du følgende privatlivspolitik." />
                 <meta property="og:title" content="Privatlivspolitik - Tipsspillet" />
-                <meta property="og:description" content="Følgende politik er gældende i forbindelse med anvendelsen af internetsiden. Ved at gå ind på denne internetside anerkender og tiltræder du følgende privatlivspolitik. Såfremt du ikke kan acceptere disse vilkår, skal du ikke benytte denne internetside" />
+                <meta property="og:url" content="https://www.tipsspillet.dk/privatliv" />
+                <meta property="og:description" content="Følgende politik er gældende i forbindelse med anvendelsen af internetsiden. Ved at gå ind på denne internetside anerkender og tiltræder du følgende privatlivspolitik." />
             </Head>
             <Header />
             <Spacer />

@@ -16,7 +16,7 @@ function _500 () {
             <Header />
             <div className="main-block-container">
                 <div className="hero-text">
-                    <p className="main-component-p animation-fadeleft">404 - Serverfejl</p>
+                    <p className="main-component-p animation-fadeleft">500 - Serverfejl</p>
                     <h1 className="main-component-h1 red-gradient animation-fadeleft animation-delay-200">Der opstod fejl på serveren.</h1>
                     <h2 className="main-component-h3 animation-fadetop animation-delay-300">Prøv igen senere.</h2>
                 </div>

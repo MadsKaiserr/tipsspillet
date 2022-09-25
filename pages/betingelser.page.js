@@ -1,25 +1,23 @@
 import * as React from 'react';
-import { useEffect } from 'react';
 import Link from 'next/link'
 import Head from 'next/head'
-import Image from 'next/image'
 import Header from './layout/header';
 import Spacer from './components/spacer';
  
 function Betingelser () {
-
     return (
         <>
             <Head>
                 <title>Betingelser - Tipsspillet</title>
                 <link rel="canonical" href="https://www.tipsspillet.dk/betingelser" />
-                <meta name="description" content="Følgende vilkår og rettigheder er gældende i forbindelse med anvendelsen af internetsiden. Ved at gå ind på denne internetside anerkender og tiltræder du følgende vilkår og rettigheder. Såfremt du ikke kan acceptere disse vilkår og rettigheder, skal du ikke benytte denne internetside" />
+                <meta name="description" content="Følgende vilkår og rettigheder er gældende i forbindelse med anvendelsen af internetsiden. Ved at gå ind på denne internetside anerkender og tiltræder du følgende vilkår og rettigheder." />
                 <meta name="author" content="Mads Kaiser" />
                 <meta name="keywords" content="tipsspillet betingelser,betingelser,terms of service,tos,faq,privatliv" />
                 <meta itemProp="name" content="Tipsspillet Betingelser" />
-                <meta itemProp="description" content="Følgende vilkår og rettigheder er gældende i forbindelse med anvendelsen af internetsiden. Ved at gå ind på denne internetside anerkender og tiltræder du følgende vilkår og rettigheder. Såfremt du ikke kan acceptere disse vilkår og rettigheder, skal du ikke benytte denne internetside" />
+                <meta itemProp="description" content="Følgende vilkår og rettigheder er gældende i forbindelse med anvendelsen af internetsiden. Ved at gå ind på denne internetside anerkender og tiltræder du følgende vilkår og rettigheder." />
                 <meta property="og:title" content="Betingelser - Tipsspillet" />
-                <meta property="og:description" content="Følgende vilkår og rettigheder er gældende i forbindelse med anvendelsen af internetsiden. Ved at gå ind på denne internetside anerkender og tiltræder du følgende vilkår og rettigheder. Såfremt du ikke kan acceptere disse vilkår og rettigheder, skal du ikke benytte denne internetside" />
+                <meta property="og:url" content="https://www.tipsspillet.dk/betingelser" />
+                <meta property="og:description" content="Følgende vilkår og rettigheder er gældende i forbindelse med anvendelsen af internetsiden. Ved at gå ind på denne internetside anerkender og tiltræder du følgende vilkår og rettigheder." />
             </Head>
             <Header />
             <Spacer />
@@ -56,7 +54,7 @@ function Betingelser () {
                     </div>
                     <div className="betingelser-element">
                         <p className="betingelser-h4">3 - Privatlivspolitik</p>
-                        <p className="betingelser-p">Ved brug af Tipsspillet accepterer du privatlivspolikken, og dens bestræbelser. <Link href="/privat">Se privatlivspolitik</Link></p>
+                        <p className="betingelser-p">Ved brug af Tipsspillet accepterer du privatlivspolikken, og dens bestræbelser. <Link href="/privatliv">Se privatlivspolitik</Link></p>
                     </div>
                     <div className="betingelser-element">
                         <p className="betingelser-h4">4 - Tekniske problemer mm.</p>

@@ -80,6 +80,7 @@ function Gruppespil ({data}) {
                 <meta itemProp="name" content="Tipsspillet Gruppespil" />
                 <meta itemProp="description" content="Opret gruppespil eller tilmeld præmiedyster, og dyst gratis mod venner og familie i fodbold-betting med virtuelle penge." />
                 <meta property="og:title" content="Find gruppespil og præmiedyster - Tipsspillet" />
+                <meta property="og:url" content="https://www.tipsspillet.dk/gruppespil" />
                 <meta property="og:description" content="Opret gruppespil eller tilmeld præmiedyster, og dyst gratis mod venner og familie i fodbold-betting med virtuelle penge." />
             </Head>
             <Header />

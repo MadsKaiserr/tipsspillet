@@ -7,6 +7,10 @@ const nextConfig = {
   },
   reactStrictMode: false,
   pageExtensions: ['page.tsx', 'page.ts', 'page.jsx', 'page.js'],
+  i18n: {
+    locales: ["da"],
+    defaultLocale: "da",
+  },
 }
 
 module.exports = nextConfig

@@ -62,7 +62,7 @@ export default function Footer()  {
             </div>
             <div className="footer-cert">
                 <a href="https://www.spillemyndigheden.dk/" target="_blank" rel="noreferrer" ><Image width="80px" height="50px" src={spillemyndighed} alt="Spillemyndigheden" className="footer-certs" /></a>
-                <Image width="50px" height="50px" src={tlogo} alt="Tipsspillet" className="footer-certs" />
+                <Image width="50px" height="50px" src={tlogo} alt="Tipsspillet logo" className="footer-certs" />
                 <a href="https://www.stopspillet.dk/" target="_blank" rel="noreferrer" ><Image width="100px" height="50px" src={stopspillet} alt="Stopsspillet" className="footer-certs" /></a>
             </div>
             <p className="footer-copyright">©2022 Alle rettigheder forbeholdes | Mads Kaiser | +45 23 96 58 58</p>

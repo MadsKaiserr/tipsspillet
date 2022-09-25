@@ -30,20 +30,21 @@ function Faq () {
     return (
         <>
             <Head>
-                <title>FAQ - Spørgsmål og svar - Få svar på dine spørgsmål - Ofte stillede spørgsmål | Tipsspillet</title>
+                <title>FAQ - Spørgsmål og svar | Tipsspillet</title>
                 <link rel="canonical" href="https://www.tipsspillet.dk/faq" />
-                <meta name="description" content="FAQ - Få svar på dine spørgsmål - Hvordan opretter man gruppespil? Hvordan tilmelder jeg mig præmiedyser? Hvordan inviterer jeg folk til mit gruppespil?" />
+                <meta name="description" content="Få svar på alt hvad du vil vide om Tipsspillet - Ofte stillede spørgsmål - Hvordan fungerer Tipsspillet?" />
                 <meta name="author" content="Mads Kaiser" />
                 <meta name="keywords" content="faq,tipsspillet faq,spørgsmål og svar,tipsspillet spørgsmål og svar,hvordan opretter man gruppespil,hvordan tilmelder jeg mig præmiedyster" />
                 <meta itemProp="name" content="Tipsspillet FAQ" />
-                <meta itemProp="description" content="FAQ - Få svar på dine spørgsmål - Hvordan opretter man gruppespil? Hvordan tilmelder jeg mig præmiedyser? Hvordan inviterer jeg folk til mit gruppespil?" />
+                <meta itemProp="description" content="Få svar på alt hvad du vil vide om Tipsspillet - Ofte stillede spørgsmål - Hvordan fungerer Tipsspillet?" />
                 <meta property="og:title" content="FAQ - Spørgsmål og svar - Tipsspillet" />
-                <meta property="og:description" content="FAQ - Få svar på dine spørgsmål - Hvordan opretter man gruppespil? Hvordan tilmelder jeg mig præmiedyser? Hvordan inviterer jeg folk til mit gruppespil?" />
+                <meta property="og:url" content="https://www.tipsspillet.dk/faq" />
+                <meta property="og:description" content="Få svar på alt hvad du vil vide om Tipsspillet - Ofte stillede spørgsmål - Hvordan fungerer Tipsspillet?" />
             </Head>
             <Header />
             <div className="faq-wrapper">
                 <div className="faq-fix">
-                    <h2 className="faq-head-h2">Ofte stillede spørgsmål</h2>
+                    <h1 className="faq-head-h2">Ofte stillede spørgsmål</h1>
                     <h3 className="faq-head-h3">Kan du ikke finde dit spørgsmål? <Link href="/kontakt"><span className="main-gradient font-weight-500 cursor-pointer">Kontakt vores support</span></Link></h3>
                     <ul className="faq-container" style={{maxHeight: "100%"}}>
                         {questions.map(question => {

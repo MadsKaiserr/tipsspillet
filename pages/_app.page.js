@@ -13,7 +13,6 @@ import Footer from './layout/footer';
 import Login from './components/login';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import Header from './layout/stageheader';
 
 import Head from 'next/head'
 
@@ -53,8 +52,8 @@ function MyApp({ Component, pageProps }) {
       />
       <Script async id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="d44cf7c1-e161-4a23-b759-e15e515a068e" data-blockingmode="auto" type="text/javascript"></Script>
       <Script async src="https://www.googletagmanager.com/gtag/js?id=G-6CYY86HX7R"></Script>
-      <Script async custom-element="amp-ad" src="https://cdn.ampproject.org/v0/amp-ad-0.1.js"></Script>
-      <Script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7071523482288616" crossOrigin="anonymous"></Script>
+      {/*<Script async custom-element="amp-ad" src="https://cdn.ampproject.org/v0/amp-ad-0.1.js"></Script> */}
+      {/* <Script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7071523482288616" crossOrigin="anonymous"></Script> */}
       <Head>
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />

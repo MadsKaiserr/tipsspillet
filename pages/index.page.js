@@ -23,7 +23,6 @@ export default function Home() {
         <Header />
         <Head>
             <title>Tipsspillet - Gratis Betting Konkurrence</title>
-            <link rel="canonical" href="https://www.tipsspillet.dk/" />
             <meta name="description" content="Dyst mod dine venner i et verdensomspændende betting-spil, helt uden at bruge en krone. Bet mod venner og familie, eller deltag i præmiedyster." />
             <meta name="author" content="Mads Kaiser" />
             <meta name="keywords" content="tipsspillet, betting, gratis betting, betting spil, gratis betting spil, betting konkurrence, betting turnering, fodbold betting, gratis fodbold betting, betting-spil, betting tips, odds, gratis oddsning, fodbold odds, gratis tipsspil, betting gruppespil" />
@@ -154,13 +153,13 @@ export default function Home() {
             <div className="fs-container">
                 <div className="fs-element">
                     <div className="fs-element-img" style={{marginTop: "3px"}}>
-                        <Image src={Money} />
+                        <Image src={Money} layout="fill" alt="Penge" />
                     </div>
                     <p className="fs-element-p">50% Flere penge</p>
                 </div>
                 <div className="fs-element">
                     <div className="fs-element-img">
-                        <Image src={Chart} />
+                        <Image src={Chart} layout="fill" alt="Graf" />
                     </div>
                     <p className="fs-element-p">100% Flere væddemål</p>
                 </div>

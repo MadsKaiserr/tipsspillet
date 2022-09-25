@@ -15,16 +15,24 @@ function Priser () {
             <Head>
                 <title>Priser - Køb Abonnement | Tipsspillet</title>
                 <link rel="canonical" href="https://www.tipsspillet.dk/priser" />
-                <meta name="description" content="Opret egne gruppespil, deltag i præmiedyster, få udvidet statistikker, gratis betting tips og meget mere. Eller køb adgangsbillet til præmiedyster for 9 kr. - Eller gruppespilsbillet, som giver adgang til at oprette eget gruppespil til 37 kr." />
+                <meta name="description" content="Hvad koster abonnement hos Tipsspillet? Spil helt gratis, eller opgrader til Plus eller Premium, og opret egne gruppespil, få udvidet statistikker, deltag i præmiedyster og meget mere." />
                 <meta name="author" content="Mads Kaiser" />
                 <meta name="keywords" content="tipsspillet priser, tipsspillet abonnement, abonnement, priser, betting abonnement, odds abonnement" />
                 <meta itemProp="name" content="Tipsspillet Priser og Abonnement" />
-                <meta itemProp="description" content="Opret egne gruppespil, deltag i præmiedyster, få udvidet statistikker, gratis betting tips og meget mere. Eller køb adgangsbillet til præmiedyster for 9 kr. - Eller gruppespilsbillet, som giver adgang til at oprette eget gruppespil til 37 kr." />
+                <meta itemProp="description" content="Hvad koster abonnement hos Tipsspillet? Spil helt gratis, eller opgrader til Plus eller Premium, og opret egne gruppespil, få udvidet statistikker, deltag i præmiedyster og meget mere." />
                 <meta property="og:title" content="Priser - Abonnement - Tipsspillet" />
-                <meta property="og:description" content="Opret egne gruppespil, deltag i præmiedyster, få udvidet statistikker, gratis betting tips og meget mere. Eller køb adgangsbillet til præmiedyster for 9 kr. - Eller gruppespilsbillet, som giver adgang til at oprette eget gruppespil til 37 kr." />
+                <meta property="og:url" content="https://www.tipsspillet.dk/priser" />
+                <meta property="og:description" content="Hvad koster abonnement hos Tipsspillet? Spil helt gratis, eller opgrader til Plus eller Premium, og opret egne gruppespil, få udvidet statistikker, deltag i præmiedyster og meget mere." />
             </Head>
             <Header />
             <Spacer />
+            <div className="main-container">
+                <div className="hero-text">
+                    <p className="main-component-p animation-fadeleft">Gennemsigtig prissætning</p>
+                    <h1 className="main-component-h1 main-gradient animation-fadeleft animation-delay-200">Priser og Abonnement</h1>
+                    <h2 className="main-component-h3 animation-fadetop animation-delay-300">Betal hvert valgte termin - Lav dine egne gruppespil, få udvidet statistikker, deltag i <span className="color-primary font-weight-500">præmiedyster</span> og meget mere.</h2>
+                </div>
+            </div>
             <PriserComp />
             <FaqComponent />
         </>

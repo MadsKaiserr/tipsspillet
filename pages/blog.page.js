@@ -4,9 +4,7 @@ import Link from 'next/link'
 import Head from 'next/head'
 import Header from './layout/header';
 import Image from 'next/image'
-import axios from "axios";
 import FaqComponent from './components/faq';
-import PriserComp from './components/priser';
 import Spacer from './components/spacer';
 
 import Banner from './img/logo-white.png';
@@ -57,14 +55,15 @@ function Blog () {
     return (
         <>
             <Head>
-                <title>Blog - Introduktion - Hjælp til at komme igang - Odds anbefalinger | Tipsspillet</title>
+                <title>Blog - Introduktion - Odds anbefalinger | Tipsspillet</title>
                 <link rel="canonical" href="https://www.tipsspillet.dk/blog" />
                 <meta name="description" content="Få hjælp til at komme igang på platformen, eller se de nyeste anbefalinger til odds fra profesionelle." />
                 <meta name="author" content="Mads Kaiser" />
                 <meta name="keywords" content="tipsspillet introduktion, blog, tipsspillet blog, tipsspillet tips, tipsspillet kom igang, odds anbefalinger, odds tips og tricks, tipsspillet anbefalinger, bedste tipsspillet odds" />
                 <meta itemProp="name" content="Tipsspillet Blog og Introduktion" />
                 <meta itemProp="description" content="Få hjælp til at komme igang på platformen, eller se de nyeste anbefalinger til odds fra profesionelle." />
-                <meta property="og:title" content="Blog - Introduktion - Hjælp til at komme igang - Odds anbefalinger | Tipsspillet" />
+                <meta property="og:title" content="Blog - Introduktion - Odds anbefalinger | Tipsspillet" />
+                <meta property="og:url" content="https://www.tipsspillet.dk/blog" />
                 <meta property="og:description" content="Få hjælp til at komme igang på platformen, eller se de nyeste anbefalinger til odds fra profesionelle." />
             </Head>
             <Header />
@@ -94,7 +93,7 @@ function Blog () {
                                         <Link href={"/blog/artikel?id=" + item.id}>
                                             <div>
                                                 <div className="blog-img">
-                                                    <Image width="80" height="80" src={Banner} />
+                                                    <Image width="80" height="80" alt="Tipsspillet logo" src={Banner} />
                                                 </div>
                                                 <div className="blog-info">
                                                     <h2 className="blog-h2">{item.h1}</h2>
@@ -118,7 +117,7 @@ function Blog () {
                                             <Link href={"/blog/artikel?id=" + item.id}>
                                                 <div>
                                                     <div className="blog-img">
-                                                        <Image width="80" height="80" src={Banner} />
+                                                        <Image width="80" height="80" alt="Tipsspillet logo" src={Banner} />
                                                     </div>
                                                     <div className="blog-info">
                                                         <h2 className="blog-h2">{item.h1}</h2>
