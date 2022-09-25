@@ -10,14 +10,14 @@ function Betingelser () {
             <Head>
                 <title>Betingelser - Tipsspillet</title>
                 <link rel="canonical" href="https://www.tipsspillet.dk/betingelser" />
-                <meta name="description" content="Følgende vilkår og rettigheder er gældende i forbindelse med anvendelsen af internetsiden. Ved at gå ind på denne internetside anerkender og tiltræder du følgende vilkår og rettigheder." />
+                <meta name="description" content="Følgende betingelser er gældende i forbindelse med anvendelsen af internetsiden. Ved brug af internetsiden anerkender og tiltræder du vores betingelser." />
                 <meta name="author" content="Mads Kaiser" />
                 <meta name="keywords" content="tipsspillet betingelser,betingelser,terms of service,tos,faq,privatliv" />
                 <meta itemProp="name" content="Tipsspillet Betingelser" />
-                <meta itemProp="description" content="Følgende vilkår og rettigheder er gældende i forbindelse med anvendelsen af internetsiden. Ved at gå ind på denne internetside anerkender og tiltræder du følgende vilkår og rettigheder." />
+                <meta itemProp="description" content="Følgende betingelser er gældende i forbindelse med anvendelsen af internetsiden. Ved brug af internetsiden anerkender og tiltræder du vores betingelser." />
                 <meta property="og:title" content="Betingelser - Tipsspillet" />
                 <meta property="og:url" content="https://www.tipsspillet.dk/betingelser" />
-                <meta property="og:description" content="Følgende vilkår og rettigheder er gældende i forbindelse med anvendelsen af internetsiden. Ved at gå ind på denne internetside anerkender og tiltræder du følgende vilkår og rettigheder." />
+                <meta property="og:description" content="Følgende betingelser er gældende i forbindelse med anvendelsen af internetsiden. Ved brug af internetsiden anerkender og tiltræder du vores betingelser." />
             </Head>
             <Header />
             <Spacer />

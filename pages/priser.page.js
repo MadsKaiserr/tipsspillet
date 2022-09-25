@@ -15,14 +15,14 @@ function Priser () {
             <Head>
                 <title>Priser - Køb Abonnement | Tipsspillet</title>
                 <link rel="canonical" href="https://www.tipsspillet.dk/priser" />
-                <meta name="description" content="Hvad koster abonnement hos Tipsspillet? Spil helt gratis, eller opgrader til Plus eller Premium, og opret egne gruppespil, få udvidet statistikker, deltag i præmiedyster og meget mere." />
+                <meta name="description" content="Hvad koster abonnement hos Tipsspillet? Spil helt gratis, eller opgrader til Plus eller Premium, og opret gruppespil og deltag i præmiedyster." />
                 <meta name="author" content="Mads Kaiser" />
                 <meta name="keywords" content="tipsspillet priser, tipsspillet abonnement, abonnement, priser, betting abonnement, odds abonnement" />
                 <meta itemProp="name" content="Tipsspillet Priser og Abonnement" />
-                <meta itemProp="description" content="Hvad koster abonnement hos Tipsspillet? Spil helt gratis, eller opgrader til Plus eller Premium, og opret egne gruppespil, få udvidet statistikker, deltag i præmiedyster og meget mere." />
+                <meta itemProp="description" content="Hvad koster abonnement hos Tipsspillet? Spil helt gratis, eller opgrader til Plus eller Premium, og opret gruppespil og deltag i præmiedyster." />
                 <meta property="og:title" content="Priser - Abonnement - Tipsspillet" />
                 <meta property="og:url" content="https://www.tipsspillet.dk/priser" />
-                <meta property="og:description" content="Hvad koster abonnement hos Tipsspillet? Spil helt gratis, eller opgrader til Plus eller Premium, og opret egne gruppespil, få udvidet statistikker, deltag i præmiedyster og meget mere." />
+                <meta property="og:description" content="Hvad koster abonnement hos Tipsspillet? Spil helt gratis, eller opgrader til Plus eller Premium, og opret gruppespil og deltag i præmiedyster." />
             </Head>
             <Header />
             <Spacer />
