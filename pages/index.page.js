@@ -30,7 +30,6 @@ export default function Home() {
             <meta itemProp="description" content="Dyst mod dine venner i et verdensomspændende betting-spil, helt uden at bruge en krone. Bet mod venner og familie, eller deltag i præmiedyster." />
             <meta property="og:title" content="Forside - Tipsspillet - Gratis Betting Konkurrence" />
             <meta property="og:description" content="Dyst mod dine venner i et verdensomspændende betting-spil, helt uden at bruge en krone. Bet mod venner og familie, eller deltag i præmiedyster." />
-            <link rel="canonical" href="https://www.tipsspillet.dk" />
         </Head>
         <div className="canvas-overlay"></div>
         <div className="hero-container">
