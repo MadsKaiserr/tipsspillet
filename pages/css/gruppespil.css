@@ -124,7 +124,7 @@
   font-size: 13px;
   color: var(--black);
   opacity: 0.7;
-  font-family: Open Sans;
+  font-family: Inter;
   font-weight: 400;
   padding-top: 5px;
   max-width: 450px;
@@ -135,7 +135,7 @@
   font-size: 13px;
   color: var(--black);
   opacity: 0.7;
-  font-family: Open Sans;
+  font-family: Inter;
   font-weight: 400;
   margin-top: 5px;
 }
@@ -143,7 +143,7 @@
 .gruppeinvite-h1 {
   font-size: 25px;
   color: var(--black);
-  font-family: Open Sans;
+  font-family: Inter;
   font-weight: 500;
 }
 
@@ -187,7 +187,7 @@
   border: 1px var(--primary) solid;
   color: var(--primary);
   font-size: 12px;
-  font-family: Open Sans;
+  font-family: Inter;
   font-weight: 400;
   border-radius: 3px;
   vertical-align: top;
@@ -424,7 +424,7 @@
   }
   
   .aktivespil-h1 {
-    font-family: Montserrat;
+    font-family: Inter;
     font-weight: 500;
     font-size: 35px;
     color: var(--black);
@@ -780,7 +780,7 @@
 .invite-p {
   color: var(--black);
   opacity: 0.7;
-  font-family: Open Sans;
+  font-family: Inter;
   font-size: 15px;
   padding: 17px 15px;
   display: inline-block;
@@ -900,7 +900,7 @@
     padding: 0px 15px;
     color: var(--softBlack);
     font-weight: 400;
-    font-family: Open Sans;
+    font-family: Inter;
     font-size: 13px;
 }
 
@@ -948,6 +948,15 @@
     vertical-align: top;  
 }
 
+.gs-h2 {
+  font-family: Inter;
+  font-weight: 500;
+  font-size: 22px;
+  display: inline-block;
+  color: #333;
+  vertical-align: top;  
+}
+
   .gruppespil-btn {
       padding: 4px 11px;
       background-color: var(--primary);
@@ -992,7 +1001,7 @@
     border: 1px var(--primaryAccent);
     color: #fff;
     font-size: 12px;
-    font-family: Open Sans;
+    font-family: Inter;
     font-weight: 400;
     border-radius: 3px;
     vertical-align: top;
@@ -1156,6 +1165,15 @@
     font-family: Inter;
 }
 
+.gs-h4 {
+  font-size: 14px;
+    color: var(--softBlack);
+    opacity: 0.7;
+    padding-bottom: 5px;
+    font-weight: 300;
+    font-family: Inter;
+}
+
 .gruppespil-li {
     display: inline-block;
     vertical-align: top;
@@ -1209,7 +1227,7 @@
 }
 
 .gruppespil-table-404 {
-    font-family: Open Sans;
+    font-family: Inter;
     font-weight: 400;
     font-size: 14px;
     color: var(--black);
@@ -1221,7 +1239,7 @@
 }
 
 .gruppespil-stage-404 {
-    font-family: Open Sans;
+    font-family: Inter;
     font-weight: 400;
     font-size: 14px;
     color: var(--black);
@@ -1233,7 +1251,7 @@
 }
 
 .gruppespil-table-p {
-    font-family: Open Sans;
+    font-family: Inter;
     font-weight: 500;
     font-size: 15px;
     color: var(--black);
@@ -1245,7 +1263,7 @@
 }
 
 .gruppespil-table-h1 {
-    font-family: Open Sans;
+    font-family: Inter;
     font-weight: 500;
     font-size: 15px;
     color: black;
@@ -1254,13 +1272,39 @@
     margin-top: 1px;
 }
 
+.gruppespil-table-place-div {
+    width: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .gruppespil-table-place {
-    font-family: Open Sans;
-    font-weight: 500;
-    font-size: 17px;
-    color: var(--black);
-    display: inline-block;
-    vertical-align: top;
+  font-family: Inter;
+  font-weight: 500;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #333;
+  background-color: transparent;
+  border-radius: 50%;
+  width: 27px;
+  height: 27px;
+}
+
+.gruppespil-table-place-active {
+  font-family: Inter;
+  font-weight: 500;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  background-color: var(--primary);
+  border-radius: 50%;
+  width: 27px;
+  height: 27px;
 }
 
 .gruppespil-table-top {
@@ -1532,7 +1576,7 @@
 }
 
 .gruppespil-table-row {
-  padding: 10px 10px;
+  padding: 5px 0px;
   border-bottom: #87889747 1px solid;
 }
 
@@ -1649,7 +1693,7 @@
     display: flex;
     align-items: center;
     width: 100%;
-    padding: 10px 0px;
+    padding: 20px 0px;
     background-color: #fff;
   }
 
@@ -1686,6 +1730,7 @@
     color: #fff;
     font-size: 13px;
     font-family: Inter;
+    cursor: pointer;
     box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.15);
     font-weight: 500;
     padding: 10px 20px;
@@ -2032,4 +2077,62 @@
     display: flex;
     align-items: center;
     gap: 2px;
+  }
+
+  .gs-container {
+    padding: 20px 160px;
+    background-color: var(--surface);
+    padding-bottom: 150px !important;
+  }
+
+  .gs-container .back-btn {
+    margin-left: 0px !important;
+  }
+
+  #gs-pos {
+    width: 50px;
+  }
+  #gs-navn {
+    width: 350px;
+  }
+  #gs-kuponer {
+    width: 150px;
+  }
+  #gs-kapital {
+    width: 250px;
+  }
+  #gs-aktive {
+    width: 200px;
+  }
+
+  .gs-h1 {
+    font-family: Inter;
+    font-weight: 500;
+    font-size: 26px;
+    color: #333;
+  }
+
+  .gs-h3 {
+    font-family: Inter;
+    font-weight: 300;
+    font-size: 13px;
+    color: #333;
+    opacity: 0.7;
+    padding-top: 5px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .gs-h3 p:first-child {
+    white-space: nowrap;
+  }
+
+  .gs-h3-divider {
+    width: 3.5px;
+    min-width: 3.5px;
+    height: 3.5px;
+    border-radius: 50%;
+    opacity: 0.5;
+    background-color: #333;
   }

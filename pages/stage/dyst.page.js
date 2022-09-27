@@ -1082,7 +1082,7 @@ function StageDyst ({data}) {
                         <p className="gruppespil-scroll">Klik for at kopiere</p>
                     </div>
                     <div className="inv-container">
-                        <div className="inv-element-a" onClick={() => {navigator.clipboard.writeText("https://tipsspillet.dk/gruppesession?game=" + activeGame + "&type=invite"); document.getElementById("copied").classList.remove("display-not"); setTimeout(function (){
+                        <div className="inv-element-a" onClick={() => {navigator.clipboard.writeText("https://www.tipsspillet.dk/gruppesession?game=" + activeGame + "&type=invite"); document.getElementById("copied").classList.remove("display-not"); setTimeout(function (){
     document.getElementById("copied").classList.add("display-not")
 }, 1000);}}>
                             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="var(--primary)" viewBox="0 0 16 16">

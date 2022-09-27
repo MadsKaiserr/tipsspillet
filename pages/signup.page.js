@@ -343,14 +343,14 @@ function Signup () {
             <Head>
                 <title>Opret konto på Tipsspillet</title>
                 <link rel="canonical" href="https://www.tipsspillet.dk/signup" />
-                <meta name="description" content="Opret konto på Danmarks eneste gratis betting platform - Bet for virtuelle penge mod venner og familie." />
+                <meta name="description" content="Opret konto på Danmarks eneste gratis betting platform - Bet for virtuelle penge mod familie og venner." />
                 <meta name="author" content="Mads Kaiser" />
                 <meta name="keywords" content="tipsspillet opret konto, opret konto,signup,tipsspillet signup,lav konto,konto,min konto" />
                 <meta itemProp="name" content="Tipsspillet Opret Konto" />
-                <meta itemProp="description" content="Opret konto på Danmarks eneste gratis betting platform - Bet for virtuelle penge mod venner og familie." />
+                <meta itemProp="description" content="Opret konto på Danmarks eneste gratis betting platform - Bet for virtuelle penge mod familie og venner." />
                 <meta property="og:title" content="Opret konto - Tipsspillet" />
                 <meta property="og:url" content="https://www.tipsspillet.dk/signup" />
-                <meta property="og:description" content="Opret konto på Danmarks eneste gratis betting platform - Bet for virtuelle penge mod venner og familie." />
+                <meta property="og:description" content="Opret konto på Danmarks eneste gratis betting platform - Bet for virtuelle penge mod familie og venner." />
             </Head>
             <div className="route-thirds">
                 <div className="signup-tilbage" onClick={() => window.open("/", "_SELF")}>

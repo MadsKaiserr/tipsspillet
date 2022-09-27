@@ -136,6 +136,10 @@
   }
 }
 
+.gs-wrapper .gruppespil-section {
+  width: 100% !important;
+}
+
 @media only screen and (max-width: 1020px) {
   .stage-kupon {
     position: fixed !important;
@@ -143,6 +147,9 @@
     right: 30px !important;
     top: inherit !important;
     z-index: 11 !important;
+  }
+  .gs-container {
+    padding: 20px 100px !important;
   }
   .error-con-error {
     width: 94% !important;
@@ -197,12 +204,6 @@
   }
   .updates-con {
     width: 80% !important;
-  }
-}
-
-@media only screen and (max-width: 870px) {
-  .footer-sections {
-    gap: 10vw !important;
   }
 }
 
@@ -281,6 +282,15 @@
   .favorit-container-match {
     display: none !important;
   }
+  #gs-navn {
+    width: 200px !important;
+  }
+  #gs-aktive {
+    display: none !important;
+  }
+  #gs-kapital {
+    width: 200px !important;
+  }
   .odd-off {
     background-color: #ebebeb !important;
     color: var(--black) !important;
@@ -325,14 +335,8 @@
     padding: 0px 0px !important;
     padding-bottom: 20px !important;
   }
-  .footer-copyright {
-    display: none !important;
-  }
   .signup-popup {
     width: 40% !important;
-  }
-  .footer-copyright {
-    color: #333 !important;
   }
   .signup-logo {
     display: none !important;
@@ -490,6 +494,33 @@
   .gruppetable-kapital {
     width: 160px !important;
   }
+  .cp-h1 {
+    font-size: 46px !important;
+  }
+  .cp-h2 {
+    font-size: 16px !important;
+    line-height: 20px !important;
+    padding: 15px !important;
+  }
+  .cp-h3 {
+    font-size: 15px !important;
+    padding-top: 0px !important;
+  }
+}
+
+@media only screen and (max-width: 870px) {
+  .footer-sections {
+    gap: 10vw !important;
+  }
+  #gs-kuponer {
+    width: 100px !important;
+  }
+  #gs-navn {
+    width: 160px !important;
+  }
+  #gs-pos {
+    width: 40px !important;
+  }
 }
 
 @media only screen and (max-width: 835px) {
@@ -565,7 +596,19 @@
   .main-component-h1 {
     font-size: 40px !important;
     line-height: 40px !important;
-    padding-top: 30px;
+    padding-top: 10px;
+  }
+  .whereami-h1 {
+    font-size: 42px !important;
+    padding-top: 4px;
+  }
+  .main-component-h4 {
+    font-size: 32px !important;
+    line-height: 35px !important;
+    padding-top: 10px;
+  }
+  .faq-container {
+    margin-top: 20px !important;
   }
   .main-switch {
     height: 65px !important;
@@ -596,6 +639,23 @@
     font-size: 14px !important;
     line-height: 17px !important;
   }
+  .whereami-h3 {
+    font-size: 14px !important;
+    line-height: 17px !important;
+    padding-top: 10px !important;
+  }
+  .law-main-container {
+    padding-top: 0px !important;
+  }
+  .betingelser-h1 {
+    font-size: 30px !important;
+  }
+  .betingelser-h2 {
+    font-size: 18px !important;
+  }
+  .betingelser-p {
+    font-size: 15px !important;
+  }
   .main-component-p {
     font-size: 14px !important;
   }
@@ -615,7 +675,9 @@
   .tabel-form {
     display: none !important;
   }
-
+  .gs-container {
+    padding: 20px 40px !important;
+  }
 }
 
 @media only screen and (max-width: 730px) {
@@ -634,6 +696,24 @@
   }
   .gruppespil-opret-own {
     display: none !important;
+  }
+  .gs-container {
+    padding: 20px !important;
+  }
+  .gs-wrapper {
+    padding-top: 10px !important;
+  }
+  .cp-h1 {
+    font-size: 32px !important;
+  }
+  .cp-h2 {
+    font-size: 14px !important;
+    line-height: 19px !important;
+    padding: 10px !important;
+  }
+  .cp-h3 {
+    font-size: 13px !important;
+    padding-top: 0px !important;
   }
   .gruppetable-el-navn {
     width: 150px !important;
@@ -813,6 +893,9 @@
   .gruppetable-kapital2-el {
     width: 70px !important;
   }
+  #gs-kuponer {
+    display: none !important;
+  }
   .nav-in {
     display: none !important;
   }
@@ -839,8 +922,17 @@
   #t3 {
     display: none !important;
   }
+  .spacer {
+    height: 75px !important;
+  }
   .td-container {
     padding: 20px 0px !important;
+  }
+  .inv-element {
+    max-width: 100% !important;
+  }
+  .inv-element-a {
+    max-width: 100% !important;
   }
   .td-box {
     padding: 20px 15px !important;
@@ -920,6 +1012,10 @@
     padding: 10px 0px !important;
   }
   .faq-a-p {
+    font-size: 14px !important;
+    font-weight: 300 !important;
+  }
+  .faq-a {
     font-size: 14px !important;
     font-weight: 300 !important;
   }
@@ -1061,6 +1157,12 @@
   .hit-elem {
     padding: 10px 5% !important;
   }
+  .cp-h1 {
+    font-size: 28px !important;
+  }
+  .gs-container {
+    padding: 10px !important;
+  }
   .match-stilling {
     width: 45% !important;
 }
@@ -1068,6 +1170,12 @@
     font-size: 12px !important;
   }
   .faq-wrapper {
+    padding-top: 40px !important;
+  }
+  .main-container {
+    padding-top: 0px !important;
+  }
+  .blog-container {
     padding-top: 0px !important;
   }
   .md-header {
@@ -1255,7 +1363,7 @@
     padding-bottom: 70px !important;
   }
   .td-box {
-    border-radius: 0px !important;
+    border-radius: 5px !important;
     margin: 0px !important;
     margin-bottom: 0px !important;
   }

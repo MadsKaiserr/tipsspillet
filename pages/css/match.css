@@ -989,6 +989,24 @@
     font-weight: 400;
 }
 
+.pos-p {
+    font-size: 15px;
+    color: var(--softBlack);
+    font-family: Inter;
+    font-weight: 400;
+    padding: 5px;
+}
+
+.pos-p-active {
+    font-size: 15px;
+    color: #fff;
+    font-family: Inter;
+    font-weight: 400;
+    padding: 5px;
+    background-color: var(--primary);
+    border-radius: 50%;
+}
+
 .tabel-h1 {
     font-size: 15px;
     color: var(--softBlack);

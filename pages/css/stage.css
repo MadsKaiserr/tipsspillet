@@ -227,7 +227,7 @@
 }
 
 .team-kampe-minut {
-    font-family: Montserrat;
+    font-family: Inter;
     font-weight: 400;
     font-size: 13px;
     width: 65px;
@@ -517,7 +517,7 @@
   
   .kupon-header-p {
     text-align: center;
-    font-family: Open Sans;
+    font-family: Inter;
     font-weight: 500;
     font-size: 16px;
     padding: 10px 0px;
@@ -531,7 +531,7 @@
   }
   
   .kupon-top-p {
-    font-family: Open Sans;
+    font-family: Inter;
     font-weight: 400;
     font-size: 13px;
     padding: 5px 15px;
@@ -565,7 +565,7 @@
   }
   
   .kupon-bottom-info-p-right {
-    font-family: Open Sans;
+    font-family: Inter;
     font-weight: 500;
     font-size: 14px;
     color: var(--black);
@@ -580,7 +580,7 @@
   }
   
   .kupon-confirm-p {
-    font-family: Open Sans;
+    font-family: Inter;
     font-weight: 400;
     font-size: 14px;
     color: var(--black);
@@ -588,7 +588,7 @@
   }
   
   .kupon-confirm-h1 {
-    font-family: Open Sans;
+    font-family: Inter;
     font-weight: 600;
     font-size: 18px;
     color: var(--black);
@@ -611,7 +611,7 @@
     float: right;
     border: 0px;
     font-weight: 400;
-    font-family: Open Sans;
+    font-family: Inter;
   }
   
   .kupon-indsats {
@@ -652,7 +652,7 @@
   }
   
   .kupon-h1 {
-    font-family: Open Sans;
+    font-family: Inter;
     font-weight: 500;
     font-size: 15px;
     padding: 8px 15px;
@@ -661,7 +661,7 @@
   }
   
   .kupon-p {
-    font-family: Open Sans;
+    font-family: Inter;
     font-weight: 400;
     font-size: 13px;
     padding: 8px 15px;
@@ -691,7 +691,7 @@
   }
   
   .kupon-h2 {
-    font-family: Open Sans;
+    font-family: Inter;
     font-weight: 500;
     font-size: 14px;
     padding-bottom: 5px !important;
@@ -699,7 +699,7 @@
   }
   
   .kupon-h2-span {
-    font-family: Open Sans;
+    font-family: Inter;
     font-weight: 300;
     font-size: 14px;
     padding-bottom: 5px !important;
@@ -755,7 +755,7 @@
   
   .date-p {
     margin-left: 10px;
-    font-family: Montserrat;
+    font-family: Inter;
     font-weight: 400;
     font-size: 14px;
     margin-top: 1px;
@@ -1102,7 +1102,7 @@
   
   .date-picker::-webkit-datetime-edit {
     margin-left: 40px;
-    font-family: Montserrat;
+    font-family: Inter;
     font-weight: 400;
     font-size: 14px;
     margin-top: 1px;
@@ -1146,7 +1146,7 @@
     display: inline-block;
     color: var(--black);
     font-size: 15px;
-    font-family: Montserrat;
+    font-family: Inter;
     font-weight: 500;
     vertical-align: top;
     margin-top: 21.5px;
@@ -1226,7 +1226,7 @@
   
   .stage-leftbar-p {
     color: var(--black);
-    font-family: Montserrat;
+    font-family: Inter;
     font-weight: 300;
     padding-left: 8px;
     vertical-align: top;
@@ -1237,7 +1237,7 @@
   
   .stage-leftbar-p-profile {
     color: var(--black);
-    font-family: Montserrat;
+    font-family: Inter;
     font-weight: 300;
     padding-left: 8px;
     vertical-align: top;
@@ -1248,7 +1248,7 @@
   
   .stage-leftbar-element-h2 {
     color: var(--black);
-    font-family: Montserrat;
+    font-family: Inter;
     font-weight: 600;
     width: 20px;
     margin-top: 1.5px;
@@ -1279,7 +1279,7 @@
   .stage-leftbar-more {
     cursor: pointer;
     color: var(--black);
-    font-family: Montserrat;
+    font-family: Inter;
     font-weight: 500;
     font-size: 13px;
     text-decoration: none;
@@ -1292,7 +1292,7 @@
   .stage-kamp-team-p {
     display: inline-block;
     color: var(--black);
-    font-family: Montserrat;
+    font-family: Inter;
     font-weight: 500;
     vertical-align: top;
     font-size: 13px;
@@ -1302,7 +1302,7 @@
   
   .stage-kamp-info-p {
     color: var(--black);
-    font-family: Montserrat;
+    font-family: Inter;
     font-weight: 300;
     font-size: 11px;
     opacity: 0.7;
@@ -1347,7 +1347,7 @@
   
   .kamp-odds-p {
     color: var(--black);
-    font-family: Montserrat;
+    font-family: Inter;
     font-weight: 500;
     margin-top: 3px;
     font-size: 13px;
@@ -1407,7 +1407,7 @@
   
   .kamp-odds-p-main {
     color: #fff;
-    font-family: Montserrat;
+    font-family: Inter;
     font-weight: 500;
     margin-top: 3px;
     font-size: 13px;
@@ -2078,7 +2078,7 @@
   }
   
   .stage-top-p {
-    font-family: Open Sans;
+    font-family: Inter;
     color: #898989;
     font-weight: 400;
     padding: 5px 0px;
@@ -2134,7 +2134,7 @@
   }
   
   .stage-kampe-p {
-    font-family: Open Sans;
+    font-family: Inter;
     font-weight: 500;
     font-size: 14px;
     color: var(--black);
@@ -2145,7 +2145,7 @@
   }
   
   .stage-kampe-p-fat {
-    font-family: Open Sans;
+    font-family: Inter;
     font-weight: 700;
     font-size: 14px;
     color: var(--black);
@@ -2193,7 +2193,7 @@
   }
   
   .stage-kampe-minut {
-    font-family: Montserrat;
+    font-family: Inter;
     font-weight: 400;
     font-size: 13px;
     color: var(--grey);
@@ -2209,7 +2209,7 @@
   }
   
   .stage-blink {
-    font-family: Montserrat;
+    font-family: Inter;
     font-weight: 600;
     font-size: 13px;
     color: var(--red);
@@ -2255,7 +2255,7 @@
   }
   
   .stage-kampe-minut-2 {
-    font-family: Montserrat;
+    font-family: Inter;
     font-weight: 400;
     font-size: 13px;
     width: 23%;
@@ -2300,7 +2300,7 @@
   }
   
   .stage-kampe-minut-small {
-    font-family: Montserrat;
+    font-family: Inter;
     font-weight: 400;
     font-size: 13px;
     color: var(--grey);
@@ -2840,7 +2840,7 @@
   
   .info-p-span {
     font-size: 16px;
-    font-family: Open Sans;
+    font-family: Inter;
     font-weight: 400;
     color: black;
     display: inline-block;
@@ -2848,7 +2848,7 @@
   
   .info-p-span-hover {
     font-size: 16px;
-    font-family: Open Sans;
+    font-family: Inter;
     font-weight: 400;
     color: black;
     display: inline-block;
@@ -2881,7 +2881,7 @@
   }
   
   .odd-data-p {
-    font-family: Montserrat;
+    font-family: Inter;
     font-weight: 300;
     font-size: 13px;
     color: rgb(236, 245, 253);
@@ -2889,7 +2889,7 @@
   }
   
   .odd-data-h1 {
-    font-family: Montserrat;
+    font-family: Inter;
     font-weight: 400;
     font-size: 13px;
     color: #fff;
@@ -2917,7 +2917,7 @@
   }
 
   .odd-used .odd-data-p {
-    font-family: Montserrat;
+    font-family: Inter;
     font-weight: 300;
     font-size: 13px;
     color: var(--softBlack);
@@ -2925,7 +2925,7 @@
   }
   
   .odd-used .odd-data-h1 {
-    font-family: Montserrat;
+    font-family: Inter;
     font-weight: 400;
     font-size: 13px;
     color: var(--softBlack);
@@ -2952,7 +2952,7 @@
   }
   
   .odd-off .odd-data-p {
-    font-family: Montserrat;
+    font-family: Inter;
     font-weight: 300;
     font-size: 13px;
     color: var(--softBlack);
@@ -2960,7 +2960,7 @@
   }
   
   .odd-off .odd-data-h1 {
-    font-family: Montserrat;
+    font-family: Inter;
     font-weight: 400;
     font-size: 13px;
     color: var(--softBlack);
@@ -2988,7 +2988,7 @@
   }
   
   .stage-kampe-head-p {
-    font-family: Open Sans;
+    font-family: Inter;
     text-transform: uppercase;
     font-weight: 500;
     font-size: 13px;

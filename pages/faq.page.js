@@ -4,7 +4,7 @@ import Header from './layout/header';
 import { getQuestions } from "./components/faqQ.js";
 import Head from 'next/head'
 import Link from 'next/link'
-import withAuth from './services/withAuth';
+import Spacer from './components/spacer';
  
 function Faq () {
 
@@ -32,16 +32,17 @@ function Faq () {
             <Head>
                 <title>FAQ - Spørgsmål og svar | Tipsspillet</title>
                 <link rel="canonical" href="https://www.tipsspillet.dk/faq" />
-                <meta name="description" content="Få svar på alt hvad du vil vide om Tipsspillet - Ofte stillede spørgsmål - Hvordan fungerer Tipsspillet?" />
+                <meta name="description" content="Få svar på alt hvad du vil vide om betting på Tipsspillet - Ofte stillede spørgsmål - Hvordan fungerer odds på Tipsspillet?" />
                 <meta name="author" content="Mads Kaiser" />
-                <meta name="keywords" content="faq,tipsspillet faq,spørgsmål og svar,tipsspillet spørgsmål og svar,hvordan opretter man gruppespil,hvordan tilmelder jeg mig præmiedyster" />
+                <meta name="keywords" content="odds,faq,tipsspillet faq,spørgsmål og svar,tipsspillet spørgsmål og svar,hvordan opretter man gruppespil,hvordan tilmelder jeg mig præmiedyster" />
                 <meta itemProp="name" content="Tipsspillet FAQ" />
-                <meta itemProp="description" content="Få svar på alt hvad du vil vide om Tipsspillet - Ofte stillede spørgsmål - Hvordan fungerer Tipsspillet?" />
+                <meta itemProp="description" content="Få svar på alt hvad du vil vide om betting på Tipsspillet - Ofte stillede spørgsmål - Hvordan fungerer odds på Tipsspillet?" />
                 <meta property="og:title" content="FAQ - Spørgsmål og svar - Tipsspillet" />
                 <meta property="og:url" content="https://www.tipsspillet.dk/faq" />
-                <meta property="og:description" content="Få svar på alt hvad du vil vide om Tipsspillet - Ofte stillede spørgsmål - Hvordan fungerer Tipsspillet?" />
+                <meta property="og:description" content="Få svar på alt hvad du vil vide om betting på Tipsspillet - Ofte stillede spørgsmål - Hvordan fungerer odds på Tipsspillet?" />
             </Head>
             <Header />
+            <Spacer />
             <div className="faq-wrapper">
                 <div className="faq-fix">
                     <h1 className="faq-head-h2">Ofte stillede spørgsmål</h1>
@@ -51,7 +52,7 @@ function Faq () {
                             return (
                                 <li key={question.id} className="faq-element" onClick={() => {showQuestion(question.id)}}>
                                     <div className="faq-question">
-                                        <p className="faq-q">{question.name}</p>
+                                        <h3 className="faq-q">{question.name}</h3>
                                         <svg xmlns="http://www.w3.org/2000/svg" id={question.id + "-i"} className="faq-chevron display" viewBox="0 0 16 16">
                                             <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
                                             <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
@@ -63,9 +64,19 @@ function Faq () {
                                     </div>
                                     <ul className="faq-answer" id={question.id + "-a"}>
                                         {question.paragraphs.map(para => {
-                                            return (
-                                                <li key={para.text} className="faq-a-p">{para.text}</li>
-                                            );
+                                            if (para.type === "text") {
+                                                return (
+                                                    <li key={para.text} className="faq-a-p">{para.text}</li>
+                                                );
+                                            } else if (para.type === "link") {
+                                                return (
+                                                    <li key={para.text} className="faq-a"><Link href={para.to}><a className="faq-a">{para.text}</a></Link></li>
+                                                );
+                                            } else if (para.type === "br") {
+                                                return (
+                                                    <><br /><br /></>
+                                                );
+                                            }
                                         })}
                                     </ul>
                                 </li>

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Link from 'next/link'
 import Head from 'next/head'
 import Header from './layout/header';
@@ -71,8 +71,8 @@ function Blog () {
             <div className="main-container" style={{paddingBottom: "20px"}}>
                 <div className="hero-text">
                     <p className="main-component-p animation-fadeleft">Tips og tricks - Hjælp til at komme igang</p>
-                    <h1 className="main-component-h1 main-gradient animation-fadeleft animation-delay-200">Tipsspillets Blog</h1>
-                    <h2 className="main-component-h3 animation-fadetop animation-delay-300">Få hjælp til at komme igang med Tipsspillet, eller få nyheder, anbefalinger fra <span className="color-primary font-weight-500">profesionelle</span> og meget mere.</h2>
+                    <h1 className="whereami-h1 main-gradient animation-fadeleft animation-delay-200">Tipsspillets Blog</h1>
+                    <h2 className="whereami-h3 animation-fadetop animation-delay-300">Få hjælp til at komme igang med Tipsspillet, eller få nyheder, anbefalinger fra <span className="color-primary font-weight-500">profesionelle</span> og meget mere.</h2>
                 </div>
             </div>
             <div className="priser-container">

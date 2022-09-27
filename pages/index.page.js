@@ -19,19 +19,19 @@ export default function Home() {
   }, [])
 
   return (
-    <div>
-        <Header />
+    <>
         <Head>
             <title>Tipsspillet - Gratis Betting Konkurrence</title>
             <link rel="canonical" href="https://www.tipsspillet.dk/" />
-            <meta name="description" content="Dyst mod dine venner i et verdensomspændende betting-spil, helt uden at bruge en krone. Bet mod venner og familie, eller deltag i præmiedyster." />
+            <meta name="description" content="Dyst mod dine venner i et verdensomspændende betting-spil, helt uden at bruge en krone. Bet mod familie og venner, eller deltag i præmiedyster." />
             <meta name="author" content="Mads Kaiser" />
             <meta name="keywords" content="tipsspillet, betting, gratis betting, betting spil, gratis betting spil, betting konkurrence, betting turnering, fodbold betting, gratis fodbold betting, betting-spil, betting tips, odds, gratis oddsning, fodbold odds, gratis tipsspil, betting gruppespil" />
             <meta itemProp="name" content="Tipsspillet" />
-            <meta itemProp="description" content="Dyst mod dine venner i et verdensomspændende betting-spil, helt uden at bruge en krone. Bet mod venner og familie, eller deltag i præmiedyster." />
-            <meta property="og:title" content="Forside - Tipsspillet - Gratis Betting Konkurrence" />
-            <meta property="og:description" content="Dyst mod dine venner i et verdensomspændende betting-spil, helt uden at bruge en krone. Bet mod venner og familie, eller deltag i præmiedyster." />
+            <meta itemProp="description" content="Dyst mod dine venner i et verdensomspændende betting-spil, helt uden at bruge en krone. Bet mod familie og venner, eller deltag i præmiedyster." />
+            <meta property="og:title" content="Tipsspillet - Gratis Betting Konkurrence" />
+            <meta property="og:description" content="Dyst mod dine venner i et verdensomspændende betting-spil, helt uden at bruge en krone. Bet mod familie og venner, eller deltag i præmiedyster." />
         </Head>
+        <Header />
         <div className="canvas-overlay"></div>
         <div className="hero-container">
             <div className="hero-container-2">
@@ -64,7 +64,7 @@ export default function Home() {
                     </div>
                 </h1>
             </div>
-            <h2 className="main-component-h1-h2">Dyst mod venner og familie i fodbold betting uden risiko. Spil med virtuelle penge, og find den bedste better iblandt jer. &#128640;</h2>
+            <h2 className="main-component-h1-h2">Dyst mod familie og venner i fodbold betting uden risiko. Spil med virtuelle penge, og find den bedste better iblandt jer. &#128640;</h2>
             <Link href="/gruppespil">
                 <button className="main-btn-default hero-btn">Find gruppespil</button>
             </Link><br />
@@ -149,17 +149,17 @@ export default function Home() {
         </div>
         <div className="forside-black">
             <h2 className="fs-wrapper-h1">Liveodds fra<br/>verdens førende<br/>betting sider</h2>
-            <div className="fs-wrapper-h2">Tag betting til nye højde med vores Livebetting. Placér væddemål i realtid, og forstør chancen for udbytte!</div>
+            <h3 className="fs-wrapper-h2">Tag betting til nye højde med vores Livebetting. Placér væddemål i realtid, og forstør chancen for udbytte!</h3>
             <div className="fs-container">
                 <div className="fs-element">
                     <div className="fs-element-img" style={{marginTop: "3px"}}>
-                        <Image src={Money} layout="fill" alt="Penge" />
+                        <Image src={Money} alt="Penge" />
                     </div>
                     <p className="fs-element-p">50% Flere penge</p>
                 </div>
                 <div className="fs-element">
                     <div className="fs-element-img">
-                        <Image src={Chart} layout="fill" alt="Graf" />
+                        <Image src={Chart} alt="Graf" />
                     </div>
                     <p className="fs-element-p">100% Flere væddemål</p>
                 </div>
@@ -170,9 +170,9 @@ export default function Home() {
             <div className="db-fill" id="fill-1"></div>
             <div className="db-section">
                 <div className="db-info">
-                    <p className="db-h1">Spil helt gratis.<br/><span className="db-h1 main-gradient">Virtuelle penge.</span></p>
-                    <p className="db-h2">Hos Tipsspillet spiller du med virtuelle penge, og eliminerer derved risikioen for tab af penge på betting.</p>
-                    <p className="db-h2">Løbet tør for penge? Intet problem! I de fleste gruppespil får du et beløb hver uge, som du kan bruge på at bette dig til større fortjeneste &#128640;</p>
+                    <h2 className="db-h1">Spil helt gratis.<br/><span className="db-h1 main-gradient">Virtuelle penge.</span></h2>
+                    <h3 className="db-h2">Hos Tipsspillet spiller du med virtuelle penge, og eliminerer derved risikioen for tab af penge på betting.</h3>
+                    <h3 className="db-h2">Løbet tør for penge? Intet problem! I de fleste gruppespil får du et beløb hver uge, som du kan bruge på at bette dig til større fortjeneste &#128640;</h3>
                 </div>
             </div>
             <div className="db-fill" id="fill-2"></div>
@@ -180,15 +180,22 @@ export default function Home() {
         <div className="forside-db">
             <div className="db-section">
                 <div className="db-info">
-                    <p className="db-h1">Opret dit eget<br/><span className="db-h1 main-gradient">gruppespil.</span></p>
-                    <p className="db-h2">Opret dit eget gruppespil i din klasse, på din arbejde, med din familie eller lav et offentligt gruppespil.</p>
-                    <p className="db-h2">Med Plus- og Premium abonnement kan du oprette gruppespil, og styre ligaer, startbeløb, beløb hver uge, deltagere og meget mere!</p>
+                    <h2 className="db-h1">Opret dit eget<br/><span className="db-h1 main-gradient">gruppespil.</span></h2>
+                    <h3 className="db-h2">Opret dit eget gruppespil i din klasse, på din arbejde, med din familie eller lav et offentligt gruppespil.</h3>
+                    <h3 className="db-h2">Med Plus- og Premium abonnement kan du oprette gruppespil, og styre ligaer, startbeløb, beløb hver uge, deltagere og meget mere!</h3>
                 </div>
             </div>
             <div className="db-fill-inverted"></div>
         </div>
+        <div className="main-container">
+            <div className="hero-text">
+                <p className="cp-h3 animation-fadeleft">Gennemsigtig prissætning</p>
+                <h2 className="cp-h1 animation-fadeleft animation-delay-200">Priser og Abonnement</h2>
+                <h3 className="cp-h2 animation-fadetop animation-delay-300">Betal hvert valgte termin - Lav dine egne gruppespil, få udvidet statistikker, deltag i <span className="color-primary font-weight-500">præmiedyster</span> og meget mere.</h3>
+            </div>
+        </div>
         <PriserComp />
         <FaqComponent />
-    </div>
+    </>
   )
 }

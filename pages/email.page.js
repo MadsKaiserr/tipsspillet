@@ -1,6 +1,4 @@
 import * as React from 'react';
-import { useEffect, useState } from 'react';
-import Link from 'next/link'
 import Head from 'next/head'
 import axios from "axios";
 import Header from './layout/header';
@@ -30,7 +28,7 @@ function Email () {
     return (
         <>
             <Head>
-                <title>Køb annulleret - Køb Abonnement | Tipsspillet</title>
+                <title>Send emails | Tipsspillet</title>
                 <meta name="robots" content="noindex" />
             </Head>
             <Header />

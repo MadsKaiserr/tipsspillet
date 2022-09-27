@@ -59,6 +59,7 @@ function MyApp({ Component, pageProps }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta httpEquiv="content-language" content="da" />
+        <link rel="alternate" hrefLang="da" />
         <meta name="ahrefs-site-verification" content="73a7adbfc78a33be4964a1fbbe25c40fa085edc8b2d105bebf9a27ebc21e0a80"></meta>
 
         <meta name="trustpilot-one-time-domain-verification-id" content="ff4f2ee6-6577-4745-905d-b14b269c3fb3"/>

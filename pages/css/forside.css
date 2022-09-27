@@ -7,10 +7,9 @@
   .main-block-container {
     text-align: center;
     position: relative;
-    background-color: var(--surface);
     overflow: hidden;
     padding-top: 140px;
-    padding-bottom: 50px;
+    padding-bottom: 35px;
   }
 
   #gradient-canvas {
@@ -81,6 +80,9 @@
   .fs-element-img {
     width: 20px;
     height: 20px;
+    max-width: 20px;
+    max-height: 20px;
+    overflow: hidden;
   }
 
   .fs-element {
@@ -1136,7 +1138,7 @@
   .main-forside-component-h3 {
     color: var(--onBackground);
     font-size: 15px;
-    font-family: Montserrat;
+    font-family: Inter;
     font-weight: 400;
     opacity: 0.75;
   }
@@ -1603,4 +1605,67 @@
     padding: 15px 20px;
     background-color: var(--surface);
     border-top-right-radius: 3px;
+  }
+
+  .kt-wrapper {
+    display: flex;
+    width: 100%;
+    gap: 30px;
+    justify-content: space-between;
+  }
+
+  .kt-type {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    text-align: left;
+    padding-bottom: 10px;
+  }
+
+  .kt-p {
+    font-family: Inter;
+    font-weight: 400;
+    color: #333;
+    font-size: 14px;
+    opacity: 0.7;
+  }
+
+  .kt-input {
+    border: 0px;
+    border-radius: 5px;
+    margin-top: 10px;
+    background-color: var(--stageSurface);
+    width: 100%;
+    padding: 15px 20px;
+  }
+
+  .kt-area {
+    border: 0px;
+    border-radius: 5px;
+    background-color: var(--stageSurface);
+    width: 100%;
+    min-height: 250px;
+    margin-top: 10px;
+    padding: 15px 20px;
+    resize: vertical;
+  }
+
+  .kontakt-btn {
+    width: 100%;
+    background-color: var(--primary);
+    border-radius: 5px;
+    border: 0px;
+    color: #fff;
+    font-family: Inter;
+    font-weight: 400;
+    font-size: 15px;
+    padding: 12px 0px;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+
+  .kontakt-btn:hover {
+    background-color: var(--primaryAccent);
   }

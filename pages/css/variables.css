@@ -1,7 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500;600;700;900&display=swap');
-@import url('https://rsms.me/inter/inter.css');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;600;700;900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
 
   :root {
@@ -651,7 +648,7 @@
       transform: matrix(1,0,0,1,0,0);
     }
   }
-  
+
   .main-component-h1 {
     color: var(--kul);
     font-size: 70px;
@@ -662,12 +659,50 @@
     line-height: 60px;
   }
 
+  .cp-h1 {
+    color: #101828ef;
+    font-size: 62px;
+    display: inline-flex;
+    flex-direction: column;
+    font-family: Inter;
+    font-weight: 700;
+  }
+
+  .whereami-h1 {
+    color: var(--kul);
+    font-size: 70px;
+    display: inline-flex;
+    flex-direction: column;
+    font-family: Inter;
+    font-weight: 600;
+  }
+  
+  .main-component-h4 {
+    color: var(--kul);
+    font-size: 56px;
+    display: inline-flex;
+    flex-direction: column;
+    font-family: Inter;
+    font-weight: 600;
+    line-height: 75px;
+  }
+
   #dash {
     font-family: Inter !important;
   }
 
   .main-component-p {
     color: var(--softBlack);
+    font-size: 16px;
+    font-family: Inter;
+    font-weight: 500;
+    padding: 15px 0px;
+    padding-bottom: 5px !important;
+    opacity: 0.9;
+  }
+
+  .cp-h3 {
+    color: var(--primary);
     font-size: 16px;
     font-family: Inter;
     font-weight: 500;
@@ -774,11 +809,35 @@
 
   .main-component-h3 {
     color: var(--softBlack);
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 27px;
+    margin: 0px auto;
+    padding: 20px 20px;
+    max-width: 550px;
+    text-align: center;
+    font-family: Inter;
+  }
+
+  .cp-h2 {
+    color: var(--softBlack);
     font-size: 20px;
     font-weight: 300;
     line-height: 27px;
     margin: 0px auto;
     padding: 20px 20px;
+    max-width: 550px;
+    text-align: center;
+    font-family: Inter;
+  }
+
+  .whereami-h3 {
+    color: var(--softBlack);
+    font-size: 20px;
+    font-weight: 300;
+    line-height: 27px;
+    margin: 0px auto;
+    padding: 15px 20px;
     max-width: 550px;
     text-align: center;
     font-family: Inter;
@@ -835,6 +894,28 @@
     cursor: pointer;
     transition: 0.1s;
     background-color: #fff;
+    opacity: 0.8;
+    margin-bottom: 15px;
+    font-family: Inter;
+    font-weight: 400;
+    color: var(--softBlack);
+    font-size: 13px;
+    gap: 5px;
+  }
+
+  .back-btn-white {
+    border: 0px;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+    position: relative;
+    padding: 5px 14px;
+    border-radius: 500px;
+    cursor: pointer;
+    transition: 0.1s;
+    background-color: var(--stageSurface);
     opacity: 0.8;
     margin-bottom: 15px;
     font-family: Inter;

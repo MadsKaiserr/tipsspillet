@@ -32,7 +32,7 @@ export default function Footer()  {
                 <div className="footer-section-nav">
                     <nav className="footer-element">
                         <p className="footer-h2">Virksomhed</p>
-                        <a href="https://www.linkedin.com/in/mads-kaiser-90036b236/" target="_blank" rel="noreferrer" className="footer-h3">LinkedIn</a>
+                        <a href="https://www.linkedin.com/in/mads-kaiser-90036b236/" target="_blank" rel="noreferrer noopener" className="footer-h3">LinkedIn</a>
                         <Link href="/blog"><a className="footer-h3">Blog</a></Link>
                         <Link href="/kontakt" className="footer-h3"><a className="footer-h3">Kontakt os</a></Link>
                     </nav>
@@ -61,9 +61,9 @@ export default function Footer()  {
                 </div>
             </div>
             <div className="footer-cert">
-                <a href="https://www.spillemyndigheden.dk/" target="_blank" rel="noreferrer" ><Image width="80px" height="50px" src={spillemyndighed} alt="Spillemyndigheden" className="footer-certs" /></a>
+                <a href="https://www.spillemyndigheden.dk/" target="_blank" rel="noreferrer noopener" ><Image width="80px" height="50px" src={spillemyndighed} alt="Spillemyndigheden" className="footer-certs" /></a>
                 <Image width="50px" height="50px" src={tlogo} alt="Tipsspillet logo" className="footer-certs" />
-                <a href="https://www.stopspillet.dk/" target="_blank" rel="noreferrer" ><Image width="100px" height="50px" src={stopspillet} alt="Stopsspillet" className="footer-certs" /></a>
+                <a href="https://www.stopspillet.dk/" target="_blank" rel="noreferrer noopener" ><Image width="100px" height="50px" src={stopspillet} alt="Stopsspillet" className="footer-certs" /></a>
             </div>
             <p className="footer-copyright">©2022 Alle rettigheder forbeholdes | Mads Kaiser | +45 23 96 58 58</p>
         </footer>

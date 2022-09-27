@@ -4,11 +4,11 @@ import Head from 'next/head'
 import Header from './layout/header';
 import Link from 'next/link'
 import axios from "axios";
-import jwtDecode from "jwt-decode";
-import Height from './components/height';
+import Spacer from './components/spacer';
 import cookie from 'js-cookie'
-import Router, { useRouter } from 'next/router'
+import { useRouter } from 'next/router'
 import { getUser } from "./services/authService";
+import Back from './components/back';
  
 function Gruppesession ({data}) {
     const router = useRouter()
@@ -23,6 +23,10 @@ function Gruppesession ({data}) {
     const [kuponer, setKuponer] = useState("Indlæser...");
     const [synlighed, setSynlighed] = useState("");
     const [startAm, setStartAm] = useState(0);
+    const [gameId, setGameId] = useState("");
+
+    const [forbrug, setForbrug] = useState(0);
+    const [winRate, setWinRate] = useState(0);
 
     useEffect(() => {
         console.log("AWS - Gruppesession:", data)
@@ -33,6 +37,10 @@ function Gruppesession ({data}) {
         setSynlighed(data.synlighed);
         setVarighed(data.varighed);
         setStartAm(data.start_amount);
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        var GetgameId = urlParams.get("game");
+        setGameId(GetgameId);
 
         function getTopN(arr, n) {
             var clone = arr.slice(0);
@@ -49,17 +57,12 @@ function Gruppesession ({data}) {
         topScorers.forEach(function(item) {
             setTableArray(tableArray => [...tableArray, item]);
         });
-        for (var u in data.players) {
-            if (data.players[u].player === getUser() ? getUser().email : "") {
-                if (data.players[u].player === getUser() ? getUser().email : "") {
-                    localStorage.setItem("notifikationer", data.players[u].info.notifikationer.length);
-                }
-            }
-        }
 
         var startValue = parseInt(data.start_amount);
         var gevinstVar = 0;
         var antalKuponer = 0;
+        var antalVundet = 0;
+        var getForbrug = 0;
         for (var i in data.players) {
             var kapital = data.players[i].info.money;
             gevinstVar = gevinstVar + (kapital - startValue);
@@ -70,8 +73,16 @@ function Gruppesession ({data}) {
             if (data.players[i].player === getUser() ? getUser().rolle : "") {
                 localStorage.setItem("notifikationer", data.players[i].info.notifikationer.length);
             }
+            for (var q in data.players[i].odds) {
+                if (data.players[i].odds[q].vundet === 2) {
+                    antalVundet = antalVundet + 1;
+                }
+                getForbrug = getForbrug + data.players[i].odds[q].indsats;
+            }
         }
+        setWinRate((antalVundet/antalKuponer)*100)
         setKuponer(finalKuponer);
+        setForbrug(getForbrug);
     }, [])
 
     function tilmeld() {
@@ -164,6 +175,18 @@ function Gruppesession ({data}) {
         document.getElementById("errorConP").innerHTML = message;
     }
 
+    function opretHandler() {
+        if (getUser()) {
+            if (getUser().rolle !== "none") {
+                window.open("/stage/opret", "_self");
+            } else {
+                window.open("/priser", "_self");
+            }
+        } else {
+            window.open("/signup", "_self");
+        }
+    }
+
     return (
         <>
             <Head>
@@ -171,109 +194,212 @@ function Gruppesession ({data}) {
                 <meta name="robots" content="noindex" />
             </Head>
             <Header />
-            <Height />
-            <div className="gruppespil-container">
-                <div className={messageType} id="errorCon">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="triangle" viewBox="0 0 16 16" id="errorIcon">
-                        <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
-                    </svg>
-                    <div className="error-text">
-                        <p className="error-container-h1" id="errorConH">Ingen væddemål</p>
-                        <p className="error-container-p" id="errorConP">Du har ikke placeret nogle væddemål. Placer ét eller flere væddemål, for at lave din kuppon.</p>
-                    </div>
-                </div>
-                <div className="gruppespil-section">
-                    <div className="gruppespil-info">
-                        <div className="gruppespil-title">
-                            <h1 className="gruppespil-h1">{gameName && <>{gameName}</>}</h1>
-                            <button className="gruppesession-btn">INVITATION</button>
-                            <p className="gruppespil-p">Du er blevet inviteret til {gameName && <>{gameName}</>}. For at tilmelde dig gruppespillet, skal du klikke på &quot;Tilmeld&quot; nedenfor.</p>
-                        </div>
-                        <div className="gruppeinvite">
-                            <div className="gruppeinvite-info">
-                                <p className="gruppeinvite-p">ANTAL SPILLERE</p>
-                                <p className="gruppeinvite-h1">{gamePlayers && <>{gamePlayers}</>}</p>
+            <Spacer />
+            <div className="gs-container">
+                <Back />
+                <div className="gs-wrapper">
+                    <div className="gruppespil-section">
+                        <h1 className="gs-h1">Tipsspillet Præmiedyst</h1>
+                        <h3 className="gs-h3"><p className="gs-h3-span">Offentlig</p><div className="gs-h3-divider"></div><p className="gs-h3-span">Pulje</p></h3>
+                        <button className="gruppeinvite-btn" onClick={() => {tilmeld()}}>Tilmeld</button>
+                        <div className="gruppespil-info" style={{paddingTop: "30px"}}>
+                            <div className="ant-container">
+                                <div className="ant-element">
+                                    <div className="ant-visual">
+                                        <div className="ant-visual-element">
+                                            <div className="ant-visual-bar" style={{height: "20%"}}></div>
+                                        </div>
+                                        <div className="ant-visual-element">
+                                            <div className="ant-visual-bar" style={{height: "35%"}}></div>
+                                        </div>
+                                        <div className="ant-visual-element">
+                                            <div className="ant-visual-bar" style={{height: "50%"}}></div>
+                                        </div>
+                                        <div className="ant-visual-element">
+                                            <div className="ant-visual-bar" style={{height: "80%"}}></div>
+                                        </div>
+                                        <div className="ant-visual-element">
+                                            <div className="ant-visual-bar" style={{height: "100%"}}></div>
+                                        </div>
+                                    </div>
+                                    <div className="ant-info">
+                                        <p className="ant-h2">Antal kuponer</p>
+                                        <div className="ant-info-price">
+                                            <p className="ant-h1">{kuponer}</p>
+                                        </div>
+                                        <p className="ant-p">Samlet antal <span className="ant-p-a">kuponer</span> fra gruppespillets <br />medlemmer</p>
+                                    </div>
+                                </div>
+                                <div className="ant-element">
+                                    <div className="ant-visual">
+                                        <div className="ant-visual-element">
+                                            <div className="ant-visual-bar-red" style={{height: "60%"}}></div>
+                                        </div>
+                                        <div className="ant-visual-element">
+                                            <div className="ant-visual-bar-red" style={{height: "70%"}}></div>
+                                        </div>
+                                        <div className="ant-visual-element">
+                                            <div className="ant-visual-bar-red" style={{height: "50%"}}></div>
+                                        </div>
+                                        <div className="ant-visual-element">
+                                            <div className="ant-visual-bar-red" style={{height: "30%"}}></div>
+                                        </div>
+                                        <div className="ant-visual-element">
+                                            <div className="ant-visual-bar-red" style={{height: "15%"}}></div>
+                                        </div>
+                                    </div>
+                                    <div className="ant-info">
+                                        <p className="ant-h2">Samlet forbrug</p>
+                                        <div className="ant-info-price">
+                                            <p className="ant-h1">{forbrug} kr.</p>
+                                        </div>
+                                        <p className="ant-p">Samlet <span className="ant-p-a">forbrug</span> fra gruppespillets <br />medlemmer</p>
+                                    </div>
+                                </div>
+                                <div className="ant-element">
+                                    <div className="ant-visual">
+                                        <div className="ant-visual-element">
+                                            <div className="ant-visual-bar" style={{height: "20%"}}></div>
+                                        </div>
+                                        <div className="ant-visual-element">
+                                            <div className="ant-visual-bar" style={{height: "35%"}}></div>
+                                        </div>
+                                        <div className="ant-visual-element">
+                                            <div className="ant-visual-bar" style={{height: "50%"}}></div>
+                                        </div>
+                                        <div className="ant-visual-element">
+                                            <div className="ant-visual-bar" style={{height: "80%"}}></div>
+                                        </div>
+                                        <div className="ant-visual-element">
+                                            <div className="ant-visual-bar" style={{height: "100%"}}></div>
+                                        </div>
+                                    </div>
+                                    <div className="ant-info">
+                                        <p className="ant-h2">Gevinst rate</p>
+                                        <div className="ant-info-price">
+                                            <p className="ant-h1">{winRate}%</p>
+                                        </div>
+                                        <p className="ant-p">Andel af <span className="ant-p-a">kuponer</span> som er vundet af <br />medlemmerne</p>
+                                    </div>
+                                </div>
                             </div>
-                            <div className="gruppeinvite-info">
-                                <p className="gruppeinvite-p">STARTBELØB</p>
-                                <p className="gruppeinvite-h1">{gameStart && <>{gameStart}</>}</p>
-                            </div>
-                            <div className="gruppeinvite-info">
-                                <p className="gruppeinvite-p">ANTAL KUPONER</p>
-                                <p className="gruppeinvite-h1">{kuponer && <>{kuponer}</>}</p>
-                            </div><br />
-                            <button className="gruppeinvite-btn" onClick={() => {tilmeld()}}>TILMELD</button>
                         </div>
-                    </div>
-                    <div className="gruppespil-info">
-                        <div className="gruppespil-title">
-                            <h1 className="gruppespil-h1">Spildeltagere</h1>
-                        </div>
-                        <div className="gruppespil-table">
-                            <div className="gruppespil-table-top">
-                                <p className="gruppespil-table-title gruppetable-navn">NAVN</p>
-                                <p className="gruppespil-table-title gruppetable-number" id="table-anv">VÆDDEMÅL</p>
-                                <p className="gruppespil-table-title gruppetable-kapital">KAPITAL</p>
-                                <p className="gruppespil-table-title gruppetable-number" id="table-av">AKTIVE VÆDDEMÅL</p>
+                        <div className="gruppespil-info">
+                            <div className="gruppespil-title">
+                                <h2 className="gs-h2">Spildeltagere</h2>
+                                <p className="gs-h4">Klik for at se mere info</p>
                             </div>
-                            <ul>
-                                {tableArray.map((item, index) => {
-                                    var profit = parseInt(item.info.money) - startAm;
-                                    var kapital = item.info.money;
-                                    var profitHtml = <></>;
-                                    if (profit >= 0) {
-                                        profitHtml = <p className="gruppespil-table-p gruppetable-kapital gruppetable-win"><svg xmlns="http://www.w3.org/2000/svg" className="gruppetable-icon-win" viewBox="0 0 16 16">
-                                        <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
-                                      </svg>{profit},00 kr.<span className="gruppetable-span">({kapital},00 kr.)</span></p>;
-                                    } else {
-                                        profitHtml = <p className="gruppespil-table-p gruppetable-kapital gruppetable-loss"><svg xmlns="http://www.w3.org/2000/svg" className="gruppetable-icon-loss" viewBox="0 0 16 16">
-                                        <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
-                                      </svg>{profit},00 kr.<span className="gruppetable-span">({kapital},00 kr.)</span></p>;
-                                    }
-
-                                    var medlemsskab = item.info.medlemsskab;
-                                    if (medlemsskab === "plus") {
-                                        medlemsskab = "gruppespil-table-medlemsskab-primary";
-                                    } else if (medlemsskab === "premium") {
-                                        medlemsskab = "gruppespil-table-medlemsskab-gold";
-                                    } else if (medlemsskab === "administrator") {
-                                        medlemsskab = "gruppespil-table-medlemsskab-special";
-                                    } else {
-                                        medlemsskab = "gruppespil-table-medlemsskab-silver";
-                                    }
-
-                                    var aktive = 0;
-                                    for (var w in item.odds) {
-                                        if (item.odds[w].calculated === "false") {
-                                            aktive = aktive + 1;
+                            <div className="tabel-top" style={{padding: "10px 5px", marginTop: "10px"}}>
+                                <div className="tabel-top-right">
+                                    <div className="tabel-ends">
+                                        <p className="tabel-h1" id="gs-pos"></p>
+                                        <p className="tabel-h1" id="gs-navn">Navn</p>
+                                    </div>
+                                </div>
+                                <div className="tabel-top-right">
+                                    <div className="tabel-ends">
+                                        <p className="tabel-h1" id="gs-kuponer">Væddemål</p>
+                                        <p className="tabel-h1" id="gs-kapital">Kapital</p>
+                                        <p className="tabel-h1" id="gs-aktive">Aktive væddemål</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="tabel-container">
+                                <ul>
+                                    {tableArray.map((item, index) => {
+                                        var profit = parseInt(item.info.money) - startAm;
+                                        var kapital = item.info.money;
+                                        var profitHtml = <></>;
+                                        if (profit >= 0) {
+                                            profitHtml = <p className="gruppespil-table-p gruppetable-kapital gruppetable-win"><svg xmlns="http://www.w3.org/2000/svg" className="gruppetable-icon-win" viewBox="0 0 16 16">
+                                            <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
+                                        </svg>{profit},00 kr.<span className="gruppetable-span">({kapital},00 kr.)</span></p>;
+                                        } else {
+                                            profitHtml = <p className="gruppespil-table-p gruppetable-kapital gruppetable-loss"><svg xmlns="http://www.w3.org/2000/svg" className="gruppetable-icon-loss" viewBox="0 0 16 16">
+                                            <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+                                        </svg>{profit},00 kr.<span className="gruppetable-span">({kapital},00 kr.)</span></p>;
                                         }
-                                    }
 
-                                    var showMe = "";
-                                    if (item.player === getUser() ? getUser().email : "") {
-                                        showMe = " gruppespil-row-active";
-                                    }
+                                        var aktive = 0;
+                                        for (var w in item.odds) {
+                                            if (item.odds[w].calculated === "false") {
+                                                aktive = aktive + 1;
+                                            }
+                                        }
 
-                                    const queryString = window.location.search;
-                                    const urlParams = new URLSearchParams(queryString);
+                                        var showMe = "";
+                                        if (item.player === getUser() ? getUser().email : "") {
+                                            showMe = " gruppespil-row-active";
+                                        }
 
-                                    return (
-                                        <li key={item.player}>
-                                            <Link href={"/stage/gruppespil/spiller?spiller="+item.player+"&game="+urlParams.get('game')}>
-                                                <div className={"gruppespil-table-row"+showMe}>
-                                                    <p className="gruppespil-table-place gruppetable-place">{index + 1}</p>
-                                                    <div className={medlemsskab}></div>
-                                                    <p className="gruppespil-table-h1 gruppetable-el-navn">{item.username && <>{item.username}</>}</p>
-                                                    <p className="gruppespil-table-p gruppetable-number" id="table-anv-data">{item.odds.length}</p>
-                                                    {profitHtml && <>{profitHtml}</>}
-                                                    <p className="gruppespil-table-p gruppetable-number" id="table-av-data">{aktive && <>{aktive}</>}</p>
-                                                </div>
-                                            </Link>
-                                        </li>
-                                    );
-                                })}
-                            </ul>
+                                        const queryString = window.location.search;
+                                        const urlParams = new URLSearchParams(queryString);
+
+                                        return (
+                                            <li key={item.player}>
+                                                <Link href={"/stage/gruppespil/spiller?spiller="+item.player+"&game="+urlParams.get('game')}>
+                                                    <div className={"tabel-element"} style={{borderLeft: "4px solid var(--primary)", padding: "10px 1px"}}>
+                                                        <div className="tabel-top-right">
+                                                            <div className="tabel-ends">
+                                                                <p className="tabel-p" id="gs-pos" style={{textAlign: "center"}}>{index + 1}</p>
+                                                                <p className="tabel-h1" id="gs-navn">{item.username && <>{item.username}</>}</p>
+                                                            </div>
+                                                        </div>
+                                                        <div className="tabel-top-right">
+                                                            <div className="tabel-ends">
+                                                                <p className="tabel-p" id="gs-kuponer">{item.odds.length}</p>
+                                                                <p className="tabel-p" id="gs-kapital">{profitHtml && <>{profitHtml}</>}</p>
+                                                                <p className="tabel-p" id="gs-aktive">{aktive && <>{aktive}</>}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </Link>
+                                            </li>
+                                            );
+                                        }
+                                    )}
+                                </ul>
+                            </div>
                         </div>
+                        <div className="gruppespil-info">
+                            <div className="gruppespil-title">
+                                <h2 className="gs-h2">Inviter venner</h2>
+                                <p className="gs-h4">Klik for at kopiere</p>
+                            </div>
+                            <div className="inv-container">
+                                <div className="inv-element-a" onClick={() => {navigator.clipboard.writeText("https://www.tipsspillet.dk/gruppesession?game=" + activeGame + "&type=invite"); document.getElementById("copied").classList.remove("display-not"); setTimeout(function (){
+                                    document.getElementById("copied").classList.add("display-not")
+                                }, 1000);}}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="var(--primary)" viewBox="0 0 16 16">
+                                        <path d="M4.715 6.542 3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.002 1.002 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z"/>
+                                        <path d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 1 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 1 0-4.243-4.243L6.586 4.672z"/>
+                                    </svg>
+                                    <p className="inv-p-a">{gameId}</p>
+                                    <div className="invite-copied display-not" id="copied">Kopieret</div>
+                                </div>
+                                <div className="inv-element">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="var(--softBlack)" viewBox="0 0 16 16">
+                                        <path d="M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5z"/>
+                                    </svg>
+                                    <p className="inv-p">Del invitationslink</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="gruppespil-section" style={{border: "0px", marginTop: "20px"}}>
+                        <h1 className="gs-h1">Lav dit eget gruppespil</h1>
+                        <h3 className="gs-h3"><p className="gs-h3-span">Deltag gratis</p><div className="gs-h3-divider"></div><p className="gs-h3-span">Opret gruppespil med Plus eller Premium</p></h3>
+                        <p className="find-h1" style={{paddingTop: "15px"}}>Opret et gruppespil</p>
+                            <p className="find-p">Opret dit eget gruppespil, og inviter familie og venner til kamp.</p>
+                        <button className="find-btn" onClick={() => {opretHandler()}}>Opret gruppespil</button>
+                        <div className="td-divider">
+                            <div className="td-line"></div>
+                                <p className="td-or">Eller</p>
+                            <div className="td-line"></div>
+                        </div>
+                        <p className="find-h1">Find nye gruppespil</p>
+                        <p className="find-p">Tilmeld dig offentlige eller private gruppespil, og spil mod familie og venner.</p>
+                        <Link href="/gruppespil"><button className="find-btn">Find gruppespil</button></Link>
                     </div>
                 </div>
             </div>
