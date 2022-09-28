@@ -1740,11 +1740,15 @@ function StageForside ({gruppespil_data, spiller_data}) {
                                                             }
                                                             <div className="stage-kampe-hold-div">
                                                                 <div className="stage-kampe-team">
-                                                                    <Image width="18px" height="18px" alt="." src={item.localTeam.data.logo_path} className="stage-img" />
+                                                                    <div className="stage-img">
+                                                                        <Image layout="fill" alt="." src={item.localTeam.data.logo_path} />
+                                                                    </div>
                                                                     <p className={teamNameLocal}>{item.localTeam.data.name}</p>
                                                                 </div>
                                                                 <div className="stage-kampe-team">
-                                                                    <Image width="18px" height="18px" alt="." src={item.visitorTeam.data.logo_path} className="stage-img" />
+                                                                    <div className="stage-img">
+                                                                        <Image layout="fill" alt="." src={item.visitorTeam.data.logo_path} />
+                                                                    </div>
                                                                     <p className={teamNameVisitor}>{item.visitorTeam.data.name}</p>
                                                                 </div>
                                                             </div>
@@ -1905,11 +1909,15 @@ function StageForside ({gruppespil_data, spiller_data}) {
                                                             }
                                                             <div className="stage-kampe-hold-div">
                                                                 <div className="stage-kampe-team">
-                                                                    <Image width="18px" height="18px" alt="." src={item.localTeam.data.logo_path} className="stage-img" />
+                                                                    <div className="stage-img">
+                                                                        <Image layout="fill" alt="." src={item.localTeam.data.logo_path} />
+                                                                    </div>
                                                                     <p className={teamNameLocal}>{item.localTeam.data.name}</p>
                                                                 </div>
                                                                 <div className="stage-kampe-team">
-                                                                    <Image width="18px" height="18px" alt="." src={item.visitorTeam.data.logo_path} className="stage-img" />
+                                                                    <div className="stage-img">
+                                                                        <Image layout="fill" alt="." src={item.visitorTeam.data.logo_path} />
+                                                                    </div>
                                                                     <p className={teamNameVisitor}>{item.visitorTeam.data.name}</p>
                                                                 </div>
                                                             </div>
@@ -2075,11 +2083,15 @@ function StageForside ({gruppespil_data, spiller_data}) {
                                                             }
                                                             <div className="stage-kampe-hold-div">
                                                                 <div className="stage-kampe-team">
-                                                                    <Image width="18px" height="18px" alt="." src={item.localTeam.data.logo_path} className="stage-img" />
+                                                                    <div className="stage-img">
+                                                                        <Image layout="fill" alt="." src={item.localTeam.data.logo_path} />
+                                                                    </div>
                                                                     <p className={teamNameLocal}>{item.localTeam.data.name}</p>
                                                                 </div>
                                                                 <div className="stage-kampe-team">
-                                                                    <Image width="18px" height="18px" alt="." src={item.visitorTeam.data.logo_path} className="stage-img" />
+                                                                    <div className="stage-img">
+                                                                        <Image layout="fill" alt="." src={item.visitorTeam.data.logo_path} />
+                                                                    </div>
                                                                     <p className={teamNameVisitor}>{item.visitorTeam.data.name}</p>
                                                                 </div>
                                                             </div>
@@ -2400,7 +2412,9 @@ function StageForside ({gruppespil_data, spiller_data}) {
                                                                 <div className="stage-kampe-team2">
                                                                     <div className="stage-kampe-teams-div">
                                                                         <div className="stage-kampe-team">
-                                                                            <Image width="22px" height="22px" alt="." src={item.image} className="stage-img" />
+                                                                            <div className="stage-img">
+                                                                                <Image width="22px" height="22px" alt="." src={item.image} className="stage-img" />
+                                                                            </div>
                                                                             <div className="stage-teams-element">
                                                                                 <p className="stage-teams-h1">{item.name}</p>
                                                                                 <p className="stage-teams-h2">{item.liga}</p>
@@ -2423,7 +2437,9 @@ function StageForside ({gruppespil_data, spiller_data}) {
                                                                 <div className="stage-kampe-team2">
                                                                     <div className="stage-kampe-teams-div">
                                                                         <div className="stage-kampe-team">
-                                                                            <Image width="22px" height="22px" alt="." src={item.image} className="stage-img" />
+                                                                            <div className="stage-img">
+                                                                                <Image width="22px" height="22px" alt="." src={item.image} />
+                                                                            </div>
                                                                             <div className="stage-teams-element">
                                                                                 <p className="stage-teams-h1">{item.name}</p>
                                                                                 <p className="stage-teams-h2">{item.liga}</p>
@@ -2465,7 +2481,9 @@ function StageForside ({gruppespil_data, spiller_data}) {
                                                     <div className="stage-kampe-team2">
                                                         <div className="stage-kampe-teams-div">
                                                             <div className="stage-kampe-team">
-                                                                <Image width="22px" height="22px" alt="." src={team.img} className="stage-img" />
+                                                                <div className="stage-img">
+                                                                    <Image width="22px" height="22px" alt="." src={team.img} />
+                                                                </div>
                                                                 <div className="stage-teams-element">
                                                                     <p className="stage-teams-h1">{team.name}</p>
                                                                     <p className="stage-teams-h2">{team.liga}</p>

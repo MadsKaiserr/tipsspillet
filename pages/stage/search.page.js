@@ -1,9 +1,6 @@
 import { useState, useEffect } from 'react';
-import axios from "axios";
-import Link from 'next/link'
 import Head from 'next/head'
 import Image from 'next/image'
-import { getKupon, getString } from "../services/algo.js";
 import StageHeader from '../layout/stageheader';
 import Height from '../components/height';
 import { useRouter } from 'next/router';
@@ -14,25 +11,7 @@ function Search () {
 
     // eslint-disable-next-line
     const [items, setItems] = useState(getSearch());
-    const [search, setSearch] = useState([]);
     const [searchStr, setSearchStr] = useState("");
-
-    useEffect(() => {
-        if (searchStr === "") {
-            setSearch(items);
-        } else {
-            var dupli = items;
-            var newDupli = [];
-            for (var y in dupli) {
-                if (dupli[y].klub.includes(searchStr)) {
-                    newDupli.push(dupli[y]);
-                } else if (dupli[y].land.includes(searchStr)) {
-                    newDupli.push(dupli[y]);
-                }
-            }
-            setSearch(newDupli);
-        }
-    }, [searchStr])
 
     useEffect(() => {
         if (document.getElementById("search-input")) {
@@ -48,7 +27,7 @@ function Search () {
             "name": "Arsenal",
             "logo_path": "https://cdn.sportmonks.com/images/soccer/teams/19/19.png",
             "type": "liga",
-            "url": "/stage/league?id=19734",
+            "url": "/stage/team?team=19",
             "land": "England",
             "season_id": 19734,
             "id": 19
@@ -60,7 +39,7 @@ function Search () {
             "name": "Chelsea",
             "logo_path": "https://cdn.sportmonks.com/images/soccer/teams/18/18.png",
             "type": "liga",
-            "url": "/stage/league?id=19734",
+            "url": "/stage/team?team=18",
             "land": "England",
             "season_id": 19734,
             "id": 18
@@ -72,7 +51,7 @@ function Search () {
             "name": "Liverpool",
             "logo_path": "https://cdn.sportmonks.com/images/soccer/teams/8/8.png",
             "type": "liga",
-            "url": "/stage/league?id=19734",
+            "url": "/stage/team?team=8",
             "land": "England",
             "season_id": 19734,
             "id": 8
@@ -84,7 +63,7 @@ function Search () {
             "name": "Brøndby",
             "logo_path": "https://cdn.sportmonks.com/images/soccer/teams/5/293.png",
             "type": "liga",
-            "url": "/stage/league?id=19686",
+            "url": "/stage/team?team=293",
             "land": "Denmark",
             "season_id": 19686,
             "id": 293
@@ -96,7 +75,7 @@ function Search () {
             "name": "København",
             "logo_path": "https://cdn.sportmonks.com/images/soccer/teams/21/85.png",
             "type": "liga",
-            "url": "/stage/league?id=19686",
+            "url": "/stage/team?team=85",
             "land": "Denmark",
             "season_id": 19686,
             "id": 85
@@ -108,7 +87,7 @@ function Search () {
             "name": "Manchester United",
             "logo_path": "https://cdn.sportmonks.com/images/soccer/teams/14/14.png",
             "type": "liga",
-            "url": "/stage/league?id=19734",
+            "url": "/stage/team?team=14",
             "land": "England",
             "season_id": 19734,
             "id": 14
@@ -120,7 +99,7 @@ function Search () {
             "name": "Denmark",
             "logo_path": "https://cdn.sportmonks.com/images/soccer/teams/23/18583.png",
             "type": "landshold",
-            "url": "/stage/team?team=19273",
+            "url": "/stage/team?team=18583",
             "land": "Denmark",
             "season_id": 19273,
             "id": 18583
@@ -137,26 +116,43 @@ function Search () {
             <Height />
             <div className="nav-hits">
                 <div className="search-el">
-                    <input type="text" placeholder="Søg i klubber og ligaer" id="search-input" className="search-input" onChange={event => setSearchStr(event.target.value)} />
+                    <input type="text" autoComplete="off" placeholder="Søg i klubber og ligaer" id="search-input" className="search-input" onChange={event => setSearchStr(event.target.value)} />
                 </div>
                 <div className="search-hits">
                     <ul id="alleG" style={{width: "100%"}}>
-                        {search.map((item) => {
-                            return (
-                                <li key={item.name + item.url} className="display" style={{width: "100%"}}>
-                                    <div className="hit-elem" style={{width: "100%"}} onClick={() => router.push(item.url)}>
-                                        <div className="hit-con">
-                                            <Image layout="fill" alt="." src={item.logo_path} className="hit-img" />
+                        {items.map((item) => {
+                            if (searchStr === "") {
+                                return (
+                                    <li key={item.name + item.url} className="display" style={{width: "100%"}}>
+                                        <div className="hit-elem" style={{width: "100%"}} onClick={() => router.push(item.url)}>
+                                            <div className="hit-con">
+                                                <Image layout="fill" alt="." src={item.logo_path} className="hit-img" />
+                                            </div>
+                                            <div className="hit-info">
+                                                <p className="hit-h1">{item.name}</p>
+                                                <p className="hit-h2">{item.land}</p>
+                                            </div>
                                         </div>
-                                        <div className="hit-info">
-                                            <p className="hit-h1">{item.name}</p>
-                                            <p className="hit-h2">{item.land}</p>
-                                        </div>
-                                    </div>
-                                </li>
+                                    </li>
                                 );
+                            } else {
+                                if ((item.name.toLowerCase()).includes(searchStr.toLowerCase())) {
+                                    return (
+                                        <li key={item.name + item.url} className="display" style={{width: "100%"}}>
+                                            <div className="hit-elem" style={{width: "100%"}} onClick={() => router.push(item.url)}>
+                                                <div className="hit-con">
+                                                    <Image layout="fill" alt="." src={item.logo_path} className="hit-img" />
+                                                </div>
+                                                <div className="hit-info">
+                                                    <p className="hit-h1">{item.name}</p>
+                                                    <p className="hit-h2">{item.land}</p>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    );
+                                }
                             }
-                        )}
+                        })}
                     </ul>
                 </div>
             </div>

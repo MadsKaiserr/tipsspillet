@@ -2337,10 +2337,17 @@ gap: 8px;
   .set-h1 {
     font-family: Inter;
     font-weight: 500;
-    font-size: 28px;
-    display: inline-flex;
-    padding-bottom: 10px;
+    font-size: 24px;
     color: #333;
+  }
+
+  .set-h2 {
+    font-family: Inter;
+    font-weight: 400;
+    font-size: 13px;
+    display: inline-flex;
+    color: var(--softBlack);
+    opacity: 0.7;
   }
 
   .set-section {

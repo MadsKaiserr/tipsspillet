@@ -537,6 +537,8 @@
     padding: 5px 15px;
     color: var(--black);
     opacity: 0.8;
+    border-bottom: 1px solid #ebebeb;
+    border-top: 1px solid #ebebeb;
   }
   
   .kupon-bottom {
@@ -1999,7 +2001,9 @@
   
   .stage-img {
     max-width: 18px;
-    max-height: 18px;
+    width: 18px;
+    height: 100%;
+    position: relative;
   }
   
   .stage-indhold-down {

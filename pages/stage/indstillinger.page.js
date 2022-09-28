@@ -1,14 +1,11 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
-import { Router, useRouter } from 'next/router'
-import Link from 'next/link'
+import FacebookLogin from 'react-facebook-login';
 import Head from 'next/head'
-import Image from 'next/image'
 import StageHeader from '../layout/stageheader';
 import axios from "axios";
-import Bin from '../img/bin.png';
+import cookie from 'js-cookie'
 import Height from '../components/heightLight';
-import Heart from '../img/heart.png';
  
 function StageIndstillinger ({data}) {
 
@@ -16,8 +13,7 @@ function StageIndstillinger ({data}) {
     const [usernameField, setUsernameField] = useState("Indlæser...");
     const [emailField, setEmailField] = useState("Indlæser...");
     const [oprettelseText, setOprettelseText] = useState("Indlæser...");
-    const [fornavn, setFornavn] = useState("Indlæser...")
-    const [efternavn, setEfternavn] = useState("Indlæser...")
+    const [navn, setNavn] = useState("Indlæser...")
     const [facebook, setFacebook] = useState(false);
     const [favorites, setFavorites] = useState([]);
 
@@ -29,8 +25,7 @@ function StageIndstillinger ({data}) {
         setUser(JSON.stringify(data));
         setUsernameField(data["username"]);
         setEmailField(data["email"]);
-        setFornavn(data["fornavn"]);
-        setEfternavn(data["efternavn"]);
+        setNavn(data["navn"]);
         if (data.type === "facebook") {
             setFacebook(true);
         }
@@ -85,6 +80,52 @@ function StageIndstillinger ({data}) {
         }
     }
 
+    const fbResponse = (event) => {
+        console.log(event);
+        // cookie.set("fbLogin", JSON.stringify(event))
+
+        // const requestConfig = {
+        //     headers: {
+        //         "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
+        //     }
+        // }
+
+        // const requestBody = {
+        //     email: event.email,
+        //     type: "facebook"
+        // }
+
+        // axios.post(loginURL, requestBody, requestConfig).then(response => {
+        //     console.log("AWS - Login:", response);
+        //     setUserSession(response.data.user, response.data.token);
+        //     if (response.data.user.type === "facebook") {
+        //         if (!response.data.user.fb_logo_id) {
+        //             const loginURL2 = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/user";
+        //             const requestConfig2 = {
+        //                 headers: {
+        //                     "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
+        //                 }
+        //             }
+            
+        //             const requestBody2 = {
+        //                 fb_logo_id: event.id,
+        //                 name: event.name,
+        //                 email: event.email
+        //             }
+            
+        //             axios.patch(loginURL2, requestBody2, requestConfig2).then(response => {
+        //                 console.log("AWS - Update user:", response);
+        //             }).catch(error => {
+        //                 console.log(error);
+        //             })
+        //         }
+        //     }
+        //     window.open("/stage", "_self");
+        // }).catch(error => {
+        //     console.log(error);
+        // })
+    }
+
     return (
         <>
             <Head>
@@ -94,126 +135,58 @@ function StageIndstillinger ({data}) {
             <StageHeader />
             <Height />
             <div className="set">
-                <h1 className="set-h1">Indstillinger</h1>
-                <div className="set-nav">
-                    <p className="set-nav-element-active" id="personlig" onClick={() => setNav("personlig")}>Personlig</p>
-                    <p className="set-nav-element" id="notifikationer" onClick={() => setNav("notifikationer")}>Notifikationer</p>
-                    <p className="set-nav-element" id="konto" onClick={() => setNav("konto")}>Konto</p>
-                    <p className="set-nav-element" id="abonnement" onClick={() => setNav("abonnement")}>Abonnement</p>
-                </div>
                 <div className="set-wrapper">
-                    <div className="set-element" id="personlig-container">
-                        <div className="set-section">
-                            <div className="set-section-left">
-                                <p className="set-section-h1">Hold og ligaer du følger</p>
-                                <p className="set-section-h2">Find hold over hele verden, og udvælg dine favoritter. Hold du følger vil komme op forrest i kampprogrammet, og ligaer ligeså.</p>
-                            </div>
-                            <div className="set-section-right">
-                                <ul className="set-hits">
-                                    {favorites.map((item) => {
-                                        return (
-                                            <li key={item.name + item.image} className="set-hit">
-                                                <div className="setup-hit-wrapper">
-                                                    <Image width="25px" height="25px" src={item.image} className="setup-img" />
-                                                    <div className="setup-icon-div">
-                                                        <Image width="12px" height="12px" src={Heart} />
-                                                    </div>
-                                                    <p className="setup-p">{item.name}</p>
-                                                </div>
-                                            </li>
-                                        );
-                                    })}
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="set-element display-not" id="notifikationer-container">
-                        <div className="set-section">
-                            <div className="set-section-left">
-                                <p className="set-section-h1">Notifikationer i gruppespil</p>
-                                <p className="set-section-h2">Vælg hvad der skal blive vist under siden &quot;Notifikationer&quot;.</p>
-                            </div>
-                            <div className="set-section-right">
-                                <ul className="set-noti">
-                                    <li className="set-noti-li">
-                                        <p className="set-noti-p">Ved indskydelse i interval</p>
-                                        <div className="set-noti-li-input">
-                                            <div className="set-noti-li-input-btn-active">Ja</div>
-                                            <div className="set-noti-li-input-btn">Nej</div>
-                                        </div>
-                                    </li>
-                                    <li className="set-noti-li">
-                                        <p className="set-noti-p">Ved oprettelse af væddemål</p>
-                                        <div className="set-noti-li-input">
-                                            <div className="set-noti-li-input-btn-active">Ja</div>
-                                            <div className="set-noti-li-input-btn">Nej</div>
-                                        </div>
-                                    </li>
-                                    <li className="set-noti-li" style={{border: "0px"}}>
-                                        <p className="set-noti-p">Ved vundet og tabte væddemål</p>
-                                        <div className="set-noti-li-input">
-                                            <div className="set-noti-li-input-btn-active">Ja</div>
-                                            <div className="set-noti-li-input-btn">Nej</div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="set-element display-not" id="konto-container">
-                    </div>
-                    <div className="set-element display-not" id="abonnement-container">
-                        <div className="set-section">
-                            <div className="set-section-left" style={{width: "100%"}}>
-                                <p className="set-section-h1">Nuværende abonnement</p>
-                                <p className="set-section-h2">Administrer dit abonnement, afbryd, sæt på pause eller opret nyt.</p>
-                                <div className="set-payment">
-                                    <div className="set-payment-element">
-                                        <div className="set-payment-top">
-                                            <div className="set-payment-top-left">
-                                                <p className="set-payment-h1">Basic version</p>
-                                                <p className="set-payment-h2">For evigt</p>
-                                            </div>
-                                            <div className="set-prices">
-                                                <p className="set-element-prisp" style={{marginTop: "6.5px"}}>kr</p>
-                                                <p className="set-element-pris">0</p>
-                                                <p className="set-element-prisp" style={{fontSize: "11px", width: "100%", opacity: "0.9", marginTop: "11px"}}>/ for evigt</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="set-payment-element">
-                                        <div className="set-payment-top">
-                                            <div className="set-payment-top-left">
-                                                <p className="set-payment-h1">Plus version</p>
-                                                <div className="plan-spar" style={{marginTop: "40px", marginRight: "20px"}}>Spar 50%</div>
-                                                <p className="set-payment-h2">Om måneden</p>
-                                            </div>
-                                            <div className="set-prices">
-                                                <p className="set-element-prisp" style={{marginTop: "6.5px"}}>kr</p>
-                                                <p className="set-element-pris">19</p>
-                                                <p className="set-element-prisp" style={{fontSize: "11px", width: "100%", opacity: "0.9", marginTop: "11px"}}>/ måned</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="set-payment-element">
-                                        <div className="set-payment-top">
-                                            <div className="set-payment-top-left">
-                                                <p className="set-payment-h1">Premium version</p>
-                                                <div className="plan-spar" style={{marginTop: "40px", marginRight: "20px"}}>Spar 50%</div>
-                                                <p className="set-payment-h2">Om måneden</p>
-                                            </div>
-                                            <div className="set-prices">
-                                                <p className="set-element-prisp" style={{marginTop: "6.5px"}}>kr</p>
-                                                <p className="set-element-pris">29</p>
-                                                <p className="set-element-prisp" style={{fontSize: "11px", width: "100%", opacity: "0.9", marginTop: "11px"}}>/ måned</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <Link href="/priser"><p className="faq-btn" style={{maxWidth: "200px", marginTop: "20px", animation: "none", opacity: "1"}}>Opgrader abonnement</p></Link>
-                            </div>
-                        </div>
-                    </div>
+                    <h1 className="set-h1">Min profil</h1>
+                    <h2 className="set-h2">Administrer din profil og konto</h2>
+                    <p className="login-form-p" style={{paddingTop: "20px"}}>Fulde navn</p>
+                    <input 
+                        value={navn}
+                        onChange={event => setNavn(event.target.value)} 
+                        type="text" 
+                        className="cg-input" 
+                    />
+                    <p className="login-form-p">Brugernavn</p>
+                    <input 
+                        value={usernameField}
+                        onChange={event => setUsernameField(event.target.value)} 
+                        type="text" 
+                        className="cg-input" 
+                    />
+                    <p className="login-form-p">Email</p>
+                    <input 
+                        value={emailField}
+                        onChange={event => setEmailField(event.target.value)} 
+                        type="email" 
+                        className="cg-input" 
+                    />
+                    <p className="login-form-p">Kodeord</p>
+                    <input 
+                        value={"********"}
+                        type="password" 
+                        className="cg-input" 
+                        disabled
+                    /><br />
+                    <p className="login-form-p">Oprettet: <span style={{fontWeight: "300"}}>{oprettelseText}</span></p>
+                    <button className="find-btn" style={{background: "var(--primary)"}}>Opdater profil</button>
+                </div>
+                <div className="set-wrapper" style={{paddingTop: "60px"}}>
+                    <h1 className="set-h1">Indstillinger</h1>
+                    <h2 className="set-h2">Notifikationer, konto mm.</h2>
+                    {/* <FacebookLogin
+                            appId="1252645385555497"
+                            autoLoad={false}
+                            fields="name,email"
+                            callback={fbResponse}
+                            disableMobileRedirect={true}
+                            version="2.5"
+                            textButton="Log ind med Facebook"
+                            redirectUri="https://www.tipsspillet.dk/"
+                            cssClass="facebook-button-class-active"
+                            icon={<svg xmlns="http://www.w3.org/2000/svg" className="facebook-icon" style={{fill: "#fff"}} viewBox="0 0 16 16">
+                                <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/>
+                                </svg>}
+                    /> */}
+                    <br /><button className="find-btn" style={{background: "var(--red)"}}>Slet profil</button>
                 </div>
             </div>
         </>

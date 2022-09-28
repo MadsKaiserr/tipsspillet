@@ -1012,19 +1012,39 @@ function StageGruppespil ({data}) {
                         </div>
                         <div className="gruppespil-info">
                             <div className="gruppespil-title">
-                                <h1 className="gruppespil-h1">Spildeltagere</h1>
+                                <h2 className="gs-h2">Spildeltagere</h2>
+                                <p className="gs-h4">Klik for at se mere info</p>
                             </div>
-                            <div className="spil-loader display" id="stage-loader2"></div>
-                            <div className="gr-table">
-                                <div className="gr-table-modifier">
-                                    <p className="gr-table-h1" id="gr-pos">Pos</p>
-                                    <p className="gr-table-h1" id="gr-navn">Navn</p>
-                                    <p className="gr-table-h1" id="gr-kapital">Kapital</p>
+                            <div className="tabel-top" style={{padding: "10px 5px", marginTop: "10px"}}>
+                                <div className="tabel-top-right">
+                                    <div className="tabel-ends">
+                                        <p className="tabel-h1" id="gs-pos"></p>
+                                        <p className="tabel-h1" id="gs-navn">Navn</p>
+                                    </div>
                                 </div>
-                                <ul className="gr-table-data">
+                                <div className="tabel-top-right">
+                                    <div className="tabel-ends">
+                                        <p className="tabel-h1" id="gs-kuponer">Væddemål</p>
+                                        <p className="tabel-h1" id="gs-kapital">Kapital</p>
+                                        <p className="tabel-h1" id="gs-aktive">Aktive væddemål</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="tabel-container">
+                                <ul>
                                     {tableArray.map((item, index) => {
                                         var profit = parseInt(item.info.money) - startAm;
                                         var kapital = item.info.money;
+                                        var profitHtml = <></>;
+                                        if (profit >= 0) {
+                                            profitHtml = <p className="gruppespil-table-p gruppetable-kapital gruppetable-win"><svg xmlns="http://www.w3.org/2000/svg" className="gruppetable-icon-win" viewBox="0 0 16 16">
+                                            <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
+                                        </svg>{profit},00 kr.<span className="gruppetable-span">({kapital},00 kr.)</span></p>;
+                                        } else {
+                                            profitHtml = <p className="gruppespil-table-p gruppetable-kapital gruppetable-loss"><svg xmlns="http://www.w3.org/2000/svg" className="gruppetable-icon-loss" viewBox="0 0 16 16">
+                                            <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+                                        </svg>{profit},00 kr.<span className="gruppetable-span">({kapital},00 kr.)</span></p>;
+                                        }
 
                                         var aktive = 0;
                                         for (var w in item.odds) {
@@ -1034,34 +1054,34 @@ function StageGruppespil ({data}) {
                                         }
 
                                         var showMe = "";
-                                        if (item.player === getUser().email) {
+                                        if (item.player === getUser() ? getUser().email : "") {
                                             showMe = " gruppespil-row-active";
                                         }
 
-                                        var profitHtml = <></>;
-                                        if (profit >= 0) {
-                                            profitHtml = <p className="gr-table-p gr-table-green" id="gr-kapital"><svg xmlns="http://www.w3.org/2000/svg" className="gruppetable-icon-win" viewBox="0 0 16 16">
-                                            <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
-                                        </svg>{profit},00 kr.<span className="gruppetable-span">({kapital},00 kr.)</span></p>;
-                                        } else {
-                                            profitHtml = <p className="gr-table-p gr-table-red" id="gr-kapital"><svg xmlns="http://www.w3.org/2000/svg" className="gruppetable-icon-loss" viewBox="0 0 16 16">
-                                            <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
-                                        </svg>{profit},00 kr.<span className="gruppetable-span">({kapital},00 kr.)</span></p>;
-                                        }
+                                        const queryString = window.location.search;
+                                        const urlParams = new URLSearchParams(queryString);
 
-                                        if (!document.getElementById(item.player)) {
-                                            return (
-                                                <li key={item.player} className={"gr-table-element" + showMe} id={item.player}>
-                                                    <Link href={"/stage/gruppespil/spiller?spiller="+item.player+"&game="+activeGame}>
-                                                        <div className="gr-table-content">
-                                                            <p className="gr-table-h2" id="gr-pos">{index + 1}</p>
-                                                            <p className="gr-table-h2" id="gr-navn">{item.username}</p>
-                                                            {profitHtml}
+                                        return (
+                                            <li key={item.player}>
+                                                <Link href={"/stage/gruppespil/spiller?spiller="+item.player+"&game="+activeGame}>
+                                                    <div className={"tabel-element"} style={{borderLeft: "4px solid var(--primary)", padding: "10px 1px"}}>
+                                                        <div className="tabel-top-right">
+                                                            <div className="tabel-ends">
+                                                                <p className="tabel-p" id="gs-pos" style={{textAlign: "center"}}>{index + 1}</p>
+                                                                <p className="tabel-h1" id="gs-navn">{item.username && <>{item.username}</>}</p>
+                                                            </div>
                                                         </div>
-                                                    </Link>
-                                                </li>
+                                                        <div className="tabel-top-right">
+                                                            <div className="tabel-ends">
+                                                                <p className="tabel-p" id="gs-kuponer">{item.odds.length}</p>
+                                                                <p className="tabel-p" id="gs-kapital">{profitHtml && <>{profitHtml}</>}</p>
+                                                                <p className="tabel-p" id="gs-aktive">{aktive && <>{aktive}</>}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </Link>
+                                            </li>
                                             );
-                                        }
                                         }
                                     )}
                                 </ul>
@@ -1105,6 +1125,21 @@ function StageGruppespil ({data}) {
                                 <div className="info-figure2"></div>
                             </div>
                 </div>}
+                <div className="gruppespil-section" style={{border: "0px", marginTop: "20px"}}>
+                    <h1 className="gs-h1">Lav dit eget gruppespil</h1>
+                    <h3 className="gs-h3"><p className="gs-h3-span">Deltag gratis</p><div className="gs-h3-divider"></div><p className="gs-h3-span">Opret gruppespil med Plus eller Premium</p></h3>
+                    <p className="find-h1" style={{paddingTop: "15px"}}>Opret et gruppespil</p>
+                        <p className="find-p">Opret dit eget gruppespil, og inviter familie og venner til kamp.</p>
+                    <button className="find-btn" onClick={() => {opretHandler()}}>Opret gruppespil</button>
+                    <div className="td-divider">
+                        <div className="td-line"></div>
+                            <p className="td-or">Eller</p>
+                        <div className="td-line"></div>
+                    </div>
+                    <p className="find-h1">Find nye gruppespil</p>
+                    <p className="find-p">Tilmeld dig offentlige eller private gruppespil, og spil mod familie og venner.</p>
+                    <Link href="/gruppespil"><button className="find-btn">Find gruppespil</button></Link>
+                </div>
             </div>
         </>
     )

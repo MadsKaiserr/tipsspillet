@@ -4,7 +4,6 @@ import axios from "axios";
 import { getKupon, getString } from "../../services/algo.js";
 import Link from 'next/link'
 import Head from 'next/head'
-import Image from 'next/image'
 import StageHeader from '../../layout/stageheader';
 import Height from '../../components/height';
 import Back from "../../components/back.js";

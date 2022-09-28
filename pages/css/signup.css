@@ -287,6 +287,31 @@
     opacity: 0.5;
     padding: 10px 0px;
   }
+
+  .facebook-button-class-active {
+    width: 50%;
+    padding: 12px 0px;
+    border-radius: 4px;
+    background-color: var(--primary);
+    text-align: center;
+    border: 0px;
+    cursor: pointer;
+    color: #fff;
+    font-family: Inter;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-weight: 500;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transform: 0.2s !important;
+  }
+
+  .facebook-button-class:hover {
+    background-color: var(--primaryAccent);
+  }
   
   .facebook-button-class {
     width: 100%;
@@ -619,6 +644,11 @@
 
   .cg-form span {
     width: 100%;
+  }
+
+  .set .cg-input {
+    padding: 12px 15px !important;
+    width: 50% !important;
   }
 
   .cg-input {
