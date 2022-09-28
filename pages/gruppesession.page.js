@@ -28,6 +28,16 @@ function Gruppesession ({data}) {
     const [forbrug, setForbrug] = useState(0);
     const [winRate, setWinRate] = useState(0);
 
+    function getPlayer(player) {
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        if (cookie.get("auth")) {
+            window.open("/stage/gruppespil/spiller?spiller="+player+"&game="+urlParams.get('game'), "_self")
+        } else {
+            window.open("/signup", "_self")
+        }
+    }
+
     useEffect(() => {
         console.log("AWS - Gruppesession:", data)
         setActiveGame(data);
@@ -198,10 +208,48 @@ function Gruppesession ({data}) {
             <div className="gs-container">
                 <Back />
                 <div className="gs-wrapper">
-                    <div className="gruppespil-section">
-                        <h1 className="gs-h1">Tipsspillet Præmiedyst</h1>
-                        <h3 className="gs-h3"><p className="gs-h3-span">Offentlig</p><div className="gs-h3-divider"></div><p className="gs-h3-span">Pulje</p></h3>
-                        <button className="gruppeinvite-btn" onClick={() => {tilmeld()}}>Tilmeld</button>
+                    {synlighed === "dyst" && <>
+                        <div className="gruppespil-section" style={{justifyContent: "center", alignItems: "center", justifyContent: "center", textAlign: "center"}}>
+                            <h1 className="gs-main-h1">{gameName}</h1>
+                            <div className="gruppespil-info-info" style={{display: "flex", alignItems: "center", justifyContent: "center", gap: "30px"}}>
+                                <div className="gruppespil-info-element" style={{width: "100px", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", margin: "0px"}}>
+                                    <p className="gruppespil-info-element-p">Startbeløb</p>
+                                    <p className="gruppespil-info-element-h1">{gameStart}</p>
+                                </div>
+                                <div className="gruppespil-info-element" style={{width: "100px", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", margin: "0px"}}>
+                                    <p className="gruppespil-info-element-p">Spillere</p>
+                                    <p className="gruppespil-info-element-h1">{gamePlayers}</p>
+                                </div>
+                                <div className="gruppespil-info-element" style={{width: "100px", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", margin: "0px"}}>
+                                    <p className="gruppespil-info-element-p">Antal Kuponer</p>
+                                    <p className="gruppespil-info-element-h1">{kuponer}</p>
+                                </div>
+                            </div>
+                            <button className="gruppeinvite-btn" onClick={() => {tilmeld()}}>Tilmeld</button>
+                        </div>
+                        <div className="gruppespil-section" style={{border: "0px", marginTop: "20px", justifyContent: "center", alignItems: "center", justifyContent: "center", textAlign: "center"}}>
+                            <div className="top-container">
+                                <div className="top-element">
+                                    <div className="top-img"></div>
+                                    <p className="top-h1">Andenplads</p>
+                                    <p className="top-h2">3 mdr. Premium abonnemnet</p>
+                                </div>
+                                <div className="top-element-big">
+                                    <div className="top-img"></div>
+                                    <p className="top-h1">Førsteplads</p>
+                                    <p className="top-h2">Gavekort til Intersport - 300 kr.</p>
+                                </div>
+                                <div className="top-element">
+                                    <div className="top-img"></div>
+                                    <p className="top-h1">Tredjeplads</p>
+                                    <p className="top-h2">1 måned plus abonnement</p>
+                                </div>
+                            </div>
+                        </div>
+                    </>}
+                    <div className="gruppespil-section" style={{border: "0px", marginTop: "20px"}}>
+                        <h2 className="gs-h1">{gameName}</h2>
+                        <h3 className="gs-h3"><p className="gs-h3-span">{synlighed === "dyst" && <>Præmiedyst</>}{synlighed !== "dyst" && <>{synlighed}</>}</p><div className="gs-h3-divider"></div><p className="gs-h3-span">Pulje</p></h3>
                         <div className="gruppespil-info" style={{paddingTop: "30px"}}>
                             <div className="ant-container">
                                 <div className="ant-element">
@@ -328,32 +376,27 @@ function Gruppesession ({data}) {
                                         }
 
                                         var showMe = "";
-                                        if (item.player === getUser() ? getUser().email : "") {
+                                        if (item.player === getUser().email) {
                                             showMe = " gruppespil-row-active";
                                         }
 
-                                        const queryString = window.location.search;
-                                        const urlParams = new URLSearchParams(queryString);
-
                                         return (
                                             <li key={item.player}>
-                                                <Link href={"/stage/gruppespil/spiller?spiller="+item.player+"&game="+urlParams.get('game')}>
-                                                    <div className={"tabel-element"} style={{borderLeft: "4px solid var(--primary)", padding: "10px 1px"}}>
-                                                        <div className="tabel-top-right">
-                                                            <div className="tabel-ends">
-                                                                <p className="tabel-p" id="gs-pos" style={{textAlign: "center"}}>{index + 1}</p>
-                                                                <p className="tabel-h1" id="gs-navn">{item.username && <>{item.username}</>}</p>
-                                                            </div>
-                                                        </div>
-                                                        <div className="tabel-top-right">
-                                                            <div className="tabel-ends">
-                                                                <p className="tabel-p" id="gs-kuponer">{item.odds.length}</p>
-                                                                <p className="tabel-p" id="gs-kapital">{profitHtml && <>{profitHtml}</>}</p>
-                                                                <p className="tabel-p" id="gs-aktive">{aktive && <>{aktive}</>}</p>
-                                                            </div>
+                                                <div className={"tabel-element"} style={{borderLeft: "4px solid var(--primary)", padding: "10px 1px"}} onClick={() => getPlayer(item.player)}>
+                                                    <div className="tabel-top-right">
+                                                        <div className="tabel-ends">
+                                                            <p className="tabel-p" id="gs-pos" style={{textAlign: "center"}}>{index + 1}</p>
+                                                            <p className="tabel-h1" id="gs-navn">{item.username && <>{item.username}</>}</p>
                                                         </div>
                                                     </div>
-                                                </Link>
+                                                    <div className="tabel-top-right">
+                                                        <div className="tabel-ends">
+                                                            <p className="tabel-p" id="gs-kuponer">{item.odds.length}</p>
+                                                            <p className="tabel-p" id="gs-kapital">{profitHtml && <>{profitHtml}</>}</p>
+                                                            <p className="tabel-p" id="gs-aktive">{aktive && <>{aktive}</>}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </li>
                                             );
                                         }

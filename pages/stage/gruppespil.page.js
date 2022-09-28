@@ -414,26 +414,28 @@ function StageGruppespil ({data}) {
                 <div className="info-figure2"></div>
             </div>
             <div className="stage-main-article-container">
-                {activeGame && <>{gameType === "dyst" && <><div className="rw-container">
-                    <div className="rw-content">
-                        <div className="rw-tip"><p className="rw-p main-gradient">Præmier</p></div>
-                        <div className="rw-wrapper">
-                            <div className="rw-element">
-                                <p className="rw-wrapper-p">Førsteplads:</p>
-                                <p className="rw-wrapper-h1">300 kr. til Intersport</p>
+                {activeGame && <>{gameType === "dyst" && <>
+                    <div className="gruppespil-section" style={{justifyContent: "center", alignItems: "center", justifyContent: "center", textAlign: "center"}}>
+                        <div className="top-container">
+                            <div className="top-element">
+                                <div className="top-img"></div>
+                                <p className="top-h1">Andenplads</p>
+                                <p className="top-h2">3 mdr. Premium abonnemnet</p>
                             </div>
-                            <div className="rw-element">
-                                <p className="rw-wrapper-p">Andenplads:</p>
-                                <p className="rw-wrapper-h1">3 mdr. Premium</p>
+                            <div className="top-element-big">
+                                <div className="top-img"></div>
+                                <p className="top-h1">Førsteplads</p>
+                                <p className="top-h2">Gavekort til Intersport - 300 kr.</p>
                             </div>
-                            <div className="rw-element">
-                                <p className="rw-wrapper-p">Tredjeplads:</p>
-                                <p className="rw-wrapper-h1">1 måned Plus</p>
+                            <div className="top-element">
+                                <div className="top-img"></div>
+                                <p className="top-h1">Tredjeplads</p>
+                                <p className="top-h2">1 måned plus abonnement</p>
                             </div>
                         </div>
                     </div>
-                </div></>}</>}
-                {activeGame && <div className="gruppespil-section">
+                </>}</>}
+                {activeGame && <div className="gruppespil-section" style={{marginTop: "20px", border: "0px"}}>
                         <Link href="/priser"><a className="gruppespil-opret-own">Opret dit eget gruppespil</a></Link>
                         <div className="gruppespil-info">
                             <div className="gruppespil-title">

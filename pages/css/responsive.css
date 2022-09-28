@@ -925,6 +925,9 @@
   .spacer {
     height: 75px !important;
   }
+  .top-container {
+    padding: 20px 0px !important;
+  }
   .td-container {
     padding: 20px 0px !important;
   }
