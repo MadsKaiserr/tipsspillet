@@ -784,6 +784,20 @@
   justify-content: space-between;
 }
 
+.top-container-mobile {
+  display: none;
+  padding: 15px 0px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.set-wrapper {
+  width: 50%;
+}
+
+
 .top-element-big .top-h1 {
   font-size: 28px !important;
 }

@@ -433,6 +433,23 @@ function StageGruppespil ({data}) {
                                 <p className="top-h2">1 måned plus abonnement</p>
                             </div>
                         </div>
+                        <div className="top-container-mobile">
+                            <div className="top-element">
+                                <div className="top-img"></div>
+                                <p className="top-h1">Førsteplads</p>
+                                <p className="top-h2">Gavekort til Intersport - 300 kr.</p>
+                            </div>
+                            <div className="top-element">
+                                <div className="top-img"></div>
+                                <p className="top-h1">Andenplads</p>
+                                <p className="top-h2">3 mdr. Premium abonnemnet</p>
+                            </div>
+                            <div className="top-element">
+                                <div className="top-img"></div>
+                                <p className="top-h1">Tredjeplads</p>
+                                <p className="top-h2">1 måned plus abonnement</p>
+                            </div>
+                        </div>
                     </div>
                 </>}</>}
                 {activeGame && <div className="gruppespil-section" style={{marginTop: "20px", border: "0px"}}>

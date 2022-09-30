@@ -245,6 +245,23 @@ function Gruppesession ({data}) {
                                     <p className="top-h2">1 måned plus abonnement</p>
                                 </div>
                             </div>
+                            <div className="top-container-mobile">
+                                <div className="top-element">
+                                    <div className="top-img"></div>
+                                    <p className="top-h1">Førsteplads</p>
+                                    <p className="top-h2">Gavekort til Intersport - 300 kr.</p>
+                                </div>
+                                <div className="top-element">
+                                    <div className="top-img"></div>
+                                    <p className="top-h1">Andenplads</p>
+                                    <p className="top-h2">3 mdr. Premium abonnemnet</p>
+                                </div>
+                                <div className="top-element">
+                                    <div className="top-img"></div>
+                                    <p className="top-h1">Tredjeplads</p>
+                                    <p className="top-h2">1 måned plus abonnement</p>
+                                </div>
+                            </div>
                         </div>
                     </>}
                     <div className="gruppespil-section" style={{border: "0px", marginTop: "20px"}}>
@@ -373,11 +390,6 @@ function Gruppesession ({data}) {
                                             if (item.odds[w].calculated === "false") {
                                                 aktive = aktive + 1;
                                             }
-                                        }
-
-                                        var showMe = "";
-                                        if (item.player === getUser().email) {
-                                            showMe = " gruppespil-row-active";
                                         }
 
                                         return (

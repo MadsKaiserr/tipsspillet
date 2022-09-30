@@ -926,7 +926,13 @@
     height: 75px !important;
   }
   .top-container {
-    padding: 20px 0px !important;
+    display: none !important;
+  }
+  .top-container-mobile {
+    display: flex !important;
+  }
+  .set-wrapper {
+    width: 100% !important;
   }
   .td-container {
     padding: 20px 0px !important;

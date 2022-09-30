@@ -646,11 +646,6 @@
     width: 100%;
   }
 
-  .set .cg-input {
-    padding: 12px 15px !important;
-    width: 50% !important;
-  }
-
   .cg-input {
     border: 0px;
     border-bottom: 1.5px solid var(--stageSurface);
