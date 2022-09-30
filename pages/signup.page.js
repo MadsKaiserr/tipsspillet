@@ -190,7 +190,6 @@ function Signup () {
                         axios.post(loginURL, loginBody, loginConfig).then(response => {
                             console.log("AWS - Login:", response);
                             setUserSession(response.data.user, response.data.token);
-                            localStorage.setItem("velkommen", "now");
                             document.getElementById("info1").classList.add("display-not");
                             document.getElementById("info2").classList.remove("display-not");
                             window.scrollTo(0, 0)
@@ -231,6 +230,7 @@ function Signup () {
 
     const fbSignupHandler = (event) => {
         event.preventDefault();
+        console.log(event);
 
         const requestConfig = {
             headers: {
@@ -281,7 +281,6 @@ function Signup () {
                     axios.post(loginURL, loginBody, loginConfig).then(response => {
                         console.log("AWS - Login:", response);
                         setUserSession(response.data.user, response.data.token);
-                        localStorage.setItem("velkommen", "now");
                         document.getElementById("info1").classList.add("display-not");
                         document.getElementById("info2").classList.remove("display-not");
                         window.scrollTo(0, 0)
