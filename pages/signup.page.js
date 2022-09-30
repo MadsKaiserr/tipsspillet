@@ -6,11 +6,10 @@ import Link from 'next/link'
 import Head from 'next/head'
 import Image from 'next/image'
 import FacebookLogin from 'react-facebook-login';
-import StageImg from './img/stage.png';
+import cookie from 'js-cookie'
 import PrimaryLogo from './img/logo-primary.png';
 import { Gradient } from './services/Gradient.js'
 import { useRouter } from 'next/router'
-import { getUser } from "./services/authService";
  
 function Signup () {
     const router = useRouter()
@@ -281,6 +280,7 @@ function Signup () {
             
                     axios.post(loginURL, loginBody, loginConfig).then(response => {
                         console.log("AWS - Login:", response);
+                        cookie.set("fbLogin", fbEvent)
                         setUserSession(response.data.user, response.data.token);
                         document.getElementById("info1").classList.add("display-not");
                         document.getElementById("info2").classList.remove("display-not");

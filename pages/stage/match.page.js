@@ -115,6 +115,12 @@ function StageMatcharticle ({data}) {
     const [kuponBtn, setKuponBtn] = useState("kupon-btn odd-notusable");
     const [returnOdds, setReturnOdds] = useState(1);
 
+    useEffect(() => {
+        if (!indsats) {
+            setIndsats(0);
+        }
+    }, [indsats])
+
     const [notUsableBtn, setNotUsableBtn] = useState([]);
     const [selectedGame, setSelectedGame] = useState([]);
 
@@ -637,7 +643,11 @@ function StageMatcharticle ({data}) {
     function updateUdbetaling(type, oddsSend, indsats) {
         if (type === "kombination") {
             var indsatsValue = document.getElementById("indsatsInput").value;
-            setUdbetaling(returnOdds * parseInt(indsatsValue));
+            if (!indsatsValue) {
+                setUdbetaling(0);
+            } else {
+                setUdbetaling(returnOdds * parseInt(indsatsValue));
+            }
         } else {
             var totalUdbetaling = 0;
             for (var q in odds) {

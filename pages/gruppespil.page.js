@@ -380,15 +380,7 @@ function Gruppespil ({data}) {
                     <div className="td-box animation-fadetop" style={{margin: "auto"}}>
                         <p className="find-h1">Opret et gruppespil</p>
                             <p className="find-p">Opret dit eget gruppespil, og inviter familie og venner til kamp.</p>
-                        <button className="find-btn">Opret gruppespil</button>
-                        <div className="td-divider">
-                            <div className="td-line"></div>
-                                <p className="td-or">Eller</p>
-                            <div className="td-line"></div>
-                        </div>
-                        <p className="find-h1">Find nye gruppespil</p>
-                        <p className="find-p">Tilmeld dig offentlige eller private gruppespil, og spil mod familie og venner.</p>
-                        <button className="find-btn">Find gruppespil</button>
+                        <button className="find-btn" onClick={() => opretHandler()}>Opret gruppespil</button>
                     </div>
                 </div>
             </div>

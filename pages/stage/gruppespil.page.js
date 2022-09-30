@@ -42,16 +42,10 @@ function StageGruppespil ({data}) {
     }, [])
 
     const [forbrug, setForbrug] = useState(0);
-    const [forbrugChange, setForbrugChange] = useState(0);
-    const [forbrugType, setForbrugType] = useState("none");
 
     const [correct, setCorrect] = useState(0);
-    const [correctChange, setCorrectChange] = useState(0);
-    const [correctType, setCorrectType] = useState("none");
 
     const [gevinstStat, setGevinstStat] = useState(0);
-    const [gevinstChange, setGevinstChange] = useState(0);
-    const [gevinstType, setGevinstType] = useState("none");
 
     const [username, setUsername] = useState("");
 
@@ -120,35 +114,13 @@ function StageGruppespil ({data}) {
                     setGameType(data.synlighed);
                     localStorage.setItem("notifikationer", data.players[k].info.notifikationer.length);
                     var forbrugInt = 0;
-                    var forbrugTd = 0;
-                    var forbrugYd = 0;
 
                     var correctInt = 0;
-                    var correctTd = 0;
-                    var correctYd = 0;
 
                     var gevinstInt = 0;
-                    var gevinstTd = 0;
-                    var gevinstYd = 0;
                     for (var q in data.players[k].odds) {
                         forbrugInt = forbrugInt + data.players[k].odds[q].indsats;
-                        if (data.players[k].odds[q].iat > (new Date().getTime() - 86400000)) {
-                            forbrugTd = forbrugTd + data.players[k].odds[q].indsats;
-                        } else if (data.players[k].odds[q].iat < (new Date().getTime() - 86400000) && data.players[k].odds[q].iat > (new Date().getTime() - 172800000)) {
-                            forbrugYd = forbrugYd + data.players[k].odds[q].indsats;
-                        }
-                        if (data.players[k].odds[q].iat > (new Date().getTime() - 86400000)) {
-                            forbrugTd = forbrugTd + data.players[k].odds[q].indsats;
-                            if (data.players[k].odds[q].vundet === "2") {
-                                correctTd = correctTd + 1;
-                            }
-                        } else if (data.players[k].odds[q].iat < (new Date().getTime() - 86400000) && data.players[k].odds[q].iat > (new Date().getTime() - 172800000)) {
-                            forbrugYd = forbrugYd + data.players[k].odds[q].indsats;
-                            if (data.players[k].odds[q].vundet === "2") {
-                                correctYd = correctYd + 1;
-                            }
-                        }
-                        if (data.players[k].odds[q].vundet === "2") {
+                        if (data.players[k].odds[q].vundet === 2) {
                             correctInt = correctInt + 1;
                             gevinstInt = gevinstInt + (data.players[k].odds[q].indsats * data.players[k].odds[q].fullProb);
                         }
@@ -156,24 +128,6 @@ function StageGruppespil ({data}) {
                     setForbrug(forbrugInt)
                     setCorrect(correctInt)
                     setGevinstStat(gevinstInt)
-                    if (forbrugInt > 0) {
-                        setForbrugType("positive");
-                    } else {
-                        setForbrugType("negative");
-                    }
-                    if (correctInt > 0) {
-                        setCorrectType("positive");
-                    } else {
-                        setCorrectType("negative");
-                    }
-                    if (gevinstInt > 0) {
-                        setGevinstType("positive");
-                    } else {
-                        setGevinstType("negative");
-                    }
-                    setForbrugChange(forbrugTd/forbrugYd*100);
-                    setCorrectChange(correctTd/correctYd*100);
-                    setGevinstChange(gevinstTd/gevinstYd*100);
                 }
             }
             setBeskeder(data.beskeder);
@@ -482,73 +436,27 @@ function StageGruppespil ({data}) {
                                 <div className="ant-element">
                                     {forbrug >= 0 && <>
                                         <div className="ant-visual">
-                                            {forbrugType === "positive" && <>
-                                                <div className="ant-visual-element">
-                                                    <div className="ant-visual-bar" style={{height: "20%"}}></div>
-                                                </div>
-                                                <div className="ant-visual-element">
-                                                    <div className="ant-visual-bar" style={{height: "35%"}}></div>
-                                                </div>
-                                                <div className="ant-visual-element">
-                                                    <div className="ant-visual-bar" style={{height: "50%"}}></div>
-                                                </div>
-                                                <div className="ant-visual-element">
-                                                    <div className="ant-visual-bar" style={{height: "80%"}}></div>
-                                                </div>
-                                                <div className="ant-visual-element">
-                                                    <div className="ant-visual-bar" style={{height: "100%"}}></div>
-                                                </div>
-                                            </>}
-                                            {forbrugType === "negative" && <>
-                                                <div className="ant-visual-element">
-                                                    <div className="ant-visual-bar-red" style={{height: "60%"}}></div>
-                                                </div>
-                                                <div className="ant-visual-element">
-                                                    <div className="ant-visual-bar-red" style={{height: "70%"}}></div>
-                                                </div>
-                                                <div className="ant-visual-element">
-                                                    <div className="ant-visual-bar-red" style={{height: "50%"}}></div>
-                                                </div>
-                                                <div className="ant-visual-element">
-                                                    <div className="ant-visual-bar-red" style={{height: "30%"}}></div>
-                                                </div>
-                                                <div className="ant-visual-element">
-                                                    <div className="ant-visual-bar-red" style={{height: "15%"}}></div>
-                                                </div>
-                                            </>}
-                                            {forbrugType === "none" && <><div className="ant-visual-element">
-                                                    <div className="ant-visual-bar" style={{height: "5%"}}></div>
-                                                </div>
-                                                <div className="ant-visual-element">
-                                                    <div className="ant-visual-bar" style={{height: "5%"}}></div>
-                                                </div>
-                                                <div className="ant-visual-element">
-                                                    <div className="ant-visual-bar" style={{height: "5%"}}></div>
-                                                </div>
-                                                <div className="ant-visual-element">
-                                                    <div className="ant-visual-bar" style={{height: "5%"}}></div>
-                                                </div>
-                                                <div className="ant-visual-element">
-                                                    <div className="ant-visual-bar" style={{height: "5%"}}></div>
-                                                </div></>}
+                                            <div className="ant-visual-element">
+                                                <div className="ant-visual-bar-red" style={{height: "60%"}}></div>
+                                            </div>
+                                            <div className="ant-visual-element">
+                                                <div className="ant-visual-bar-red" style={{height: "70%"}}></div>
+                                            </div>
+                                            <div className="ant-visual-element">
+                                                <div className="ant-visual-bar-red" style={{height: "50%"}}></div>
+                                            </div>
+                                            <div className="ant-visual-element">
+                                                <div className="ant-visual-bar-red" style={{height: "30%"}}></div>
+                                            </div>
+                                            <div className="ant-visual-element">
+                                                <div className="ant-visual-bar-red" style={{height: "15%"}}></div>
+                                            </div>
                                         </div>
                                     </>}
                                     <div className="ant-info">
                                         <p className="ant-h2">Dit forbrug</p>
                                         <div className="ant-info-price">
                                             <p className="ant-h1">{forbrug} kr.</p>
-                                            {forbrugChange - 100 > 0 && <>
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="var(--green)" style={{marginTop: "3px", transform: "rotate(180deg)"}} viewBox="0 0 16 16">
-                                                    <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
-                                                </svg>
-                                                <p className="ant-small" style={{color: "var(--green)"}}>{forbrugChange - 100}%</p>
-                                            </>}
-                                            {forbrugChange - 100 < 0 && <>
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="var(--red)" style={{marginTop: "3px"}} viewBox="0 0 16 16">
-                                                    <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
-                                                </svg>
-                                                <p className="ant-small" style={{color: "var(--red)"}}>{forbrugChange - 100}%</p>
-                                            </>}
                                         </div>
                                         <p className="ant-p">Dit <span className="ant-p-a">forbrug</span> fra gruppespillets <br />start</p>
                                     </div>
@@ -556,73 +464,27 @@ function StageGruppespil ({data}) {
                                 <div className="ant-element">
                                     {correct >= 0 && <>
                                         <div className="ant-visual">
-                                            {correctType === "positive" && <>
-                                                <div className="ant-visual-element">
-                                                    <div className="ant-visual-bar" style={{height: "20%"}}></div>
-                                                </div>
-                                                <div className="ant-visual-element">
-                                                    <div className="ant-visual-bar" style={{height: "35%"}}></div>
-                                                </div>
-                                                <div className="ant-visual-element">
-                                                    <div className="ant-visual-bar" style={{height: "50%"}}></div>
-                                                </div>
-                                                <div className="ant-visual-element">
-                                                    <div className="ant-visual-bar" style={{height: "80%"}}></div>
-                                                </div>
-                                                <div className="ant-visual-element">
-                                                    <div className="ant-visual-bar" style={{height: "100%"}}></div>
-                                                </div>
-                                            </>}
-                                            {correctType === "negative" && <>
-                                                <div className="ant-visual-element">
-                                                    <div className="ant-visual-bar-red" style={{height: "60%"}}></div>
-                                                </div>
-                                                <div className="ant-visual-element">
-                                                    <div className="ant-visual-bar-red" style={{height: "70%"}}></div>
-                                                </div>
-                                                <div className="ant-visual-element">
-                                                    <div className="ant-visual-bar-red" style={{height: "50%"}}></div>
-                                                </div>
-                                                <div className="ant-visual-element">
-                                                    <div className="ant-visual-bar-red" style={{height: "30%"}}></div>
-                                                </div>
-                                                <div className="ant-visual-element">
-                                                    <div className="ant-visual-bar-red" style={{height: "15%"}}></div>
-                                                </div>
-                                            </>}
-                                            {correctType === "none" && <><div className="ant-visual-element">
-                                                    <div className="ant-visual-bar" style={{height: "5%"}}></div>
-                                                </div>
-                                                <div className="ant-visual-element">
-                                                    <div className="ant-visual-bar" style={{height: "5%"}}></div>
-                                                </div>
-                                                <div className="ant-visual-element">
-                                                    <div className="ant-visual-bar" style={{height: "5%"}}></div>
-                                                </div>
-                                                <div className="ant-visual-element">
-                                                    <div className="ant-visual-bar" style={{height: "5%"}}></div>
-                                                </div>
-                                                <div className="ant-visual-element">
-                                                    <div className="ant-visual-bar" style={{height: "5%"}}></div>
-                                                </div></>}
+                                            <div className="ant-visual-element">
+                                                <div className="ant-visual-bar" style={{height: "20%"}}></div>
+                                            </div>
+                                            <div className="ant-visual-element">
+                                                <div className="ant-visual-bar" style={{height: "35%"}}></div>
+                                            </div>
+                                            <div className="ant-visual-element">
+                                                <div className="ant-visual-bar" style={{height: "50%"}}></div>
+                                            </div>
+                                            <div className="ant-visual-element">
+                                                <div className="ant-visual-bar" style={{height: "80%"}}></div>
+                                            </div>
+                                            <div className="ant-visual-element">
+                                                <div className="ant-visual-bar" style={{height: "100%"}}></div>
+                                            </div>
                                         </div>
                                     </>}
                                     <div className="ant-info">
                                         <p className="ant-h2">Antal korrekte</p>
                                         <div className="ant-info-price">
                                             <p className="ant-h1">{correct}</p>
-                                            {correctChange - 100 > 0 && <>
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="var(--green)" style={{marginTop: "3px", transform: "rotate(180deg)"}} viewBox="0 0 16 16">
-                                                    <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
-                                                </svg>
-                                                <p className="ant-small" style={{color: "var(--green)"}}>{correctChange - 100}%</p>
-                                            </>}
-                                            {correctChange - 100 < 0 && <>
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="var(--red)" style={{marginTop: "3px"}} viewBox="0 0 16 16">
-                                                    <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
-                                                </svg>
-                                                <p className="ant-small" style={{color: "var(--red)"}}>{correctChange - 100}%</p>
-                                            </>}
                                         </div>
                                         <p className="ant-p">Antal <span className="ant-p-a">korrekte</span> fra gruppespillets <br />start</p>
                                     </div>
@@ -630,73 +492,27 @@ function StageGruppespil ({data}) {
                                 <div className="ant-element">
                                     {gevinstStat >= 0 && <>
                                         <div className="ant-visual">
-                                            {gevinstType === "positive" && <>
-                                                <div className="ant-visual-element">
-                                                    <div className="ant-visual-bar" style={{height: "20%"}}></div>
-                                                </div>
-                                                <div className="ant-visual-element">
-                                                    <div className="ant-visual-bar" style={{height: "35%"}}></div>
-                                                </div>
-                                                <div className="ant-visual-element">
-                                                    <div className="ant-visual-bar" style={{height: "50%"}}></div>
-                                                </div>
-                                                <div className="ant-visual-element">
-                                                    <div className="ant-visual-bar" style={{height: "80%"}}></div>
-                                                </div>
-                                                <div className="ant-visual-element">
-                                                    <div className="ant-visual-bar" style={{height: "100%"}}></div>
-                                                </div>
-                                            </>}
-                                            {gevinstType === "negative" && <>
-                                                <div className="ant-visual-element">
-                                                    <div className="ant-visual-bar-red" style={{height: "60%"}}></div>
-                                                </div>
-                                                <div className="ant-visual-element">
-                                                    <div className="ant-visual-bar-red" style={{height: "70%"}}></div>
-                                                </div>
-                                                <div className="ant-visual-element">
-                                                    <div className="ant-visual-bar-red" style={{height: "50%"}}></div>
-                                                </div>
-                                                <div className="ant-visual-element">
-                                                    <div className="ant-visual-bar-red" style={{height: "30%"}}></div>
-                                                </div>
-                                                <div className="ant-visual-element">
-                                                    <div className="ant-visual-bar-red" style={{height: "15%"}}></div>
-                                                </div>
-                                            </>}
-                                            {gevinstType === "none" && <><div className="ant-visual-element">
-                                                    <div className="ant-visual-bar" style={{height: "5%"}}></div>
-                                                </div>
-                                                <div className="ant-visual-element">
-                                                    <div className="ant-visual-bar" style={{height: "5%"}}></div>
-                                                </div>
-                                                <div className="ant-visual-element">
-                                                    <div className="ant-visual-bar" style={{height: "5%"}}></div>
-                                                </div>
-                                                <div className="ant-visual-element">
-                                                    <div className="ant-visual-bar" style={{height: "5%"}}></div>
-                                                </div>
-                                                <div className="ant-visual-element">
-                                                    <div className="ant-visual-bar" style={{height: "5%"}}></div>
-                                                </div></>}
+                                            <div className="ant-visual-element">
+                                                <div className="ant-visual-bar" style={{height: "20%"}}></div>
+                                            </div>
+                                            <div className="ant-visual-element">
+                                                <div className="ant-visual-bar" style={{height: "35%"}}></div>
+                                            </div>
+                                            <div className="ant-visual-element">
+                                                <div className="ant-visual-bar" style={{height: "50%"}}></div>
+                                            </div>
+                                            <div className="ant-visual-element">
+                                                <div className="ant-visual-bar" style={{height: "80%"}}></div>
+                                            </div>
+                                            <div className="ant-visual-element">
+                                                <div className="ant-visual-bar" style={{height: "100%"}}></div>
+                                            </div>
                                         </div>
                                     </>}
                                     <div className="ant-info">
                                         <p className="ant-h2">Din gevinst</p>
                                         <div className="ant-info-price">
                                             <p className="ant-h1">{gevinstStat} kr.</p>
-                                            {gevinstChange - 100 > 0 && <>
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="var(--green)" style={{marginTop: "3px", transform: "rotate(180deg)"}} viewBox="0 0 16 16">
-                                                    <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
-                                                </svg>
-                                                <p className="ant-small" style={{color: "var(--green)"}}>{gevinstChange - 100}%</p>
-                                            </>}
-                                            {gevinstChange - 100 < 0 && <>
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="var(--red)" style={{marginTop: "3px"}} viewBox="0 0 16 16">
-                                                    <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
-                                                </svg>
-                                                <p className="ant-small" style={{color: "var(--red)"}}>{gevinstChange - 100}%</p>
-                                            </>}
                                         </div>
                                         <p className="ant-p">Din <span className="ant-p-a">gevinst</span> fra gruppespillets <br />start</p>
                                     </div>
