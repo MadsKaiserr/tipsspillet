@@ -102,7 +102,7 @@
   }
 
   .db-fill {
-    width: 45%;
+    width: 650px;
     position: relative;
     overflow: hidden;
     height: 490px;
@@ -111,9 +111,15 @@
     background-color: var(--primary);
   }
 
+  #fill-4 {
+    display: none;
+  }
+
   .db-fill-inverted {
-    width: 45%;
-    height: 520px;
+    width: 650px;
+    position: relative;
+    overflow: hidden;
+    height: 490px;
     border-top-left-radius: 30px;
     border-bottom-left-radius: 30px;
     background-color: var(--primary);
@@ -772,7 +778,6 @@
     height: 600px;
     background-color: #888;
     border-radius: 30px;
-    opacity: 0.85;
     position: absolute;
     right: 20px;
     top: 50px;

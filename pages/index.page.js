@@ -6,9 +6,9 @@ import PriserComp from './components/priser';
 import { Gradient } from './services/Gradient.js'
 
 import RightArrow from './img/right-arrow.png';
-import Mockup from './img/14Mockup.png';
-import MatchMock from './img/MatchMock.png';
-import MatchMockMB from './img/MatchMockMB.png';
+import Mockup from './img/TipsspilletIphone14Mockup.jpg';
+import MatchMock from './img/KampIphoneMacbookMockup.jpg';
+import MatchMockMB from './img/KampIphoneMockup.jpg';
 import Money from './img/money.png';
 import Chart from './img/bar-chart.png';
 import FaqComponent from './components/faq';
@@ -194,7 +194,8 @@ export default function Home() {
                     <h3 className="db-h2">Med Plus- og Premium abonnement kan du oprette gruppespil, og styre ligaer, startbeløb, beløb hver uge, deltagere og meget mere!</h3>
                 </div>
             </div>
-            <div className="db-fill-inverted"></div>
+            <div className="db-fill-inverted" id="fill-3"><Image src={MatchMock} /></div>
+            <div className="db-fill-inverted" id="fill-4"><Image src={MatchMockMB} /></div>
         </div>
         <div className="main-container">
             <div className="hero-text">

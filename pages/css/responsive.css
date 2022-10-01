@@ -319,6 +319,10 @@
   .nav-bar {
     padding: 0px 50px !important;
   }
+  .db-section {
+    padding: 0px 100px !important;
+    width: 100% !important;
+  }
 }
 
 @media only screen and (max-width: 1133px) {
@@ -690,6 +694,10 @@
   .noti-section-error {
     flex-direction: column !important;
   }
+  .db-section {
+    padding: 0px 70px !important;
+    width: 100% !important;
+  }
   .inf-con-1 {
     flex-direction: column !important;
     align-items: center !important;
@@ -949,16 +957,18 @@
   .forside-db {
     flex-direction: column;
   }
-  .db-fill-inverted {
-    margin-left: auto;
-    width: 70% !important;
-    margin-top: 30px;
-  }
   #fill-2 {
     display: block !important;
     height: 440px !important;
   }
   #fill-1 {
+    display: none !important;
+  }
+  #fill-4 {
+    display: block !important;
+    height: 440px !important;
+  }
+  #fill-3 {
     display: none !important;
   }
   .forside-black-blob {
@@ -1003,8 +1013,13 @@
     text-align: center;
   }
   .db-fill {
-    width: 70% !important;
+    width: 325px !important;
     margin-top: 30px;
+  }
+  .db-fill-inverted {
+    width: 325px !important;
+    margin-top: 30px;
+    margin-left: auto !important;
   }
   .db-h1 {
     font-size: 35px !important;
