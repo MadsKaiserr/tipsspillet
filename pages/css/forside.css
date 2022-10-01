@@ -103,7 +103,9 @@
 
   .db-fill {
     width: 45%;
-    height: 520px;
+    position: relative;
+    overflow: hidden;
+    height: 490px;
     border-top-right-radius: 30px;
     border-bottom-right-radius: 30px;
     background-color: var(--primary);
@@ -769,11 +771,12 @@
     width: 600px;
     height: 600px;
     background-color: #888;
-    opacity: 0.15;
     border-radius: 30px;
+    opacity: 0.85;
     position: absolute;
     right: 20px;
     top: 50px;
+    overflow: hidden;
   }
   
   @keyframes pulse {

@@ -956,6 +956,7 @@
   }
   #fill-2 {
     display: block !important;
+    height: 440px !important;
   }
   #fill-1 {
     display: none !important;

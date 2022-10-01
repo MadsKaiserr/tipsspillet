@@ -6,6 +6,9 @@ import PriserComp from './components/priser';
 import { Gradient } from './services/Gradient.js'
 
 import RightArrow from './img/right-arrow.png';
+import Mockup from './img/14Mockup.png';
+import MatchMock from './img/MatchMock.png';
+import MatchMockMB from './img/MatchMockMB.png';
 import Money from './img/money.png';
 import Chart from './img/bar-chart.png';
 import FaqComponent from './components/faq';
@@ -164,10 +167,14 @@ export default function Home() {
                     <p className="fs-element-p">100% Flere væddemål</p>
                 </div>
             </div>
-            <div className="forside-black-blob"></div>
+            <div className="forside-black-blob">
+                <Image src={Mockup} />
+            </div>
         </div>
         <div className="forside-db" style={{marginTop: "50px"}}>
-            <div className="db-fill" id="fill-1"></div>
+            <div className="db-fill" id="fill-1">
+                <Image src={MatchMock} />
+            </div>
             <div className="db-section">
                 <div className="db-info">
                     <h2 className="db-h1">Spil helt gratis.<br/><span className="db-h1 main-gradient">Virtuelle penge.</span></h2>
@@ -175,7 +182,9 @@ export default function Home() {
                     <h3 className="db-h2">Løbet tør for penge? Intet problem! I de fleste gruppespil får du et beløb hver uge, som du kan bruge på at bette dig til større fortjeneste &#128640;</h3>
                 </div>
             </div>
-            <div className="db-fill" id="fill-2"></div>
+            <div className="db-fill" id="fill-2">
+                <Image src={MatchMockMB} />
+            </div>
         </div>
         <div className="forside-db">
             <div className="db-section">
