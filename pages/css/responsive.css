@@ -972,7 +972,14 @@
     display: none !important;
   }
   .forside-black-blob {
-    display: none !important;
+    width: 390px !important;
+    height: 390px !important;
+    position: relative !important;
+    margin: auto !important;
+    right: 0 !important;
+  }
+  .forside-black {
+    height: 900px !important;
   }
   .fs-wrapper-h1 {
     font-size: 46px !important;
@@ -989,9 +996,6 @@
   }
   .fs-container {
     padding-left: 50px !important;
-  }
-  .forside-black {
-    height: 550px !important
   }
   .forside-blob {
     border-radius: 30px !important;
@@ -1196,9 +1200,6 @@
   }
   .faq-wrapper {
     padding-top: 40px !important;
-  }
-  .main-container {
-    padding-top: 0px !important;
   }
   .blog-container {
     padding-top: 0px !important;
