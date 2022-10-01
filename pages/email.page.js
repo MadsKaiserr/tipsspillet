@@ -15,7 +15,9 @@ function Email () {
             }
         }
         const requestBody = {
-            toAddress: "mebondekaiser@gmail.com"
+            toAddress: [
+                "mebondekaiser@gmail.com"
+            ]
         }
 
         axios.post(URL, requestBody, requestConfig).then(response => {

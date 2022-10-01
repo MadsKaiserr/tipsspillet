@@ -2262,7 +2262,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
                             <button className="gruppespil2-btn" style={{marginTop: "0px"}}>Skift</button>
                         </Link>
                     </span></p><br />
-                    <p className="info-p">Kapital: <span className="info-p-span">{currentMoney},00 kr.</span></p><br />
+                    <p className="info-p">Kapital: <span className="info-p-span">{parseInt(currentMoney)},00 kr.</span></p><br />
                     <p className="info-p">Placering: <span className="info-p-span">{position}</span> af <span className="info-p-span">{positionCount}</span></p><br />
                     <p className="info-p">Slutdato: <span className="info-p-span">{slutdatostr}</span></p>
                     <div className="info-figure">

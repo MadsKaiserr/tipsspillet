@@ -961,9 +961,7 @@ function StageGruppespil ({data}) {
                             </div>
                 </div>}
                 <div className="gruppespil-section" style={{border: "0px", marginTop: "20px"}}>
-                    <h1 className="gs-h1">Lav dit eget gruppespil</h1>
-                    <h3 className="gs-h3"><p className="gs-h3-span">Deltag gratis</p><div className="gs-h3-divider"></div><p className="gs-h3-span">Opret gruppespil med Plus eller Premium</p></h3>
-                    <p className="find-h1" style={{paddingTop: "15px"}}>Opret et gruppespil</p>
+                    <p className="find-h1">Opret et gruppespil</p>
                         <p className="find-p">Opret dit eget gruppespil, og inviter familie og venner til kamp.</p>
                     <button className="find-btn" onClick={() => {opretHandler()}}>Opret gruppespil</button>
                     <div className="td-divider">

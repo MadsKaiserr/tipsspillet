@@ -914,6 +914,7 @@
 
 .match-indhold {
     display: none;
+    overflow: hidden;
     justify-content: center;
     align-items: flex-start;
     flex-direction: column;
