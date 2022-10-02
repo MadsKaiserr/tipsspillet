@@ -3037,7 +3037,7 @@
   width: 100%;
   margin-bottom: 100px !important;
   min-height: 450px;
-  position: fixed;
+  position: absolute;
   display: flex;
   justify-content: center;
   top: 0;
@@ -3104,9 +3104,12 @@
   padding-top: 10px;
   position: absolute;
   gap: 10px;
+  background-color: #fff;
   width: 100%;
   padding: 0px 15px;
-  bottom: 30px;
+  padding-top: 15px;
+  bottom: 0px;
+  padding-bottom: 30px;
   left: 0px;
 }
 
@@ -3473,8 +3476,13 @@
   gap: 30px;
 }
 
+.td-table {
+  overflow: auto;
+  max-height: 400px;
+}
+
 .pull-tilmeldte {
-  max-height: 250px;
+  max-height: 370px;
   overflow-y: auto;
   overflow-x: hidden;
 }

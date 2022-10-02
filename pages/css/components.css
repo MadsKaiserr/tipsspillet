@@ -1286,12 +1286,15 @@
 
 .signup-abonnement {
   background-color: var(--surface);
-  position: fixed;
+  position: absolute;
   left: 0;
   top: 0;
   width: 100%;
-  height: 100%;
   z-index: 29;
+}
+
+.signup-abonnement .plans-container {
+  padding-top: 0px !important;
 }
 
 .signup-abonnement-prices {

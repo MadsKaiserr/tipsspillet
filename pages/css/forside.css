@@ -39,9 +39,9 @@
 
   .forside-black {
     width: 100%;
+    padding-bottom: 65px;
     position: relative;
     background-color: #1b1b1b;
-    height: 700px;
     background-image: radial-gradient(circle farthest-corner at 100% -30%,#0e0e0e,rgba(14,14,14,0) 56%);
   }
 
@@ -774,9 +774,9 @@
   }
 
   .forside-black-blob {
-    width: 600px;
-    height: 600px;
-    background-color: #888;
+    width: 550px;
+    height: 550px;
+    background-color: transparent;
     border-radius: 30px;
     position: absolute;
     right: 20px;

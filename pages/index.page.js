@@ -9,6 +9,8 @@ import RightArrow from './img/right-arrow.png';
 import Mockup from './img/TipsspilletIphone14Mockup.jpg';
 import MatchMock from './img/KampIphoneMacbookMockup.jpg';
 import MatchMockMB from './img/KampIphoneMockup.jpg';
+import GrMatchMock from './img/GruppespilMockup.jpg';
+import GrMatchMockMB from './img/IphoneGruppespilMockup.jpg';
 import Money from './img/money.png';
 import Chart from './img/bar-chart.png';
 import FaqComponent from './components/faq';
@@ -171,31 +173,33 @@ export default function Home() {
                 <Image src={Mockup} />
             </div>
         </div>
-        <div className="forside-db" style={{marginTop: "50px"}}>
-            <div className="db-fill" id="fill-1">
-                <Image src={MatchMock} />
-            </div>
-            <div className="db-section">
-                <div className="db-info">
-                    <h2 className="db-h1">Spil helt gratis.<br/><span className="db-h1 main-gradient">Virtuelle penge.</span></h2>
-                    <h3 className="db-h2">Hos Tipsspillet spiller du med virtuelle penge, og eliminerer derved risikioen for tab af penge på betting.</h3>
-                    <h3 className="db-h2">Løbet tør for penge? Intet problem! I de fleste gruppespil får du et beløb hver uge, som du kan bruge på at bette dig til større fortjeneste &#128640;</h3>
+        <div className="db-container">
+            <div className="forside-db" style={{marginTop: "50px"}}>
+                <div className="db-fill" id="fill-1">
+                    <Image src={MatchMock} />
+                </div>
+                <div className="db-section">
+                    <div className="db-info">
+                        <h2 className="db-h1">Spil helt gratis.<br/><span className="db-h1 main-gradient">Virtuelle penge.</span></h2>
+                        <h3 className="db-h2">Hos Tipsspillet spiller du med virtuelle penge, og eliminerer derved risikioen for tab af penge på betting.</h3>
+                        <h3 className="db-h2">Løbet tør for penge? Intet problem! I de fleste gruppespil får du et beløb hver uge, som du kan bruge på at bette dig til større fortjeneste &#128640;</h3>
+                    </div>
+                </div>
+                <div className="db-fill" id="fill-2">
+                    <Image src={MatchMockMB} />
                 </div>
             </div>
-            <div className="db-fill" id="fill-2">
-                <Image src={MatchMockMB} />
-            </div>
-        </div>
-        <div className="forside-db">
-            <div className="db-section">
-                <div className="db-info">
-                    <h2 className="db-h1">Opret dit eget<br/><span className="db-h1 main-gradient">gruppespil.</span></h2>
-                    <h3 className="db-h2">Opret dit eget gruppespil i din klasse, på din arbejde, med din familie eller lav et offentligt gruppespil.</h3>
-                    <h3 className="db-h2">Med Plus- og Premium abonnement kan du oprette gruppespil, og styre ligaer, startbeløb, beløb hver uge, deltagere og meget mere!</h3>
+            <div className="forside-db">
+                <div className="db-section">
+                    <div className="db-info">
+                        <h2 className="db-h1">Opret dit eget<br/><span className="db-h1 main-gradient">gruppespil.</span></h2>
+                        <h3 className="db-h2">Opret dit eget gruppespil i din klasse, på din arbejde, med din familie eller lav et offentligt gruppespil.</h3>
+                        <h3 className="db-h2">Med Plus- og Premium abonnement kan du oprette gruppespil, og styre ligaer, startbeløb, beløb hver uge, deltagere og meget mere!</h3>
+                    </div>
                 </div>
+                <div className="db-fill-inverted" id="fill-3"><Image src={GrMatchMock} /></div>
+                <div className="db-fill-inverted" id="fill-4"><Image src={GrMatchMockMB} /></div>
             </div>
-            <div className="db-fill-inverted" id="fill-3"><Image src={MatchMock} /></div>
-            <div className="db-fill-inverted" id="fill-4"><Image src={MatchMockMB} /></div>
         </div>
         <div className="main-container">
             <div className="hero-text">

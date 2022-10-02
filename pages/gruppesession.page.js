@@ -117,10 +117,10 @@ function Gruppesession ({data}) {
                 var userEmail;
                 var username;
                 
-                if (getUser() ? getUser().rolle : "") {
-                    medlemsskab = getUser() ? getUser().rolle : "";
-                    userEmail = getUser() ? getUser().email : "";
-                    username = getUser() ? getUser().username : "";
+                if (getUser().rolle) {
+                    medlemsskab = getUser().rolle;
+                    userEmail = getUser().email;
+                    username = getUser().username;
                 } else {
                     medlemsskab = "none";
                     userEmail = "Ukendt";
@@ -151,7 +151,14 @@ function Gruppesession ({data}) {
                     cookie.set("activeGame", activeGame["id"], {expires: 24});
                     localStorage.setItem("activeGame", activeGame["id"]);
                     localStorage.setItem("playerIndex", response.data.Item.Attributes.players.findIndex(obj => obj.player === getUser().email));
-                    router.push("/stage");
+                    const queryString = window.location.search;
+                    const urlParams = new URLSearchParams(queryString);
+                    var GetRes = urlParams.get("res");
+                    if (GetRes) {
+                        router.push("/stage/setup?rel=page2");
+                    } else {
+                        router.push("/stage");
+                    }
                 }).catch(error => {
                     console.log(error);
                 })
@@ -207,6 +214,15 @@ function Gruppesession ({data}) {
             <Spacer />
             <div className="gs-container">
                 <Back />
+                <div className={messageType} id="errorCon">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="triangle" viewBox="0 0 16 16" id="errorIcon">
+                        <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                    </svg>
+                    <div className="error-text">
+                        <p className="error-container-h1" id="errorConH">Ingen væddemål</p>
+                        <p className="error-container-p" id="errorConP">Du har ikke placeret nogle væddemål. Placer ét eller flere væddemål, for at lave din kuppon.</p>
+                    </div>
+                </div>
                 <div className="gs-wrapper">
                     {synlighed === "dyst" && <>
                         <div className="gruppespil-section" style={{justifyContent: "center", alignItems: "center", justifyContent: "center", textAlign: "center"}}>
@@ -342,7 +358,7 @@ function Gruppesession ({data}) {
                                     <div className="ant-info">
                                         <p className="ant-h2">Gevinst rate</p>
                                         <div className="ant-info-price">
-                                            <p className="ant-h1">{winRate}%</p>
+                                            <p className="ant-h1">{parseInt(winRate)}%</p>
                                         </div>
                                         <p className="ant-p">Andel af <span className="ant-p-a">kuponer</span> som er vundet af <br />medlemmerne</p>
                                     </div>
@@ -378,11 +394,11 @@ function Gruppesession ({data}) {
                                         if (profit >= 0) {
                                             profitHtml = <p className="gruppespil-table-p gruppetable-kapital gruppetable-win"><svg xmlns="http://www.w3.org/2000/svg" className="gruppetable-icon-win" viewBox="0 0 16 16">
                                             <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
-                                        </svg>{profit},00 kr.<span className="gruppetable-span">({kapital},00 kr.)</span></p>;
+                                        </svg>{parseInt(profit)},00 kr.<span className="gruppetable-span">({parseInt(kapital)},00 kr.)</span></p>;
                                         } else {
                                             profitHtml = <p className="gruppespil-table-p gruppetable-kapital gruppetable-loss"><svg xmlns="http://www.w3.org/2000/svg" className="gruppetable-icon-loss" viewBox="0 0 16 16">
                                             <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
-                                        </svg>{profit},00 kr.<span className="gruppetable-span">({kapital},00 kr.)</span></p>;
+                                        </svg>{parseInt(profit)},00 kr.<span className="gruppetable-span">({parseInt(kapital)},00 kr.)</span></p>;
                                         }
 
                                         var aktive = 0;
@@ -391,10 +407,16 @@ function Gruppesession ({data}) {
                                                 aktive = aktive + 1;
                                             }
                                         }
+                                        var trueMe = "";
+                                        if (getUser()) {
+                                            if (getUser().email === item.player) {
+                                                trueMe = "tabel-correct";
+                                            }
+                                        }
 
                                         return (
                                             <li key={item.player}>
-                                                <div className={"tabel-element"} style={{borderLeft: "4px solid var(--primary)", padding: "10px 1px"}} onClick={() => getPlayer(item.player)}>
+                                                <div className={"tabel-element " + trueMe} style={{borderLeft: "4px solid var(--primary)", padding: "10px 1px"}} onClick={() => getPlayer(item.player)}>
                                                     <div className="tabel-top-right">
                                                         <div className="tabel-ends">
                                                             <p className="tabel-p" id="gs-pos" style={{textAlign: "center"}}>{index + 1}</p>
@@ -422,7 +444,10 @@ function Gruppesession ({data}) {
                                 <p className="gs-h4">Klik for at kopiere</p>
                             </div>
                             <div className="inv-container">
-                                <div className="inv-element-a" onClick={() => {navigator.clipboard.writeText("https://www.tipsspillet.dk/gruppesession?game=" + activeGame + "&type=invite"); document.getElementById("copied").classList.remove("display-not"); setTimeout(function (){
+                                <div className="inv-element-a" onClick={() => {
+                                    const queryString = window.location.search;
+                                    const urlParams = new URLSearchParams(queryString);
+                                    navigator.clipboard.writeText("https://www.tipsspillet.dk/gruppesession?game=" + urlParams.get('game') + "&type=invite"); document.getElementById("copied").classList.remove("display-not"); setTimeout(function (){
                                     document.getElementById("copied").classList.add("display-not")
                                 }, 1000);}}>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="var(--primary)" viewBox="0 0 16 16">
@@ -442,8 +467,6 @@ function Gruppesession ({data}) {
                         </div>
                     </div>
                     <div className="gruppespil-section" style={{border: "0px", marginTop: "20px"}}>
-                        <h1 className="gs-h1">Lav dit eget gruppespil</h1>
-                        <h3 className="gs-h3"><p className="gs-h3-span">Deltag gratis</p><div className="gs-h3-divider"></div><p className="gs-h3-span">Opret gruppespil med Plus eller Premium</p></h3>
                         <p className="find-h1" style={{paddingTop: "15px"}}>Opret et gruppespil</p>
                             <p className="find-p">Opret dit eget gruppespil, og inviter familie og venner til kamp.</p>
                         <button className="find-btn" onClick={() => {opretHandler()}}>Opret gruppespil</button>
@@ -463,6 +486,10 @@ function Gruppesession ({data}) {
 }
 
 export async function getServerSideProps({ req, res, query }) {
+    res.setHeader(
+        'Cache-Control',
+        'public, s-maxage=15, stale-while-revalidate=20'
+    )
     const category = query.game;
     const requestConfig = {
         headers: {

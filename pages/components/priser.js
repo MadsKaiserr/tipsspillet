@@ -29,7 +29,7 @@ function Priser () {
     const [premiumPrice, setPremiumPrice] = useState(39);
 
     const handlePlus = async e => {
-        if (JSON.parse(JSON.stringify(getUser()))) {
+        if (getUser()) {
             if (plusPrice === 39) {
                 setLoading1(true);
                 const URL = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/payment";

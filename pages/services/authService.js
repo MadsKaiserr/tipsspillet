@@ -25,8 +25,8 @@ module.exports = {
 
     setUserSession: function(user, token) {
         user.auth_token = token;
-        cookie.set("email", user.email, {expires: 24});
-        cookie.set("auth", JSON.stringify(user), {expires: 24});
+        cookie.set("email", user.email, {expires: 168});
+        cookie.set("auth", JSON.stringify(user), {expires: 168});
         localStorage.removeItem("favoritter");
         localStorage.removeItem("aktive-spil-suspend");
     },

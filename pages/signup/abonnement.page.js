@@ -226,11 +226,11 @@ function Priser () {
                 <meta property="og:description" content="Premium: 79kr - Opret egne gruppespil, deltag i præmiedyster, få udvidet statistikker, gratis betting tips og meget mere. Eller køb adgangsbillet til præmiedyster for 9 kr. - Eller gruppespilsbillet, som giver adgang til at oprette eget gruppespil til 37 kr." />
             </Head>
             <div className="signup-abonnement">
-                <div className="main-container">
+                <div className="main-container" style={{paddingTop: "30px"}}>
                     <div className="hero-text">
-                        <p className="main-component-p animation-fadeleft">Vælg et abonnement</p>
-                        <h1 className="main-component-h1 main-gradient animation-fadeleft animation-delay-200">Vælg et abonnement</h1>
-                        <h2 className="main-component-h3 animation-fadetop animation-delay-300">Opret gratis konto, eller opgrader til <span className="color-primary font-weight-500">Plus</span> eller <span className="color-primary font-weight-500">Premium</span>.</h2>
+                        <p className="cp-h3 animation-fadeleft" style={{color: "#333"}}>Abonnement</p>
+                        <h1 className="cp-h1 main-gradient animation-fadeleft animation-delay-200">Vælg et abonnement</h1>
+                        <h2 className="cp-h2 animation-fadetop animation-delay-300">Opret gratis konto, eller opgrader til <span className="color-primary font-weight-500">Plus</span> eller <span className="color-primary font-weight-500">Premium</span>.</h2>
                     </div>
                 </div>
                 <div className="signup-abonnement-prices">

@@ -204,7 +204,7 @@ function StageAktiveSpil ({ data }) {
                         </div>
                     </div>
                 </div>
-                <div className="td-box animation-fadetop" style={{margin: "auto"}}>
+                <div className="td-box animation-fadetop" style={{margin: "auto", minHeight: "300px"}}>
                     <div className="td-top">
                         <div className="td-top-left">
                             <div className="td-input-con">
@@ -243,6 +243,14 @@ function StageAktiveSpil ({ data }) {
                         <ul className="td-table">
                             {search.map((item) => {
                                 const index = item.players.findIndex(obj => obj.player === getUser().email);
+                                var Facebooks = 0;
+                                var facebookArray = [];
+                                for (var u in item.players) {
+                                    if (item.players[u].fb_logo_id) {
+                                        Facebooks = Facebooks + 1;
+                                        facebookArray.push(item.players[u]);
+                                    }
+                                }
                                 if (currentType === "alle") {
                                     if (new Date(item.varighed).getTime() > new Date().getTime()) {
                                         return (
@@ -254,7 +262,20 @@ function StageAktiveSpil ({ data }) {
                                                     <p className="td-modifier-p" style={{fontWeight: "500"}}>{item.name}</p>
                                                 </div>
                                                 <p className="td-modifier-p" id="td-synlighed">{item.synlighed}</p>
-                                                <p className="td-modifier-p" id="td-spillere">{item.players.length}</p>
+                                                <div className="tl-wrapper" id="td-spillere">
+                                                            <ul className="tl-players">
+                                                                {facebookArray.slice(0,5).map((spiller) => {
+                                                                    if (spiller.fb_logo_id) {
+                                                                        return (
+                                                                                <li key={spiller.fb_logo_id} className="td-player-img">
+                                                                                    <Image layout="fill" src={"http://graph.facebook.com/"+ spiller.fb_logo_id +"/picture?type=square"} />
+                                                                                </li>
+                                                                        );
+                                                                    }
+                                                                })}
+                                                            </ul>
+                                                            <p className="td-modifier-p" style={{paddingLeft: "8px"}} id="td-spillere">+{item.players.length - Facebooks} flere</p>
+                                                        </div>
                                                 <p className="td-modifier-p" id="td-admin">{item.admin}</p>
                                             </li>
                                         );
@@ -270,7 +291,20 @@ function StageAktiveSpil ({ data }) {
                                                     <p className="td-modifier-p" style={{fontWeight: "500"}}>{item.name}</p>
                                                 </div>
                                                 <p className="td-modifier-p" id="td-synlighed">{item.synlighed}</p>
-                                                <p className="td-modifier-p" id="td-spillere">{item.players.length}</p>
+                                                <div className="tl-wrapper" id="td-spillere">
+                                                            <ul className="tl-players">
+                                                                {facebookArray.slice(0,5).map((spiller) => {
+                                                                    if (spiller.fb_logo_id) {
+                                                                        return (
+                                                                                <li key={spiller.fb_logo_id} className="td-player-img">
+                                                                                    <Image layout="fill" src={"http://graph.facebook.com/"+ spiller.fb_logo_id +"/picture?type=square"} />
+                                                                                </li>
+                                                                        );
+                                                                    }
+                                                                })}
+                                                            </ul>
+                                                            <p className="td-modifier-p" style={{paddingLeft: "8px"}} id="td-spillere">+{item.players.length - Facebooks} flere</p>
+                                                        </div>
                                                 <p className="td-modifier-p" id="td-admin">{item.admin}</p>
                                             </li>
                                         );
@@ -286,7 +320,20 @@ function StageAktiveSpil ({ data }) {
                                                     <p className="td-modifier-p" style={{fontWeight: "500"}}>{item.name}</p>
                                                 </div>
                                                 <p className="td-modifier-p" id="td-synlighed">{item.synlighed}</p>
-                                                <p className="td-modifier-p" id="td-spillere">{item.players.length}</p>
+                                                <div className="tl-wrapper" id="td-spillere">
+                                                            <ul className="tl-players">
+                                                                {facebookArray.slice(0,5).map((spiller) => {
+                                                                    if (spiller.fb_logo_id) {
+                                                                        return (
+                                                                                <li key={spiller.fb_logo_id} className="td-player-img">
+                                                                                    <Image layout="fill" src={"http://graph.facebook.com/"+ spiller.fb_logo_id +"/picture?type=square"} />
+                                                                                </li>
+                                                                        );
+                                                                    }
+                                                                })}
+                                                            </ul>
+                                                            <p className="td-modifier-p" style={{paddingLeft: "8px"}} id="td-spillere">+{item.players.length - Facebooks} flere</p>
+                                                        </div>
                                                 <p className="td-modifier-p" id="td-admin">{item.admin}</p>
                                             </li>
                                         );
@@ -302,7 +349,20 @@ function StageAktiveSpil ({ data }) {
                                                     <p className="td-modifier-p" style={{fontWeight: "500"}}>{item.name}</p>
                                                 </div>
                                                 <p className="td-modifier-p" id="td-synlighed">{item.synlighed}</p>
-                                                <p className="td-modifier-p" id="td-spillere">{item.players.length}</p>
+                                                <div className="tl-wrapper" id="td-spillere">
+                                                            <ul className="tl-players">
+                                                                {facebookArray.slice(0,5).map((spiller) => {
+                                                                    if (spiller.fb_logo_id) {
+                                                                        return (
+                                                                                <li key={spiller.fb_logo_id} className="td-player-img">
+                                                                                    <Image layout="fill" src={"http://graph.facebook.com/"+ spiller.fb_logo_id +"/picture?type=square"} />
+                                                                                </li>
+                                                                        );
+                                                                    }
+                                                                })}
+                                                            </ul>
+                                                            <p className="td-modifier-p" style={{paddingLeft: "8px"}} id="td-spillere">+{item.players.length - Facebooks} flere</p>
+                                                        </div>
                                                 <p className="td-modifier-p" id="td-admin">{item.admin}</p>
                                             </li>
                                         );

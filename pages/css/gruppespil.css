@@ -1981,7 +1981,7 @@
   }
 
   #td-navn {
-    width: 300px;
+    width: 300px !important;
   }
 
   #td-synlighed {
@@ -2015,10 +2015,26 @@
     gap: 10px;
   }
 
+  .tl-players {
+    display: flex;
+    align-items: center;
+    gap: 0px;
+  }
+
+  .td-player-img {
+    border-radius: 50%;
+    width: 27px;
+    height: 27px;
+    border: 2px #fff solid;
+    overflow: hidden;
+    margin-right: -10px;
+    position: relative;
+  }
+
   .tl-element {
     display: flex;
     align-items: center;
-    padding: 10px 30px;
+    padding: 15px 30px;
     cursor: pointer;
     transition: 0.2s;
     border-bottom: var(--surface) 1px solid;

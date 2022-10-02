@@ -270,13 +270,59 @@
   .match-odds-cont {
       width: 100% !important;
   }
+  .forside-db:first-child {
+    flex-direction: row-reverse;
+  }
+  #fill-2 {
+    display: block !important;
+    height: 440px !important;
+  }
+  #fill-1 {
+    display: none !important;
+  }
+  #fill-4 {
+    display: block !important;
+    height: 440px !important;
+  }
+  #fill-3 {
+    display: none !important;
+  }
 }
 
 
-
-
-
-
+@media only screen and (max-width: 1360px) {
+  .forside-blob {
+    margin: 30px 25px !important;
+    margin-top: 0px !important;
+    width: calc(100% - 50px) !important;
+    border-radius: 30px !important;
+    position: relative !important;
+    top: 0px !important;
+  }
+  .forside-black-h1 {
+    font-size: 44px !important;
+    padding-bottom: 5px !important;
+  }
+  .forside-black-h3 {
+    font-size: 14px !important;
+  }
+  .forside-black-divider {
+    width: 45px !important;
+  }
+  .forside-black-p {
+    font-size: 14px !important;
+  }
+  .forside-blob #gradient-canvas {
+    border-radius: 30px !important;
+  }
+  .hero-container {
+    padding-bottom: 85px !important;
+  }
+  .forside-black-blob {
+    width: 400px !important;
+    height: 400px !important;
+  }
+}
 
 @media only screen and (max-width: 1250px) {
   .favorit-container-match {
@@ -344,6 +390,15 @@
   }
   .signup-logo {
     display: none !important;
+  }
+  .forside-black-blob {
+    width: 50% !important;
+    height: 50% !important;
+    position: relative !important;
+    right: 0 !important;
+    margin-left: 100px !important;
+    top: 0 !important;
+    margin-top: 50px !important;
   }
 }
 
@@ -488,6 +543,14 @@
   .gruppetable-navn2-el {
     width: 250px !important;
   }
+  .td-player-img {
+    width: 22px !important;
+    height: 22px !important;
+    margin-right: -8px !important;
+  }
+  #td-spillere {
+    padding-left: 3px !important;
+  }
   .gruppetable-navn2 {
     width: 250px !important;
   }
@@ -530,6 +593,18 @@
 @media only screen and (max-width: 835px) {
   .stage-indstillinger-sidebar {
     display: none !important;
+  }
+  .main-component-h-fix {
+    justify-content: center !important;
+  }
+  .hero-container {
+    padding: 0px 0px !important;
+    padding-top: 90px !important;
+    padding-bottom: 30px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
   }
   .gruppespil-kupon-1 {
     margin-right: 0px !important;
@@ -632,10 +707,6 @@
     font-size: 13px !important;
     padding: 12px 40px !important;
   }
-  .forside-blob {
-    margin: 30px 25px !important;
-    width: calc(100% - 50px) !important;
-  }
   .wrap-h1 {
     font-size: 36px !important;
   }
@@ -682,6 +753,10 @@
   .gs-container {
     padding: 20px 40px !important;
   }
+  .forside-black-blob {
+    width: 65% !important;
+    height: 65% !important;
+  }
 }
 
 @media only screen and (max-width: 730px) {
@@ -718,6 +793,7 @@
     font-size: 14px !important;
     line-height: 19px !important;
     padding: 10px !important;
+    max-width: 370px;
   }
   .cp-h3 {
     font-size: 13px !important;
@@ -734,19 +810,6 @@
   }
   .t6 {
     display: none !important;
-  }
-  .forside-black-h1 {
-    font-size: 44px !important;
-    padding-bottom: 5px !important;
-  }
-  .forside-black-h3 {
-    font-size: 14px !important;
-  }
-  .forside-black-divider {
-    width: 45px !important;
-  }
-  .forside-black-p {
-    font-size: 14px !important;
   }
 }
 
@@ -814,6 +877,9 @@
   }
   #t2 {
     display: none !important;
+  }
+  .gs-main-h1 {
+    font-size: 30px !important;
   }
   .gruppespil-div {
     width: 90% !important;
@@ -930,6 +996,30 @@
   #t3 {
     display: none !important;
   }
+  .forside-black-blob {
+    width: 95% !important;
+    height: 95% !important;
+    position: relative !important;
+    margin: auto !important;
+    right: 0 !important;
+    top: 0px !important;
+    margin-top: 50px !important;
+  }
+  .forside-db {
+    flex-direction: column !important;
+  }
+  .db-fill {
+    width: 325px !important;
+    margin-top: 30px;
+  }
+  .db-fill-inverted {
+    width: 325px !important;
+    margin-top: 30px;
+    margin-left: auto !important;
+  }
+  .forside-db {
+    flex-direction: column;
+  }
   .spacer {
     height: 75px !important;
   }
@@ -954,33 +1044,6 @@
   .td-box {
     padding: 20px 15px !important;
   }
-  .forside-db {
-    flex-direction: column;
-  }
-  #fill-2 {
-    display: block !important;
-    height: 440px !important;
-  }
-  #fill-1 {
-    display: none !important;
-  }
-  #fill-4 {
-    display: block !important;
-    height: 440px !important;
-  }
-  #fill-3 {
-    display: none !important;
-  }
-  .forside-black-blob {
-    width: 390px !important;
-    height: 390px !important;
-    position: relative !important;
-    margin: auto !important;
-    right: 0 !important;
-  }
-  .forside-black {
-    height: 900px !important;
-  }
   .fs-wrapper-h1 {
     font-size: 46px !important;
     line-height: 50px !important;
@@ -996,34 +1059,6 @@
   }
   .fs-container {
     padding-left: 50px !important;
-  }
-  .forside-blob {
-    border-radius: 30px !important;
-    position: relative !important;
-    top: 0px !important;
-  }
-  .forside-blob #gradient-canvas {
-    border-radius: 30px !important;
-  }
-  .main-component-h-fix {
-    justify-content: center !important;
-  }
-  .hero-container {
-    padding: 0px 0px !important;
-    padding-top: 0px !important;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-  }
-  .db-fill {
-    width: 325px !important;
-    margin-top: 30px;
-  }
-  .db-fill-inverted {
-    width: 325px !important;
-    margin-top: 30px;
-    margin-left: auto !important;
   }
   .db-h1 {
     font-size: 35px !important;
@@ -1060,7 +1095,7 @@
   .tl-element {
     padding: 10px !important;
   }
-  #td-synlighed {
+  #td-spillere {
     display: none !important;
   }
   .td-modifier-p {
@@ -1442,10 +1477,6 @@
     top: 5px !important;
     right: 5px !important;
   }
-  .hero-container {
-    padding-top: 90px !important;
-    padding-bottom: 10px !important;
-  }
   .main-block-container  {
     padding-top: 80px !important;
     padding-bottom: 10px !important;
@@ -1582,12 +1613,12 @@
     width: 85% !important;
   }
   .price-input-element {
-    padding: 4px 8px !important;
-    font-size: 12px !important;
+    padding: 6px 10px !important;
+    font-size: 13px !important;
   }
   .price-input-element-active {
-    padding: 5px 10px !important;
-    font-size: 12px !important;
+    padding: 6px 10px !important;
+    font-size: 13px !important;
   }
 }
 
@@ -1670,6 +1701,9 @@
   }
   .footer-section-nav {
     flex-direction: column !important;
+  }
+  #td-synlighed {
+    display: none !important;
   }
 }
 

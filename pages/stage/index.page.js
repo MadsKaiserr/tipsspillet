@@ -2404,7 +2404,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
                                     </div>
                                     <ul>
                                         {favoritter.length > 0 && favoritter.map((item) => {
-                                            if (item.name === item.name) {
+                                            if (item.type === "liga") {
                                                 return (
                                                     <li key={item.name + item.image} className="display" style={{width: "100%"}}>
                                                         <div className="stage-team">

@@ -9,7 +9,7 @@ import Header from './layout/header';
 import Router, { useRouter } from 'next/router'
 import { getUser } from "./services/authService";
  
-function Gruppespil ({data}) {
+function Gruppespil ({data, responseTime}) {
     const router = useRouter()
     const [items, setItems] = useState([]);
 
@@ -42,6 +42,7 @@ function Gruppespil ({data}) {
 
     useEffect(() => {
         console.log("AWS - Gruppespil:", data)
+        console.log(responseTime)
         if (!data.notFound) {
             var newArray = [];
             for (var q in data.allGruppespil) {
@@ -115,7 +116,7 @@ function Gruppespil ({data}) {
                             </div>
                         </div>
                     </div>
-                    <div className="td-box animation-fadetop" style={{margin: "auto"}}>
+                    <div className="td-box animation-fadetop" style={{margin: "auto", minHeight: "300px"}}>
                         <div className="td-top">
                             <div className="td-top-left">
                                 <div className="td-input-con">
@@ -153,6 +154,14 @@ function Gruppespil ({data}) {
                             <div className="match-loader display" id="stage-loader1"></div>
                             <ul className="td-table">
                                 {search.map((item) => {
+                                    var Facebooks = 0;
+                                    var facebookArray = [];
+                                    for (var u in item.players) {
+                                        if (item.players[u].fb_logo_id) {
+                                            Facebooks = Facebooks + 1;
+                                            facebookArray.push(item.players[u]);
+                                        }
+                                    }
                                     if (currentType === "offentlige") {
                                         if (item.synlighed === "offentlig") {
                                             return (
@@ -166,7 +175,20 @@ function Gruppespil ({data}) {
                                                                     <p className="td-modifier-p" style={{fontWeight: "500"}}>{item.name}</p>
                                                                 </div>
                                                                 <p className="td-modifier-p" id="td-synlighed">{item.synlighed}</p>
-                                                                <p className="td-modifier-p" id="td-spillere">{item.players.length}</p>
+                                                                <div className="tl-wrapper" id="td-spillere">
+                                                            <ul className="tl-players">
+                                                                {facebookArray.slice(0,5).map((spiller) => {
+                                                                    if (spiller.fb_logo_id) {
+                                                                        return (
+                                                                                <li key={spiller.fb_logo_id} className="td-player-img">
+                                                                                    <Image layout="fill" src={"http://graph.facebook.com/"+ spiller.fb_logo_id +"/picture?type=square"} />
+                                                                                </li>
+                                                                        );
+                                                                    }
+                                                                })}
+                                                            </ul>
+                                                            <p className="td-modifier-p" style={{paddingLeft: "8px"}} id="td-spillere">+{item.players.length - Facebooks} flere</p>
+                                                        </div>
                                                                 <p className="td-modifier-p" id="td-admin">{item.admin}</p>
                                                             </div>
                                                         </Link>
@@ -186,7 +208,20 @@ function Gruppespil ({data}) {
                                                                 <p className="td-modifier-p" style={{fontWeight: "500"}}>{item.name}</p>
                                                             </div>
                                                             <p className="td-modifier-p" id="td-synlighed">{item.synlighed}</p>
-                                                            <p className="td-modifier-p" id="td-spillere">{item.players.length}</p>
+                                                            <div className="tl-wrapper" id="td-spillere">
+                                                            <ul className="tl-players">
+                                                                {facebookArray.slice(0,5).map((spiller) => {
+                                                                    if (spiller.fb_logo_id) {
+                                                                        return (
+                                                                                <li key={spiller.fb_logo_id} className="td-player-img">
+                                                                                    <Image layout="fill" src={"http://graph.facebook.com/"+ spiller.fb_logo_id +"/picture?type=square"} />
+                                                                                </li>
+                                                                        );
+                                                                    }
+                                                                })}
+                                                            </ul>
+                                                            <p className="td-modifier-p" style={{paddingLeft: "8px"}} id="td-spillere">+{item.players.length - Facebooks} flere</p>
+                                                        </div>
                                                             <p className="td-modifier-p" id="td-admin">{item.admin}</p>
                                                             </div>
                                                         </Link>
@@ -206,7 +241,20 @@ function Gruppespil ({data}) {
                                                                 <p className="td-modifier-p" style={{fontWeight: "500"}}>{item.name}</p>
                                                             </div>
                                                             <p className="td-modifier-p" id="td-synlighed">{item.synlighed}</p>
-                                                            <p className="td-modifier-p" id="td-spillere">{item.players.length}</p>
+                                                            <div className="tl-wrapper" id="td-spillere">
+                                                            <ul className="tl-players">
+                                                                {facebookArray.slice(0,5).map((spiller) => {
+                                                                    if (spiller.fb_logo_id) {
+                                                                        return (
+                                                                                <li key={spiller.fb_logo_id} className="td-player-img">
+                                                                                    <Image layout="fill" src={"http://graph.facebook.com/"+ spiller.fb_logo_id +"/picture?type=square"} />
+                                                                                </li>
+                                                                        );
+                                                                    }
+                                                                })}
+                                                            </ul>
+                                                            <p className="td-modifier-p" style={{paddingLeft: "8px"}} id="td-spillere">+{item.players.length - Facebooks} flere</p>
+                                                        </div>
                                                             <p className="td-modifier-p" id="td-admin">{item.admin}</p>
                                                             </div>
                                                         </Link>
@@ -225,7 +273,20 @@ function Gruppespil ({data}) {
                                                             <p className="td-modifier-p" style={{fontWeight: "500"}}>{item.name}</p>
                                                         </div>
                                                         <p className="td-modifier-p" id="td-synlighed">{item.synlighed}</p>
-                                                        <p className="td-modifier-p" id="td-spillere">{item.players.length}</p>
+                                                        <div className="tl-wrapper" id="td-spillere">
+                                                            <ul className="tl-players">
+                                                                {facebookArray.slice(0,5).map((spiller) => {
+                                                                    if (spiller.fb_logo_id) {
+                                                                        return (
+                                                                                <li key={spiller.fb_logo_id} className="td-player-img">
+                                                                                    <Image layout="fill" src={"http://graph.facebook.com/"+ spiller.fb_logo_id +"/picture?type=square"} />
+                                                                                </li>
+                                                                        );
+                                                                    }
+                                                                })}
+                                                            </ul>
+                                                            <p className="td-modifier-p" style={{paddingLeft: "8px"}} id="td-spillere">+{item.players.length - Facebooks} flere</p>
+                                                        </div>
                                                         <p className="td-modifier-p" id="td-admin">{item.admin}</p>
                                                         </div>
                                                     </Link>
@@ -389,11 +450,16 @@ function Gruppespil ({data}) {
 }
 
 export async function getServerSideProps({ req, res }) {
+    res.setHeader(
+        'Cache-Control',
+        'public, s-maxage=10, stale-while-revalidate=11'
+    )
     const requestConfig = {
         headers: {
             "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
         }
     }
+    var time_1 =  new Date().getTime();
     var resp = await axios.get("https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/gruppespil", requestConfig);;
     var data = resp.data;
     if (!data) {
@@ -401,8 +467,10 @@ export async function getServerSideProps({ req, res }) {
           notFound: true,
         }
     }
+    var time_2 =  new Date().getTime();
+    var responseTime = time_2 - time_1 + " ms.";
     return {
-        props: { data },
+        props: { data, responseTime },
     }
 }
 export default Gruppespil;
