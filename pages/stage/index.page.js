@@ -18,6 +18,8 @@ import cookie from 'js-cookie'
 function StageForside ({gruppespil_data, spiller_data}) {
     const router = useRouter()
 
+    const [grLeagues, setGrLeagues] = useState([]);
+
     useEffect(() => {
         if (window.innerWidth < 1020) {
             if (document.getElementById("kupon")) {
@@ -241,12 +243,16 @@ function StageForside ({gruppespil_data, spiller_data}) {
         }
         if (new Date(selected).getDate() === new Date().getDate() && new Date(selected).toLocaleString("da-DK", {month: 'long'}) === new Date().toLocaleString("da-DK", {month: 'long'}) && new Date(selected).getFullYear === new Date().getFullYear) {
             setChosenDate("I dag");
+            document.getElementById("stage-main1").classList.remove("display-not");
         } else if (new Date(selected).getDate() === new Date().getDate() + 1 && new Date(selected).toLocaleString("da-DK", {month: 'long'}) === new Date().toLocaleString("da-DK", {month: 'long'}) && new Date(selected).getFullYear === new Date().getFullYear) {
             setChosenDate("I morgen")
+            document.getElementById("stage-main1").classList.add("display-not");
         } else if (new Date(selected).getDate() === new Date().getDate() - 1 && new Date(selected).toLocaleString("da-DK", {month: 'long'}) === new Date().toLocaleString("da-DK", {month: 'long'}) && new Date(selected).getFullYear === new Date().getFullYear) {
             setChosenDate("I går")
+            document.getElementById("stage-main1").classList.add("display-not");
         } else {
             setChosenDate(new Date(selected).getDate() + " " + new Date(selected).toLocaleString("da-DK", {month: 'long'}))
+            document.getElementById("stage-main1").classList.add("display-not");
         }
         leagueQuery = "fixtures/between/" + new Date(selected).getFullYear() + "-" + checkMonths + "-" + checkDays + "/" + new Date(selected).getFullYear() + "-" + checkMonths2 + "-" + checkDay2s;
         apiCall();
@@ -263,7 +269,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
         setLoadingText("Indlæser...");
     }, [selected])
 
-    function place3wayBet(btnId, matchId, homeTeam, visitorTeam, probability, oddsResult, oddsDate) {
+    function place3wayBet(leagueId, btnId, matchId, homeTeam, visitorTeam, probability, oddsResult, oddsDate) {
         if (!notUsableBtn.includes(btnId) && odds.length < 6) {
             document.getElementById(btnId).classList.add("odd-used");
             setNotUsableBtn([...notUsableBtn, "3Way Result"+btnId]);
@@ -280,7 +286,8 @@ function StageForside ({gruppespil_data, spiller_data}) {
                 "probability": probability,
                 "odds_type": "3Way Result",
                 "odds_result": oddsResult,
-                "odds_date": oddsDate
+                "odds_date": oddsDate,
+                "odds_liga": leagueId
             }
     
             setOdds([...odds, jsonNote]);
@@ -400,6 +407,14 @@ function StageForside ({gruppespil_data, spiller_data}) {
             var nowDate = new Date().getTime();
             var varighedDate = new Date(slutdato).getTime();
             var placeBetBTN = document.getElementById("placeBetBTN");
+            var allowed = true;
+            if (grLeagues.length > 0) {
+                for (var q in odds) {
+                    if (grLeagues.findIndex(obj => obj === odds[q].odds_liga) < 0) {
+                        allowed = false;
+                    }
+                }
+            }
             if (!(odds.length > 0) || !(cookie.get("activeGame")) || indsats <= 0) {
                 if (!(odds.length > 0)) {
                     setNotiMessage("error", "Ingen væddemål", "Du har ikke placeret nogle væddemål. Placer ét eller flere væddemål, for at lave din kuppon.");
@@ -413,6 +428,9 @@ function StageForside ({gruppespil_data, spiller_data}) {
                 }
             } else if (nowDate > varighedDate) {
                 setNotiMessage("error", "Gruppespil slut", "Gruppespillet er desværre allerede færdiggjort.");
+                placeBetBTN.innerHTML = "Placér bet";
+            } else if (allowed === false) {
+                setNotiMessage("error", "Liga ikke tilladt i dette gruppespil", "Administratoren har slået en liga, som du prøver at spille på, fra.");
                 placeBetBTN.innerHTML = "Placér bet";
             } else {
                 if (currentMoney < indsats || indsats < selectedGame["min_amount"] || indsats > selectedGame["max_amount"]) {
@@ -988,6 +1006,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
         console.log("AWS - Gruppespil:", gruppespil_data)
         if (gruppespil_data.admin !== undefined && gruppespil_data.admin !== null) {
             setActiveGameName(gruppespil_data.name);
+            setGrLeagues(gruppespil_data.ligaer);
             setSelectedGame(gruppespil_data);
             var slutStringDay = new Date(gruppespil_data.varighed).getDate();
             var slutStringMonth = new Date(gruppespil_data.varighed).getMonth() + 1;
@@ -1439,10 +1458,18 @@ function StageForside ({gruppespil_data, spiller_data}) {
     }
 
     function getMatches(type) {
+        var normLeagues = [8, 271, 274, 2, 564, 82, 301, 384];
+        var useLeagues = false;
+        if (grLeagues.length === 0) {
+            useLeagues = false;
+        } else {
+            useLeagues = true;
+        }
         var leagues = [];
         var favorites = [];
         var favorit3 = [];
         var newItems = items;
+        console.log("LIGAER", useLeagues)
         if (type === "kommende") {
             newItems = kommendeItems;
         }
@@ -1486,13 +1513,11 @@ function StageForside ({gruppespil_data, spiller_data}) {
         leagues.sort((a, b) => {
             return a.id - b.id;
         });
-        var prefLeagues = [8, 271, 274, 2, 564, 82, 301, 384];
-        prefLeagues.reverse();
-        for (var o in prefLeagues) {
+        for (var o in normLeagues) {
             if (leagues.length > 0) {
                 for (var p in leagues) {
                     var dupli = {};
-                    if (prefLeagues[o] === leagues[p].id) {
+                    if (normLeagues[o] === leagues[p].id) {
                         dupli = leagues[p];
                         var id = parseInt(p);
                         leagues.splice(id, 1);
@@ -1517,12 +1542,12 @@ function StageForside ({gruppespil_data, spiller_data}) {
             var dateParse = selectedDate;
             var favDiv = <svg xmlns="http://www.w3.org/2000/svg" className="leagueImg-none" viewBox="0 0 16 16">
             <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
-          </svg>;
+            </svg>;
             for (var q in favorit3) {
                 if (favorit3[q].id === league.season) {
                     favDiv = <svg xmlns="http://www.w3.org/2000/svg" className="leagueImg" viewBox="0 0 16 16">
                     <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
-                  </svg>;
+                    </svg>;
                 }
             }
             var getType = items;
@@ -1532,195 +1557,215 @@ function StageForside ({gruppespil_data, spiller_data}) {
             if (type === "favoritter") {
                 getType = favoritItems;
             }
-            return (
-                <>
-                    <li key={league.season + league.name} className="stage-kampe-section">
-                        <div className="stage-kampe-head" onClick={() => router.push("/stage/league?id=" + league.season)}>
-                            <p className="stage-league"><Image width="18px" height="18px" className="inline-img" src={league.img} alt="" />{league.name}{league.round !== undefined && <> | Runde {league.round}</>}</p>
-                        </div>
-                        <div className="stage-kampe">
-                            {loadingText}
-                            <ul>
-                            {getType.map(item => {
-                                var timeClass = "stage-kampe-minut";
-                                var starting_at_year = new Date(item.time.starting_at.timestamp * 1000).getDate();
-                                var yearClass = "display-not";
-                                if (starting_at_year === (new Date().getDate() + 1)) {
-                                    yearClass = "team-kampe-minut";
-                                }
-                                var liveView = "FT";
-                                var scoreLocal = "stage-stilling-p";
-                                var scoreVisitor = "stage-stilling-p";
-                                var teamNameLocal = "stage-kampe-p";
-                                var teamNameVisitor = "stage-kampe-p";
-                                if (item.time.status === "LIVE") {
-                                    liveView = item.time.minute;
-                                } else if (item.time.status === "NS") {
-                                    scoreLocal = "stage-stilling-p-none";
-                                    scoreVisitor = "stage-stilling-p-none";
-                                    var calcTime = item.time.starting_at.time;
-                                    calcTime = calcTime.slice(0,-3);
-                                    liveView = calcTime;
-                                } else if (item.time.status === "FT") {
-                                    if (item.winner_team_id === item.localteam_id) {
-                                        scoreLocal = "stage-stilling-p-fat";
-                                        teamNameLocal = "stage-kampe-p-fat";
-                                    } else if (item.winner_team_id === item.visitorteam_id) {
-                                        scoreVisitor = "stage-stilling-p-fat";
-                                        teamNameVisitor = "stage-kampe-p-fat";
-                                    }
-                                } else if (item.time.status === "CANCL") {
-                                    liveView = "AFLYST";
-                                } else if (item.time.status === "HT") {
-                                    liveView = "Pause";
-                                } else if (item.time.status === "ET") {
-                                    liveView = "EX. TID";
-                                } else if (item.time.status === "PEN_LIVE") {
-                                    liveView = "STR.";
-                                } else if (item.time.status === "BREAK") {
-                                    liveView = "Pause";
-                                } else if (item.time.status === "POSTP") {
-                                    liveView = "Udskudt";
-                                } else if (item.time.status === "INT") {
-                                    liveView = "Afbrudt";
-                                } else if (item.time.status === "ABAN") {
-                                    liveView = "Forladt";
-                                } else if (item.time.status === "ABAN") {
-                                    liveView = "Forladt";
-                                } else if (item.time.status === "SUSP") {
-                                    liveView = "SUSP.";
-                                } else if (item.time.status === "TBA") {
-                                    liveView = "TBA";
-                                } else if (item.time.status === "DELAYED") {
-                                    liveView = "Forsinket";
-                                } else if (item.time.status === "WO") {
-                                    liveView = "WO";
-                                } else if (item.time.status === "AU") {
-                                    liveView = "Afventer";
-                                } else if (item.time.status === "Deleted") {
-                                    liveView = "Slettet";
-                                }
-
-                                if (type === "kommende") {
-                                    if ((leagueParse !== 0 && item.league_id === leagueParse && item.odds.data.length > 0) || (leagueParse === 0 && item.league_id !== 2 && item.league_id !== 271 && item.league_id !== 8 && item.league_id !== 564 && item.league_id !== 301 && item.league_id !== 82 && item.league_id !== 573 && item.odds.data.length > 0) && (item.odds.data[0].bookmaker.data[0].odds.data[0] && item.odds.data[0].bookmaker.data[0].odds.data[1] && item.odds.data[0].bookmaker.data[0].odds.data[2])) {
-                                        var betButton1;
-                                        var betButton2;
-                                        var betButton3;
-                                        if (item.time.status === "NS") {
-                                        betButton1 = <button className="stage-kampe-odds-btn" id={item.id + "-" + "0"} onClick={() => place3wayBet(item.id + "-" + "0", item.id, item.localTeam.data.name, item.visitorTeam.data.name, item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[0].value, "0", item.time.starting_at.timestamp)}><p className="odd-data-p">1</p><p className="odd-data-h1">{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[0].value}</p></button>;
-                                        betButton2 = <button className="stage-kampe-odds-btn" id={item.id + "-" + "1"} onClick={() => place3wayBet(item.id + "-" + "1", item.id, item.localTeam.data.name, item.visitorTeam.data.name, item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[1].value, "1", item.time.starting_at.timestamp)}><p className="odd-data-p">X</p><p className="odd-data-h1">{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[1].value}</p></button>;
-                                        betButton3 = <button className="stage-kampe-odds-btn" id={item.id + "-" + "2"} onClick={() => place3wayBet(item.id + "-" + "2", item.id, item.localTeam.data.name, item.visitorTeam.data.name, item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[2].value, "2", item.time.starting_at.timestamp)}><p className="odd-data-p">2</p><p className="odd-data-h1">{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[2].value}</p></button>;
-                                    } else {
-                                        betButton1 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "0")}>{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[0].value}</button>;
-                                        betButton2 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "1")}>{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[1].value}</button>;
-                                        betButton3 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "2")}>{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[2].value}</button>;
+            if (useLeagues) {
+                if (grLeagues.findIndex(obj => obj === league.id) >= 0) {
+                    return (
+                        <>
+                            <li key={league.season + league.name} className="stage-kampe-section">
+                                <div className="stage-kampe-head" onClick={() => router.push("/stage/league?id=" + league.season)}>
+                                    <p className="stage-league">
+                                        <Image width="18px" height="18px" className="inline-img" src={league.img} alt="" />
+                                        {league.name}{league.round !== undefined && <> | Runde {league.round}</>}
+                                    </p>
+                                    {(JSON.parse(localStorage.getItem("favoritter"))).findIndex(obj => obj.id === league.season) >= 0 && <>
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="var(--primary)" width="17px" height="17px" viewBox="0 0 16 16">
+                                            <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                        </svg>
+                                    </>}
+                                </div>
+                                <div className="stage-kampe">
+                                    {loadingText}
+                                    <ul>
+                                    {getType.map(item => {
+                                        var timeClass = "stage-kampe-minut";
+                                        var starting_at_year = new Date(item.time.starting_at.timestamp * 1000).getDate();
+                                        var yearClass = "display-not";
+                                        if (starting_at_year === (new Date().getDate() + 1)) {
+                                            yearClass = "team-kampe-minut";
                                         }
-                    
-                                        if (sessionStorage.getItem("notUsableBtn") !== "" && sessionStorage.getItem("notUsableBtn") !== null && sessionStorage.getItem("notUsableBtn") !== undefined) {
-                                            for (var p in JSON.parse(sessionStorage.getItem("notUsableBtn"))) {
-                                                var removedPart = JSON.parse(sessionStorage.getItem("notUsableBtn"))[p].slice(11)
-                                                if (removedPart === item.id + "-" + "0") {
-                                                    betButton1 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "0")}><p className="odd-data-p">1</p><p className="odd-data-h1">{item.odds.data[0].bookmaker.data[0].odds.data[0].value}</p></button>;
-                                                }
-                                                if (removedPart === item.id + "-" + "1") {
-                                                    betButton2 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "1")}><p className="odd-data-p">X</p><p className="odd-data-h1">{item.odds.data[0].bookmaker.data[0].odds.data[1].value}</p></button>;
-                                                }
-                                                if (removedPart === item.id + "-" + "2") {
-                                                    betButton3 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "2")}><p className="odd-data-p">2</p><p className="odd-data-h1">{item.odds.data[0].bookmaker.data[0].odds.data[2].value}</p></button>;
-                                                }
+                                        var liveView = "FT";
+                                        var scoreLocal = "stage-stilling-p";
+                                        var scoreVisitor = "stage-stilling-p";
+                                        var teamNameLocal = "stage-kampe-p";
+                                        var teamNameVisitor = "stage-kampe-p";
+                                        if (item.time.status === "LIVE") {
+                                            liveView = item.time.minute;
+                                        } else if (item.time.status === "NS") {
+                                            scoreLocal = "stage-stilling-p-none";
+                                            scoreVisitor = "stage-stilling-p-none";
+                                            var calcTime = item.time.starting_at.time;
+                                            calcTime = calcTime.slice(0,-3);
+                                            liveView = calcTime;
+                                        } else if (item.time.status === "FT") {
+                                            if (item.winner_team_id === item.localteam_id) {
+                                                scoreLocal = "stage-stilling-p-fat";
+                                                teamNameLocal = "stage-kampe-p-fat";
+                                            } else if (item.winner_team_id === item.visitorteam_id) {
+                                                scoreVisitor = "stage-stilling-p-fat";
+                                                teamNameVisitor = "stage-kampe-p-fat";
                                             }
+                                        } else if (item.time.status === "CANCL") {
+                                            liveView = "AFLYST";
+                                        } else if (item.time.status === "HT") {
+                                            liveView = "Pause";
+                                        } else if (item.time.status === "ET") {
+                                            liveView = "EX. TID";
+                                        } else if (item.time.status === "PEN_LIVE") {
+                                            liveView = "STR.";
+                                        } else if (item.time.status === "BREAK") {
+                                            liveView = "Pause";
+                                        } else if (item.time.status === "POSTP") {
+                                            liveView = "Udskudt";
+                                        } else if (item.time.status === "INT") {
+                                            liveView = "Afbrudt";
+                                        } else if (item.time.status === "ABAN") {
+                                            liveView = "Forladt";
+                                        } else if (item.time.status === "ABAN") {
+                                            liveView = "Forladt";
+                                        } else if (item.time.status === "SUSP") {
+                                            liveView = "SUSP.";
+                                        } else if (item.time.status === "TBA") {
+                                            liveView = "TBA";
+                                        } else if (item.time.status === "DELAYED") {
+                                            liveView = "Forsinket";
+                                        } else if (item.time.status === "WO") {
+                                            liveView = "WO";
+                                        } else if (item.time.status === "AU") {
+                                            liveView = "Afventer";
+                                        } else if (item.time.status === "Deleted") {
+                                            liveView = "Slettet";
                                         }
-                                        const gameURL = "/stage/match?game=" + item.id;
-                                        return (
-                                            <li key={item.id}>
-                                                <div className="stage-match">
-                                                    <div className="stage-kampe-top">
-                                                        {item.time.status === "LIVE" &&
-                                                            <div className="stage-live-pulse"></div>
+        
+                                        if (type === "kommende") {
+                                            if ((leagueParse !== 0 && item.league_id === leagueParse && item.odds.data.length > 0) || (leagueParse === 0 && item.league_id !== 2 && item.league_id !== 271 && item.league_id !== 8 && item.league_id !== 564 && item.league_id !== 301 && item.league_id !== 82 && item.league_id !== 573 && item.odds.data.length > 0) && (item.odds.data[0].bookmaker.data[0].odds.data[0] && item.odds.data[0].bookmaker.data[0].odds.data[1] && item.odds.data[0].bookmaker.data[0].odds.data[2])) {
+                                                var betButton1;
+                                                var betButton2;
+                                                var betButton3;
+                                                if (item.time.status === "NS") {
+                                                betButton1 = <button className="stage-kampe-odds-btn" id={item.id + "-" + "0"} onClick={() => place3wayBet(item.league_id, item.id + "-" + "0", item.id, item.localTeam.data.name, item.visitorTeam.data.name, item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[0].value, "0", item.time.starting_at.timestamp)}><p className="odd-data-p">1</p><p className="odd-data-h1">{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[0].value}</p></button>;
+                                                betButton2 = <button className="stage-kampe-odds-btn" id={item.id + "-" + "1"} onClick={() => place3wayBet(item.league_id, item.id + "-" + "1", item.id, item.localTeam.data.name, item.visitorTeam.data.name, item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[1].value, "1", item.time.starting_at.timestamp)}><p className="odd-data-p">X</p><p className="odd-data-h1">{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[1].value}</p></button>;
+                                                betButton3 = <button className="stage-kampe-odds-btn" id={item.id + "-" + "2"} onClick={() => place3wayBet(item.league_id, item.id + "-" + "2", item.id, item.localTeam.data.name, item.visitorTeam.data.name, item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[2].value, "2", item.time.starting_at.timestamp)}><p className="odd-data-p">2</p><p className="odd-data-h1">{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[2].value}</p></button>;
+                                            } else {
+                                                betButton1 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "0")}>{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[0].value}</button>;
+                                                betButton2 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "1")}>{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[1].value}</button>;
+                                                betButton3 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "2")}>{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[2].value}</button>;
+                                                }
+                            
+                                                if (sessionStorage.getItem("notUsableBtn") !== "" && sessionStorage.getItem("notUsableBtn") !== null && sessionStorage.getItem("notUsableBtn") !== undefined) {
+                                                    for (var p in JSON.parse(sessionStorage.getItem("notUsableBtn"))) {
+                                                        var removedPart = JSON.parse(sessionStorage.getItem("notUsableBtn"))[p].slice(11)
+                                                        if (removedPart === item.id + "-" + "0") {
+                                                            betButton1 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "0")}><p className="odd-data-p">1</p><p className="odd-data-h1">{item.odds.data[0].bookmaker.data[0].odds.data[0].value}</p></button>;
                                                         }
-                                                        {item.time.status === "HT" &&
-                                                            <div className="stage-live-pulse"></div>
+                                                        if (removedPart === item.id + "-" + "1") {
+                                                            betButton2 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "1")}><p className="odd-data-p">X</p><p className="odd-data-h1">{item.odds.data[0].bookmaker.data[0].odds.data[1].value}</p></button>;
                                                         }
-                                                    </div>
-                                                    <div className="stage-indhold-down">
-                                                    <Link href={gameURL}>
-                                                        <div className="stage-kampe-hold">
-                                                            {item.time.status === "LIVE" &&
-                                                                <div className="stage-live">
-                                                                    <div className="stage-live-con">
-                                                                        <p className="stage-kampe-minut stage-kampe-minut-active">{liveView}</p>
-                                                                        <p className="stage-blink">&apos;</p>
-                                                                    </div>
-                                                                    <div className="stage-live-scores">
-                                                                        <p className="stage-stilling-p">{item.scores.localteam_score}</p>
-                                                                        <p className="stage-stilling-p">{item.scores.visitorteam_score}</p>
-                                                                    </div>
-                                                                </div>
-                                                            }
-                                                            {item.time.status === "HT" &&
-                                                                <div className="stage-live">
-                                                                    <div className="stage-live-con">
-                                                                        <p className="stage-kampe-minut stage-kampe-minut-active">{liveView}</p>
-                                                                    </div>
-                                                                    <div className="stage-live-scores">
-                                                                        <p className="stage-stilling-p">{item.scores.localteam_score}</p>
-                                                                        <p className="stage-stilling-p">{item.scores.visitorteam_score}</p>
-                                                                    </div>
-                                                                </div>
-                                                            }
-                                                            {item.time.status === "FT" &&
-                                                                <>
-                                                                    <div className="stage-time-small">
-                                                                        <div className="stage-time-con">
-                                                                            <p className="stage-kampe-minut">FT</p>
-                                                                        </div>
-                                                                        <div className="stage-time-scores">
-                                                                            <p className={scoreLocal}>{item.scores.localteam_score}</p>
-                                                                            <p className={scoreVisitor}>{item.scores.visitorteam_score}</p>
-                                                                        </div>
-                                                                    </div>
-                                                                </>
-                                                            }
-                                                            {item.time.status === "AET" &&
-                                                                <>
-                                                                    <div className="stage-time-small">
-                                                                        <div className="stage-time-con">
-                                                                            <p className="stage-kampe-minut">EFS</p>
-                                                                        </div>
-                                                                        <div className="stage-time-scores">
-                                                                            <p className={scoreLocal}>{item.scores.localteam_score}</p>
-                                                                            <p className={scoreVisitor}>{item.scores.visitorteam_score}</p>
-                                                                        </div>
-                                                                    </div>
-                                                                </>
-                                                            }
-                                                            {item.time.status === "FT_PEN" &&
-                                                                <>
-                                                                    <div className="stage-time-small">
-                                                                        <div className="stage-time-con">
-                                                                            <p className="stage-kampe-minut">Str.</p>
-                                                                        </div>
-                                                                        <div className="stage-time-scores">
-                                                                            <p className={scoreLocal}>{item.scores.localteam_score}</p>
-                                                                            <p className={scoreVisitor}>{item.scores.visitorteam_score}</p>
-                                                                        </div>
-                                                                    </div>
-                                                                </>
-                                                            }
-                                                            {item.time.status === "POSTP" &&
-                                                                <>
-                                                                    {item.scores.visitorteam_score &&
-                                                                        <div className="stage-time">
-                                                                            <div className="stage-time-con">
-                                                                                <p className="stage-kampe-minut">{liveView}</p>
+                                                        if (removedPart === item.id + "-" + "2") {
+                                                            betButton3 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "2")}><p className="odd-data-p">2</p><p className="odd-data-h1">{item.odds.data[0].bookmaker.data[0].odds.data[2].value}</p></button>;
+                                                        }
+                                                    }
+                                                }
+                                                const gameURL = "/stage/match?game=" + item.id;
+                                                return (
+                                                    <li key={item.id}>
+                                                        <div className="stage-match">
+                                                            <div className="stage-kampe-top">
+                                                                {item.time.status === "LIVE" &&
+                                                                    <div className="stage-live-pulse"></div>
+                                                                }
+                                                                {item.time.status === "HT" &&
+                                                                    <div className="stage-live-pulse"></div>
+                                                                }
+                                                            </div>
+                                                            <div className="stage-indhold-down">
+                                                            <Link href={gameURL}>
+                                                                <div className="stage-kampe-hold">
+                                                                    {item.time.status === "LIVE" &&
+                                                                        <div className="stage-live">
+                                                                            <div className="stage-live-con">
+                                                                                <p className="stage-kampe-minut stage-kampe-minut-active">{liveView}</p>
+                                                                                <p className="stage-blink">&apos;</p>
                                                                             </div>
-                                                                            <div className="stage-time-scores">
-                                                                                <p className={scoreLocal}>{item.scores.localteam_score}</p>
-                                                                                <p className={scoreVisitor}>{item.scores.visitorteam_score}</p>
+                                                                            <div className="stage-live-scores">
+                                                                                <p className="stage-stilling-p">{item.scores.localteam_score}</p>
+                                                                                <p className="stage-stilling-p">{item.scores.visitorteam_score}</p>
                                                                             </div>
                                                                         </div>
                                                                     }
-                                                                    {!item.scores.visitorteam_score &&
+                                                                    {item.time.status === "HT" &&
+                                                                        <div className="stage-live">
+                                                                            <div className="stage-live-con">
+                                                                                <p className="stage-kampe-minut stage-kampe-minut-active">{liveView}</p>
+                                                                            </div>
+                                                                            <div className="stage-live-scores">
+                                                                                <p className="stage-stilling-p">{item.scores.localteam_score}</p>
+                                                                                <p className="stage-stilling-p">{item.scores.visitorteam_score}</p>
+                                                                            </div>
+                                                                        </div>
+                                                                    }
+                                                                    {item.time.status === "FT" &&
+                                                                        <>
+                                                                            <div className="stage-time-small">
+                                                                                <div className="stage-time-con">
+                                                                                    <p className="stage-kampe-minut">FT</p>
+                                                                                </div>
+                                                                                <div className="stage-time-scores">
+                                                                                    <p className={scoreLocal}>{item.scores.localteam_score}</p>
+                                                                                    <p className={scoreVisitor}>{item.scores.visitorteam_score}</p>
+                                                                                </div>
+                                                                            </div>
+                                                                        </>
+                                                                    }
+                                                                    {item.time.status === "AET" &&
+                                                                        <>
+                                                                            <div className="stage-time-small">
+                                                                                <div className="stage-time-con">
+                                                                                    <p className="stage-kampe-minut">EFS</p>
+                                                                                </div>
+                                                                                <div className="stage-time-scores">
+                                                                                    <p className={scoreLocal}>{item.scores.localteam_score}</p>
+                                                                                    <p className={scoreVisitor}>{item.scores.visitorteam_score}</p>
+                                                                                </div>
+                                                                            </div>
+                                                                        </>
+                                                                    }
+                                                                    {item.time.status === "FT_PEN" &&
+                                                                        <>
+                                                                            <div className="stage-time-small">
+                                                                                <div className="stage-time-con">
+                                                                                    <p className="stage-kampe-minut">Str.</p>
+                                                                                </div>
+                                                                                <div className="stage-time-scores">
+                                                                                    <p className={scoreLocal}>{item.scores.localteam_score}</p>
+                                                                                    <p className={scoreVisitor}>{item.scores.visitorteam_score}</p>
+                                                                                </div>
+                                                                            </div>
+                                                                        </>
+                                                                    }
+                                                                    {item.time.status === "POSTP" &&
+                                                                        <>
+                                                                            {item.scores.visitorteam_score &&
+                                                                                <div className="stage-time">
+                                                                                    <div className="stage-time-con">
+                                                                                        <p className="stage-kampe-minut">{liveView}</p>
+                                                                                    </div>
+                                                                                    <div className="stage-time-scores">
+                                                                                        <p className={scoreLocal}>{item.scores.localteam_score}</p>
+                                                                                        <p className={scoreVisitor}>{item.scores.visitorteam_score}</p>
+                                                                                    </div>
+                                                                                </div>
+                                                                            }
+                                                                            {!item.scores.visitorteam_score &&
+                                                                                <div className="stage-time-small">
+                                                                                    <div className="stage-time-con">
+                                                                                        <p className="stage-kampe-minut">{liveView}</p>
+                                                                                        <p className={yearClass}>I morgen</p>
+                                                                                    </div>
+                                                                                </div>
+                                                                            }
+                                                                        </>
+                                                                    }
+                                                                    {item.time.status === "NS" &&
                                                                         <div className="stage-time-small">
                                                                             <div className="stage-time-con">
                                                                                 <p className="stage-kampe-minut">{liveView}</p>
@@ -1728,168 +1773,168 @@ function StageForside ({gruppespil_data, spiller_data}) {
                                                                             </div>
                                                                         </div>
                                                                     }
-                                                                </>
-                                                            }
-                                                            {item.time.status === "NS" &&
-                                                                <div className="stage-time-small">
-                                                                    <div className="stage-time-con">
-                                                                        <p className="stage-kampe-minut">{liveView}</p>
-                                                                        <p className={yearClass}>I morgen</p>
-                                                                    </div>
-                                                                </div>
-                                                            }
-                                                            <div className="stage-kampe-hold-div">
-                                                                <div className="stage-kampe-team">
-                                                                    <div className="stage-img">
-                                                                        <Image layout="fill" alt="." src={item.localTeam.data.logo_path} />
-                                                                    </div>
-                                                                    <p className={teamNameLocal}>{item.localTeam.data.name}</p>
-                                                                </div>
-                                                                <div className="stage-kampe-team">
-                                                                    <div className="stage-img">
-                                                                        <Image layout="fill" alt="." src={item.visitorTeam.data.logo_path} />
-                                                                    </div>
-                                                                    <p className={teamNameVisitor}>{item.visitorTeam.data.name}</p>
-                                                                </div>
-                                                            </div>
-                                                            </div>
-                                                        </Link>
-                                                        {item.time.status === "NS" &&
-                                                            <div className="stage-kampe-odds">
-                                                                {betButton1}
-                                                                {betButton2}
-                                                                {betButton3}
-                                                            </div>
-                                                        }
-                                                        {item.time.status !== "NS" &&
-                                                            <div className="stage-kampe-odds-fix">
-
-                                                            </div>
-                                                        }
-                                                        </div>
-                                                    </div>
-                                            </li>);
-                                    } else return;
-                                } else if (type === "favoritter") {
-                                    if ((leagueParse !== 0 && item.league_id === leagueParse && item.odds.data.length > 0) || (leagueParse === 0 && item.league_id !== 2 && item.league_id !== 271 && item.league_id !== 8 && item.league_id !== 564 && item.league_id !== 301 && item.league_id !== 82 && item.league_id !== 573 && item.odds.data.length > 0) && (item.odds.data[0].bookmaker.data[0].odds.data[0] && item.odds.data[0].bookmaker.data[0].odds.data[1] && item.odds.data[0].bookmaker.data[0].odds.data[2])) {
-                                        var betButton1;
-                                        var betButton2;
-                                        var betButton3;
-                                        if (item.time.status === "NS") {
-                                        betButton1 = <button className="stage-kampe-odds-btn" id={item.id + "-" + "0"} onClick={() => place3wayBet(item.id + "-" + "0", item.id, item.localTeam.data.name, item.visitorTeam.data.name, item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[0].value, "0", item.time.starting_at.timestamp)}><p className="odd-data-p">1</p><p className="odd-data-h1">{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[0].value}</p></button>;
-                                        betButton2 = <button className="stage-kampe-odds-btn" id={item.id + "-" + "1"} onClick={() => place3wayBet(item.id + "-" + "1", item.id, item.localTeam.data.name, item.visitorTeam.data.name, item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[1].value, "1", item.time.starting_at.timestamp)}><p className="odd-data-p">X</p><p className="odd-data-h1">{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[1].value}</p></button>;
-                                        betButton3 = <button className="stage-kampe-odds-btn" id={item.id + "-" + "2"} onClick={() => place3wayBet(item.id + "-" + "2", item.id, item.localTeam.data.name, item.visitorTeam.data.name, item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[2].value, "2", item.time.starting_at.timestamp)}><p className="odd-data-p">2</p><p className="odd-data-h1">{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[2].value}</p></button>;
-                                    } else {
-                                        betButton1 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "0")}>{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[0].value}</button>;
-                                        betButton2 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "1")}>{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[1].value}</button>;
-                                        betButton3 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "2")}>{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[2].value}</button>;
-                                        }
-                    
-                                        if (sessionStorage.getItem("notUsableBtn") !== "" && sessionStorage.getItem("notUsableBtn") !== null && sessionStorage.getItem("notUsableBtn") !== undefined) {
-                                            for (var p in JSON.parse(sessionStorage.getItem("notUsableBtn"))) {
-                                                var removedPart = JSON.parse(sessionStorage.getItem("notUsableBtn"))[p].slice(11)
-                                                if (removedPart === item.id + "-" + "0") {
-                                                    betButton1 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "0")}><p className="odd-data-p">1</p><p className="odd-data-h1">{item.odds.data[0].bookmaker.data[0].odds.data[0].value}</p></button>;
-                                                }
-                                                if (removedPart === item.id + "-" + "1") {
-                                                    betButton2 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "1")}><p className="odd-data-p">X</p><p className="odd-data-h1">{item.odds.data[0].bookmaker.data[0].odds.data[1].value}</p></button>;
-                                                }
-                                                if (removedPart === item.id + "-" + "2") {
-                                                    betButton3 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "2")}><p className="odd-data-p">2</p><p className="odd-data-h1">{item.odds.data[0].bookmaker.data[0].odds.data[2].value}</p></button>;
-                                                }
-                                            }
-                                        }
-                                        const gameURL = "/stage/match?game=" + item.id;
-                                        return (
-                                            <li key={item.id}>
-                                                <div className="stage-match">
-                                                    <div className="stage-kampe-top">
-                                                        {item.time.status === "LIVE" &&
-                                                            <div className="stage-live-pulse"></div>
-                                                        }
-                                                        {item.time.status === "HT" &&
-                                                            <div className="stage-live-pulse"></div>
-                                                        }
-                                                    </div>
-                                                    <div className="stage-indhold-down">
-                                                    <Link href={gameURL}>
-                                                        <div className="stage-kampe-hold">
-                                                            {item.time.status === "LIVE" &&
-                                                                <div className="stage-live">
-                                                                    <div className="stage-live-con">
-                                                                        <p className="stage-kampe-minut stage-kampe-minut-active">{liveView}</p>
-                                                                        <p className="stage-blink">&apos;</p>
-                                                                    </div>
-                                                                    <div className="stage-live-scores">
-                                                                        <p className="stage-stilling-p">{item.scores.localteam_score}</p>
-                                                                        <p className="stage-stilling-p">{item.scores.visitorteam_score}</p>
-                                                                    </div>
-                                                                </div>
-                                                            }
-                                                            {item.time.status === "HT" &&
-                                                                <div className="stage-live">
-                                                                    <div className="stage-live-con">
-                                                                        <p className="stage-kampe-minut stage-kampe-minut-active">{liveView}</p>
-                                                                    </div>
-                                                                    <div className="stage-live-scores">
-                                                                        <p className="stage-stilling-p">{item.scores.localteam_score}</p>
-                                                                        <p className="stage-stilling-p">{item.scores.visitorteam_score}</p>
-                                                                    </div>
-                                                                </div>
-                                                            }
-                                                            {item.time.status === "FT" &&
-                                                                <>
-                                                                    <div className="stage-time-small">
-                                                                        <div className="stage-time-con">
-                                                                            <p className="stage-kampe-minut">FT</p>
-                                                                        </div>
-                                                                        <div className="stage-time-scores">
-                                                                            <p className={scoreLocal}>{item.scores.localteam_score}</p>
-                                                                            <p className={scoreVisitor}>{item.scores.visitorteam_score}</p>
-                                                                        </div>
-                                                                    </div>
-                                                                </>
-                                                            }
-                                                            {item.time.status === "AET" &&
-                                                                <>
-                                                                    <div className="stage-time-small">
-                                                                        <div className="stage-time-con">
-                                                                            <p className="stage-kampe-minut">EFS</p>
-                                                                        </div>
-                                                                        <div className="stage-time-scores">
-                                                                            <p className={scoreLocal}>{item.scores.localteam_score}</p>
-                                                                            <p className={scoreVisitor}>{item.scores.visitorteam_score}</p>
-                                                                        </div>
-                                                                    </div>
-                                                                </>
-                                                            }
-                                                            {item.time.status === "FT_PEN" &&
-                                                                <>
-                                                                    <div className="stage-time-small">
-                                                                        <div className="stage-time-con">
-                                                                            <p className="stage-kampe-minut">Str.</p>
-                                                                        </div>
-                                                                        <div className="stage-time-scores">
-                                                                            <p className={scoreLocal}>{item.scores.localteam_score}</p>
-                                                                            <p className={scoreVisitor}>{item.scores.visitorteam_score}</p>
-                                                                        </div>
-                                                                    </div>
-                                                                </>
-                                                            }
-                                                            {item.time.status === "POSTP" &&
-                                                                <>
-                                                                    {item.scores.visitorteam_score &&
-                                                                        <div className="stage-time">
-                                                                            <div className="stage-time-con">
-                                                                                <p className="stage-kampe-minut">{liveView}</p>
+                                                                    <div className="stage-kampe-hold-div">
+                                                                        <div className="stage-kampe-team">
+                                                                            <div className="stage-img">
+                                                                                <Image layout="fill" alt="." src={item.localTeam.data.logo_path} />
                                                                             </div>
-                                                                            <div className="stage-time-scores">
-                                                                                <p className={scoreLocal}>{item.scores.localteam_score}</p>
-                                                                                <p className={scoreVisitor}>{item.scores.visitorteam_score}</p>
+                                                                            <p className={teamNameLocal}>{item.localTeam.data.name}</p>
+                                                                        </div>
+                                                                        <div className="stage-kampe-team">
+                                                                            <div className="stage-img">
+                                                                                <Image layout="fill" alt="." src={item.visitorTeam.data.logo_path} />
+                                                                            </div>
+                                                                            <p className={teamNameVisitor}>{item.visitorTeam.data.name}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                    </div>
+                                                                </Link>
+                                                                {item.time.status === "NS" &&
+                                                                    <div className="stage-kampe-odds">
+                                                                        {betButton1}
+                                                                        {betButton2}
+                                                                        {betButton3}
+                                                                    </div>
+                                                                }
+                                                                {item.time.status !== "NS" &&
+                                                                    <div className="stage-kampe-odds-fix">
+        
+                                                                    </div>
+                                                                }
+                                                                </div>
+                                                            </div>
+                                                    </li>);
+                                            } else return;
+                                        } else if (type === "favoritter") {
+                                            if ((leagueParse !== 0 && item.league_id === leagueParse && item.odds.data.length > 0) || (leagueParse === 0 && item.league_id !== 2 && item.league_id !== 271 && item.league_id !== 8 && item.league_id !== 564 && item.league_id !== 301 && item.league_id !== 82 && item.league_id !== 573 && item.odds.data.length > 0) && (item.odds.data[0].bookmaker.data[0].odds.data[0] && item.odds.data[0].bookmaker.data[0].odds.data[1] && item.odds.data[0].bookmaker.data[0].odds.data[2])) {
+                                                var betButton1;
+                                                var betButton2;
+                                                var betButton3;
+                                                if (item.time.status === "NS") {
+                                                betButton1 = <button className="stage-kampe-odds-btn" id={item.id + "-" + "0"} onClick={() => place3wayBet(item.league_id, item.id + "-" + "0", item.id, item.localTeam.data.name, item.visitorTeam.data.name, item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[0].value, "0", item.time.starting_at.timestamp)}><p className="odd-data-p">1</p><p className="odd-data-h1">{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[0].value}</p></button>;
+                                                betButton2 = <button className="stage-kampe-odds-btn" id={item.id + "-" + "1"} onClick={() => place3wayBet(item.league_id, item.id + "-" + "1", item.id, item.localTeam.data.name, item.visitorTeam.data.name, item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[1].value, "1", item.time.starting_at.timestamp)}><p className="odd-data-p">X</p><p className="odd-data-h1">{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[1].value}</p></button>;
+                                                betButton3 = <button className="stage-kampe-odds-btn" id={item.id + "-" + "2"} onClick={() => place3wayBet(item.league_id, item.id + "-" + "2", item.id, item.localTeam.data.name, item.visitorTeam.data.name, item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[2].value, "2", item.time.starting_at.timestamp)}><p className="odd-data-p">2</p><p className="odd-data-h1">{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[2].value}</p></button>;
+                                            } else {
+                                                betButton1 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "0")}>{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[0].value}</button>;
+                                                betButton2 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "1")}>{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[1].value}</button>;
+                                                betButton3 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "2")}>{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[2].value}</button>;
+                                                }
+                            
+                                                if (sessionStorage.getItem("notUsableBtn") !== "" && sessionStorage.getItem("notUsableBtn") !== null && sessionStorage.getItem("notUsableBtn") !== undefined) {
+                                                    for (var p in JSON.parse(sessionStorage.getItem("notUsableBtn"))) {
+                                                        var removedPart = JSON.parse(sessionStorage.getItem("notUsableBtn"))[p].slice(11)
+                                                        if (removedPart === item.id + "-" + "0") {
+                                                            betButton1 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "0")}><p className="odd-data-p">1</p><p className="odd-data-h1">{item.odds.data[0].bookmaker.data[0].odds.data[0].value}</p></button>;
+                                                        }
+                                                        if (removedPart === item.id + "-" + "1") {
+                                                            betButton2 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "1")}><p className="odd-data-p">X</p><p className="odd-data-h1">{item.odds.data[0].bookmaker.data[0].odds.data[1].value}</p></button>;
+                                                        }
+                                                        if (removedPart === item.id + "-" + "2") {
+                                                            betButton3 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "2")}><p className="odd-data-p">2</p><p className="odd-data-h1">{item.odds.data[0].bookmaker.data[0].odds.data[2].value}</p></button>;
+                                                        }
+                                                    }
+                                                }
+                                                const gameURL = "/stage/match?game=" + item.id;
+                                                return (
+                                                    <li key={item.id}>
+                                                        <div className="stage-match">
+                                                            <div className="stage-kampe-top">
+                                                                {item.time.status === "LIVE" &&
+                                                                    <div className="stage-live-pulse"></div>
+                                                                }
+                                                                {item.time.status === "HT" &&
+                                                                    <div className="stage-live-pulse"></div>
+                                                                }
+                                                            </div>
+                                                            <div className="stage-indhold-down">
+                                                            <Link href={gameURL}>
+                                                                <div className="stage-kampe-hold">
+                                                                    {item.time.status === "LIVE" &&
+                                                                        <div className="stage-live">
+                                                                            <div className="stage-live-con">
+                                                                                <p className="stage-kampe-minut stage-kampe-minut-active">{liveView}</p>
+                                                                                <p className="stage-blink">&apos;</p>
+                                                                            </div>
+                                                                            <div className="stage-live-scores">
+                                                                                <p className="stage-stilling-p">{item.scores.localteam_score}</p>
+                                                                                <p className="stage-stilling-p">{item.scores.visitorteam_score}</p>
                                                                             </div>
                                                                         </div>
                                                                     }
-                                                                    {!item.scores.visitorteam_score &&
+                                                                    {item.time.status === "HT" &&
+                                                                        <div className="stage-live">
+                                                                            <div className="stage-live-con">
+                                                                                <p className="stage-kampe-minut stage-kampe-minut-active">{liveView}</p>
+                                                                            </div>
+                                                                            <div className="stage-live-scores">
+                                                                                <p className="stage-stilling-p">{item.scores.localteam_score}</p>
+                                                                                <p className="stage-stilling-p">{item.scores.visitorteam_score}</p>
+                                                                            </div>
+                                                                        </div>
+                                                                    }
+                                                                    {item.time.status === "FT" &&
+                                                                        <>
+                                                                            <div className="stage-time-small">
+                                                                                <div className="stage-time-con">
+                                                                                    <p className="stage-kampe-minut">FT</p>
+                                                                                </div>
+                                                                                <div className="stage-time-scores">
+                                                                                    <p className={scoreLocal}>{item.scores.localteam_score}</p>
+                                                                                    <p className={scoreVisitor}>{item.scores.visitorteam_score}</p>
+                                                                                </div>
+                                                                            </div>
+                                                                        </>
+                                                                    }
+                                                                    {item.time.status === "AET" &&
+                                                                        <>
+                                                                            <div className="stage-time-small">
+                                                                                <div className="stage-time-con">
+                                                                                    <p className="stage-kampe-minut">EFS</p>
+                                                                                </div>
+                                                                                <div className="stage-time-scores">
+                                                                                    <p className={scoreLocal}>{item.scores.localteam_score}</p>
+                                                                                    <p className={scoreVisitor}>{item.scores.visitorteam_score}</p>
+                                                                                </div>
+                                                                            </div>
+                                                                        </>
+                                                                    }
+                                                                    {item.time.status === "FT_PEN" &&
+                                                                        <>
+                                                                            <div className="stage-time-small">
+                                                                                <div className="stage-time-con">
+                                                                                    <p className="stage-kampe-minut">Str.</p>
+                                                                                </div>
+                                                                                <div className="stage-time-scores">
+                                                                                    <p className={scoreLocal}>{item.scores.localteam_score}</p>
+                                                                                    <p className={scoreVisitor}>{item.scores.visitorteam_score}</p>
+                                                                                </div>
+                                                                            </div>
+                                                                        </>
+                                                                    }
+                                                                    {item.time.status === "POSTP" &&
+                                                                        <>
+                                                                            {item.scores.visitorteam_score &&
+                                                                                <div className="stage-time">
+                                                                                    <div className="stage-time-con">
+                                                                                        <p className="stage-kampe-minut">{liveView}</p>
+                                                                                    </div>
+                                                                                    <div className="stage-time-scores">
+                                                                                        <p className={scoreLocal}>{item.scores.localteam_score}</p>
+                                                                                        <p className={scoreVisitor}>{item.scores.visitorteam_score}</p>
+                                                                                    </div>
+                                                                                </div>
+                                                                            }
+                                                                            {!item.scores.visitorteam_score &&
+                                                                                <div className="stage-time-small">
+                                                                                    <div className="stage-time-con">
+                                                                                        <p className="stage-kampe-minut">{liveView}</p>
+                                                                                        <p className={yearClass}>I morgen</p>
+                                                                                    </div>
+                                                                                </div>
+                                                                            }
+                                                                        </>
+                                                                    }
+                                                                    {item.time.status === "NS" &&
                                                                         <div className="stage-time-small">
                                                                             <div className="stage-time-con">
                                                                                 <p className="stage-kampe-minut">{liveView}</p>
@@ -1897,229 +1942,818 @@ function StageForside ({gruppespil_data, spiller_data}) {
                                                                             </div>
                                                                         </div>
                                                                     }
-                                                                </>
-                                                            }
-                                                            {item.time.status === "NS" &&
-                                                                <div className="stage-time-small">
-                                                                    <div className="stage-time-con">
-                                                                        <p className="stage-kampe-minut">{liveView}</p>
-                                                                        <p className={yearClass}>I morgen</p>
+                                                                    <div className="stage-kampe-hold-div">
+                                                                        <div className="stage-kampe-team">
+                                                                            <div className="stage-img">
+                                                                                <Image layout="fill" alt="." src={item.localTeam.data.logo_path} />
+                                                                            </div>
+                                                                            <p className={teamNameLocal}>{item.localTeam.data.name}</p>
+                                                                        </div>
+                                                                        <div className="stage-kampe-team">
+                                                                            <div className="stage-img">
+                                                                                <Image layout="fill" alt="." src={item.visitorTeam.data.logo_path} />
+                                                                            </div>
+                                                                            <p className={teamNameVisitor}>{item.visitorTeam.data.name}</p>
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                            }
-                                                            <div className="stage-kampe-hold-div">
-                                                                <div className="stage-kampe-team">
-                                                                    <div className="stage-img">
-                                                                        <Image layout="fill" alt="." src={item.localTeam.data.logo_path} />
                                                                     </div>
-                                                                    <p className={teamNameLocal}>{item.localTeam.data.name}</p>
-                                                                </div>
-                                                                <div className="stage-kampe-team">
-                                                                    <div className="stage-img">
-                                                                        <Image layout="fill" alt="." src={item.visitorTeam.data.logo_path} />
+                                                                </Link>
+                                                                {item.time.status === "NS" &&
+                                                                    <div className="stage-kampe-odds">
+                                                                        {betButton1}
+                                                                        {betButton2}
+                                                                        {betButton3}
                                                                     </div>
-                                                                    <p className={teamNameVisitor}>{item.visitorTeam.data.name}</p>
+                                                                }
+                                                                {item.time.status !== "NS" &&
+                                                                    <div className="stage-kampe-odds-fix">
+        
+                                                                    </div>
+                                                                }
                                                                 </div>
                                                             </div>
-                                                            </div>
-                                                        </Link>
-                                                        {item.time.status === "NS" &&
-                                                            <div className="stage-kampe-odds">
-                                                                {betButton1}
-                                                                {betButton2}
-                                                                {betButton3}
-                                                            </div>
-                                                        }
-                                                        {item.time.status !== "NS" &&
-                                                            <div className="stage-kampe-odds-fix">
-
-                                                            </div>
-                                                        }
-                                                        </div>
-                                                    </div>
-                                            </li>);
-                                    } else return;
-                                } else {
-                                    if ((leagueParse !== 0 && item.league_id === leagueParse && item.time.starting_at.date === dateParse && item.odds.data.length > 0) || (leagueParse === 0 && item.league_id !== 2 && item.league_id !== 271 && item.league_id !== 8 && item.league_id !== 564 && item.league_id !== 301 && item.league_id !== 82 && item.league_id !== 573 && item.time.starting_at.date === dateParse && item.odds.data.length > 0) && (item.odds.data[0].bookmaker.data[0].odds.data[0].value && item.odds.data[0].bookmaker.data[0].odds.data[1].value && item.odds.data[0].bookmaker.data[0].odds.data[2].value)) {
-                                        var betButton1;
-                                        var betButton2;
-                                        var betButton3;
-                                        if (item.time.status === "NS") {
-                                            betButton1 = <button className="stage-kampe-odds-btn" id={item.id + "-" + "0"} onClick={() => place3wayBet(item.id + "-" + "0", item.id, item.localTeam.data.name, item.visitorTeam.data.name, item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[0].value, "0", item.time.starting_at.timestamp)}><p className="odd-data-p">1</p><p className="odd-data-h1">{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[0].value}</p></button>;
-                                            betButton2 = <button className="stage-kampe-odds-btn" id={item.id + "-" + "1"} onClick={() => place3wayBet(item.id + "-" + "1", item.id, item.localTeam.data.name, item.visitorTeam.data.name, item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[1].value, "1", item.time.starting_at.timestamp)}><p className="odd-data-p">X</p><p className="odd-data-h1">{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[1].value}</p></button>;
-                                            betButton3 = <button className="stage-kampe-odds-btn" id={item.id + "-" + "2"} onClick={() => place3wayBet(item.id + "-" + "2", item.id, item.localTeam.data.name, item.visitorTeam.data.name, item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[2].value, "2", item.time.starting_at.timestamp)}><p className="odd-data-p">2</p><p className="odd-data-h1">{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[2].value}</p></button>;
+                                                    </li>);
+                                            } else return;
                                         } else {
-                                            betButton1 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "0")}>{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[0].value}</button>;
-                                            betButton2 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "1")}>{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[1].value}</button>;
-                                            betButton3 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "2")}>{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[2].value}</button>;
+                                            if ((leagueParse !== 0 && item.league_id === leagueParse && item.time.starting_at.date === dateParse && item.odds.data.length > 0) || (leagueParse === 0 && item.league_id !== 2 && item.league_id !== 271 && item.league_id !== 8 && item.league_id !== 564 && item.league_id !== 301 && item.league_id !== 82 && item.league_id !== 573 && item.time.starting_at.date === dateParse && item.odds.data.length > 0) && (item.odds.data[0].bookmaker.data[0].odds.data[0].value && item.odds.data[0].bookmaker.data[0].odds.data[1].value && item.odds.data[0].bookmaker.data[0].odds.data[2].value)) {
+                                                var betButton1;
+                                                var betButton2;
+                                                var betButton3;
+                                                if (item.time.status === "NS") {
+                                                    betButton1 = <button className="stage-kampe-odds-btn" id={item.id + "-" + "0"} onClick={() => place3wayBet(item.league_id, item.id + "-" + "0", item.id, item.localTeam.data.name, item.visitorTeam.data.name, item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[0].value, "0", item.time.starting_at.timestamp)}><p className="odd-data-p">1</p><p className="odd-data-h1">{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[0].value}</p></button>;
+                                                    betButton2 = <button className="stage-kampe-odds-btn" id={item.id + "-" + "1"} onClick={() => place3wayBet(item.league_id, item.id + "-" + "1", item.id, item.localTeam.data.name, item.visitorTeam.data.name, item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[1].value, "1", item.time.starting_at.timestamp)}><p className="odd-data-p">X</p><p className="odd-data-h1">{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[1].value}</p></button>;
+                                                    betButton3 = <button className="stage-kampe-odds-btn" id={item.id + "-" + "2"} onClick={() => place3wayBet(item.league_id, item.id + "-" + "2", item.id, item.localTeam.data.name, item.visitorTeam.data.name, item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[2].value, "2", item.time.starting_at.timestamp)}><p className="odd-data-p">2</p><p className="odd-data-h1">{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[2].value}</p></button>;
+                                                } else {
+                                                    betButton1 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "0")}>{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[0].value}</button>;
+                                                    betButton2 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "1")}>{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[1].value}</button>;
+                                                    betButton3 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "2")}>{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[2].value}</button>;
+                                                }
+                        
+                                            if (sessionStorage.getItem("notUsableBtn") !== "" && sessionStorage.getItem("notUsableBtn") !== null && sessionStorage.getItem("notUsableBtn") !== undefined) {
+                                                for (var p in JSON.parse(sessionStorage.getItem("notUsableBtn"))) {
+                                                    var removedPart = JSON.parse(sessionStorage.getItem("notUsableBtn"))[p].slice(11)
+                                                    if (removedPart === item.id + "-" + "0") {
+                                                        betButton1 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "0")}><p className="odd-data-p">1</p><p className="odd-data-h1">{item.odds.data[0].bookmaker.data[0].odds.data[0].value}</p></button>;
+                                                    }
+                                                    if (removedPart === item.id + "-" + "1") {
+                                                        betButton2 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "1")}><p className="odd-data-p">X</p><p className="odd-data-h1">{item.odds.data[0].bookmaker.data[0].odds.data[1].value}</p></button>;
+                                                    }
+                                                    if (removedPart === item.id + "-" + "2") {
+                                                        betButton3 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "2")}><p className="odd-data-p">2</p><p className="odd-data-h1">{item.odds.data[0].bookmaker.data[0].odds.data[2].value}</p></button>;
+                                                    }
+                                                }
+                                            }
+                                            const gameURL = "/stage/match?game=" + item.id;
+                                            var starting_at_year = new Date(item.time.starting_at.timestamp * 1000).getDate();
+                                            var yearClass = "display-not";
+                                            if (starting_at_year === (new Date().getDate() + 1)) {
+                                                yearClass = "team-kampe-minut";
+                                            }
+                                            return (
+                                                <li key={item.id}>
+                                                    <div className="stage-match">
+                                                        <div className="stage-kampe-top">
+                                                        {item.time.status === "LIVE" &&
+                                                                    <div className="stage-live-pulse"></div>
+                                                                }
+                                                                {item.time.status === "HT" &&
+                                                                    <div className="stage-live-pulse"></div>
+                                                                }
+                                                        </div>
+                                                        <div className="stage-indhold-down">
+                                                        <Link href={gameURL}>
+                                                        <div className="stage-kampe-hold">
+                                                                    {item.time.status === "LIVE" &&
+                                                                        <div className="stage-live">
+                                                                            <div className="stage-live-con">
+                                                                                <p className="stage-kampe-minut stage-kampe-minut-active">{liveView}</p>
+                                                                                <p className="stage-blink">&apos;</p>
+                                                                            </div>
+                                                                            <div className="stage-live-scores">
+                                                                                <p className="stage-stilling-p">{item.scores.localteam_score}</p>
+                                                                                <p className="stage-stilling-p">{item.scores.visitorteam_score}</p>
+                                                                            </div>
+                                                                        </div>
+                                                                    }
+                                                                    {item.time.status === "HT" &&
+                                                                        <div className="stage-live">
+                                                                            <div className="stage-live-con">
+                                                                                <p className="stage-kampe-minut stage-kampe-minut-active">{liveView}</p>
+                                                                            </div>
+                                                                            <div className="stage-live-scores">
+                                                                                <p className="stage-stilling-p">{item.scores.localteam_score}</p>
+                                                                                <p className="stage-stilling-p">{item.scores.visitorteam_score}</p>
+                                                                            </div>
+                                                                        </div>
+                                                                    }
+                                                                    {item.time.status === "NS" &&
+                                                                        <div className="stage-time-small">
+                                                                            <div className="stage-time-con">
+                                                                                <p className="stage-kampe-minut">{liveView}</p>
+                                                                                <p className={yearClass}>I morgen</p>
+                                                                            </div>
+                                                                        </div>
+                                                                    }
+                                                                    {item.time.status === "FT" &&
+                                                                        <>
+                                                                            <div className="stage-time-small">
+                                                                                <div className="stage-time-con">
+                                                                                    <p className="stage-kampe-minut">FT</p>
+                                                                                </div>
+                                                                                <div className="stage-time-scores">
+                                                                                    <p className={scoreLocal}>{item.scores.localteam_score}</p>
+                                                                                    <p className={scoreVisitor}>{item.scores.visitorteam_score}</p>
+                                                                                </div>
+                                                                            </div>
+                                                                        </>
+                                                                    }
+                                                                    {item.time.status === "AET" &&
+                                                                        <>
+                                                                            <div className="stage-time-small">
+                                                                                <div className="stage-time-con">
+                                                                                    <p className="stage-kampe-minut">EFS</p>
+                                                                                </div>
+                                                                                <div className="stage-time-scores">
+                                                                                    <p className={scoreLocal}>{item.scores.localteam_score}</p>
+                                                                                    <p className={scoreVisitor}>{item.scores.visitorteam_score}</p>
+                                                                                </div>
+                                                                            </div>
+                                                                        </>
+                                                                    }
+                                                                    {item.time.status === "FT_PEN" &&
+                                                                        <>
+                                                                            <div className="stage-time-small">
+                                                                                <div className="stage-time-con">
+                                                                                    <p className="stage-kampe-minut">Str.</p>
+                                                                                </div>
+                                                                                <div className="stage-time-scores">
+                                                                                    <p className={scoreLocal}>{item.scores.localteam_score}</p>
+                                                                                    <p className={scoreVisitor}>{item.scores.visitorteam_score}</p>
+                                                                                </div>
+                                                                            </div>
+                                                                        </>
+                                                                    }
+                                                                    {item.time.status === "POSTP" &&
+                                                                        <>
+                                                                            {item.scores.visitorteam_score &&
+                                                                                <div className="stage-time-small">
+                                                                                    <div className="stage-time-con">
+                                                                                        <p className="stage-kampe-minut">{liveView}</p>
+                                                                                    </div>
+                                                                                    <div className="stage-time-scores">
+                                                                                        <p className={scoreLocal}>{item.scores.localteam_score}</p>
+                                                                                        <p className={scoreVisitor}>{item.scores.visitorteam_score}</p>
+                                                                                    </div>
+                                                                                </div>
+                                                                            }
+                                                                            {!item.scores.visitorteam_score &&
+                                                                                <div className="stage-time-small">
+                                                                                    <div className="stage-time-con">
+                                                                                        <p className="stage-kampe-minut">{liveView}</p>
+                                                                                        <p className={yearClass}>I morgen</p>
+                                                                                    </div>
+                                                                                </div>
+                                                                            }
+                                                                        </>
+                                                                    }
+                                                                    <div className="stage-kampe-hold-div">
+                                                                        <div className="stage-kampe-team">
+                                                                            <div className="stage-img">
+                                                                                <Image layout="fill" alt="." src={item.localTeam.data.logo_path} />
+                                                                            </div>
+                                                                            <p className={teamNameLocal}>{item.localTeam.data.name}</p>
+                                                                        </div>
+                                                                        <div className="stage-kampe-team">
+                                                                            <div className="stage-img">
+                                                                                <Image layout="fill" alt="." src={item.visitorTeam.data.logo_path} />
+                                                                            </div>
+                                                                            <p className={teamNameVisitor}>{item.visitorTeam.data.name}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                    </div>
+                                                                </Link>
+                                                                {item.time.status === "NS" &&
+                                                                    <div className="stage-kampe-odds">
+                                                                        {betButton1}
+                                                                        {betButton2}
+                                                                        {betButton3}
+                                                                    </div>
+                                                                }
+                                                                {item.time.status !== "NS" &&
+                                                                    <div className="stage-kampe-odds-fix">
+        
+                                                                    </div>
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                </li>);
+                                        } else return;
                                         }
-                
-                                    if (sessionStorage.getItem("notUsableBtn") !== "" && sessionStorage.getItem("notUsableBtn") !== null && sessionStorage.getItem("notUsableBtn") !== undefined) {
-                                        for (var p in JSON.parse(sessionStorage.getItem("notUsableBtn"))) {
-                                            var removedPart = JSON.parse(sessionStorage.getItem("notUsableBtn"))[p].slice(11)
-                                            if (removedPart === item.id + "-" + "0") {
-                                                betButton1 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "0")}><p className="odd-data-p">1</p><p className="odd-data-h1">{item.odds.data[0].bookmaker.data[0].odds.data[0].value}</p></button>;
-                                            }
-                                            if (removedPart === item.id + "-" + "1") {
-                                                betButton2 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "1")}><p className="odd-data-p">X</p><p className="odd-data-h1">{item.odds.data[0].bookmaker.data[0].odds.data[1].value}</p></button>;
-                                            }
-                                            if (removedPart === item.id + "-" + "2") {
-                                                betButton3 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "2")}><p className="odd-data-p">2</p><p className="odd-data-h1">{item.odds.data[0].bookmaker.data[0].odds.data[2].value}</p></button>;
-                                            }
-                                        }
-                                    }
-                                    const gameURL = "/stage/match?game=" + item.id;
+                                    })}
+                                    </ul>
+                                </div>
+                            </li>
+                        </>
+                    );
+                }
+            } else {
+                return (
+                    <>
+                        <li key={league.season + league.name} className="stage-kampe-section">
+                            <div className="stage-kampe-head" onClick={() => router.push("/stage/league?id=" + league.season)}>
+                                <p className="stage-league">
+                                    <Image width="18px" height="18px" className="inline-img" src={league.img} alt="" />
+                                    {league.name}{league.round !== undefined && <> | Runde {league.round}</>}
+                                </p>
+                                {(JSON.parse(localStorage.getItem("favoritter"))).findIndex(obj => obj.id === league.season) >= 0 && <>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="var(--primary)" width="17px" height="17px" viewBox="0 0 16 16">
+                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                    </svg>
+                                </>}
+                            </div>
+                            <div className="stage-kampe">
+                                {loadingText}
+                                <ul>
+                                {getType.map(item => {
+                                    var timeClass = "stage-kampe-minut";
                                     var starting_at_year = new Date(item.time.starting_at.timestamp * 1000).getDate();
                                     var yearClass = "display-not";
                                     if (starting_at_year === (new Date().getDate() + 1)) {
                                         yearClass = "team-kampe-minut";
                                     }
-                                    return (
-                                        <li key={item.id}>
-                                            <div className="stage-match">
-                                                <div className="stage-kampe-top">
-                                                {item.time.status === "LIVE" &&
-                                                            <div className="stage-live-pulse"></div>
-                                                        }
-                                                        {item.time.status === "HT" &&
-                                                            <div className="stage-live-pulse"></div>
-                                                        }
-                                                </div>
-                                                <div className="stage-indhold-down">
-                                                <Link href={gameURL}>
-                                                <div className="stage-kampe-hold">
+                                    var liveView = "FT";
+                                    var scoreLocal = "stage-stilling-p";
+                                    var scoreVisitor = "stage-stilling-p";
+                                    var teamNameLocal = "stage-kampe-p";
+                                    var teamNameVisitor = "stage-kampe-p";
+                                    if (item.time.status === "LIVE") {
+                                        liveView = item.time.minute;
+                                    } else if (item.time.status === "NS") {
+                                        scoreLocal = "stage-stilling-p-none";
+                                        scoreVisitor = "stage-stilling-p-none";
+                                        var calcTime = item.time.starting_at.time;
+                                        calcTime = calcTime.slice(0,-3);
+                                        liveView = calcTime;
+                                    } else if (item.time.status === "FT") {
+                                        if (item.winner_team_id === item.localteam_id) {
+                                            scoreLocal = "stage-stilling-p-fat";
+                                            teamNameLocal = "stage-kampe-p-fat";
+                                        } else if (item.winner_team_id === item.visitorteam_id) {
+                                            scoreVisitor = "stage-stilling-p-fat";
+                                            teamNameVisitor = "stage-kampe-p-fat";
+                                        }
+                                    } else if (item.time.status === "CANCL") {
+                                        liveView = "AFLYST";
+                                    } else if (item.time.status === "HT") {
+                                        liveView = "Pause";
+                                    } else if (item.time.status === "ET") {
+                                        liveView = "EX. TID";
+                                    } else if (item.time.status === "PEN_LIVE") {
+                                        liveView = "STR.";
+                                    } else if (item.time.status === "BREAK") {
+                                        liveView = "Pause";
+                                    } else if (item.time.status === "POSTP") {
+                                        liveView = "Udskudt";
+                                    } else if (item.time.status === "INT") {
+                                        liveView = "Afbrudt";
+                                    } else if (item.time.status === "ABAN") {
+                                        liveView = "Forladt";
+                                    } else if (item.time.status === "ABAN") {
+                                        liveView = "Forladt";
+                                    } else if (item.time.status === "SUSP") {
+                                        liveView = "SUSP.";
+                                    } else if (item.time.status === "TBA") {
+                                        liveView = "TBA";
+                                    } else if (item.time.status === "DELAYED") {
+                                        liveView = "Forsinket";
+                                    } else if (item.time.status === "WO") {
+                                        liveView = "WO";
+                                    } else if (item.time.status === "AU") {
+                                        liveView = "Afventer";
+                                    } else if (item.time.status === "Deleted") {
+                                        liveView = "Slettet";
+                                    }
+    
+                                    if (type === "kommende") {
+                                        if ((leagueParse !== 0 && item.league_id === leagueParse && item.odds.data.length > 0) || (leagueParse === 0 && item.league_id !== 2 && item.league_id !== 271 && item.league_id !== 8 && item.league_id !== 564 && item.league_id !== 301 && item.league_id !== 82 && item.league_id !== 573 && item.odds.data.length > 0) && (item.odds.data[0].bookmaker.data[0].odds.data[0] && item.odds.data[0].bookmaker.data[0].odds.data[1] && item.odds.data[0].bookmaker.data[0].odds.data[2])) {
+                                            var betButton1;
+                                            var betButton2;
+                                            var betButton3;
+                                            if (item.time.status === "NS") {
+                                            betButton1 = <button className="stage-kampe-odds-btn" id={item.id + "-" + "0"} onClick={() => place3wayBet(item.league_id, item.id + "-" + "0", item.id, item.localTeam.data.name, item.visitorTeam.data.name, item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[0].value, "0", item.time.starting_at.timestamp)}><p className="odd-data-p">1</p><p className="odd-data-h1">{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[0].value}</p></button>;
+                                            betButton2 = <button className="stage-kampe-odds-btn" id={item.id + "-" + "1"} onClick={() => place3wayBet(item.league_id, item.id + "-" + "1", item.id, item.localTeam.data.name, item.visitorTeam.data.name, item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[1].value, "1", item.time.starting_at.timestamp)}><p className="odd-data-p">X</p><p className="odd-data-h1">{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[1].value}</p></button>;
+                                            betButton3 = <button className="stage-kampe-odds-btn" id={item.id + "-" + "2"} onClick={() => place3wayBet(item.league_id, item.id + "-" + "2", item.id, item.localTeam.data.name, item.visitorTeam.data.name, item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[2].value, "2", item.time.starting_at.timestamp)}><p className="odd-data-p">2</p><p className="odd-data-h1">{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[2].value}</p></button>;
+                                        } else {
+                                            betButton1 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "0")}>{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[0].value}</button>;
+                                            betButton2 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "1")}>{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[1].value}</button>;
+                                            betButton3 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "2")}>{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[2].value}</button>;
+                                            }
+                        
+                                            if (sessionStorage.getItem("notUsableBtn") !== "" && sessionStorage.getItem("notUsableBtn") !== null && sessionStorage.getItem("notUsableBtn") !== undefined) {
+                                                for (var p in JSON.parse(sessionStorage.getItem("notUsableBtn"))) {
+                                                    var removedPart = JSON.parse(sessionStorage.getItem("notUsableBtn"))[p].slice(11)
+                                                    if (removedPart === item.id + "-" + "0") {
+                                                        betButton1 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "0")}><p className="odd-data-p">1</p><p className="odd-data-h1">{item.odds.data[0].bookmaker.data[0].odds.data[0].value}</p></button>;
+                                                    }
+                                                    if (removedPart === item.id + "-" + "1") {
+                                                        betButton2 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "1")}><p className="odd-data-p">X</p><p className="odd-data-h1">{item.odds.data[0].bookmaker.data[0].odds.data[1].value}</p></button>;
+                                                    }
+                                                    if (removedPart === item.id + "-" + "2") {
+                                                        betButton3 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "2")}><p className="odd-data-p">2</p><p className="odd-data-h1">{item.odds.data[0].bookmaker.data[0].odds.data[2].value}</p></button>;
+                                                    }
+                                                }
+                                            }
+                                            const gameURL = "/stage/match?game=" + item.id;
+                                            return (
+                                                <li key={item.id}>
+                                                    <div className="stage-match">
+                                                        <div className="stage-kampe-top">
                                                             {item.time.status === "LIVE" &&
-                                                                <div className="stage-live">
-                                                                    <div className="stage-live-con">
-                                                                        <p className="stage-kampe-minut stage-kampe-minut-active">{liveView}</p>
-                                                                        <p className="stage-blink">&apos;</p>
-                                                                    </div>
-                                                                    <div className="stage-live-scores">
-                                                                        <p className="stage-stilling-p">{item.scores.localteam_score}</p>
-                                                                        <p className="stage-stilling-p">{item.scores.visitorteam_score}</p>
-                                                                    </div>
-                                                                </div>
+                                                                <div className="stage-live-pulse"></div>
                                                             }
                                                             {item.time.status === "HT" &&
-                                                                <div className="stage-live">
-                                                                    <div className="stage-live-con">
-                                                                        <p className="stage-kampe-minut stage-kampe-minut-active">{liveView}</p>
-                                                                    </div>
-                                                                    <div className="stage-live-scores">
-                                                                        <p className="stage-stilling-p">{item.scores.localteam_score}</p>
-                                                                        <p className="stage-stilling-p">{item.scores.visitorteam_score}</p>
-                                                                    </div>
-                                                                </div>
+                                                                <div className="stage-live-pulse"></div>
                                                             }
-                                                            {item.time.status === "NS" &&
-                                                                <div className="stage-time-small">
-                                                                    <div className="stage-time-con">
-                                                                        <p className="stage-kampe-minut">{liveView}</p>
-                                                                        <p className={yearClass}>I morgen</p>
-                                                                    </div>
-                                                                </div>
-                                                            }
-                                                            {item.time.status === "FT" &&
-                                                                <>
-                                                                    <div className="stage-time-small">
-                                                                        <div className="stage-time-con">
-                                                                            <p className="stage-kampe-minut">FT</p>
+                                                        </div>
+                                                        <div className="stage-indhold-down">
+                                                        <Link href={gameURL}>
+                                                            <div className="stage-kampe-hold">
+                                                                {item.time.status === "LIVE" &&
+                                                                    <div className="stage-live">
+                                                                        <div className="stage-live-con">
+                                                                            <p className="stage-kampe-minut stage-kampe-minut-active">{liveView}</p>
+                                                                            <p className="stage-blink">&apos;</p>
                                                                         </div>
-                                                                        <div className="stage-time-scores">
-                                                                            <p className={scoreLocal}>{item.scores.localteam_score}</p>
-                                                                            <p className={scoreVisitor}>{item.scores.visitorteam_score}</p>
+                                                                        <div className="stage-live-scores">
+                                                                            <p className="stage-stilling-p">{item.scores.localteam_score}</p>
+                                                                            <p className="stage-stilling-p">{item.scores.visitorteam_score}</p>
                                                                         </div>
                                                                     </div>
-                                                                </>
-                                                            }
-                                                            {item.time.status === "AET" &&
-                                                                <>
-                                                                    <div className="stage-time-small">
-                                                                        <div className="stage-time-con">
-                                                                            <p className="stage-kampe-minut">EFS</p>
+                                                                }
+                                                                {item.time.status === "HT" &&
+                                                                    <div className="stage-live">
+                                                                        <div className="stage-live-con">
+                                                                            <p className="stage-kampe-minut stage-kampe-minut-active">{liveView}</p>
                                                                         </div>
-                                                                        <div className="stage-time-scores">
-                                                                            <p className={scoreLocal}>{item.scores.localteam_score}</p>
-                                                                            <p className={scoreVisitor}>{item.scores.visitorteam_score}</p>
+                                                                        <div className="stage-live-scores">
+                                                                            <p className="stage-stilling-p">{item.scores.localteam_score}</p>
+                                                                            <p className="stage-stilling-p">{item.scores.visitorteam_score}</p>
                                                                         </div>
                                                                     </div>
-                                                                </>
-                                                            }
-                                                            {item.time.status === "FT_PEN" &&
-                                                                <>
-                                                                    <div className="stage-time-small">
-                                                                        <div className="stage-time-con">
-                                                                            <p className="stage-kampe-minut">Str.</p>
-                                                                        </div>
-                                                                        <div className="stage-time-scores">
-                                                                            <p className={scoreLocal}>{item.scores.localteam_score}</p>
-                                                                            <p className={scoreVisitor}>{item.scores.visitorteam_score}</p>
-                                                                        </div>
-                                                                    </div>
-                                                                </>
-                                                            }
-                                                            {item.time.status === "POSTP" &&
-                                                                <>
-                                                                    {item.scores.visitorteam_score &&
+                                                                }
+                                                                {item.time.status === "FT" &&
+                                                                    <>
                                                                         <div className="stage-time-small">
                                                                             <div className="stage-time-con">
-                                                                                <p className="stage-kampe-minut">{liveView}</p>
+                                                                                <p className="stage-kampe-minut">FT</p>
                                                                             </div>
                                                                             <div className="stage-time-scores">
                                                                                 <p className={scoreLocal}>{item.scores.localteam_score}</p>
                                                                                 <p className={scoreVisitor}>{item.scores.visitorteam_score}</p>
                                                                             </div>
                                                                         </div>
-                                                                    }
-                                                                    {!item.scores.visitorteam_score &&
+                                                                    </>
+                                                                }
+                                                                {item.time.status === "AET" &&
+                                                                    <>
                                                                         <div className="stage-time-small">
                                                                             <div className="stage-time-con">
-                                                                                <p className="stage-kampe-minut">{liveView}</p>
-                                                                                <p className={yearClass}>I morgen</p>
+                                                                                <p className="stage-kampe-minut">EFS</p>
+                                                                            </div>
+                                                                            <div className="stage-time-scores">
+                                                                                <p className={scoreLocal}>{item.scores.localteam_score}</p>
+                                                                                <p className={scoreVisitor}>{item.scores.visitorteam_score}</p>
                                                                             </div>
                                                                         </div>
-                                                                    }
-                                                                </>
+                                                                    </>
+                                                                }
+                                                                {item.time.status === "FT_PEN" &&
+                                                                    <>
+                                                                        <div className="stage-time-small">
+                                                                            <div className="stage-time-con">
+                                                                                <p className="stage-kampe-minut">Str.</p>
+                                                                            </div>
+                                                                            <div className="stage-time-scores">
+                                                                                <p className={scoreLocal}>{item.scores.localteam_score}</p>
+                                                                                <p className={scoreVisitor}>{item.scores.visitorteam_score}</p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </>
+                                                                }
+                                                                {item.time.status === "POSTP" &&
+                                                                    <>
+                                                                        {item.scores.visitorteam_score &&
+                                                                            <div className="stage-time">
+                                                                                <div className="stage-time-con">
+                                                                                    <p className="stage-kampe-minut">{liveView}</p>
+                                                                                </div>
+                                                                                <div className="stage-time-scores">
+                                                                                    <p className={scoreLocal}>{item.scores.localteam_score}</p>
+                                                                                    <p className={scoreVisitor}>{item.scores.visitorteam_score}</p>
+                                                                                </div>
+                                                                            </div>
+                                                                        }
+                                                                        {!item.scores.visitorteam_score &&
+                                                                            <div className="stage-time-small">
+                                                                                <div className="stage-time-con">
+                                                                                    <p className="stage-kampe-minut">{liveView}</p>
+                                                                                    <p className={yearClass}>I morgen</p>
+                                                                                </div>
+                                                                            </div>
+                                                                        }
+                                                                    </>
+                                                                }
+                                                                {item.time.status === "NS" &&
+                                                                    <div className="stage-time-small">
+                                                                        <div className="stage-time-con">
+                                                                            <p className="stage-kampe-minut">{liveView}</p>
+                                                                            <p className={yearClass}>I morgen</p>
+                                                                        </div>
+                                                                    </div>
+                                                                }
+                                                                <div className="stage-kampe-hold-div">
+                                                                    <div className="stage-kampe-team">
+                                                                        <div className="stage-img">
+                                                                            <Image layout="fill" alt="." src={item.localTeam.data.logo_path} />
+                                                                        </div>
+                                                                        <p className={teamNameLocal}>{item.localTeam.data.name}</p>
+                                                                    </div>
+                                                                    <div className="stage-kampe-team">
+                                                                        <div className="stage-img">
+                                                                            <Image layout="fill" alt="." src={item.visitorTeam.data.logo_path} />
+                                                                        </div>
+                                                                        <p className={teamNameVisitor}>{item.visitorTeam.data.name}</p>
+                                                                    </div>
+                                                                </div>
+                                                                </div>
+                                                            </Link>
+                                                            {item.time.status === "NS" &&
+                                                                <div className="stage-kampe-odds">
+                                                                    {betButton1}
+                                                                    {betButton2}
+                                                                    {betButton3}
+                                                                </div>
                                                             }
-                                                            <div className="stage-kampe-hold-div">
-                                                                <div className="stage-kampe-team">
-                                                                    <div className="stage-img">
-                                                                        <Image layout="fill" alt="." src={item.localTeam.data.logo_path} />
-                                                                    </div>
-                                                                    <p className={teamNameLocal}>{item.localTeam.data.name}</p>
+                                                            {item.time.status !== "NS" &&
+                                                                <div className="stage-kampe-odds-fix">
+    
                                                                 </div>
-                                                                <div className="stage-kampe-team">
-                                                                    <div className="stage-img">
-                                                                        <Image layout="fill" alt="." src={item.visitorTeam.data.logo_path} />
+                                                            }
+                                                            </div>
+                                                        </div>
+                                                </li>);
+                                        } else return;
+                                    } else if (type === "favoritter") {
+                                        if ((leagueParse !== 0 && item.league_id === leagueParse && item.odds.data.length > 0) || (leagueParse === 0 && item.league_id !== 2 && item.league_id !== 271 && item.league_id !== 8 && item.league_id !== 564 && item.league_id !== 301 && item.league_id !== 82 && item.league_id !== 573 && item.odds.data.length > 0) && (item.odds.data[0].bookmaker.data[0].odds.data[0] && item.odds.data[0].bookmaker.data[0].odds.data[1] && item.odds.data[0].bookmaker.data[0].odds.data[2])) {
+                                            var betButton1;
+                                            var betButton2;
+                                            var betButton3;
+                                            if (item.time.status === "NS") {
+                                            betButton1 = <button className="stage-kampe-odds-btn" id={item.id + "-" + "0"} onClick={() => place3wayBet(item.league_id, item.id + "-" + "0", item.id, item.localTeam.data.name, item.visitorTeam.data.name, item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[0].value, "0", item.time.starting_at.timestamp)}><p className="odd-data-p">1</p><p className="odd-data-h1">{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[0].value}</p></button>;
+                                            betButton2 = <button className="stage-kampe-odds-btn" id={item.id + "-" + "1"} onClick={() => place3wayBet(item.league_id, item.id + "-" + "1", item.id, item.localTeam.data.name, item.visitorTeam.data.name, item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[1].value, "1", item.time.starting_at.timestamp)}><p className="odd-data-p">X</p><p className="odd-data-h1">{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[1].value}</p></button>;
+                                            betButton3 = <button className="stage-kampe-odds-btn" id={item.id + "-" + "2"} onClick={() => place3wayBet(item.league_id, item.id + "-" + "2", item.id, item.localTeam.data.name, item.visitorTeam.data.name, item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[2].value, "2", item.time.starting_at.timestamp)}><p className="odd-data-p">2</p><p className="odd-data-h1">{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[2].value}</p></button>;
+                                        } else {
+                                            betButton1 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "0")}>{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[0].value}</button>;
+                                            betButton2 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "1")}>{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[1].value}</button>;
+                                            betButton3 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "2")}>{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[2].value}</button>;
+                                            }
+                        
+                                            if (sessionStorage.getItem("notUsableBtn") !== "" && sessionStorage.getItem("notUsableBtn") !== null && sessionStorage.getItem("notUsableBtn") !== undefined) {
+                                                for (var p in JSON.parse(sessionStorage.getItem("notUsableBtn"))) {
+                                                    var removedPart = JSON.parse(sessionStorage.getItem("notUsableBtn"))[p].slice(11)
+                                                    if (removedPart === item.id + "-" + "0") {
+                                                        betButton1 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "0")}><p className="odd-data-p">1</p><p className="odd-data-h1">{item.odds.data[0].bookmaker.data[0].odds.data[0].value}</p></button>;
+                                                    }
+                                                    if (removedPart === item.id + "-" + "1") {
+                                                        betButton2 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "1")}><p className="odd-data-p">X</p><p className="odd-data-h1">{item.odds.data[0].bookmaker.data[0].odds.data[1].value}</p></button>;
+                                                    }
+                                                    if (removedPart === item.id + "-" + "2") {
+                                                        betButton3 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "2")}><p className="odd-data-p">2</p><p className="odd-data-h1">{item.odds.data[0].bookmaker.data[0].odds.data[2].value}</p></button>;
+                                                    }
+                                                }
+                                            }
+                                            const gameURL = "/stage/match?game=" + item.id;
+                                            return (
+                                                <li key={item.id}>
+                                                    <div className="stage-match">
+                                                        <div className="stage-kampe-top">
+                                                            {item.time.status === "LIVE" &&
+                                                                <div className="stage-live-pulse"></div>
+                                                            }
+                                                            {item.time.status === "HT" &&
+                                                                <div className="stage-live-pulse"></div>
+                                                            }
+                                                        </div>
+                                                        <div className="stage-indhold-down">
+                                                        <Link href={gameURL}>
+                                                            <div className="stage-kampe-hold">
+                                                                {item.time.status === "LIVE" &&
+                                                                    <div className="stage-live">
+                                                                        <div className="stage-live-con">
+                                                                            <p className="stage-kampe-minut stage-kampe-minut-active">{liveView}</p>
+                                                                            <p className="stage-blink">&apos;</p>
+                                                                        </div>
+                                                                        <div className="stage-live-scores">
+                                                                            <p className="stage-stilling-p">{item.scores.localteam_score}</p>
+                                                                            <p className="stage-stilling-p">{item.scores.visitorteam_score}</p>
+                                                                        </div>
                                                                     </div>
-                                                                    <p className={teamNameVisitor}>{item.visitorTeam.data.name}</p>
+                                                                }
+                                                                {item.time.status === "HT" &&
+                                                                    <div className="stage-live">
+                                                                        <div className="stage-live-con">
+                                                                            <p className="stage-kampe-minut stage-kampe-minut-active">{liveView}</p>
+                                                                        </div>
+                                                                        <div className="stage-live-scores">
+                                                                            <p className="stage-stilling-p">{item.scores.localteam_score}</p>
+                                                                            <p className="stage-stilling-p">{item.scores.visitorteam_score}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                }
+                                                                {item.time.status === "FT" &&
+                                                                    <>
+                                                                        <div className="stage-time-small">
+                                                                            <div className="stage-time-con">
+                                                                                <p className="stage-kampe-minut">FT</p>
+                                                                            </div>
+                                                                            <div className="stage-time-scores">
+                                                                                <p className={scoreLocal}>{item.scores.localteam_score}</p>
+                                                                                <p className={scoreVisitor}>{item.scores.visitorteam_score}</p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </>
+                                                                }
+                                                                {item.time.status === "AET" &&
+                                                                    <>
+                                                                        <div className="stage-time-small">
+                                                                            <div className="stage-time-con">
+                                                                                <p className="stage-kampe-minut">EFS</p>
+                                                                            </div>
+                                                                            <div className="stage-time-scores">
+                                                                                <p className={scoreLocal}>{item.scores.localteam_score}</p>
+                                                                                <p className={scoreVisitor}>{item.scores.visitorteam_score}</p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </>
+                                                                }
+                                                                {item.time.status === "FT_PEN" &&
+                                                                    <>
+                                                                        <div className="stage-time-small">
+                                                                            <div className="stage-time-con">
+                                                                                <p className="stage-kampe-minut">Str.</p>
+                                                                            </div>
+                                                                            <div className="stage-time-scores">
+                                                                                <p className={scoreLocal}>{item.scores.localteam_score}</p>
+                                                                                <p className={scoreVisitor}>{item.scores.visitorteam_score}</p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </>
+                                                                }
+                                                                {item.time.status === "POSTP" &&
+                                                                    <>
+                                                                        {item.scores.visitorteam_score &&
+                                                                            <div className="stage-time">
+                                                                                <div className="stage-time-con">
+                                                                                    <p className="stage-kampe-minut">{liveView}</p>
+                                                                                </div>
+                                                                                <div className="stage-time-scores">
+                                                                                    <p className={scoreLocal}>{item.scores.localteam_score}</p>
+                                                                                    <p className={scoreVisitor}>{item.scores.visitorteam_score}</p>
+                                                                                </div>
+                                                                            </div>
+                                                                        }
+                                                                        {!item.scores.visitorteam_score &&
+                                                                            <div className="stage-time-small">
+                                                                                <div className="stage-time-con">
+                                                                                    <p className="stage-kampe-minut">{liveView}</p>
+                                                                                    <p className={yearClass}>I morgen</p>
+                                                                                </div>
+                                                                            </div>
+                                                                        }
+                                                                    </>
+                                                                }
+                                                                {item.time.status === "NS" &&
+                                                                    <div className="stage-time-small">
+                                                                        <div className="stage-time-con">
+                                                                            <p className="stage-kampe-minut">{liveView}</p>
+                                                                            <p className={yearClass}>I morgen</p>
+                                                                        </div>
+                                                                    </div>
+                                                                }
+                                                                <div className="stage-kampe-hold-div">
+                                                                    <div className="stage-kampe-team">
+                                                                        <div className="stage-img">
+                                                                            <Image layout="fill" alt="." src={item.localTeam.data.logo_path} />
+                                                                        </div>
+                                                                        <p className={teamNameLocal}>{item.localTeam.data.name}</p>
+                                                                    </div>
+                                                                    <div className="stage-kampe-team">
+                                                                        <div className="stage-img">
+                                                                            <Image layout="fill" alt="." src={item.visitorTeam.data.logo_path} />
+                                                                        </div>
+                                                                        <p className={teamNameVisitor}>{item.visitorTeam.data.name}</p>
+                                                                    </div>
                                                                 </div>
+                                                                </div>
+                                                            </Link>
+                                                            {item.time.status === "NS" &&
+                                                                <div className="stage-kampe-odds">
+                                                                    {betButton1}
+                                                                    {betButton2}
+                                                                    {betButton3}
+                                                                </div>
+                                                            }
+                                                            {item.time.status !== "NS" &&
+                                                                <div className="stage-kampe-odds-fix">
+    
+                                                                </div>
+                                                            }
                                                             </div>
-                                                            </div>
-                                                        </Link>
-                                                        {item.time.status === "NS" &&
-                                                            <div className="stage-kampe-odds">
-                                                                {betButton1}
-                                                                {betButton2}
-                                                                {betButton3}
-                                                            </div>
-                                                        }
-                                                        {item.time.status !== "NS" &&
-                                                            <div className="stage-kampe-odds-fix">
-
-                                                            </div>
-                                                        }
+                                                        </div>
+                                                </li>);
+                                        } else return;
+                                    } else {
+                                        if ((leagueParse !== 0 && item.league_id === leagueParse && item.time.starting_at.date === dateParse && item.odds.data.length > 0) || (leagueParse === 0 && item.league_id !== 2 && item.league_id !== 271 && item.league_id !== 8 && item.league_id !== 564 && item.league_id !== 301 && item.league_id !== 82 && item.league_id !== 573 && item.time.starting_at.date === dateParse && item.odds.data.length > 0) && (item.odds.data[0].bookmaker.data[0].odds.data[0].value && item.odds.data[0].bookmaker.data[0].odds.data[1].value && item.odds.data[0].bookmaker.data[0].odds.data[2].value)) {
+                                            var betButton1;
+                                            var betButton2;
+                                            var betButton3;
+                                            if (item.time.status === "NS") {
+                                                betButton1 = <button className="stage-kampe-odds-btn" id={item.id + "-" + "0"} onClick={() => place3wayBet(item.league_id, item.id + "-" + "0", item.id, item.localTeam.data.name, item.visitorTeam.data.name, item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[0].value, "0", item.time.starting_at.timestamp)}><p className="odd-data-p">1</p><p className="odd-data-h1">{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[0].value}</p></button>;
+                                                betButton2 = <button className="stage-kampe-odds-btn" id={item.id + "-" + "1"} onClick={() => place3wayBet(item.league_id, item.id + "-" + "1", item.id, item.localTeam.data.name, item.visitorTeam.data.name, item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[1].value, "1", item.time.starting_at.timestamp)}><p className="odd-data-p">X</p><p className="odd-data-h1">{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[1].value}</p></button>;
+                                                betButton3 = <button className="stage-kampe-odds-btn" id={item.id + "-" + "2"} onClick={() => place3wayBet(item.league_id, item.id + "-" + "2", item.id, item.localTeam.data.name, item.visitorTeam.data.name, item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[2].value, "2", item.time.starting_at.timestamp)}><p className="odd-data-p">2</p><p className="odd-data-h1">{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[2].value}</p></button>;
+                                            } else {
+                                                betButton1 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "0")}>{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[0].value}</button>;
+                                                betButton2 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "1")}>{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[1].value}</button>;
+                                                betButton3 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "2")}>{item.odds.data[item.odds.data.findIndex(obj => obj.name === "3Way Result")].bookmaker.data[0].odds.data[2].value}</button>;
+                                            }
+                    
+                                        if (sessionStorage.getItem("notUsableBtn") !== "" && sessionStorage.getItem("notUsableBtn") !== null && sessionStorage.getItem("notUsableBtn") !== undefined) {
+                                            for (var p in JSON.parse(sessionStorage.getItem("notUsableBtn"))) {
+                                                var removedPart = JSON.parse(sessionStorage.getItem("notUsableBtn"))[p].slice(11)
+                                                if (removedPart === item.id + "-" + "0") {
+                                                    betButton1 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "0")}><p className="odd-data-p">1</p><p className="odd-data-h1">{item.odds.data[0].bookmaker.data[0].odds.data[0].value}</p></button>;
+                                                }
+                                                if (removedPart === item.id + "-" + "1") {
+                                                    betButton2 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "1")}><p className="odd-data-p">X</p><p className="odd-data-h1">{item.odds.data[0].bookmaker.data[0].odds.data[1].value}</p></button>;
+                                                }
+                                                if (removedPart === item.id + "-" + "2") {
+                                                    betButton3 = <button className="stage-kampe-odds-btn odd-used" onClick={() => rem3wayBet(item.id, "3Way Result", "2")}><p className="odd-data-p">2</p><p className="odd-data-h1">{item.odds.data[0].bookmaker.data[0].odds.data[2].value}</p></button>;
+                                                }
+                                            }
+                                        }
+                                        const gameURL = "/stage/match?game=" + item.id;
+                                        var starting_at_year = new Date(item.time.starting_at.timestamp * 1000).getDate();
+                                        var yearClass = "display-not";
+                                        if (starting_at_year === (new Date().getDate() + 1)) {
+                                            yearClass = "team-kampe-minut";
+                                        }
+                                        return (
+                                            <li key={item.id}>
+                                                <div className="stage-match">
+                                                    <div className="stage-kampe-top">
+                                                    {item.time.status === "LIVE" &&
+                                                                <div className="stage-live-pulse"></div>
+                                                            }
+                                                            {item.time.status === "HT" &&
+                                                                <div className="stage-live-pulse"></div>
+                                                            }
                                                     </div>
-                                                </div>
-                                        </li>);
-                                } else return;
-                                }
-                            })}
-                            </ul>
-                        </div>
-                    </li>
-                </>
-            );
+                                                    <div className="stage-indhold-down">
+                                                    <Link href={gameURL}>
+                                                    <div className="stage-kampe-hold">
+                                                                {item.time.status === "LIVE" &&
+                                                                    <div className="stage-live">
+                                                                        <div className="stage-live-con">
+                                                                            <p className="stage-kampe-minut stage-kampe-minut-active">{liveView}</p>
+                                                                            <p className="stage-blink">&apos;</p>
+                                                                        </div>
+                                                                        <div className="stage-live-scores">
+                                                                            <p className="stage-stilling-p">{item.scores.localteam_score}</p>
+                                                                            <p className="stage-stilling-p">{item.scores.visitorteam_score}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                }
+                                                                {item.time.status === "HT" &&
+                                                                    <div className="stage-live">
+                                                                        <div className="stage-live-con">
+                                                                            <p className="stage-kampe-minut stage-kampe-minut-active">{liveView}</p>
+                                                                        </div>
+                                                                        <div className="stage-live-scores">
+                                                                            <p className="stage-stilling-p">{item.scores.localteam_score}</p>
+                                                                            <p className="stage-stilling-p">{item.scores.visitorteam_score}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                }
+                                                                {item.time.status === "NS" &&
+                                                                    <div className="stage-time-small">
+                                                                        <div className="stage-time-con">
+                                                                            <p className="stage-kampe-minut">{liveView}</p>
+                                                                            <p className={yearClass}>I morgen</p>
+                                                                        </div>
+                                                                    </div>
+                                                                }
+                                                                {item.time.status === "FT" &&
+                                                                    <>
+                                                                        <div className="stage-time-small">
+                                                                            <div className="stage-time-con">
+                                                                                <p className="stage-kampe-minut">FT</p>
+                                                                            </div>
+                                                                            <div className="stage-time-scores">
+                                                                                <p className={scoreLocal}>{item.scores.localteam_score}</p>
+                                                                                <p className={scoreVisitor}>{item.scores.visitorteam_score}</p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </>
+                                                                }
+                                                                {item.time.status === "AET" &&
+                                                                    <>
+                                                                        <div className="stage-time-small">
+                                                                            <div className="stage-time-con">
+                                                                                <p className="stage-kampe-minut">EFS</p>
+                                                                            </div>
+                                                                            <div className="stage-time-scores">
+                                                                                <p className={scoreLocal}>{item.scores.localteam_score}</p>
+                                                                                <p className={scoreVisitor}>{item.scores.visitorteam_score}</p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </>
+                                                                }
+                                                                {item.time.status === "FT_PEN" &&
+                                                                    <>
+                                                                        <div className="stage-time-small">
+                                                                            <div className="stage-time-con">
+                                                                                <p className="stage-kampe-minut">Str.</p>
+                                                                            </div>
+                                                                            <div className="stage-time-scores">
+                                                                                <p className={scoreLocal}>{item.scores.localteam_score}</p>
+                                                                                <p className={scoreVisitor}>{item.scores.visitorteam_score}</p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </>
+                                                                }
+                                                                {item.time.status === "POSTP" &&
+                                                                    <>
+                                                                        {item.scores.visitorteam_score &&
+                                                                            <div className="stage-time-small">
+                                                                                <div className="stage-time-con">
+                                                                                    <p className="stage-kampe-minut">{liveView}</p>
+                                                                                </div>
+                                                                                <div className="stage-time-scores">
+                                                                                    <p className={scoreLocal}>{item.scores.localteam_score}</p>
+                                                                                    <p className={scoreVisitor}>{item.scores.visitorteam_score}</p>
+                                                                                </div>
+                                                                            </div>
+                                                                        }
+                                                                        {!item.scores.visitorteam_score &&
+                                                                            <div className="stage-time-small">
+                                                                                <div className="stage-time-con">
+                                                                                    <p className="stage-kampe-minut">{liveView}</p>
+                                                                                    <p className={yearClass}>I morgen</p>
+                                                                                </div>
+                                                                            </div>
+                                                                        }
+                                                                    </>
+                                                                }
+                                                                <div className="stage-kampe-hold-div">
+                                                                    <div className="stage-kampe-team">
+                                                                        <div className="stage-img">
+                                                                            <Image layout="fill" alt="." src={item.localTeam.data.logo_path} />
+                                                                        </div>
+                                                                        <p className={teamNameLocal}>{item.localTeam.data.name}</p>
+                                                                    </div>
+                                                                    <div className="stage-kampe-team">
+                                                                        <div className="stage-img">
+                                                                            <Image layout="fill" alt="." src={item.visitorTeam.data.logo_path} />
+                                                                        </div>
+                                                                        <p className={teamNameVisitor}>{item.visitorTeam.data.name}</p>
+                                                                    </div>
+                                                                </div>
+                                                                </div>
+                                                            </Link>
+                                                            {item.time.status === "NS" &&
+                                                                <div className="stage-kampe-odds">
+                                                                    {betButton1}
+                                                                    {betButton2}
+                                                                    {betButton3}
+                                                                </div>
+                                                            }
+                                                            {item.time.status !== "NS" &&
+                                                                <div className="stage-kampe-odds-fix">
+    
+                                                                </div>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                            </li>);
+                                    } else return;
+                                    }
+                                })}
+                                </ul>
+                            </div>
+                        </li>
+                    </>
+                );
+            }
         })
     }
 
@@ -2384,7 +3018,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
                                     </div>
                                 </div>
                             </div> */}
-                             <p className="stage-kampe-h1">Kampe idag</p>
+                             <p className="stage-kampe-h1">Kampe {chosenDate}</p>
                         </div>
                         <p className="nogames" id="nogames">Der kunne ikke findes nogen kampe d. {new Date(selected).getDate()}/{new Date(selected).getMonth() + 1}/{new Date(selected).getFullYear()}...</p>
                         <div className="md-header" id="md-container">

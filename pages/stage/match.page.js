@@ -13,9 +13,10 @@ import Congrats from '../img/congrats.svg';
 import StageHeader from '../layout/stageheader';
 import Height from '../components/height';
 import { getUser } from "../services/authService";
-import { set } from 'date-fns';
 
 function StageMatcharticle ({data}) {
+
+    const [grLeagues, setGrLeagues] = useState([]);
 
     useEffect(() => {
         getGame();
@@ -719,6 +720,7 @@ function StageMatcharticle ({data}) {
         setUserRolle(getUser().rolle);
         setSelectedGame(data);
         setSlutdato(data.varighed);
+        setGrLeagues(data.ligaer);
         for (var x in data.players) {
             if (data.players[x].player === getUser().email) {
                 setCurrentMoney(data.players[x].info.money);
@@ -754,6 +756,14 @@ function StageMatcharticle ({data}) {
             var nowDate = new Date().getTime();
             var varighedDate = new Date(slutdato).getTime();
             var placeBetBTN = document.getElementById("placeBetBTN");
+            var allowed = true;
+            if (grLeagues.length > 0) {
+                for (var q in odds) {
+                    if (grLeagues.findIndex(obj => obj === odds[q].odds_liga) < 0) {
+                        allowed = false;
+                    }
+                }
+            }
             if (!(odds.length > 0) || !(cookie.get("activeGame")) || indsats <= 0) {
                 if (!(odds.length > 0)) {
                     setNotiMessage("error", "Ingen væddemål", "Du har ikke placeret nogle væddemål. Placer ét eller flere væddemål, for at lave din kuppon.");
@@ -767,6 +777,9 @@ function StageMatcharticle ({data}) {
                 }
             } else if (nowDate > varighedDate) {
                 setNotiMessage("error", "Gruppespil slut", "Gruppespillet er desværre allerede færdiggjort.");
+                placeBetBTN.innerHTML = "Placér bet";
+            } else if (allowed === false) {
+                setNotiMessage("error", "Liga ikke tilladt i dette gruppespil", "Administratoren har slået en liga, som du prøver at spille på, fra.");
                 placeBetBTN.innerHTML = "Placér bet";
             } else {
                 if (currentMoney < indsats || indsats < selectedGame["min_amount"] || indsats > selectedGame["max_amount"]) {
