@@ -2631,7 +2631,10 @@ export async function getServerSideProps({ req, res }) {
     if (!req.cookies.auth) {
         sendRedirectLocation('/signup')
     }
-
+    res.setHeader(
+        'Cache-Control',
+        'public, s-maxage=10, stale-while-revalidate=11'
+    )
     const requestConfig = {
         headers: {
             "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"

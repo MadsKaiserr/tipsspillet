@@ -1661,15 +1661,15 @@
   }
 
   .kontakt-btn {
-    width: 100%;
     background-color: var(--primary);
-    border-radius: 5px;
+    border-radius: 500px;
     border: 0px;
+    margin: auto;
     color: #fff;
     font-family: Inter;
     font-weight: 400;
     font-size: 15px;
-    padding: 12px 0px;
+    padding: 12px 70px;
     cursor: pointer;
     transition: 0.2s;
   }

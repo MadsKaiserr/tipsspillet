@@ -12,21 +12,18 @@ import Script from 'next/script'
 import Footer from './layout/footer';
 import Login from './components/login';
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
+import Router, { useRouter } from 'next/router';
+
+import NProgress from 'nprogress';
+import 'nprogress/nprogress.css';
 
 import Head from 'next/head'
 
+Router.events.on('routeChangeStart', () => NProgress.start()); 
+Router.events.on('routeChangeComplete', () => NProgress.done()); 
+Router.events.on('routeChangeError', () => NProgress.done());
+
 function MyApp({ Component, pageProps }) {
-  const router = useRouter();
-  const [pageLoading, setPageLoading] = useState(false);
-    useEffect(() => {
-        const handleStart = () => { setPageLoading(true); };
-        const handleComplete = () => { setPageLoading(false); };
-    
-        router.events.on('routeChangeStart', handleStart);
-        router.events.on('routeChangeComplete', handleComplete);
-        router.events.on('routeChangeError', handleComplete);
-      }, [router]);
   return (
     <>
       <Script id="gtag"
@@ -97,10 +94,7 @@ function MyApp({ Component, pageProps }) {
       </Head>
       <Script id="CookieDeclaration" src="https://consent.cookiebot.com/d44cf7c1-e161-4a23-b759-e15e515a068e/cd.js" type="text/javascript" async></Script>
       <Login />
-      { pageLoading 
-        ? (<div className="main-loader"><div className="main-site-loader"></div></div>)
-        : <Component {...pageProps}/>
-      }
+      <Component {...pageProps}/>
       <Footer />
     </>
   );

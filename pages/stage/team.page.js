@@ -9,10 +9,93 @@ import Height from '../components/height';
 import Back from "../components/back.js";
 import { getUser } from "../services/authService";
  
-function StageTeam () {
+function StageTeam ({data}) {
 
     useEffect(() => {
-        getGame();
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const matchID = urlParams.get("team");
+        console.log("Sportmonks - Teams:", data);
+        getTabel(data.data.league.data.current_season_id);
+
+        var topscorerArray = data.data.goalscorers.data;
+        var assistArray = data.data.assistscorers.data;
+        var mostgoalsArray = [];
+        var mostAssistsArray = [];
+        for (var e in topscorerArray) {
+            if (topscorerArray[e].type === "goals" && topscorerArray[e].player.data.team_id === parseInt(matchID)) {
+                var mostGoalsIndex = mostgoalsArray.findIndex(obj => obj.player.data.fullname === topscorerArray[e].player.data.fullname);
+                if (mostGoalsIndex === -1) {
+                    mostgoalsArray.push(topscorerArray[e]);
+                } else {
+                    mostgoalsArray[mostGoalsIndex].goals = mostgoalsArray[mostGoalsIndex].goals + topscorerArray[e].goals;
+                    mostgoalsArray[mostGoalsIndex].penalty_goals = mostgoalsArray[mostGoalsIndex].penalty_goals + topscorerArray[e].penalty_goals;
+                }
+            }
+        }
+        mostgoalsArray.sort((a, b) => {
+            return b.goals - a.goals;
+        });
+        for (var q in assistArray) {
+            var mostAssistsIndex = mostAssistsArray.findIndex(obj => obj.player_id === assistArray[q].player_id);
+            if (mostAssistsIndex === -1) {
+                mostAssistsArray.push(assistArray[q]);
+            } else {
+                mostAssistsArray[mostAssistsIndex].assists = mostAssistsArray[mostAssistsIndex].assists + assistArray[q].assists;
+            }
+        }
+        for (var t in mostAssistsArray) {
+            var mostArrayIndex = mostgoalsArray.findIndex(obj => obj.player_id === mostAssistsArray[t].player_id);
+            if (mostArrayIndex !== -1) {
+                if (mostAssistsArray[t].assists === undefined) {
+                    mostgoalsArray[mostArrayIndex].assists = 0;
+                } else {
+                    mostgoalsArray[mostArrayIndex].assists = mostAssistsArray[t].assists;
+                }
+            }
+        }
+        setMostGoals(mostgoalsArray);
+
+        var favorit2 = [];
+        if (localStorage.getItem("favoritter")) {
+            favorit2 = JSON.parse(localStorage.getItem("favoritter"));
+        } else {
+            favorit2 = [];
+        }
+        for (var q in favorit2) {
+            if (favorit2[q].id + "" === matchID) {
+                setFavorit(true);
+            }
+        }
+        var latestArray = data.data.latest.data;
+        var matches = "";
+        for (var u in latestArray) {
+            if (matches === "") {
+                matches = latestArray[u].id;
+            } else {
+                matches = matches + "," + latestArray[u].id;
+            }
+        }
+
+        var kommendeArray = data.data.upcoming.data;
+        for (var u in kommendeArray) {
+            if (matches === "") {
+                matches = kommendeArray[u].id;
+            } else {
+                matches = matches + "," + kommendeArray[u].id;
+            }
+        }
+        getGame(matches);
+        setLogo(data.data.logo_path);
+        setSeason(data.data.league.data.current_season_id);
+        setTeam_name(data.data.name);
+        if (data.data.national_team === true) {
+            setNat_team("Landshold");
+        } else {
+            setNat_team(data.data.league.data.name);
+        }
+        setLoadingText("");
+        setSquad(data.data.squad.data);
     }, [])
 
     const [loadingText, setLoadingText] = useState("Indlæser...");
@@ -49,123 +132,33 @@ function StageTeam () {
 
     const [mostgoals, setMostGoals] = useState([]);
 
-    function getGame() {
-        const queryString = window.location.search;
-        const urlParams = new URLSearchParams(queryString);
-        const matchID = urlParams.get("team");
-        fetch("https://soccer.sportmonks.com/api/v2.0/teams/"+matchID+"?api_token="+"kvgDywRFDSqPhS9iYQynEci42JvyVtqLpCXBJlBHrH5v8Br8RtrEayi94Ybf"+"&include=goalscorers.player,goalscorers.team,assistscorers.player,assistscorers.team,league,latest,squad,upcoming,transfers,stats,fifaranking,uefaranking,goalscorers,assistscorers,trophies,rivals,activeSeasons&tz=Europe/Copenhagen")
+    function getGame(matches) {
+        fetch("https://soccer.sportmonks.com/api/v2.0/fixtures/multi/"+matches+"?api_token="+"kvgDywRFDSqPhS9iYQynEci42JvyVtqLpCXBJlBHrH5v8Br8RtrEayi94Ybf"+"&include=localTeam,visitorTeam&tz=Europe/Copenhagen")
         .then(response => response.json())
-        .then(function (result) {
-            console.log("Sportmonks - Teams:", result);
-            getTabel(result.data.league.data.current_season_id);
-
-            var topscorerArray = result.data.goalscorers.data;
-            var assistArray = result.data.assistscorers.data;
-            var mostgoalsArray = [];
-            var mostAssistsArray = [];
-            for (var e in topscorerArray) {
-                if (topscorerArray[e].type === "goals" && topscorerArray[e].player.data.team_id === parseInt(matchID)) {
-                    var mostGoalsIndex = mostgoalsArray.findIndex(obj => obj.player.data.fullname === topscorerArray[e].player.data.fullname);
-                    if (mostGoalsIndex === -1) {
-                        mostgoalsArray.push(topscorerArray[e]);
-                    } else {
-                        mostgoalsArray[mostGoalsIndex].goals = mostgoalsArray[mostGoalsIndex].goals + topscorerArray[e].goals;
-                        mostgoalsArray[mostGoalsIndex].penalty_goals = mostgoalsArray[mostGoalsIndex].penalty_goals + topscorerArray[e].penalty_goals;
+        .then(function (response) {
+            console.log("Sportmonks - Multi fixtures:", response);
+            var kommendeSlash = [];
+            var senesteSlash = [];
+            for (var q in response.data) {
+                for (var y in kommendeArray) {
+                    if (kommendeArray[y].id === response.data[q].id) {
+                        kommendeSlash.push(response.data[q]);
+                    }
+                }
+                for (var y in latestArray) {
+                    if (latestArray[y].id === response.data[q].id) {
+                        senesteSlash.push(response.data[q]);
                     }
                 }
             }
-            mostgoalsArray.sort((a, b) => {
-                return b.goals - a.goals;
+            senesteSlash.sort((a, b) => {
+                return b.time.starting_at.timestamp - a.time.starting_at.timestamp;
             });
-            for (var q in assistArray) {
-                var mostAssistsIndex = mostAssistsArray.findIndex(obj => obj.player_id === assistArray[q].player_id);
-                if (mostAssistsIndex === -1) {
-                    mostAssistsArray.push(assistArray[q]);
-                } else {
-                    mostAssistsArray[mostAssistsIndex].assists = mostAssistsArray[mostAssistsIndex].assists + assistArray[q].assists;
-                }
-            }
-            for (var t in mostAssistsArray) {
-                var mostArrayIndex = mostgoalsArray.findIndex(obj => obj.player_id === mostAssistsArray[t].player_id);
-                if (mostArrayIndex !== -1) {
-                    if (mostAssistsArray[t].assists === undefined) {
-                        mostgoalsArray[mostArrayIndex].assists = 0;
-                    } else {
-                        mostgoalsArray[mostArrayIndex].assists = mostAssistsArray[t].assists;
-                    }
-                }
-            }
-            setMostGoals(mostgoalsArray);
-
-            var favorit2 = [];
-            if (localStorage.getItem("favoritter")) {
-                favorit2 = JSON.parse(localStorage.getItem("favoritter"));
-            } else {
-                favorit2 = [];
-            }
-            for (var q in favorit2) {
-                if (favorit2[q].id + "" === matchID) {
-                    setFavorit(true);
-                }
-            }
-            var latestArray = result.data.latest.data;
-            var matches = "";
-            for (var u in latestArray) {
-                if (matches === "") {
-                    matches = latestArray[u].id;
-                } else {
-                    matches = matches + "," + latestArray[u].id;
-                }
-            }
-
-            var kommendeArray = result.data.upcoming.data;
-            for (var u in kommendeArray) {
-                if (matches === "") {
-                    matches = kommendeArray[u].id;
-                } else {
-                    matches = matches + "," + kommendeArray[u].id;
-                }
-            }
-
-            fetch("https://soccer.sportmonks.com/api/v2.0/fixtures/multi/"+matches+"?api_token="+"kvgDywRFDSqPhS9iYQynEci42JvyVtqLpCXBJlBHrH5v8Br8RtrEayi94Ybf"+"&include=localTeam,visitorTeam&tz=Europe/Copenhagen")
-            .then(response => response.json())
-            .then(function (response) {
-                console.log("Sportmonks - Multi fixtures:", response);
-                var kommendeSlash = [];
-                var senesteSlash = [];
-                for (var q in response.data) {
-                    for (var y in kommendeArray) {
-                        if (kommendeArray[y].id === response.data[q].id) {
-                            kommendeSlash.push(response.data[q]);
-                        }
-                    }
-                    for (var y in latestArray) {
-                        if (latestArray[y].id === response.data[q].id) {
-                            senesteSlash.push(response.data[q]);
-                        }
-                    }
-                }
-                senesteSlash.sort((a, b) => {
-                    return b.time.starting_at.timestamp - a.time.starting_at.timestamp;
-                });
-                setSenesteFive(senesteSlash);
-                kommendeSlash.sort((a, b) => {
-                    return a.time.starting_at.timestamp - b.time.starting_at.timestamp;
-                });
-                setKommendeFive(kommendeSlash);
-            }) .catch(error => 
-                console.log('error', error
-            ));
-            setLogo(result.data.logo_path);
-            setSeason(result.data.league.data.current_season_id);
-            setTeam_name(result.data.name);
-            if (result.data.national_team === true) {
-                setNat_team("Landshold");
-            } else {
-                setNat_team(result.data.league.data.name);
-            }
-            setLoadingText("");
-            setSquad(result.data.squad.data);
+            setSenesteFive(senesteSlash);
+            kommendeSlash.sort((a, b) => {
+                return a.time.starting_at.timestamp - b.time.starting_at.timestamp;
+            });
+            setKommendeFive(kommendeSlash);
         }) .catch(error => 
             console.log('error', error
         ));
@@ -1588,7 +1581,11 @@ function StageTeam () {
     )
 }
 
-export async function getServerSideProps({ res, req }) {
+export async function getServerSideProps({ res, req, query }) {
+    res.setHeader(
+        'Cache-Control',
+        'public, s-maxage=58, stale-while-revalidate=59'
+    )
     const sendRedirectLocation = (location) => {
         res.writeHead(302, {
             Location: location,
@@ -1599,8 +1596,16 @@ export async function getServerSideProps({ res, req }) {
     if (!req.cookies.auth) {
         sendRedirectLocation('/signup')
     }
+    const category = query.team;
+    var resp = await axios.get("https://soccer.sportmonks.com/api/v2.0/teams/"+category+"?api_token="+"kvgDywRFDSqPhS9iYQynEci42JvyVtqLpCXBJlBHrH5v8Br8RtrEayi94Ybf"+"&include=goalscorers.player,goalscorers.team,assistscorers.player,assistscorers.team,league,latest,squad,upcoming,transfers,stats,fifaranking,uefaranking,goalscorers,assistscorers,trophies,rivals,activeSeasons&tz=Europe/Copenhagen");
+    var data = resp.data;
+    if (!data) {
+        return {
+          notFound: true,
+        }
+    }
     return {
-        props: { },
+        props: { data },
     }
 }
  

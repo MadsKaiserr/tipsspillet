@@ -419,7 +419,7 @@ function StageGruppespil ({data}) {
                             <div className="gruppespil-info-info">
                                 <div className="gruppespil-info-element">
                                     <p className="gruppespil-info-element-p">Total Gevinst</p>
-                                    <p className="gruppespil-info-element-h1">{Number(parseFloat(gevinst).toFixed(2))} kr.</p>
+                                    <p className="gruppespil-info-element-h1">{parseInt(gevinst)} kr.</p>
                                 </div>
                                 <div className="gruppespil-info-element">
                                     <p className="gruppespil-info-element-p">Førende</p>
@@ -512,7 +512,7 @@ function StageGruppespil ({data}) {
                                     <div className="ant-info">
                                         <p className="ant-h2">Din gevinst</p>
                                         <div className="ant-info-price">
-                                            <p className="ant-h1">{gevinstStat} kr.</p>
+                                            <p className="ant-h1">{parseInt(gevinstStat)} kr.</p>
                                         </div>
                                         <p className="ant-p">Din <span className="ant-p-a">gevinst</span> fra gruppespillets <br />start</p>
                                     </div>
@@ -888,18 +888,17 @@ function StageGruppespil ({data}) {
                                             }
                                         }
 
-                                        var showMe = "";
-                                        if (item.player === getUser() ? getUser().email : "") {
-                                            showMe = " gruppespil-row-active";
+                                        var trueMe = "";
+                                        if (getUser()) {
+                                            if (getUser().email === item.player) {
+                                                trueMe = "tabel-correct";
+                                            }
                                         }
-
-                                        const queryString = window.location.search;
-                                        const urlParams = new URLSearchParams(queryString);
 
                                         return (
                                             <li key={item.player}>
                                                 <Link href={"/stage/gruppespil/spiller?spiller="+item.player+"&game="+activeGame}>
-                                                    <div className={"tabel-element"} style={{borderLeft: "4px solid var(--primary)", padding: "10px 1px"}}>
+                                                    <div className={"tabel-element " + trueMe} style={{borderLeft: "4px solid var(--primary)", padding: "10px 1px"}}>
                                                         <div className="tabel-top-right">
                                                             <div className="tabel-ends">
                                                                 <p className="tabel-p" id="gs-pos" style={{textAlign: "center"}}>{index + 1}</p>
@@ -986,6 +985,10 @@ export async function getServerSideProps({ req, res }) {
         res.end();
         return { props: {} };
     };
+    res.setHeader(
+        'Cache-Control',
+        'public, s-maxage=10, stale-while-revalidate=11'
+    )
     if (!req.cookies.auth) {
         sendRedirectLocation('/signup')
     }
