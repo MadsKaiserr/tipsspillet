@@ -56,7 +56,7 @@ function StageGruppespil ({data}) {
 
     const [tableArray, setTableArray] = useState([]);
 
-    const [gevinst, setGevinst] = useState("Indlæser...");
+    const [totForbrug, setTotForbrug] = useState("Indlæser...");
     const [first, setFirst] = useState("Indlæser...");
     const [kuponer, setKuponer] = useState("Indlæser...");
     const [startAm, setStartAm] = useState(0);
@@ -139,19 +139,17 @@ function StageGruppespil ({data}) {
             setGameName(data.name);
             setStartAm(data.start_amount);
 
-            var startValue = parseInt(data.start_amount);
-            var gevinstVar = 0;
             var antalKuponer = 0;
+            var forbrugVar = 0;
             for (var i in data.players) {
-                var kapital = data.players[i].info.money;
-                gevinstVar = gevinstVar + (kapital - startValue);
-
                 var playerKuponer = data.players[i].odds.length;
                 antalKuponer = antalKuponer + playerKuponer;
                 var finalKuponer = antalKuponer + "";
+                for (var y in data.players[i].odds) {
+                    forbrugVar = forbrugVar + data.players[i].odds[y].indsats;
+                }
             }
-            var gevinstDone = gevinstVar+" kr.";
-            setGevinst(gevinstDone);
+            setTotForbrug(forbrugVar);
             setKuponer(finalKuponer);
 
             var n = data.players.length;
@@ -418,8 +416,8 @@ function StageGruppespil ({data}) {
                             </div>
                             <div className="gruppespil-info-info">
                                 <div className="gruppespil-info-element">
-                                    <p className="gruppespil-info-element-p">Total Gevinst</p>
-                                    <p className="gruppespil-info-element-h1">{parseInt(gevinst)} kr.</p>
+                                    <p className="gruppespil-info-element-p">Total Forbrug</p>
+                                    <p className="gruppespil-info-element-h1">{parseInt(totForbrug)} kr.</p>
                                 </div>
                                 <div className="gruppespil-info-element">
                                     <p className="gruppespil-info-element-p">Førende</p>
