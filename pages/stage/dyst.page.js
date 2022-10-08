@@ -1092,7 +1092,12 @@ function StageDyst ({data}) {
                             <p className="inv-p-a">{activeGame}</p>
                             <div className="invite-copied display-not" id="copied">Kopieret</div>
                         </div>
-                        <div className="inv-element">
+                        <div className="inv-element" onClick={() => {
+                                    const queryString = window.location.search;
+                                    const urlParams = new URLSearchParams(queryString);
+                                    navigator.clipboard.writeText("https://www.tipsspillet.dk/gruppesession?game=" + urlParams.get('game') + "&type=invite"); document.getElementById("copied").classList.remove("display-not"); setTimeout(function (){
+                                    document.getElementById("copied").classList.add("display-not")
+                                }, 1000);}}>
                             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="var(--softBlack)" viewBox="0 0 16 16">
                                 <path d="M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5z"/>
                             </svg>

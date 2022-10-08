@@ -248,7 +248,7 @@ function Signup () {
             type: "facebook"
         }
 
-        if (box2) {
+        if (box4) {
             requestBody = {
                 username: username,
                 navn: event.name,
