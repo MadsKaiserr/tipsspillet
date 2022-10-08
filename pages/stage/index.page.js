@@ -20,6 +20,37 @@ import GrMatchMockMB from '../img/IphoneGruppespilMockup.jpg';
 function StageForside ({gruppespil_data, spiller_data}) {
     const router = useRouter()
 
+    const [loading, setLoading] = useState(false);
+
+    function indsendFeedback() {
+        setLoading(true);
+        const signupURL = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/kontakt";
+
+        const requestConfig = {
+            headers: {
+                "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
+            }
+        }
+
+        const requestBody = {
+            email: getUser().email,
+            navn: getUser().username,
+            besked: feedbackText,
+            box: feedbackBox
+        }
+
+        axios.post(signupURL, requestBody, requestConfig).then(response => {
+            console.log("AWS - Besked sendt:", response);
+            setLoading(false);
+            setFeedbackMessage("Tak for din feedback!");
+            setFeedbackBox(0);
+            setFeedbackText("");
+        }).catch(error => {
+            setLoading(false);
+            console.log(error);
+        })
+    }
+
     const [grLeagues, setGrLeagues] = useState([]);
 
     useEffect(() => {
@@ -2847,13 +2878,8 @@ function StageForside ({gruppespil_data, spiller_data}) {
 
     const [feedback, setFeedback] = useState(false);
     const [feedbackText, setFeedbackText] = useState("");
+    const [feedbackMessage, setFeedbackMessage] = useState("");
     const [feedbackBox, setFeedbackBox] = useState(0);
-
-    function indsendFeedback() {
-        if (feedbackBox > 0 && feedbackText !== "") {
-
-        }
-    }
 
     return (
         <>
@@ -2929,8 +2955,9 @@ function StageForside ({gruppespil_data, spiller_data}) {
                             <textarea className="wc-input" placeholder='Fortæl os hvad vi kan gøre bedre' value={feedbackText} onChange={event => setFeedbackText(event.target.value)} />
                         </div>
                     </div>
+                    {feedbackMessage && <p className="wc-h3">{feedbackMessage}</p>}
                     {feedbackBox > 0 && <>
-                        {feedbackText !== "" && <button className="wc-btn" onClick={() => indsendFeedback()}>Indsend</button>}
+                        {feedbackText !== "" && <button className="wc-btn" onClick={() => indsendFeedback()}>{loading && <div className="loader" id="loader"></div>}{!loading && <>Indsend</>}</button>}
                         {feedbackText === "" && <button className="wc-btn-off">Indsend</button>}
                     </>}
                     {feedbackBox <= 0 && <button className="wc-btn-off">Indsend</button>}
