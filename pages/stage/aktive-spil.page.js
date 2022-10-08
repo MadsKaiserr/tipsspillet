@@ -58,7 +58,7 @@ function StageAktiveSpil ({ data }) {
     }, [loading])
 
     function setActiveGame(id, index, name) {
-        cookie.set("activeGame", id, {expires: 24});
+        cookie.set("activeGame", id, {expires: 7});
         localStorage.setItem("activeGame", id);
         localStorage.setItem("playerIndex", index);
         localStorage.setItem("aktive-spil-suspend", "null");

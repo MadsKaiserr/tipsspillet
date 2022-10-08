@@ -1,8 +1,52 @@
 import * as React from 'react';
 import Head from 'next/head'
 import Header from './layout/header';
+import { useState, useEffect } from 'react';
+import axios from "axios";
 
 function Kontakt() {
+
+    const [loading, setLoading] = useState(false);
+    const [message, setMessage] = useState("");
+
+    const [besked, setBesked] = useState("");
+    const [email, setEmail] = useState("");
+    const [navn, setNavn] = useState("");
+
+    function sendBesked() {
+        setLoading(true);
+        const signupURL = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/kontakt";
+
+        const requestConfig = {
+            headers: {
+                "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
+            }
+        }
+
+        const requestBody = {
+            email: email,
+            navn: navn,
+            besked: besked
+        }
+
+        if (besked !== "" && navn !== "" && email !== "") {
+            axios.post(signupURL, requestBody, requestConfig).then(response => {
+                console.log("AWS - Besked sendt:", response);
+                setBesked("");
+                setEmail("");
+                setNavn("");
+                setMessage("Beskeden er sendt!")
+                setLoading(false);
+            }).catch(error => {
+                setLoading(false);
+                console.log(error);
+                setMessage("Der skete en fejl - Din besked blev ikke sendt.")
+            })
+        } else {
+            setLoading(false);
+            setMessage("Udfyld alle felter")
+        }
+    }
 
     return (
         <>
@@ -32,18 +76,20 @@ function Kontakt() {
                         <div className="kt-wrapper">
                             <div className="kt-type">
                                 <p clasName="kt-p">Navn</p>
-                                <input type="text" className="kt-input" placeholder="Fx. Mads Kaiser" />
+                                <input type="text" value={navn} onChange={event => setNavn(event.target.value)}  className="kt-input" placeholder="Fx. Mads Kaiser" />
                             </div>
                             <div className="kt-type">
                                 <p clasName="kt-p">Email</p>
-                                <input type="text" className="kt-input" placeholder="Fx. madskaiser@gmail.com" />
+                                <input type="text" value={email} onChange={event => setEmail(event.target.value)}  className="kt-input" placeholder="Fx. madskaiser@gmail.com" />
                             </div>
                         </div>
                         <div className="kt-type" style={{width: "100%"}}>
                             <p clasName="kt-p">Besked</p>
-                            <textarea className="kt-area" placeholder="Tekst..." />
+                            <textarea className="kt-area" onChange={event => setBesked(event.target.value)}  value={besked} placeholder="Besked..." />
                         </div>
-                        <button className="kontakt-btn">Send mail</button>
+                        {besked !== "" && <button className="kontakt-btn" onClick={() => sendBesked()}>{loading && <div className="loader" id="loader"></div>}{!loading && <>Send besked</>}</button>}
+                        {message !== "" && <p className="kontakt-p">{message}</p>}
+                        {besked === "" && <button className="kontakt-btn-off">Send besked</button>}
                     </div>
                 </div>
             </div>

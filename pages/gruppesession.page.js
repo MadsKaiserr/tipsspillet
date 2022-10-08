@@ -15,6 +15,7 @@ function Gruppesession ({data}) {
     const [tableArray, setTableArray] = useState([]);
 
     const [activeGame, setActiveGame] = useState([]);
+    const [password, setPassword] = useState("");
 
     const [varighed, setVarighed] = useState("0");
     const [gameName, setGameName] = useState("Indlæser...");
@@ -27,6 +28,8 @@ function Gruppesession ({data}) {
 
     const [forbrug, setForbrug] = useState(0);
     const [winRate, setWinRate] = useState(0);
+
+    const [loading, setLoading] = useState(false);
 
     function getPlayer(player) {
         const queryString = window.location.search;
@@ -96,83 +99,182 @@ function Gruppesession ({data}) {
     }, [])
 
     function tilmeld() {
-        if (getUser()) {
-            var yourIndex = activeGame["players"].findIndex(obj => obj.player === getUser().email);
+        setLoading(true);
+        if ((synlighed === "privat" && password !== "") || (synlighed === "offentlig" || synlighed === "dyst")) {
+            if (getUser()) {
+                var yourIndex = activeGame["players"].findIndex(obj => obj.player === getUser().email);
+    
+                var varighedDate = new Date(varighed).getTime();
+                var nowDate = new Date().getTime();
 
-            var varighedDate = new Date(varighed).getTime();
-            var nowDate = new Date().getTime();
-    
-            if ((yourIndex === -1 && varighedDate > nowDate) && getUser().rolle) {
-                console.log(activeGame)
-                const tilmeldUrl = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/gruppesession";
-    
-                const tilmeldConfig = {
-                    headers: {
-                        "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
+                if (synlighed === "privat") {
+                    const loginURL = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/gruppespillogin";
+                    const requestConfig = {
+                        headers: {
+                            "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
+                        }
                     }
-                }
-    
-                var moneys = parseInt(activeGame["start_amount"]);
-                var medlemsskab;
-                var userEmail;
-                var username;
+            
+                    const requestBody = {
+                        game: gameId,
+                        password: password
+                    }
+            
+                    axios.post(loginURL, requestBody, requestConfig).then(response => {
+                        console.log("AWS - Gruppespil Login:", response);
+                        if ((yourIndex === -1 && varighedDate > nowDate) && getUser().rolle) {
+                            console.log(activeGame)
+                            const tilmeldUrl = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/gruppesession";
                 
-                if (getUser().rolle) {
-                    medlemsskab = getUser().rolle;
-                    userEmail = getUser().email;
-                    username = getUser().username;
+                            const tilmeldConfig = {
+                                headers: {
+                                    "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
+                                }
+                            }
+                
+                            var moneys = parseInt(activeGame["start_amount"]);
+                            var medlemsskab;
+                            var userEmail;
+                            var username;
+                            
+                            if (getUser().rolle) {
+                                medlemsskab = getUser().rolle;
+                                userEmail = getUser().email;
+                                username = getUser().username;
+                            } else {
+                                medlemsskab = "none";
+                                userEmail = "Ukendt";
+                                username = "Ukendt";
+                            }
+                            var fbLogo = "";
+                            if (cookie.get("fbLogin")) {
+                                fbLogo = JSON.parse(cookie.get("fbLogin")).id;
+                            }
+                
+                            const tilmeldBody = {
+                                "tilmeldId": activeGame["id"],
+                                "updateItValue": {
+                                    "player": userEmail,
+                                    "username": username,
+                                    "fb_logo_id": fbLogo,
+                                    "info": {
+                                        "money": moneys,
+                                        "notifikationer": [],
+                                        "medlemsskab": medlemsskab
+                                    }, 
+                                    "odds": []
+                                }
+                            }
+                
+                            axios.patch(tilmeldUrl, tilmeldBody, tilmeldConfig).then(response => {
+                                console.log("AWS - Gruppespil:", response)
+                                cookie.set("activeGame", activeGame["id"], {expires: 7});
+                                localStorage.setItem("activeGame", activeGame["id"]);
+                                localStorage.setItem("playerIndex", response.data.Item.Attributes.players.findIndex(obj => obj.player === getUser().email));
+                                const queryString = window.location.search;
+                                const urlParams = new URLSearchParams(queryString);
+                                var GetRes = urlParams.get("res");
+                                if (GetRes) {
+                                    router.push("/stage/setup?rel=page2");
+                                } else {
+                                    router.push("/stage");
+                                }
+                            }).catch(error => {
+                                console.log(error);
+                            })
+                        } else {
+                            setLoading(false);
+                            if (yourIndex !== -1) {
+                                setNotiMessage("error", "Deltager allerede", "Det ser ud til, at du allerede deltager i dette gruppespil.");
+                            } else if (varighedDate < nowDate) {
+                                setNotiMessage("error", "Gruppespil slut", "Gruppespil er desværre allerede færdiggjort");
+                            } else if (!getUser().rolle) {
+                                router.push("/signup");
+                            }
+                        }
+                    }).catch(error => {
+                        console.log(error);
+                        setNotiMessage("error", "Forkert kodeord", "Du har indtastet en forkert kode til gruppespillet.");
+                        setLoading(false);
+                    })
                 } else {
-                    medlemsskab = "none";
-                    userEmail = "Ukendt";
-                    username = "Ukendt";
-                }
-                var fbLogo = "";
-                if (cookie.get("fbLogin")) {
-                    fbLogo = JSON.parse(cookie.get("fbLogin")).id;
-                }
-    
-                const tilmeldBody = {
-                    "tilmeldId": activeGame["id"],
-                    "updateItValue": {
-                        "player": userEmail,
-                        "username": username,
-                        "fb_logo_id": fbLogo,
-                        "info": {
-                            "money": moneys,
-                            "notifikationer": [],
-                            "medlemsskab": medlemsskab
-                        }, 
-                        "odds": []
-                    }
-                }
-    
-                axios.patch(tilmeldUrl, tilmeldBody, tilmeldConfig).then(response => {
-                    console.log("AWS - Gruppespil:", response)
-                    cookie.set("activeGame", activeGame["id"], {expires: 24});
-                    localStorage.setItem("activeGame", activeGame["id"]);
-                    localStorage.setItem("playerIndex", response.data.Item.Attributes.players.findIndex(obj => obj.player === getUser().email));
-                    const queryString = window.location.search;
-                    const urlParams = new URLSearchParams(queryString);
-                    var GetRes = urlParams.get("res");
-                    if (GetRes) {
-                        router.push("/stage/setup?rel=page2");
+                    if ((yourIndex === -1 && varighedDate > nowDate) && getUser().rolle) {
+                        console.log(activeGame)
+                        const tilmeldUrl = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/gruppesession";
+            
+                        const tilmeldConfig = {
+                            headers: {
+                                "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
+                            }
+                        }
+            
+                        var moneys = parseInt(activeGame["start_amount"]);
+                        var medlemsskab;
+                        var userEmail;
+                        var username;
+                        
+                        if (getUser().rolle) {
+                            medlemsskab = getUser().rolle;
+                            userEmail = getUser().email;
+                            username = getUser().username;
+                        } else {
+                            medlemsskab = "none";
+                            userEmail = "Ukendt";
+                            username = "Ukendt";
+                        }
+                        var fbLogo = "";
+                        if (cookie.get("fbLogin")) {
+                            fbLogo = JSON.parse(cookie.get("fbLogin")).id;
+                        }
+            
+                        const tilmeldBody = {
+                            "tilmeldId": activeGame["id"],
+                            "updateItValue": {
+                                "player": userEmail,
+                                "username": username,
+                                "fb_logo_id": fbLogo,
+                                "info": {
+                                    "money": moneys,
+                                    "notifikationer": [],
+                                    "medlemsskab": medlemsskab
+                                }, 
+                                "odds": []
+                            }
+                        }
+            
+                        axios.patch(tilmeldUrl, tilmeldBody, tilmeldConfig).then(response => {
+                            console.log("AWS - Gruppespil:", response)
+                            cookie.set("activeGame", activeGame["id"], {expires: 7});
+                            localStorage.setItem("activeGame", activeGame["id"]);
+                            localStorage.setItem("playerIndex", response.data.Item.Attributes.players.findIndex(obj => obj.player === getUser().email));
+                            const queryString = window.location.search;
+                            const urlParams = new URLSearchParams(queryString);
+                            var GetRes = urlParams.get("res");
+                            if (GetRes) {
+                                router.push("/stage/setup?rel=page2");
+                            } else {
+                                router.push("/stage");
+                            }
+                        }).catch(error => {
+                            console.log(error);
+                        })
                     } else {
-                        router.push("/stage");
+                        setLoading(false);
+                        if (yourIndex !== -1) {
+                            setNotiMessage("error", "Deltager allerede", "Det ser ud til, at du allerede deltager i dette gruppespil.");
+                        } else if (varighedDate < nowDate) {
+                            setNotiMessage("error", "Gruppespil slut", "Gruppespil er desværre allerede færdiggjort");
+                        } else if (!getUser().rolle) {
+                            router.push("/signup");
+                        }
                     }
-                }).catch(error => {
-                    console.log(error);
-                })
-            } else {
-                if (yourIndex !== -1) {
-                    setNotiMessage("error", "Deltager allerede", "Det ser ud til, at du allerede deltager i dette gruppespil.");
-                } else if (varighedDate < nowDate) {
-                    setNotiMessage("error", "Gruppespil slut", "Gruppespil er desværre allerede færdiggjort");
-                } else if (!getUser().rolle) {
-                    router.push("/signup");
                 }
+            } else {
+                router.push("/signup");
             }
         } else {
-            router.push("/signup");
+            setLoading(false);
+            setNotiMessage("error", "Privat gruppespil kræver kode", "Det kræver at du har en kode, for at tilmelde dig private gruppespil.");
         }
     }
 
@@ -224,25 +326,45 @@ function Gruppesession ({data}) {
                     </div>
                 </div>
                 <div className="gs-wrapper">
-                    {synlighed === "dyst" && <>
-                        <div className="gruppespil-section" style={{justifyContent: "center", alignItems: "center", justifyContent: "center", textAlign: "center"}}>
-                            <h1 className="gs-main-h1">{gameName}</h1>
-                            <div className="gruppespil-info-info" style={{display: "flex", alignItems: "center", justifyContent: "center", gap: "30px"}}>
-                                <div className="gruppespil-info-element" style={{width: "100px", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", margin: "0px"}}>
-                                    <p className="gruppespil-info-element-p">Startbeløb</p>
-                                    <p className="gruppespil-info-element-h1">{gameStart}</p>
-                                </div>
-                                <div className="gruppespil-info-element" style={{width: "100px", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", margin: "0px"}}>
-                                    <p className="gruppespil-info-element-p">Spillere</p>
-                                    <p className="gruppespil-info-element-h1">{gamePlayers}</p>
-                                </div>
-                                <div className="gruppespil-info-element" style={{width: "100px", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", margin: "0px"}}>
-                                    <p className="gruppespil-info-element-p">Antal Kuponer</p>
-                                    <p className="gruppespil-info-element-h1">{kuponer}</p>
-                                </div>
+                    {synlighed !== "privat" && <div className="gruppespil-section" style={{justifyContent: "center", alignItems: "center", justifyContent: "center", textAlign: "center"}}>
+                        <h1 className="gs-main-h1">{gameName}</h1>
+                        <div className="gruppespil-info-info" style={{display: "flex", alignItems: "center", justifyContent: "center", gap: "30px"}}>
+                            <div className="gruppespil-info-element" style={{width: "100px", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", margin: "0px"}}>
+                                <p className="gruppespil-info-element-p">Startbeløb</p>
+                                <p className="gruppespil-info-element-h1">{gameStart}</p>
                             </div>
-                            <button className="gruppeinvite-btn" onClick={() => {tilmeld()}}>Tilmeld</button>
+                            <div className="gruppespil-info-element" style={{width: "100px", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", margin: "0px"}}>
+                                <p className="gruppespil-info-element-p">Spillere</p>
+                                <p className="gruppespil-info-element-h1">{gamePlayers}</p>
+                            </div>
+                            <div className="gruppespil-info-element" style={{width: "100px", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", margin: "0px"}}>
+                                <p className="gruppespil-info-element-p">Antal Kuponer</p>
+                                <p className="gruppespil-info-element-h1">{kuponer}</p>
+                            </div>
                         </div>
+                        <button className="gruppeinvite-btn" onClick={() => {tilmeld()}}>{loading && <div className="loader" id="loader"></div>}{!loading && <>Tilmeld</>}</button>
+                    </div>}
+                    {synlighed === "privat" && <div className="gruppespil-section" style={{justifyContent: "center", alignItems: "center", justifyContent: "center", textAlign: "center"}}>
+                        <h1 className="gs-main-h1">{gameName}</h1>
+                        <div className="gruppespil-info-info" style={{display: "flex", alignItems: "center", justifyContent: "center", gap: "30px"}}>
+                            <div className="gruppespil-info-element" style={{width: "100px", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", margin: "0px"}}>
+                                <p className="gruppespil-info-element-p">Startbeløb</p>
+                                <p className="gruppespil-info-element-h1">{gameStart}</p>
+                            </div>
+                            <div className="gruppespil-info-element" style={{width: "100px", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", margin: "0px"}}>
+                                <p className="gruppespil-info-element-p">Spillere</p>
+                                <p className="gruppespil-info-element-h1">{gamePlayers}</p>
+                            </div>
+                            <div className="gruppespil-info-element" style={{width: "100px", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", margin: "0px"}}>
+                                <p className="gruppespil-info-element-p">Antal Kuponer</p>
+                                <p className="gruppespil-info-element-h1">{kuponer}</p>
+                            </div>
+                        </div>
+                        <input type="password" value={password} style={{maxWidth: "250px", marginTop: "40px"}} onChange={event => setPassword(event.target.value)} className="op-input" placeholder='Kodeord' /><br />
+                        {password !== "" && <button className="gruppeinvite-btn" onClick={() => {tilmeld()}}>{loading && <div className="loader" id="loader"></div>}{!loading && <>Tilmeld</>}</button>}
+                        {password === "" && <button className="gruppeinvite-btn-off">Tilmeld</button>}
+                    </div>}
+                    {synlighed === "dyst" && <>
                         <div className="gruppespil-section" style={{border: "0px", marginTop: "20px", justifyContent: "center", alignItems: "center", justifyContent: "center", textAlign: "center"}}>
                             <div className="top-container">
                                 <div className="top-element">
@@ -358,7 +480,7 @@ function Gruppesession ({data}) {
                                     <div className="ant-info">
                                         <p className="ant-h2">Gevinst rate</p>
                                         <div className="ant-info-price">
-                                            <p className="ant-h1">{parseInt(winRate)}%</p>
+                                            <p className="ant-h1">{!isNaN(parseInt(winRate)) && <>{parseInt(winRate)}</>}{isNaN(parseInt(winRate)) && <>0</>}%</p>
                                         </div>
                                         <p className="ant-p">Andel af <span className="ant-p-a">kuponer</span> som er vundet af <br />medlemmerne</p>
                                     </div>
@@ -438,7 +560,7 @@ function Gruppesession ({data}) {
                                 </ul>
                             </div>
                         </div>
-                        <div className="gruppespil-info">
+                        {synlighed !== "privat" && <div className="gruppespil-info">
                             <div className="gruppespil-title">
                                 <h2 className="gs-h2">Inviter venner</h2>
                                 <p className="gs-h4">Klik for at kopiere</p>
@@ -464,7 +586,7 @@ function Gruppesession ({data}) {
                                     <p className="inv-p">Del invitationslink</p>
                                 </div>
                             </div>
-                        </div>
+                        </div>}
                     </div>
                     <div className="gruppespil-section" style={{border: "0px", marginTop: "20px"}}>
                         <p className="find-h1" style={{paddingTop: "15px"}}>Opret et gruppespil</p>

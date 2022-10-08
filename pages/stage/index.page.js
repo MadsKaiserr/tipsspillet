@@ -14,6 +14,8 @@ import StageHeader from '../layout/stageheader';
 import Height from '../components/height';
 import { useRouter } from 'next/router'
 import cookie from 'js-cookie'
+import GrMatchMock from '../img/GruppespilMockup.jpg';
+import GrMatchMockMB from '../img/IphoneGruppespilMockup.jpg';
  
 function StageForside ({gruppespil_data, spiller_data}) {
     const router = useRouter()
@@ -961,47 +963,6 @@ function StageForside ({gruppespil_data, spiller_data}) {
         }
    }, [])
 
-    function getIndskydelse(data) {
-        var nowDate = new Date().getTime();
-        var varighedDate = new Date(slutdato).getTime();
-        if (nowDate < varighedDate) {
-            var oprettelse_weeks = data.oprettelse / (1000*60*60*24*7);
-            var weeks = data.indskydelse_int;
-            var weekSince = (new Date().getTime() / (1000*60*60*24*7)) - oprettelse_weeks;
-            if (weekSince - weeks >= 1) {
-                var activeGame = cookie.get("activeGame");
-                const betCalcURL = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/updateindskydelse";
-        
-                const winBody = {
-                    game: activeGame + "",
-                    amount: data.indskydelse_amount,
-                    players: data.players,
-                    since: Math.floor(weekSince)
-                }
-    
-                const requestConfig = {
-                    headers: {
-                        "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
-                    }
-                }
-                axios.patch(betCalcURL, winBody, requestConfig).then(responseTem => {
-                    console.log("AWS - Indskydelse:", responseTem, winBody);
-                    for (var i in responseTem.data.players) {
-                        if (responseTem.data.players[i].player === getUser().email) {
-                            setCurrentMoney(responseTem.data.players[i].info.money);
-                        }
-                    }
-                }).catch(error => {
-                    if (error.response.status === 401 || error.response.status === 403) {
-                        setNotiMessage("error","Fejl i opdatering af indskydelse" , error.response.data.message);
-                    } else {
-                        setNotiMessage("error","Serverfejl" , "Serveren slog fejl. Dette skyldes ofte for meget trafik på hjemmesiden. Kontakt os for mere information.");
-                    }
-                })
-            }
-        }
-    }
-
     useEffect(() => {
         console.log("AWS - Gruppespil:", gruppespil_data)
         if (gruppespil_data.admin !== undefined && gruppespil_data.admin !== null) {
@@ -1046,17 +1007,51 @@ function StageForside ({gruppespil_data, spiller_data}) {
                 }
             }
 
-            getIndskydelse(gruppespil_data);
-
             var n = gruppespil_data.players.length;
             setPositionCount(n);
+            var weekCount = new Date().getTime() - gruppespil_data.oprettelse;
+            weekCount = weekCount / 1000 / 60 / 60 / 24 / 7;
             var topScorers = getTopN(gruppespil_data.players, n);
             topScorers.forEach(function(gameItem, index) {
                 if (gameItem.player === getUser().email) {
-                    setCurrentMoney(gameItem.info.money)
+                    if (Math.floor(weekCount) <= gruppespil_data.indskydelse_int) {
+                        setCurrentMoney(gameItem.info.money)
+                    }
                     setPosition(index + 1);
                 }
             });
+
+            if (Math.floor(weekCount) > gruppespil_data.indskydelse_int) {
+                var activeGame = cookie.get("activeGame");
+                const betCalcURL = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/updateindskydelse";
+        
+                const winBody = {
+                    game: activeGame + "",
+                    amount: gruppespil_data.indskydelse_amount,
+                    players: gruppespil_data.players,
+                    since: Math.floor(weekCount)
+                }
+    
+                const requestConfig = {
+                    headers: {
+                        "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
+                    }
+                }
+                axios.patch(betCalcURL, winBody, requestConfig).then(responseTem => {
+                    console.log("AWS - Indskydelse:", responseTem, winBody);
+                    for (var i in responseTem.data.Item.Attributes.players) {
+                        if (responseTem.data.Item.Attributes.players[i].player === getUser().email) {
+                            setCurrentMoney(responseTem.data.Item.Attributes.players[i].info.money);
+                        }
+                    }
+                }).catch(error => {
+                    if (error.response.status === 401 || error.response.status === 403) {
+                        setNotiMessage("error","Fejl i opdatering af indskydelse" , error.response.data.message);
+                    } else {
+                        setNotiMessage("error","Serverfejl" , "Serveren slog fejl. Dette skyldes ofte for meget trafik på hjemmesiden. Kontakt os for mere information.");
+                    }
+                })
+            }
         } else {
             if (cookie.get("activeGame")) {
                 document.getElementById("main-error").classList.add("display-flex");
@@ -1459,6 +1454,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
 
     function getMatches(type) {
         var normLeagues = [8, 271, 274, 2, 564, 82, 301, 384];
+        var grUsedLeagues = grLeagues;
         var useLeagues = false;
         if (grLeagues.length === 0) {
             useLeagues = false;
@@ -1469,9 +1465,14 @@ function StageForside ({gruppespil_data, spiller_data}) {
         var favorites = [];
         var favorit3 = [];
         var newItems = items;
-        console.log("LIGAER", useLeagues)
         if (type === "kommende") {
             newItems = kommendeItems;
+            if (grLeagues.length === 0) {
+                useLeagues = true;
+                var grUsedLeagues = normLeagues;
+            } else {
+                useLeagues = true;
+            }
         }
         if (type === "favoritter") {
             newItems = favoritItems;
@@ -1558,7 +1559,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
                 getType = favoritItems;
             }
             if (useLeagues) {
-                if (grLeagues.findIndex(obj => obj === league.id) >= 0) {
+                if (grUsedLeagues.findIndex(obj => obj === league.id) >= 0) {
                     return (
                         <>
                             <li key={league.season + league.name} className="stage-kampe-section">
@@ -2844,6 +2845,16 @@ function StageForside ({gruppespil_data, spiller_data}) {
         );
     }
 
+    const [feedback, setFeedback] = useState(false);
+    const [feedbackText, setFeedbackText] = useState("");
+    const [feedbackBox, setFeedbackBox] = useState(0);
+
+    function indsendFeedback() {
+        if (feedbackBox > 0 && feedbackText !== "") {
+
+        }
+    }
+
     return (
         <>
         <Head>
@@ -2852,6 +2863,85 @@ function StageForside ({gruppespil_data, spiller_data}) {
         </Head>
         <StageHeader />
         <div className="height-fix2">
+        </div>
+        {feedback && <>
+            <div className="wc-container" id="wc-container">
+                <div className="wc-wrapper">
+                    <div className="wc-top">
+                        <svg xmlns="http://www.w3.org/2000/svg" onClick={() => setFeedback(false)} className="login-close" viewBox="0 0 16 16">
+                            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                        </svg>
+                        <div className="wc-circles">
+                            <div className="wc-cir1"><div className="wc-cir2"><div className="wc-cir3"></div></div></div>
+                        </div>
+                        <p className="wc-h1">Din <span style={{color: "var(--primary)", fontWeight: "600"}}>feeback</span> betyder noget</p>
+                        <div className="wc-trans"></div>
+                    </div>
+                    <div className="wc-content">
+                        <p className="wc-h2">Hvor tilfreds er du med Tipsspillet indtil videre?</p>
+                        {feedbackBox === 0 && <div className="wc-1-5">
+                            <div className="wc-1-5-element" onClick={() => setFeedbackBox(1)}>1</div>
+                            <div className="wc-1-5-element" onClick={() => setFeedbackBox(2)}>2</div>
+                            <div className="wc-1-5-element" onClick={() => setFeedbackBox(3)}>3</div>
+                            <div className="wc-1-5-element" onClick={() => setFeedbackBox(4)}>4</div>
+                            <div className="wc-1-5-element" onClick={() => setFeedbackBox(5)}>5</div>
+                        </div>}
+                        {feedbackBox === 1 && <div className="wc-1-5">
+                            <div className="wc-1-5-element-active" onClick={() => setFeedbackBox(1)}>1</div>
+                            <div className="wc-1-5-element" onClick={() => setFeedbackBox(2)}>2</div>
+                            <div className="wc-1-5-element" onClick={() => setFeedbackBox(3)}>3</div>
+                            <div className="wc-1-5-element" onClick={() => setFeedbackBox(4)}>4</div>
+                            <div className="wc-1-5-element" onClick={() => setFeedbackBox(5)}>5</div>
+                        </div>}
+                        {feedbackBox === 2 && <div className="wc-1-5">
+                            <div className="wc-1-5-element" onClick={() => setFeedbackBox(1)}>1</div>
+                            <div className="wc-1-5-element-active" onClick={() => setFeedbackBox(2)}>2</div>
+                            <div className="wc-1-5-element" onClick={() => setFeedbackBox(3)}>3</div>
+                            <div className="wc-1-5-element" onClick={() => setFeedbackBox(4)}>4</div>
+                            <div className="wc-1-5-element" onClick={() => setFeedbackBox(5)}>5</div>
+                        </div>}
+                        {feedbackBox === 3 && <div className="wc-1-5">
+                            <div className="wc-1-5-element" onClick={() => setFeedbackBox(1)}>1</div>
+                            <div className="wc-1-5-element" onClick={() => setFeedbackBox(2)}>2</div>
+                            <div className="wc-1-5-element-active" onClick={() => setFeedbackBox(3)}>3</div>
+                            <div className="wc-1-5-element" onClick={() => setFeedbackBox(4)}>4</div>
+                            <div className="wc-1-5-element" onClick={() => setFeedbackBox(5)}>5</div>
+                        </div>}
+                        {feedbackBox === 4 && <div className="wc-1-5">
+                            <div className="wc-1-5-element" onClick={() => setFeedbackBox(1)}>1</div>
+                            <div className="wc-1-5-element" onClick={() => setFeedbackBox(2)}>2</div>
+                            <div className="wc-1-5-element" onClick={() => setFeedbackBox(3)}>3</div>
+                            <div className="wc-1-5-element-active" onClick={() => setFeedbackBox(4)}>4</div>
+                            <div className="wc-1-5-element" onClick={() => setFeedbackBox(5)}>5</div>
+                        </div>}
+                        {feedbackBox === 5 && <div className="wc-1-5">
+                            <div className="wc-1-5-element" onClick={() => setFeedbackBox(1)}>1</div>
+                            <div className="wc-1-5-element" onClick={() => setFeedbackBox(2)}>2</div>
+                            <div className="wc-1-5-element" onClick={() => setFeedbackBox(3)}>3</div>
+                            <div className="wc-1-5-element" onClick={() => setFeedbackBox(4)}>4</div>
+                            <div className="wc-1-5-element-active" onClick={() => setFeedbackBox(5)}>5</div>
+                        </div>}
+                        <div className="wc-1-5-modifier">
+                            <p className="wc-h3">Meget utilfreds</p>
+                            <p className="wc-h3">Meget tilfreds</p>
+                        </div>
+                        <div className="wc-input-con">
+                            <textarea className="wc-input" placeholder='Fortæl os hvad vi kan gøre bedre' value={feedbackText} onChange={event => setFeedbackText(event.target.value)} />
+                        </div>
+                    </div>
+                    {feedbackBox > 0 && <>
+                        {feedbackText !== "" && <button className="wc-btn" onClick={() => indsendFeedback()}>Indsend</button>}
+                        {feedbackText === "" && <button className="wc-btn-off">Indsend</button>}
+                    </>}
+                    {feedbackBox <= 0 && <button className="wc-btn-off">Indsend</button>}
+                </div>
+            </div>
+        </>}
+        <div className="fbck-knap" onClick={() => setFeedback(true)}>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="#fff" viewBox="0 0 16 16">
+                <path d="M2 1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h9.586a2 2 0 0 1 1.414.586l2 2V2a1 1 0 0 0-1-1H2zm12-1a2 2 0 0 1 2 2v12.793a.5.5 0 0 1-.854.353l-2.853-2.853a1 1 0 0 0-.707-.293H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12z"/>
+                <path d="M3 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 6a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 6zm0 2.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>
+            </svg>
         </div>
         <Height />
         {getCurrentLeagues()}

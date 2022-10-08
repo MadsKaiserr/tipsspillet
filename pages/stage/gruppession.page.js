@@ -118,7 +118,7 @@ function StageGruppesession ({data}) {
 
             axios.patch(tilmeldUrl, tilmeldBody, tilmeldConfig).then(response => {
                 console.log("AWS - Gruppespil:", response)
-                cookie.set("activeGame", activeGame["id"], {expires: 24});
+                cookie.set("activeGame", activeGame["id"], {expires: 7});
                 localStorage.setItem("activeGame", activeGame["id"]);
                 localStorage.setItem("playerIndex", data.Item.Attributes.players.findIndex(obj => obj.player === getUser().email));
                 router.push("/stage")

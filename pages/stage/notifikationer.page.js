@@ -53,120 +53,101 @@ function StageNotifikationer () {
         }
     }, [loadingText])
 
-    // function getNoti() {
-    //     return (
-    //         <ul className="ntd-content">
-    //             {items.slice(0).reverse().map(noti => {
-    //                 var dato_string = "";
-    //                 var dato_time_string = "";
-    //                 var dato_day;
-    //                 var dato_month;
-    //                 var dato_year;
-
-    //                 var dato_minutes;
-    //                 var dato_hours;
-    //                 if (noti.date !== undefined) {
-    //                     dato_minutes = new Date(noti.date).getMinutes();
-    //                     dato_hours = new Date(noti.date).getHours();
-    //                     dato_time_string = dato_hours + ":" + dato_minutes;
-
-    //                     var today_day = new Date().getDate();
-    //                     var today_month = new Date().getMonth();
-    //                     var today_year = new Date().getFullYear();
-    //                     dato_day = new Date(noti.date).getDate();
-    //                     dato_month = new Date(noti.date).getMonth();
-    //                     dato_year = new Date(noti.date).getFullYear();
-    //                     if (today_day === dato_day && today_month === dato_month && today_year === dato_year) {
-    //                         dato_string = "I dag, " + dato_time_string;
-    //                     } else if ((today_day - 1) === dato_day && today_month === dato_month && today_year === dato_year) {
-    //                         dato_string = "I går, " + dato_time_string;
-    //                     } else if ((today_day - 2) === dato_day && today_month === dato_month && today_year === dato_year) {
-    //                         dato_string = "I forgårs, " + dato_time_string;
-    //                     } else {
-    //                         dato_string = dato_day + "/" + dato_month + " - " + dato_time_string;
-    //                     }
-    //                 }
-
-    //                 return (
-    //                     <li className="ntd-element-active" key={noti.id}>
-    //                         <p className="ntd-element-h1">{noti.h1}</p>
-    //                         <p className="ntd-element-p">{dato_string} - {noti.sender}</p>
-    //                     </li>
-    //                 );
-    //             })}
-    //         </ul>
-    //     );
-    // }
+    const [nav, setNav] = useState("generelt");
 
     return (
         <>
-        <Head>
-            <title>Notifikationer - Tipsspillet</title>
-            <meta name="robots" content="noindex" />
-        </Head>
-        <StageHeader />
-        <Height />
-            <div className="noti-main">
-                <div className="ntd-top">
-                    <div className="ntd-text">
-                        <p className="ntd-h1">Notifikationer</p>
-                        <p className="ntd-a">Alle læst</p>
+            <Head>
+                <title>Notifikationer - Tipsspillet</title>
+                <meta name="robots" content="noindex" />
+            </Head>
+            <StageHeader />
+            <div className="op-container" style={{background: "var(--surface)"}}>
+                {nav === "generelt" && <div className="op-content">
+                    <p className="op-h1">Notifikationer</p>
+                    <p className="op-h2">Aktive gruppespils notifikationer</p>
+                    <div className="nt-content">
+                        <div className="match-loader display" id="stage-loader1"></div>
+                        {items.slice(0).reverse().map(noti => {
+                            return (
+                                <li key={noti.id}>
+                                    <div className="noti-section">
+                                        <div className="noti-left">
+                                            {noti.type === "bet_place" && <><p className="noti-sec-h1">Du har placeret en kupon</p>
+                                            <p className="noti-sec-p">Du har gennemført et køb af en kupon med en potentiel udbetaling på <span className="noti-span">{parseInt(noti.indsats * noti.fullProb)} kr.</span></p></>}
+                                            {noti.type === "bet_won" && <><p className="noti-sec-h1">Du har <span style={{color: "var(--green)"}}>vundet</span> en kupon</p>
+                                            <p className="noti-sec-p">Du har vundet følgende kupon, og modtaget en udbetaling på <span className="noti-span">{noti.udbetaling} kr.</span></p></>}
+                                            {noti.type === "bet_lose" && <><p className="noti-sec-h1">Du har <span style={{color: "var(--red)"}}>tabt</span> en kupon</p>
+                                            <p className="noti-sec-p">Du har tabt følgende kupon med <span className="noti-span">{noti.odds} væddemål.</span></p></>}
+                                            <p className="noti-sec-dato">{new Date(noti.date).getDate().toString().padStart(2, '0') + "/" + (new Date(noti.date).getMonth() + 1).toString().padStart(2, '0') + " - " + new Date(noti.date).getHours().toString().padStart(2, '0') + ":" + new Date(noti.date).getMinutes().toString().padStart(2, '0')}</p>
+                                        </div>
+                                        <ul>
+                                            {noti.kupon.map((item) => {
+                                                var randomNumber = Math.floor(Math.random() * 512);
+                                                var randomId = new Date().getTime()+"-"+randomNumber;
+                                                return (
+                                                    <li key={item.id + "-" + randomId} className="gruppespil-li">
+                                                        <div className="gruppespil-kupon">
+                                                            <div className="kupon-top">
+                                                                <p className="kupon-header-p">{item.type}</p>
+                                                            </div>
+                                                            <ul>
+                                                                {item.bets.map((element) => {
+                                                                    var randomNumber = Math.floor(Math.random() * 512);
+                                                                    var randomId = new Date().getTime()+"-"+randomNumber;
+                                                                    return (
+                                                                        <li key={randomId} className="display">
+                                                                            <Link href={"/stage/match?game=" + element.game}>
+                                                                                <div className="kupon-container">
+                                                                                    <div className="kupon-divider-first"></div>
+                                                                                    <div className="bet-top">
+                                                                                        <p className="kupon-top-p">Dit væddemål</p>
+                                                                                        <p className="kupon-top-p">{new Date(element.bet_date*1000).getDate().toString().padStart(2, '0') + "/" + (new Date(element.bet_date*1000).getMonth() + 1).toString().padStart(2, '0') + " - " + new Date(element.bet_date*1000).getHours().toString().padStart(2, '0') + ":" + new Date(element.bet_date*1000).getMinutes().toString().padStart(2, '0')}</p>
+                                                                                    </div>
+                                                                                    <div className="kupon-divider"></div>
+                                                                                    <div className="kupon-content">
+                                                                                        <div className="kupon-info">
+                                                                                            <p className="kupon-h1">{element.hometeam} - {element.visitorteam}</p>
+                                                                                            <p className="kupon-p">{getKupon(element.betType,element.hometeam,element.visitorteam)}: <span className="weight600">{getString(element.betType,element.result,element.hometeam,element.visitorteam)}</span></p>
+                                                                                        </div>
+                                                                                        <div className="kupon-odds">
+                                                                                            <p className="kupon-h2">{(Number(element.probability)).toFixed(2)}</p>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </Link>
+                                                                        </li>
+                                                                        );
+                                                                    }
+                                                                )}
+                                                            </ul>
+                                                            <div className="kupon-bottom display">
+                                                                <div className="kupon-bottom-info">
+                                                                    <p className="kupon-bottom-info-p">Total indsats</p>
+                                                                    <p className="kupon-bottom-info-p-right">{item.indsats},00 kr.</p><br />
+                                                                    <p className="kupon-bottom-info-p">Total odds</p>
+                                                                    <p className="kupon-bottom-info-p-right">{(Number(item.fullProb)).toFixed(2)}</p>
+                                                                </div>
+                                                                <div className="kupon-confirm">
+                                                                    <div className="kupon-confirm-div">
+                                                                        {noti.type === "bet_place" &&  <p className="kupon-confirm-p">Potentiel udbetaling:</p>}
+                                                                        {noti.type === "bet_won" &&  <p className="kupon-confirm-p"><span style={{color: "var(--green)", fontWeight: "500"}}>Vundet</span> udbetaling:</p>}
+                                                                        {noti.type === "bet_lose" &&  <p className="kupon-confirm-p"><span style={{color: "var(--red)", fontWeight: "500"}}>Tabt</span> udbetaling:</p>}
+                                                                        <p className="kupon-confirm-h1">{(item.indsats * item.fullProb).toFixed(2)} kr.</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                );
+                                            })}
+                                        </ul>
+                                    </div>
+                                </li>
+                            )
+                        })}
                     </div>
-                    <div className="ntd-nav">
-                        <div className="ntd-nav-elements">
-                            <p className="ntd-nav-element-active">Profil</p>
-                            <p className="ntd-nav-element">Gruppespil</p>
-                            <p className="ntd-nav-element">Arkiv</p>
-                        </div>
-                        <Link href="/stage/indstillinger">
-                            <svg xmlns="http://www.w3.org/2000/svg" style={{cursor: "pointer"}} width="14px" height="14px" fill="var(--softBlack)" viewBox="0 0 16 16">
-                                <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"/>
-                                <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"/>
-                            </svg>
-                        </Link>
-                    </div>
-                </div>
-                <div className="spil-loader display" id="stage-loader1"></div>
-                <ul className="ntd-content">
-                    {items.slice(0).reverse().map(noti => {
-                        var dato_string = "";
-                        var dato_time_string = "";
-                        var dato_day;
-                        var dato_month;
-                        var dato_year;
-
-                        var dato_minutes;
-                        var dato_hours;
-                        if (noti.date !== undefined) {
-                            dato_minutes = new Date(noti.date).getMinutes();
-                            dato_hours = new Date(noti.date).getHours();
-                            dato_time_string = dato_hours + ":" + dato_minutes;
-
-                            var today_day = new Date().getDate();
-                            var today_month = new Date().getMonth();
-                            var today_year = new Date().getFullYear();
-                            dato_day = new Date(noti.date).getDate();
-                            dato_month = new Date(noti.date).getMonth();
-                            dato_year = new Date(noti.date).getFullYear();
-                            if (today_day === dato_day && today_month === dato_month && today_year === dato_year) {
-                                dato_string = "I dag, " + dato_time_string;
-                            } else if ((today_day - 1) === dato_day && today_month === dato_month && today_year === dato_year) {
-                                dato_string = "I går, " + dato_time_string;
-                            } else if ((today_day - 2) === dato_day && today_month === dato_month && today_year === dato_year) {
-                                dato_string = "I forgårs, " + dato_time_string;
-                            } else {
-                                dato_string = dato_day + "/" + dato_month + " - " + dato_time_string;
-                            }
-                        }
-
-                        return (
-                            <li className="ntd-element-active" key={noti.id}>
-                                <p className="ntd-element-h1">{noti.h1}</p>
-                                <p className="ntd-element-p">{dato_string} - {noti.sender}</p>
-                            </li>
-                        );
-                    })}
-                </ul>
+                </div>}
             </div>
         </>
     )

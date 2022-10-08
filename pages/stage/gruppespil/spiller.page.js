@@ -14,7 +14,7 @@ function StageSpiller ({ data }) {
 
     const [gevinst, setGevinst] = useState(0);
     const [kuponer, setKuponer] = useState(0);
-    const [online, setOnline] = useState(1657540794801);
+    const [online, setOnline] = useState(0);
     const [player, setPlayer] = useState("Indlæser...")
     
     useEffect(() => {
@@ -38,6 +38,7 @@ function StageSpiller ({ data }) {
                     setGevinst(parseInt(data.players[k].info.money))
                     setKuponer(data.players[k].odds.length);
                     setPlayer(data.players[k].username);
+                    setOnline(data.players[k].info.online)
                 }
             }
             setPlayerOdds(myPlayer.reverse());
@@ -71,7 +72,7 @@ function StageSpiller ({ data }) {
                             </div>
                             <div className="gruppespil-info-element">
                                 <p className="gruppespil-info-element-p">Sidst online</p>
-                                <p className="gruppespil-info-element-h1">{new Date(online).getDate()}/{new Date(online).getMonth() + 1}/{new Date(online).getFullYear()}</p>
+                                <p className="gruppespil-info-element-h1">{new Date(online).getDate().toString().padStart(2, '0') + "/" + (new Date(online).getMonth() + 1).toString().padStart(2, '0') + "/" + new Date(online).getFullYear().toString().padStart(2, '0')}</p>
                             </div>
                         </div>
                     </div>

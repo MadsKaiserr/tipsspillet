@@ -173,6 +173,7 @@
     position: absolute;
     overflow: hidden;
     top: 130px;
+
   }
   
   .inf-h1 {
@@ -1658,6 +1659,29 @@
     margin-top: 10px;
     padding: 15px 20px;
     resize: vertical;
+  }
+
+  .kontakt-p {
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 400;
+    text-align: center;
+    color: var(--softBlack);
+  }
+
+  .kontakt-btn-off {
+    background-color: var(--stageSurface);
+    border-radius: 500px;
+    border: 0px;
+    margin: auto;
+    color: #333;
+    font-family: Inter;
+    font-weight: 400;
+    opacity: 0.5;
+    font-size: 15px;
+    padding: 12px 70px;
+    cursor: not-allowed;
+    transition: 0.2s;
   }
 
   .kontakt-btn {

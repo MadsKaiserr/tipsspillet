@@ -12,6 +12,18 @@ import { Gradient } from '../services/Gradient.js'
  
 function StageGruppespil ({data}) {
 
+    function opretHandler() {
+        if (getUser()) {
+            if (getUser().rolle !== "none") {
+                window.open("/stage/opret", "_self");
+            } else {
+                window.open("/priser", "_self");
+            }
+        } else {
+            window.open("/signup", "_self");
+        }
+    }
+
     useEffect(() => {
         const gradient = new Gradient()
         gradient.initGradient('#gradient-canvas')
@@ -405,7 +417,7 @@ function StageGruppespil ({data}) {
                     </div>
                 </>}</>}
                 {activeGame && <div className="gruppespil-section" style={{marginTop: "20px", border: "0px"}}>
-                        <Link href="/priser"><a className="gruppespil-opret-own">Opret dit eget gruppespil</a></Link>
+                        <a className="gruppespil-opret-own" onClick={() => opretHandler()}>Opret dit eget gruppespil</a>
                         <div className="gruppespil-info">
                             <div className="gruppespil-title">
                                 <h1 className="gruppespil-h1">{gameName}</h1>

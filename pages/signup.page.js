@@ -280,7 +280,7 @@ function Signup () {
             
                     axios.post(loginURL, loginBody, loginConfig).then(response => {
                         console.log("AWS - Login:", response);
-                        cookie.set("fbLogin", fbEvent)
+                        cookie.set("fbLogin", fbEvent, {expires: 7})
                         setUserSession(response.data.user, response.data.token);
                         document.getElementById("info1").classList.add("display-not");
                         document.getElementById("info2").classList.remove("display-not");

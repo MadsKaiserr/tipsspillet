@@ -6,8 +6,15 @@ import StageHeader from '../layout/stageheader';
 import axios from "axios";
 import cookie from 'js-cookie'
 import Height from '../components/heightLight';
+import { getUser } from "../services/authService";
  
 function StageIndstillinger ({data}) {
+
+    const [ogusernameField, setogUsernameField] = useState("Indlæser...");
+    const [ogemailField, setogEmailField] = useState("Indlæser...");
+    const [ognavn, setogNavn] = useState("Indlæser...")
+
+    const [message, setMessage] = useState("");
 
     const [user, setUser] = useState("");
     const [usernameField, setUsernameField] = useState("Indlæser...");
@@ -16,6 +23,9 @@ function StageIndstillinger ({data}) {
     const [navn, setNavn] = useState("Indlæser...")
     const [facebook, setFacebook] = useState(false);
     const [favorites, setFavorites] = useState([]);
+    const [handlinger, setHandlinger] = useState([]);
+
+    const [nav, setNav] = useState("generelt");
 
     useEffect(() => {
         setFavorites(JSON.parse(localStorage.getItem("favoritter")));
@@ -26,6 +36,10 @@ function StageIndstillinger ({data}) {
         setUsernameField(data["username"]);
         setEmailField(data["email"]);
         setNavn(data["navn"]);
+        setogEmailField(data["email"]);
+        setogNavn(data["navn"]);
+        setogUsernameField(data["username"]);
+        setHandlinger(data["handlinger"]);
         if (data.type === "facebook") {
             setFacebook(true);
         }
@@ -36,53 +50,9 @@ function StageIndstillinger ({data}) {
         setOprettelseText(day + "/" + month + "/" + year);
     }, [])
 
-    function setNav(type) {
-        if (type === "personlig") {
-            document.getElementById("personlig").className = "set-nav-element-active";
-            document.getElementById("notifikationer").className = "set-nav-element";
-            document.getElementById("konto").className = "set-nav-element";
-            document.getElementById("abonnement").className = "set-nav-element";
-
-            document.getElementById("personlig-container").classList.remove("display-not");
-            document.getElementById("notifikationer-container").classList.add("display-not");
-            document.getElementById("konto-container").classList.add("display-not");
-            document.getElementById("abonnement-container").classList.add("display-not");
-        } else if (type === "notifikationer") {
-            document.getElementById("personlig").className = "set-nav-element";
-            document.getElementById("notifikationer").className = "set-nav-element-active";
-            document.getElementById("konto").className = "set-nav-element";
-            document.getElementById("abonnement").className = "set-nav-element";
-
-            document.getElementById("personlig-container").classList.add("display-not");
-            document.getElementById("notifikationer-container").classList.remove("display-not");
-            document.getElementById("konto-container").classList.add("display-not");
-            document.getElementById("abonnement-container").classList.add("display-not");
-        } else if (type === "konto") {
-            document.getElementById("personlig").className = "set-nav-element";
-            document.getElementById("notifikationer").className = "set-nav-element";
-            document.getElementById("konto").className = "set-nav-element-active";
-            document.getElementById("abonnement").className = "set-nav-element";
-
-            document.getElementById("personlig-container").classList.add("display-not");
-            document.getElementById("notifikationer-container").classList.add("display-not");
-            document.getElementById("konto-container").classList.remove("display-not");
-            document.getElementById("abonnement-container").classList.add("display-not");
-        } else if (type === "abonnement") {
-            document.getElementById("personlig").className = "set-nav-element";
-            document.getElementById("notifikationer").className = "set-nav-element";
-            document.getElementById("konto").className = "set-nav-element";
-            document.getElementById("abonnement").className = "set-nav-element-active";
-
-            document.getElementById("personlig-container").classList.add("display-not");
-            document.getElementById("notifikationer-container").classList.add("display-not");
-            document.getElementById("konto-container").classList.add("display-not");
-            document.getElementById("abonnement-container").classList.remove("display-not");
-        }
-    }
-
     const fbResponse = (event) => {
         console.log(event);
-        // cookie.set("fbLogin", JSON.stringify(event))
+        // cookie.set("fbLogin", JSON.stringify(event), {expires: 7})
 
         // const requestConfig = {
         //     headers: {
@@ -126,6 +96,46 @@ function StageIndstillinger ({data}) {
         // })
     }
 
+    useEffect(() => {
+        if ((usernameField !== ogusernameField) || (emailField !== ogemailField) || (navn !== ognavn)) {
+            setEdited(true)
+        } else {
+            setEdited(false)
+        }
+    }, [usernameField, emailField, navn])
+
+    const [edited, setEdited] = useState(false);
+
+    function updateProfile() {
+        if (handlinger.findIndex(obj => obj.type === "ProfilChange" && ((new Date().getTime() - obj.iat) / 1000 / 60 / 60 / 24) < 7) < 0) {
+            const loginURL2 = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/updateuser";
+            const requestConfig2 = {
+                headers: {
+                    "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
+                }
+            }
+    
+            const requestBody2 = {
+                name: navn,
+                email: getUser().email,
+                username: usernameField,
+                handlinger: handlinger
+            }
+    
+            axios.patch(loginURL2, requestBody2, requestConfig2).then(response => {
+                console.log("AWS - Update user:", response);
+                setogNavn(navn);
+                setogUsernameField(usernameField);
+                setMessage("Profiloplysninger opdateret!");
+                setHandlinger(response.data.Item.Attributes.handlinger);
+            }).catch(error => {
+                console.log(error);
+            })
+        } else {
+            setMessage("Det er mindre end 7 dage siden du sidst opdaterede dine oplysninger. Vent til " + new Date(handlinger[handlinger.findIndex(obj => obj.type === "ProfilChange" && ((new Date().getTime() - obj.iat) / 1000 / 60 / 60 / 24) < 7)].iat + 1000 * 60 * 60 * 24 * 7).getDate() + "/" + (new Date(handlinger[handlinger.findIndex(obj => obj.type === "ProfilChange" && ((new Date().getTime() - obj.iat) / 1000 / 60 / 60 / 24) < 7)].iat + 1000 * 60 * 60 * 24 * 7).getMonth() + 1) + "/" + new Date(handlinger[handlinger.findIndex(obj => obj.type === "ProfilChange" && ((new Date().getTime() - obj.iat) / 1000 / 60 / 60 / 24) < 7)].iat + 1000 * 60 * 60 * 24 * 7).getFullYear() + " før du prøver igen.")
+        }
+    }
+
     return (
         <>
             <Head>
@@ -133,61 +143,46 @@ function StageIndstillinger ({data}) {
                 <meta name="robots" content="noindex" />
             </Head>
             <StageHeader />
-            <Height />
-            <div className="set">
-                <div className="set-wrapper">
-                    <h1 className="set-h1">Min profil</h1>
-                    <h2 className="set-h2">Administrer din profil og konto</h2>
-                    <p className="login-form-p" style={{paddingTop: "20px"}}>Fulde navn</p>
-                    <input 
-                        value={navn}
-                        onChange={event => setNavn(event.target.value)} 
-                        type="text" 
-                        className="cg-input" 
-                    />
-                    <p className="login-form-p">Brugernavn</p>
-                    <input 
-                        value={usernameField}
-                        onChange={event => setUsernameField(event.target.value)} 
-                        type="text" 
-                        className="cg-input" 
-                    />
-                    <p className="login-form-p">Email</p>
-                    <input 
-                        value={emailField}
-                        onChange={event => setEmailField(event.target.value)} 
-                        type="email" 
-                        className="cg-input" 
-                    />
-                    <p className="login-form-p">Kodeord</p>
-                    <input 
-                        value={"********"}
-                        type="password" 
-                        className="cg-input" 
-                        disabled
-                    /><br />
-                    <p className="login-form-p">Oprettet: <span style={{fontWeight: "300"}}>{oprettelseText}</span></p>
-                    <button className="find-btn" style={{background: "var(--primary)"}}>Opdater profil</button>
+            <div className="op-container">
+                <div className="op-top">
+                    {nav === "generelt" && <><div className="op-top-element-active">
+                        <div className="op-top-identifier">1</div>
+                        <p className="op-top-p">Generelt</p>
+                    </div>
+                    <div className="op-top-element">
+                        <div className="op-top-identifier">2</div>
+                        <p className="op-top-p">Notifikationer</p>
+                    </div>
+                    <div className="op-top-element">
+                        <div className="op-top-identifier">3</div>
+                        <p className="op-top-p">Abonnement</p>
+                    </div></>}
                 </div>
-                <div className="set-wrapper" style={{paddingTop: "60px"}}>
-                    <h1 className="set-h1">Indstillinger</h1>
-                    <h2 className="set-h2">Notifikationer, konto mm.</h2>
-                    {/* <FacebookLogin
-                            appId="1252645385555497"
-                            autoLoad={false}
-                            fields="name,email"
-                            callback={fbResponse}
-                            disableMobileRedirect={true}
-                            version="2.5"
-                            textButton="Log ind med Facebook"
-                            redirectUri="https://www.tipsspillet.dk/"
-                            cssClass="facebook-button-class-active"
-                            icon={<svg xmlns="http://www.w3.org/2000/svg" className="facebook-icon" style={{fill: "#fff"}} viewBox="0 0 16 16">
-                                <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/>
-                                </svg>}
-                    /> */}
-                    <br /><button className="find-btn" style={{background: "var(--red)"}}>Slet profil</button>
-                </div>
+                {nav === "generelt" && <div className="op-content">
+                    <p className="op-h1">Generelt</p>
+                    <p className="op-h2">Generelle brugerindstillinger</p>
+                    <div className="op-form">
+                        <div className="op-form-element">
+                            <p className="op-form-p">Fulde navn</p>
+                            <input type="text" value={navn} onChange={event => setNavn(event.target.value)} className="op-input" />
+                        </div>
+                        <div className="op-form-element">
+                            <p className="op-form-p">Brugernavn</p>
+                            <input type="text" value={usernameField} onChange={event => setUsernameField(event.target.value)} className="op-input" />
+                        </div>
+                        <div className="op-form-element">
+                            <p className="op-form-p">Email</p>
+                            <input type="text" value={emailField} onChange={event => setEmailField(event.target.value)} className="op-input" />
+                        </div>
+                        <div className="op-form-element">
+                            <p className="op-form-p">Kodeord</p>
+                            <input type="password" value={"******"} disabled className="op-input" />
+                        </div>
+                    </div>
+                </div>}
+                {message !== "" && <p className="og-msg">{message}</p>}
+                {edited && <button className="wc-btn" onClick={() => updateProfile()}>Opdater profil</button>}
+                {!edited && <button className="wc-btn-off">Opdater profil</button>}
             </div>
         </>
     )

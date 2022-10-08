@@ -73,7 +73,7 @@ function Login () {
             axios.post(loginURL, requestBody, requestConfig).then(response => {
                 console.log("AWS - Login:", response);
                 setUserSession(response.data.user, response.data.token);
-                cookie.set("fbLogin", JSON.stringify(event))
+                cookie.set("fbLogin", JSON.stringify(event), {expires: 7})
                 if (response.data.user.type === "facebook") {
                     if (!response.data.user.fb_logo_id) {
                         const loginURL2 = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/user";

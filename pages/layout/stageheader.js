@@ -19,6 +19,7 @@ function StageHeader () {
         if (localStorage.getItem("aktive-spil-suspend") === "true") {
             document.getElementById("main-error").classList.add("display-flex");
             document.getElementById("main-error-p").innerHTML = "Dit aktive spil er suspenderet.";
+            cookie.remove("activeGame");
         }
         if (localStorage.getItem("notifikationer")) {
             document.getElementById("notital").classList.add("display-flex");
@@ -58,79 +59,6 @@ function StageHeader () {
 
     function closeMenu() {
         document.getElementById("sidemenu").classList.remove("display-flex");
-    }
-
-    const [items, setItems] = useState([]);
-    const [notiUsed, setNotiUsed] = useState(false);
-
-    function getNotis() {
-        if (cookie.get("activeGame") && cookie.get("activeGame") !== "" && !notiUsed) {
-            var activeGame = cookie.get("activeGame");
-            const URL = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/gruppesession?game=" + activeGame;
-    
-            const requestConfigen = {
-                headers: {
-                    "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
-                }
-            }
-            axios.get(URL, requestConfigen).then(response => {
-                console.log("AWS - Notifikationer:", response);
-                for (var i in response.data.players) {
-                    if (response.data.players[i].player === getUser().email) {
-                        setItems(response.data.players[i].info.notifikationer);
-                    }
-                }
-                setNotiUsed(true);
-            }).catch(error => {
-                setNotiUsed(true);
-                console.log("Fejl ved indhentning af data" + error)
-            })
-        }
-    }
-
-    function getNoti() {
-        return (
-            <ul className="ntd-content">
-                {items.slice(0).reverse().map(noti => {
-                    var dato_string = "";
-                    var dato_time_string = "";
-                    var dato_day;
-                    var dato_month;
-                    var dato_year;
-
-                    var dato_minutes;
-                    var dato_hours;
-                    if (noti.date !== undefined) {
-                        dato_minutes = new Date(noti.date).getMinutes();
-                        dato_hours = new Date(noti.date).getHours();
-                        dato_time_string = dato_hours + ":" + dato_minutes;
-
-                        var today_day = new Date().getDate();
-                        var today_month = new Date().getMonth();
-                        var today_year = new Date().getFullYear();
-                        dato_day = new Date(noti.date).getDate();
-                        dato_month = new Date(noti.date).getMonth();
-                        dato_year = new Date(noti.date).getFullYear();
-                        if (today_day === dato_day && today_month === dato_month && today_year === dato_year) {
-                            dato_string = "I dag, " + dato_time_string;
-                        } else if ((today_day - 1) === dato_day && today_month === dato_month && today_year === dato_year) {
-                            dato_string = "I går, " + dato_time_string;
-                        } else if ((today_day - 2) === dato_day && today_month === dato_month && today_year === dato_year) {
-                            dato_string = "I forgårs, " + dato_time_string;
-                        } else {
-                            dato_string = dato_day + "/" + dato_month + " - " + dato_time_string;
-                        }
-                    }
-
-                    return (
-                        <li className="ntd-element-active" key={noti.id}>
-                            <p className="ntd-element-h1">{noti.h1}</p>
-                            <p className="ntd-element-p">{dato_string} - {noti.sender}</p>
-                        </li>
-                    );
-                })}
-            </ul>
-        );
     }
 
     return (
@@ -193,9 +121,11 @@ function StageHeader () {
                             </Link>
                             <div className="nav-link">
                                 <div className="noti-icon" id="notital">{notifikationer}</div>
-                                <svg xmlns="http://www.w3.org/2000/svg" onClick={() => {document.getElementById("notiDropdown").classList.toggle("display");getNotis()}} className="bell-icon" viewBox="0 0 16 16">
-                                    <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/>
-                                </svg>
+                                <Link href="/stage/notifikationer">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="bell-icon" viewBox="0 0 16 16">
+                                        <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/>
+                                    </svg>
+                                </Link>
                                 <div className="noti-dropdown" id="notiDropdown">
                                     <div className="ntd-top">
                                         <div className="ntd-text">
@@ -216,7 +146,6 @@ function StageHeader () {
                                             </Link>
                                         </div>
                                     </div>
-                                    {getNoti()}
                                 </div>
                             </div>
                             <div className="nav-profile-btn" onClick={() => {document.getElementById("userDropdown").classList.toggle("display"); document.getElementById("profileArrow").classList.toggle("deg180");}}>
@@ -323,9 +252,11 @@ function StageHeader () {
                                             </Link>
                                             <div className="nav-link">
                                                 <div className="noti-icon" id="notital">{notifikationer}</div>
-                                                <svg xmlns="http://www.w3.org/2000/svg" onClick={() => {document.getElementById("notiDropdown").classList.toggle("display");getNotis()}} className="bell-icon" viewBox="0 0 16 16">
-                                                    <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/>
-                                                </svg>
+                                                <Link href="/stage/notifikationer">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" className="bell-icon" viewBox="0 0 16 16">
+                                                        <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/>
+                                                    </svg>
+                                                </Link>
                                                 <div className="noti-dropdown" id="notiDropdown">
                                                     <div className="ntd-top">
                                                         <div className="ntd-text">
@@ -346,7 +277,6 @@ function StageHeader () {
                                                             </Link>
                                                         </div>
                                                     </div>
-                                                    {getNoti()}
                                                 </div>
                                             </div>
                                             <div className="nav-profile-btn" onClick={() => {document.getElementById("userDropdown").classList.toggle("display"); document.getElementById("profileArrow").classList.toggle("deg180");}}>

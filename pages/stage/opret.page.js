@@ -8,17 +8,28 @@ import Head from 'next/head'
 import Image from 'next/image'
 import Height from '../components/height';
 import PrimaryLogo from '../img/logo-primary.png';
-import { Gradient } from '../services/Gradient.js'
+import StageHeader from '../layout/stageheader';
+import { getSearch } from '../services/search';
  
 function Opret ({ }) {
-    const router = useRouter()
+
+    const [minSetting, setMinSetting] = useState(false);
+    const [maksSetting, setMaksSetting] = useState(false);
+    const [indskydelseSetting, setIndskydelseSetting] = useState(true);
+    const [leagueSetting, setLeagueSetting] = useState(false);
+    const [nav, setNav] = useState("generelt");
 
     const [message, setMessage] = useState("");
     const [loading, setLoading] = useState(false);
+    const [ligasearchStr, setLigaSearchStr] = useState("");
+
+    const [items, setItems] = useState(getSearch());
+    const [favorites, setFavorites] = useState([]);
 
     const [spilNavn, setSpilNavn] = useState("");
+    const [password, setPassword] = useState("");
     const [spilVarighed, setVarighed] = useState("");
-    const [indskydelse, setIndskydelse] = useState(0);
+    const [indskydelse, setIndskydelse] = useState(150);
     const [spilStart, setStart] = useState(1000);
     const [spilMin, setMin] = useState(0);
     const [spilMax, setMax] = useState(10000);
@@ -71,7 +82,7 @@ function Opret ({ }) {
         setLoading(true)
         const signupURL = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/gruppesession";
         const user_email = getUser().email;
-        if (((spilMax > 0 && maksSetting) || (!maksSetting)) && ((spilMin > 0 && minSetting) || (!minSetting)) && spilNavn !== "" && spilVarighed !== "" && spilStart >=0 && ((indskydelse > 0 && indskydelseSetting) || (!indskydelseSetting))) {
+        if (((spilMax > 0 && maksSetting) || (!maksSetting)) && ((spilSynlighed === "privat" && password !== "") || (spilSynlighed === "offentlig")) && ((spilMin >= 0 && minSetting) || (!minSetting)) && spilNavn !== "" && spilVarighed !== "" && spilStart >=0 && ((indskydelse >= 0 && indskydelseSetting) || (!indskydelseSetting))) {
             setMessage("");
             const URL = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/playergruppespil?player=" + user_email;
 
@@ -120,13 +131,13 @@ function Opret ({ }) {
                             varighed: spilVarighed,
                             start_amount: spilStart,
                             min_amount: 0,
-                            max_amount: 0,
-                            weeks: 0,
-                            weeks_amount: 0,
-                            bankerot_tilstand: "tilskuer",
-                            bankerot_belob: "0",
+                            max_amount: 10000,
+                            indskydelse_int: 0,
+                            indskydelse_amount: 0,
+                            ligaer: [],
                             admin: getUser().username,
                             synlighed: spilSynlighed,
+                            password: "",
                             players: [{player: userEmail, username: username, info: {money: spilStart, notifikationer: [], medlemsskab: medlemsskab}, odds: []}]
                         }
 
@@ -137,7 +148,17 @@ function Opret ({ }) {
                             gruppespilBody.max_amount = spilMax;
                         }
                         if (indskydelseSetting) {
-                            gruppespilBody.weeks_amount = indskydelse;
+                            gruppespilBody.indskydelse_amount = indskydelse;
+                        }
+                        if (leagueSetting) {
+                            var leagues = [];
+                            for (var q in favorites) {
+                                leagues.push(favorites[q].id);
+                            }
+                            gruppespilBody.ligaer = leagues;
+                        }
+                        if (spilSynlighed === "privat") {
+                            gruppespilBody.password = password;
                         }
                 
                         axios.post(signupURL, gruppespilBody, gruppespilConfig).then(result => {
@@ -153,21 +174,23 @@ function Opret ({ }) {
                 setLoading(false)
             })
         } else {
-            if ((spilMax > 0 && maksSetting)) {
+            if ((spilMax <= 0 && maksSetting)) {
+                setNav("eco");
                 setMessage("Maksbeløb kan ikke være 0 eller negativt");
-                document.getElementById("maks").classList.add("cg-error");
-            } else if ((spilMin > 0 && minSetting)) {
+            } else if ((spilMin < 0 && minSetting)) {
+                setNav("eco");
                 setMessage("Mininumbeløb kan ikke være negativt");
-                document.getElementById("min").classList.add("cg-error");
             } else if (spilNavn === "") {
-                setMessage("Du mangler at afgive spillets navn");
-                document.getElementById("navn").classList.add("cg-error");
+                setNav("generelt");
+                setMessage("Du mangler at angive spillets navn");
             } else if ((spilVarighed > 0 && varighedSetting) === "") {
-                setMessage("Du mangler at afgive spillets slutdato");
-                document.getElementById("varighed").classList.add("cg-error");
+                setNav("generelt");
+                setMessage("Du mangler at angive spillets slutdato");
             } else if (spilStart <= 0) {
+                setNav("eco");
                 setMessage("Startbeløb kan ikke være 0 eller negativt");
-                document.getElementById("start").classList.add("cg-error");
+            } else if (spilSynlighed === "privat" && password === "") {
+                setMessage("Sæt et kodeord, som spillere skal bruge til at tilmelde sig gruppespillet");
             } else {
                 setMessage("Der skete en fejl. Tjek dine input, og kontroller der ikke er brugt bogstaver i tal-input.");
             }
@@ -175,14 +198,25 @@ function Opret ({ }) {
         }
     }
 
-    useEffect(() => {
-        const gradient = new Gradient()
-        gradient.initGradient('#gradient-canvas')
-    }, [])
-
-    const [minSetting, setMinSetting] = useState(false);
-    const [maksSetting, setMaksSetting] = useState(false);
-    const [indskydelseSetting, setIndskydelseSetting] = useState(true);
+    function addFavorite(id, name, image, liga, type) {
+        if (favorites.findIndex(obj => obj.id === id) >= 0) {
+            var duppel = favorites;
+            duppel.splice((favorites.findIndex(obj => obj.id === id)), 1);
+            setFavorites(duppel);
+            document.getElementById("klub-" + id + type).classList.remove("setup-checkbox-active");
+            document.getElementById("icon-" + id + type).classList.remove("display");
+        } else {
+            setFavorites([...favorites, {
+                "id": id,
+                "name": name,
+                "image": image,
+                "liga": liga,
+                "type": type
+            }]);
+            document.getElementById("klub-" + id + type).classList.add("setup-checkbox-active");
+            document.getElementById("icon-" + id + type).classList.add("display");
+        }
+    }
 
     return (
         <>
@@ -191,124 +225,222 @@ function Opret ({ }) {
                 <meta name="robots" content="noindex" />
             </Head>
             <Height />
-            <div className="route-thirds">
-                <div className="signup-tilbage" onClick={() => window.open("/stage/aktive-spil", "_SELF")}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="25px" height="25px" fill="var(--black)" viewBox="0 0 16 16">
-                    <path fillRule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/>
-                    </svg>
-                    <p className="signup-tilbage-p">Tilbage til gruppespil</p>
-                </div>
-                <div className="route-thirds-element-1" id="third">
-                    <div className="signup-popup" id="info1">
-                        <div className="cg-info">
-                            <h1 className="cg-h1">Opret et gruppespil</h1>
-                            <h2 className="cg-h2">Opstil indstillinger til dit gruppespil.</h2>
-                        </div>
-                        <form onSubmit={opretHandler} className="cg-form">
-                            <input type="text" autoComplete="off" className="cg-input" id="navn" value={spilNavn} placeholder="Spillets navn" onChange={event => setSpilNavn(event.target.value)} />
-                            <input type="date" autoComplete="off" className="cg-input" id="varighed" value={spilVarighed} onChange={event => setVarighed(event.target.value)} placeholder="Slutdato" />
-                            <div className="cg-settings">
-                                <div className="cg-setting" onClick={() => {if(spilSynlighed === "offentlig"){setSynlighed("privat")}else{setSynlighed("offentlig")}}}>
-                                    <div className="cg-setting-info">
-                                        <div className="cg-setting-pic">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#333" viewBox="0 0 16 16">
-                                                <path d="m10.79 12.912-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7.029 7.029 0 0 0 2.79-.588zM5.21 3.088A7.028 7.028 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474L5.21 3.089z"/>
-                                                <path d="M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829l-2.83-2.829zm4.95.708-2.829-2.83a2.5 2.5 0 0 1 2.829 2.829zm3.171 6-12-12 .708-.708 12 12-.708.708z"/>
-                                            </svg>
-                                        </div>
-                                        <div className="cg-setting-text">
-                                            <p className="cg-setting-h1">Synlighed</p>
-                                            <p className="cg-setting-h2">Private gruppespil kræver adgangskode</p>
-                                        </div>
-                                    </div>
-                                    <div className="cg-cta">
-                                        {spilSynlighed === "privat" && <p className="cg-cta-p-active">Privat</p>}
-                                        {spilSynlighed === "offentlig" && <p className="cg-cta-p">Offentlig</p>}
-                                    </div>
-                                </div>
-                                <div className="cg-setting" style={{cursor: "not-allowed"}}>
-                                    <div className="cg-setting-info">
-                                        <div className="cg-setting-pic">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#333" viewBox="0 0 16 16">
-                                                <path d="M7.964 1.527c-2.977 0-5.571 1.704-6.32 4.125h-.55A1 1 0 0 0 .11 6.824l.254 1.46a1.5 1.5 0 0 0 1.478 1.243h.263c.3.513.688.978 1.145 1.382l-.729 2.477a.5.5 0 0 0 .48.641h2a.5.5 0 0 0 .471-.332l.482-1.351c.635.173 1.31.267 2.011.267.707 0 1.388-.095 2.028-.272l.543 1.372a.5.5 0 0 0 .465.316h2a.5.5 0 0 0 .478-.645l-.761-2.506C13.81 9.895 14.5 8.559 14.5 7.069c0-.145-.007-.29-.02-.431.261-.11.508-.266.705-.444.315.306.815.306.815-.417 0 .223-.5.223-.461-.026a.95.95 0 0 0 .09-.255.7.7 0 0 0-.202-.645.58.58 0 0 0-.707-.098.735.735 0 0 0-.375.562c-.024.243.082.48.32.654a2.112 2.112 0 0 1-.259.153c-.534-2.664-3.284-4.595-6.442-4.595Zm7.173 3.876a.565.565 0 0 1-.098.21.704.704 0 0 1-.044-.025c-.146-.09-.157-.175-.152-.223a.236.236 0 0 1 .117-.173c.049-.027.08-.021.113.012a.202.202 0 0 1 .064.199Zm-8.999-.65a.5.5 0 1 1-.276-.96A7.613 7.613 0 0 1 7.964 3.5c.763 0 1.497.11 2.18.315a.5.5 0 1 1-.287.958A6.602 6.602 0 0 0 7.964 4.5c-.64 0-1.255.09-1.826.254ZM5 6.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"/>
-                                            </svg>
-                                        </div>
-                                        <div className="cg-setting-text">
-                                            <p className="cg-setting-h1">Startbeløb</p>
-                                            <p className="cg-setting-h2">Startbeløb hver ny spiller start med</p>
-                                        </div>
-                                    </div>
-                                    <div className="cg-cta" style={{opacity: "0.6"}}>
-                                        <p className="cg-cta-p-active">Til</p>
-                                    </div>
-                                </div>
-                                <input type="text" autoComplete="off" id="start" onChange={event => setStart(parseInt(((event.target.value.replace(".", "")).replace(",", ""))))} className="cg-input" style={{fontSize: "14px", margin: "0px 10px", width: "calc(100% - 20px)", marginBottom: "10px"}} placeholder="Ex. 150" />
-                                <div className="cg-setting" onClick={() => {if(minSetting){setMinSetting(false)}else{setMinSetting(true)}}}>
-                                    <div className="cg-setting-info">
-                                        <div className="cg-setting-pic">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#333" viewBox="0 0 16 16">
-                                                <path d="M0 11.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2zm4 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm4 0a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm4 0a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z"/>
-                                            </svg>
-                                        </div>
-                                        <div className="cg-setting-text">
-                                            <p className="cg-setting-h1">Minimum beløb</p>
-                                            <p className="cg-setting-h2">Minimumbeløb pr. væddemål</p>
-                                        </div>
-                                    </div>
-                                    <div className="cg-cta">
-                                        {minSetting && <p className="cg-cta-p-active">Til</p>}
-                                        {!minSetting && <p className="cg-cta-p">Fra</p>}
-                                    </div>
-                                </div>
-                                {minSetting && <input type="text" autoComplete="off" id="min" onChange={event => setMin(parseInt(((event.target.value.replace(".", "")).replace(",", ""))))} className="cg-input" style={{fontSize: "14px", margin: "0px 10px", width: "calc(100% - 20px)", marginBottom: "10px"}} placeholder="Ex. 150" />}
-                                <div className="cg-setting" onClick={() => {if(maksSetting){setMaksSetting(false)}else{setMaksSetting(true)}}}>
-                                    <div className="cg-setting-info">
-                                        <div className="cg-setting-pic">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#333" viewBox="0 0 16 16">
-                                                <path d="M0 11.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2zm4-3a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-5zm4-3a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-8zm4-3a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v11a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-11z"/>
-                                            </svg>
-                                        </div>
-                                        <div className="cg-setting-text">
-                                            <p className="cg-setting-h1">Maksimum beløb</p>
-                                            <p className="cg-setting-h2">Maksimumbeløb pr. væddemål</p>
-                                        </div>
-                                    </div>
-                                    <div className="cg-cta">
-                                        {maksSetting && <p className="cg-cta-p-active">Til</p>}
-                                        {!maksSetting && <p className="cg-cta-p">Fra</p>}
-                                    </div>
-                                </div>
-                                {maksSetting && <input type="text" autoComplete="off" id="maks" onChange={event => setMax(parseInt(((event.target.value.replace(".", "")).replace(",", ""))))} className="cg-input" style={{fontSize: "14px", margin: "0px 10px", width: "calc(100% - 20px)", marginBottom: "10px"}} placeholder="Ex. 150" />}
-                                <div className="cg-setting" onClick={() => {if(indskydelseSetting){setIndskydelseSetting(false)}else{setIndskydelseSetting(true)}}}>
-                                    <div className="cg-setting-info">
-                                        <div className="cg-setting-pic">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#333" viewBox="0 0 16 16">
-                                                <path fillRule="evenodd" d="M8 0c-.69 0-1.843.265-2.928.56-1.11.3-2.229.655-2.887.87a1.54 1.54 0 0 0-1.044 1.262c-.596 4.477.787 7.795 2.465 9.99a11.777 11.777 0 0 0 2.517 2.453c.386.273.744.482 1.048.625.28.132.581.24.829.24s.548-.108.829-.24a7.159 7.159 0 0 0 1.048-.625 11.775 11.775 0 0 0 2.517-2.453c1.678-2.195 3.061-5.513 2.465-9.99a1.541 1.541 0 0 0-1.044-1.263 62.467 62.467 0 0 0-2.887-.87C9.843.266 8.69 0 8 0zm0 5a1.5 1.5 0 0 1 .5 2.915l.385 1.99a.5.5 0 0 1-.491.595h-.788a.5.5 0 0 1-.49-.595l.384-1.99A1.5 1.5 0 0 1 8 5z"/>
-                                            </svg>
-                                        </div>
-                                        <div className="cg-setting-text">
-                                            <p className="cg-setting-h1">Indskydelse</p>
-                                            <p className="cg-setting-h2">Mængde spillere skal modtage hver uge</p>
-                                        </div>
-                                    </div>
-                                    <div className="cg-cta">
-                                        {indskydelseSetting && <p className="cg-cta-p-active">Til</p>}
-                                        {!indskydelseSetting && <p className="cg-cta-p">Fra</p>}
-                                    </div>
-                                </div>
-                                {indskydelseSetting && <input autoComplete="off" type="text" id="indskydelse" className="cg-input" onChange={event => setIndskydelse(parseInt(((event.target.value.replace(".", "")).replace(",", ""))))} style={{fontSize: "14px", margin: "0px 10px", width: "calc(100% - 20px)", marginBottom: "10px"}} placeholder="Ex. 150" />}
-                            </div>
-                            {!indskydelseSetting && <p className="cg-h2" style={{fontSize: "12px", maxWidth: "100%", padding: "5px 0px"}}>BEMÆRK: Uden indskydelse hver uge, vil spillere potentielt ikke kunne være med, hvis de taber alle deres penge.</p>}
-                            <div className="form-btn">
-                                {message !== "" && <p className="form-error">{message}</p>}
-                                <button value="Login" className="main-btn-login" style={{width: "100%"}} type="submit">{loading && <div className="loader" id="loader"></div>}{!loading && <>Opret gruppespil</>}</button>
-                            </div>
-                        </form>
+            <StageHeader />
+            <div className="op-container">
+                <div className="op-top">
+                    {nav === "generelt" && <><div className="op-top-element-active">
+                        <div className="op-top-identifier">1</div>
+                        <p className="op-top-p">Generelt</p>
                     </div>
-                    <p className="footer-copyright" style={{position: "absolute", bottom: "5px", opacity: "0.3"}}>©2022 Alle rettigheder forbeholdes | Mads Kaiser</p>
+                    <div className="op-top-element">
+                        <div className="op-top-identifier">2</div>
+                        <p className="op-top-p">Økonomi</p>
+                    </div>
+                    <div className="op-top-element">
+                        <div className="op-top-identifier">3</div>
+                        <p className="op-top-p">Offentliggør gruppespil</p>
+                    </div></>}
+                    {nav === "eco" && <><div className="op-top-element-active">
+                        <div className="op-top-identifier">1</div>
+                        <p className="op-top-p">Generelt</p>
+                    </div>
+                    <div className="op-top-element-active">
+                        <div className="op-top-identifier">2</div>
+                        <p className="op-top-p">Økonomi</p>
+                    </div>
+                    <div className="op-top-element">
+                        <div className="op-top-identifier">3</div>
+                        <p className="op-top-p">Offentliggør gruppespil</p>
+                    </div></>}
+                    {nav === "publish" && <><div className="op-top-element-active">
+                        <div className="op-top-identifier">1</div>
+                        <p className="op-top-p">Generelt</p>
+                    </div>
+                    <div className="op-top-element-active">
+                        <div className="op-top-identifier">2</div>
+                        <p className="op-top-p">Økonomi</p>
+                    </div>
+                    <div className="op-top-element-active">
+                        <div className="op-top-identifier">3</div>
+                        <p className="op-top-p">Offentliggør gruppespil</p>
+                    </div></>}
                 </div>
-                <div className="route-thirds-element-2">
-                    <canvas className="canvas-container-signup" id="gradient-canvas" data-transition-in></canvas>
+                {nav === "generelt" && <div className="op-content">
+                    <p className="op-h1">Generelt</p>
+                    <p className="op-h2">Angiv gruppespillets navn, samt datoen gruppespillet skal slutte.</p>
+                    <div className="op-form">
+                        <div className="op-form-element">
+                            <p className="op-form-p">Gruppespillets navn</p>
+                            <input type="text" value={spilNavn} onChange={event => setSpilNavn(event.target.value)} className="op-input" placeholder="Eks. Danbolig's Gruppespil" />
+                        </div>
+                        <div className="op-form-element">
+                            <p className="op-form-p">Slutdato</p>
+                            <input type="date" value={spilVarighed} onChange={event => setVarighed(event.target.value)} className="op-input" />
+                        </div>
+                    </div>
+                </div>}
+                {nav === "eco" && <div className="op-content">
+                    <p className="op-h1">Økonomi</p>
+                    <p className="op-h2">Angiv gruppespillets økonomi. Herunder startbeløb, minimum og maksimum beløb pr væddemål og indskydelse hver uge.</p>
+                    <div className="op-form">
+                        <div className="op-form-element">
+                            <p className="op-form-p">Startbeløb</p>
+                            <input type="number" value={spilStart} onChange={event => setStart(event.target.value)} className="op-input" placeholder="0" />
+                        </div>
+                        <div className="op-box" onClick={() => {if (minSetting){setMinSetting(false)}else{setMinSetting(true)}}}>
+                            {minSetting && <div className="op-input-tick-active"><svg xmlns="http://www.w3.org/2000/svg" fill="#fff" width="16" height="16" viewBox="0 0 16 16">
+                                        <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                                    </svg></div>}
+                            {!minSetting && <div className="op-input-tick"></div>}
+                            <p className="op-form-p">Tilføj minimumsbeløb</p>
+                        </div>
+                        {minSetting && <div className="op-form-element">
+                            <p className="op-form-p">Mininumbeløb</p>
+                            <input type="number" value={spilMin} onChange={event => setMin(event.target.value)} className="op-input" placeholder="0" />
+                        </div>}
+                        <div className="op-box" onClick={() => {if (maksSetting){setMaksSetting(false)}else{setMaksSetting(true)}}}>
+                            {maksSetting && <div className="op-input-tick-active"><svg xmlns="http://www.w3.org/2000/svg" fill="#fff" width="16" height="16" viewBox="0 0 16 16">
+                                        <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                                    </svg></div>}
+                            {!maksSetting && <div className="op-input-tick"></div>}
+                            <p className="op-form-p">Tilføj maksbeløb</p>
+                        </div>
+                        {maksSetting && <div className="op-form-element">
+                            <p className="op-form-p">Maksbeløb</p>
+                            <input type="number" value={spilMax} onChange={event => setMax(event.target.value)} className="op-input" placeholder="0" />
+                        </div>}
+                        <div className="op-box" onClick={() => {if (indskydelseSetting){setIndskydelseSetting(false)}else{setIndskydelseSetting(true)}}}>
+                            {indskydelseSetting && <div className="op-input-tick-active"><svg xmlns="http://www.w3.org/2000/svg" fill="#fff" width="16" height="16" viewBox="0 0 16 16">
+                                        <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                                    </svg></div>}
+                            {!indskydelseSetting && <div className="op-input-tick"></div>}
+                            <p className="op-form-p">Tilføj ugentligt indskydelse</p>
+                        </div>
+                        {indskydelseSetting && <div className="op-form-element">
+                            <p className="op-form-p">Ugentligt indskydelse</p>
+                            <input type="number" value={indskydelse} onChange={event => setIndskydelse(event.target.value)} className="op-input" placeholder="0" />
+                        </div>}
+                    </div>
+                </div>}
+                {nav === "publish" && <div className="op-content">
+                    <p className="op-h1">Offentliggør gruppespil</p>
+                    <p className="op-h2">Angiv gruppespillets synlighed og forbyd ligaer.</p>
+                    <div className="op-form">
+                        <div className="op-form-element">
+                            <div className="op-box" style={{marginTop: "0px"}} onClick={() => {if (spilSynlighed === "offentlig"){setSynlighed("privat")}else{setSynlighed("offentlig")}}}>
+                                {spilSynlighed === "offentlig" && <div className="op-input-tick-active"><svg xmlns="http://www.w3.org/2000/svg" fill="#fff" width="16" height="16" viewBox="0 0 16 16">
+                                        <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                                    </svg></div>}
+                                {spilSynlighed === "privat" && <div className="op-input-tick"></div>}
+                                <p className="op-form-p">Offentligt gruppespil</p>
+                            </div>
+                        </div>
+                        {spilSynlighed === "privat" && <div className="op-form-element">
+                            <p className="op-form-p">Kodeord til tilmelding</p>
+                            <input type="password" value={password} onChange={event => setPassword(event.target.value)} className="op-input" autoComplete='off' />
+                        </div>}
+                        <div className="op-form-element" style={{marginTop: "10px"}}>
+                            <div className="op-box" style={{marginTop: "0px"}} onClick={() => {if (leagueSetting){setLeagueSetting(false)}else{setLeagueSetting(true)}}}>
+                                {!leagueSetting && <div className="op-input-tick-active"><svg xmlns="http://www.w3.org/2000/svg" fill="#fff" width="16" height="16" viewBox="0 0 16 16">
+                                        <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                                    </svg></div>}
+                                {leagueSetting && <div className="op-input-tick"></div>}
+                                <p className="op-form-p">Alle ligaer</p>
+                            </div>
+                        </div>
+                        {leagueSetting && <div className="setup-element">
+                            <p className="op-form-p" style={{padding: "10px 0px"}}>Ligaer</p>
+                            <div className="setup-search">
+                                <input type="text" placeholder="Søg" className="setup-input" onChange={event => setLigaSearchStr(event.target.value)} />
+                            </div>
+                            <ul className="setup-hits">
+                                {items.map((item) => {
+                                    if (item.type === "liga") {
+                                        if (ligasearchStr === "") {
+                                            if (favorites.findIndex(obj => obj.id === item.id && obj.type === item.type) >= 0) {
+                                                return (
+                                                    <li key={item.name + item.logo_path} className="setup-hit" onClick={() => {addFavorite(item.id, item.name, item.logo_path, item.land, item.type)}}>
+                                                        <button id={"klub-" + item.id + item.type} className="setup-checkbox setup-checkbox-active">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" id={"icon-" + item.id + item.type} className="setup-icon display" viewBox="0 0 16 16">
+                                                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                                                            </svg>
+                                                        </button>
+                                                        <div className="setup-hit-wrapper">
+                                                            <div className="setup-img">
+                                                                <Image layout="fill" src={item.logo_path} />
+                                                            </div>
+                                                            <p className="setup-p">{item.name}</p>
+                                                        </div>
+                                                    </li>
+                                                );
+                                            } else {
+                                                return (
+                                                    <li key={item.name + item.logo_path} className="setup-hit" onClick={() => {addFavorite(item.id, item.name, item.logo_path, item.land, item.type)}}>
+                                                        <button id={"klub-" + item.id + item.type} className="setup-checkbox" >
+                                                            <svg xmlns="http://www.w3.org/2000/svg"  id={"icon-" + item.id + item.type} className="setup-icon" viewBox="0 0 16 16">
+                                                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                                                            </svg>
+                                                        </button>
+                                                        <div className="setup-hit-wrapper">
+                                                            <div className="setup-img">
+                                                                <Image layout="fill" src={item.logo_path} />
+                                                            </div>
+                                                            <p className="setup-p">{item.name}</p>
+                                                        </div>
+                                                    </li>
+                                                );
+                                            }
+                                        } else {
+                                            if ((item.name.toLowerCase()).includes(ligasearchStr.toLowerCase())) {
+                                                if (favorites.findIndex(obj => obj.id === item.id && obj.type === item.type) >= 0) {
+                                                    return (
+                                                        <li key={item.name + item.logo_path} className="setup-hit" onClick={() => {addFavorite(item.id, item.name, item.logo_path, item.land, item.type)}}>
+                                                            <button id={"klub-" + item.id + item.type} className="setup-checkbox setup-checkbox-active">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" id={"icon-" + item.id + item.type} className="setup-icon display" viewBox="0 0 16 16">
+                                                                    <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                                                                </svg>
+                                                            </button>
+                                                            <div className="setup-hit-wrapper">
+                                                                <div className="setup-img">
+                                                                    <Image layout="fill" src={item.logo_path} />
+                                                                </div>
+                                                                <p className="setup-p">{item.name}</p>
+                                                            </div>
+                                                        </li>
+                                                    );
+                                                } else {
+                                                    return (
+                                                        <li key={item.name + item.logo_path} className="setup-hit" onClick={() => {addFavorite(item.id, item.name, item.logo_path, item.land, item.type)}}>
+                                                            <button id={"klub-" + item.id + item.type} className="setup-checkbox" >
+                                                                <svg xmlns="http://www.w3.org/2000/svg"  id={"icon-" + item.id + item.type} className="setup-icon" viewBox="0 0 16 16">
+                                                                    <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                                                                </svg>
+                                                            </button>
+                                                            <div className="setup-hit-wrapper">
+                                                                <div className="setup-img">
+                                                                    <Image layout="fill" src={item.logo_path} />
+                                                                </div>
+                                                                <p className="setup-p">{item.name}</p>
+                                                            </div>
+                                                        </li>
+                                                    );
+                                                }
+                                            }
+                                        }
+                                    }
+                                })}
+                            </ul>
+                        </div>}
+                    </div>
+                </div>}
+                {message !== "" && <p className="form-error">{message}</p>}
+                <div className="op-cta">
+                    {nav === "generelt" && <><button className="op-cta-secondary" onClick={() => window.open("/stage/aktive-spil", "_self")}>Afbryd</button>
+                    <button className="op-cta-primary" onClick={() => setNav("eco")}>Næste</button></>}
+                    {nav === "eco" && <><button className="op-cta-secondary" onClick={() => setNav("generelt")}>Tilbage</button>
+                    <button className="op-cta-primary" onClick={() => setNav("publish")}>Næste</button></>}
+                    {nav === "publish" && <><button className="op-cta-secondary" onClick={() => setNav("eco")}>Tilbage</button>
+                    <button className="op-cta-primary" onClick={opretHandler}>Opret gruppespil</button></>}
                 </div>
             </div>
         </>

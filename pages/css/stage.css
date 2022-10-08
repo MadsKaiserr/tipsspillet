@@ -1726,6 +1726,435 @@
     display: inline-block;
     color: var(--softBlack);
   }
+
+  .wc-container {
+    z-index: 25;
+    background-color: rgba(0, 0, 0, 0.4);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+  }
+
+  .wc-wrapper {
+    width: 450px;
+    background: #fff;
+    border-radius: 10px;
+    display: flex;
+    position: relative;
+    align-items: center;
+    box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.1);
+    flex-direction: column;
+  }
+
+  .op-box {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 20px;
+  }
+
+  .op-input-tick {
+    width: 16px;
+    height: 16px;
+    border-radius: 3px;
+    box-shadow: 0px 0px 1px 0px rgba(0,0,0,0.6);
+  }
+
+  .op-input-tick-active {
+    width: 16px;
+    height: 16px;
+    border-radius: 3px;
+    background-color: var(--primary);
+  }
+
+  .op-top {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+    padding: 20px;
+    background-color: var(--surface);
+  }
+
+  .op-top-element {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+  }
+
+  .op-top-element-active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+  }
+
+  .op-content {
+    width: 100%;
+    max-width: 650px;
+    padding-top: 50px;
+  }
+
+  .op-h1 {
+    font-family: Inter;
+    font-weight: 500;
+    font-size: 26px;
+    color: #333;
+  }
+
+  .op-cta {
+    width: 100%;
+    max-width: 650px;
+    padding: 30px 0px;;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .op-cta-secondary {
+    border: 1px #ebebeb solid;
+    border-radius: 3px;
+    font-family: Inter;
+    font-weight: 400;
+    font-size: 14px;
+    color: #333;
+    cursor: pointer;
+    transition: 0.2s;
+    padding: 10px 20px;
+    background-color: transparent;
+  }
+
+  .op-cta-primary {
+    border: 0px;
+    background-color: var(--primary);
+    border-radius: 3px;
+    font-family: Inter;
+    font-weight: 500;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.2s;
+    color: #fff;
+    padding: 10px 20px;
+  }
+
+  .op-h2 {
+    font-family: Inter;
+    font-weight: 300;
+    font-size: 15px;
+    color: var(--softBlack);
+    opacity: 0.85;
+  }
+
+  .op-form {
+    padding-top: 20px;
+  }
+
+  .op-form-element {
+    padding: 10px 0px;
+  }
+
+  .op-input {
+    width: 100%;
+    padding: 12px 10px;
+    margin-top: 5px;
+    border: 0px;
+    background-color: transparent;
+    border-radius: 3px;
+    box-shadow: 0px 0px 1px 0px rgba(0,0,0,0.6);
+  }
+
+  .op-form-p {
+    font-family: Inter;
+    font-weight: 500;
+    font-size: 15px;
+    color: var(--softBlack);
+  }
+
+  .op-container {
+    padding-top: 80px;
+    display: flex;
+    flex-direction: column;
+    min-height: 700px;
+    align-items: center;
+  }
+
+  .op-top-element-active .op-top-identifier {
+    border: 0px !important;
+    background-color: var(--primary) !important;
+    color: #fff !important;
+  }
+
+  .op-top-element-active .op-top-p {
+    opacity: 1 !important;
+  }
+
+  .op-top-identifier {
+    font-family: Inter;
+    font-weight: 500;
+    font-size: 14px;
+    color: #888;
+    border: 1px #ebebeb solid;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .op-top-p {
+    font-family: Inter;
+    font-weight: 500;
+    font-size: 14px;
+    color: #333;
+    opacity: 0.6;
+  }
+
+  .fbck-knap {
+    background-color: var(--primary);
+    border-radius: 50%;
+    position: fixed;
+    box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.3);
+    cursor: pointer;
+    right: 40px;
+    border: 3px #fff solid;
+    bottom: 40px;
+    height: 48px;
+    width: 48px;
+    padding: 12px;
+    z-index: 10;
+    padding-top: 13px !important;
+    transition: 0.2s;
+  }
+
+  .fbck-knap:hover {
+    background-color: var(--primaryAccent) !important;
+  }
+
+  .wc-top {
+    overflow: hidden;
+    position: relative;
+    padding: 0px 40px;
+    padding-top: 35px !important;
+  }
+
+  .wc-content {
+    padding: 0px 40px;
+  }
+
+  .wc-trans {
+    width: 100%;
+    height: 75px;
+    position: relative;
+    display: block;
+    z-index: 2;
+    margin-top: -30px;
+    background: linear-gradient(rgba(255,255,255,0), rgba(255,255,255,1));
+  }
+
+  .wc-h1 {
+    font-family: Inter;
+    font-weight: 500;
+    color: #333;
+    font-size: 42px;
+    line-height: 45px;
+    z-index: 3;
+    position: relative;
+    display: block;
+  }
+
+  .wc-h2 {
+    font-family: Inter;
+    font-weight: 500;
+    color: #333;
+    font-size: 16px;
+  }
+
+  .wc-1-5 {
+    display: flex;
+    gap: 10px;
+    padding-top: 10px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .wc-1-5-element {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 65px;
+    height: 60px;
+    cursor: pointer;
+    background-color: var(--stageSurface);
+    border-radius: 5px;
+    font-family: Inter;
+    font-weight: 600;
+    color: #333;
+    font-size: 16px;
+    transition: 0.2s;
+  }
+
+  .wc-1-5-element-active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 65px;
+    height: 60px;
+    cursor: pointer;
+    background-color: var(--primary);
+    border-radius: 5px;
+    font-family: Inter;
+    font-weight: 600;
+    color: #fff;
+    font-size: 16px;
+    transition: 0.2s;
+  }
+
+  .wc-h3 {
+    font-family: Inter;
+    font-weight: 300;
+    color: #888;
+    font-size: 12px;
+  }
+
+  .wc-1-5-modifier {
+    display: flex;
+    padding-top: 5px;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .wc-input-con {
+    background-color: var(--stageSurface);
+    width: 100%;
+    margin-top: 20px;
+    border-radius: 5px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .wc-input-btn {
+    border-radius: 5px;
+    border: 0px;
+    background-color: var(--primary);
+    font-family: Inter;
+    font-weight: 400;
+    color: #fff;
+    font-size: 14px;
+    margin: 4px;
+    padding: 15px 20px;
+  }
+
+  .wc-btn-off {
+    border: 0px;
+    border-radius: 500px;
+    background-color: #ebebeb;
+    font-family: Inter;
+    font-weight: 400;
+    color: #333;
+    font-size: 14px;
+    padding: 10px 50px;
+    margin-top: 15px;
+    margin-bottom: 25px;
+    cursor: not-allowed;
+    transition: 0.2s;
+    opacity: 0.5;
+  }
+
+  .wc-btn {
+    border: 0px;
+    border-radius: 500px;
+    background-color: var(--primary);
+    font-family: Inter;
+    font-weight: 400;
+    color: #fff;
+    font-size: 14px;
+    padding: 10px 50px;
+    margin-top: 15px;
+    margin-bottom: 25px;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+
+  .wc-btn:hover {
+    background-color: var(--primaryAccent) !important;
+  }
+
+  .wc-input {
+    width: 100%;
+    border: 0px;
+    min-height: 70px;
+    padding: 12px 15px;
+    outline: none;
+    resize: none;
+    background-color: transparent;
+    font-family: Inter;
+    font-weight: 400;
+    color: #888;
+    font-size: 14px;
+  }
+
+  .wc-input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #888;
+    opacity: 1;
+  }
+
+  .wc-1-5-element:hover {
+    background-color: var(--blueStageSurface) !important;
+  }
+
+  .wc-circles {
+    position: absolute;
+    left: -20px;
+    opacity: 0.2;
+    top: -30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .wc-cir1 {
+    width: 270px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 270px;
+    border-radius: 50%;
+    border: 1px solid #888;
+  }
+
+  .wc-cir2 {
+    width: 170px;
+    height: 170px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 1px solid #888;
+  }
+
+  .wc-cir3 {
+    width: 70px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 1px solid #888;
+  }
   
   .stage-kampe-head {
     width: 100%;
@@ -2712,6 +3141,7 @@
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
+    flex-direction: column;
     margin: 20px auto;
     box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.03);
 }

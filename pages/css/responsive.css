@@ -148,6 +148,10 @@
     top: inherit !important;
     z-index: 11 !important;
   }
+  .fbck-knap {
+    bottom: 60px !important;
+    right: 20px !important;
+  }
   .gs-container {
     padding: 20px 100px !important;
   }
@@ -757,6 +761,10 @@
     width: 65% !important;
     height: 65% !important;
   }
+  .wc-wrapper {
+    width: 95% !important;
+    max-width: 450px !important;
+  }
 }
 
 @media only screen and (max-width: 730px) {
@@ -874,6 +882,9 @@
 @media only screen and (max-width: 650px) {
   #t1 {
     display: none !important;
+  }
+  .op-content {
+    width: 90% !important;
   }
   #t2 {
     display: none !important;
@@ -997,6 +1008,9 @@
     display: none !important;
   }
   .kontakt-btn {
+    width: 100% !important;
+  }
+  .kontakt-btn-off {
     width: 100% !important;
   }
   .forside-black-blob {
@@ -1223,6 +1237,12 @@
 @media only screen and (max-width: 540px) {
   .hit-elem {
     padding: 10px 5% !important;
+  }
+  .op-container {
+    padding-top: 65px !important;
+  }
+  .op-content {
+    padding-top: 25px !important;
   }
   .cp-h1 {
     font-size: 28px !important;
@@ -1622,6 +1642,27 @@
   .price-input-element-active {
     padding: 6px 10px !important;
     font-size: 13px !important;
+  }
+  .wc-1-5-element {
+    width: 55px !important;
+    height: 50px !important;
+    font-size: 15px !important;
+  }
+  .wc-1-5-element-active {
+    width: 55px !important;
+    height: 50px !important;
+    font-size: 15px !important;
+  }
+  .wc-h1 {
+    font-size: 38px !important;
+    line-height: 40px !important;
+  }
+  .wc-content {
+    margin-top: -10px !important;
+    z-index: 4;
+  }
+  .wc-1-5 {
+    gap: 7px !important;
   }
 }
 
