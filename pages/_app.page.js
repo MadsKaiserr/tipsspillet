@@ -62,7 +62,7 @@ function MyApp({ Component, pageProps }) {
         <meta name="trustpilot-one-time-domain-verification-id" content="ff4f2ee6-6577-4745-905d-b14b269c3fb3"/>
 
         <meta name="copyright" content="Tipsspillet, https://www.tipsspillet.dk/" />
-        <meta itemProp="image" content="https://www.tipsspillet.dk/logo-primary.png" />
+        <meta itemProp="image" content="https://www.tipsspillet.dk/FBBanner.jpg" />
 
         <meta property="al:ios:app_name" content="Tipsspillet" />
         <meta property="al:ios:url" content="https://www.tipsspillet.dk" />
@@ -80,8 +80,8 @@ function MyApp({ Component, pageProps }) {
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://www.tipsspillet.dk" />
         <meta property="og:embed" content="Tipsspillet" />
-        <meta property="og:image" content="https://www.tipsspillet.dk/logo-primary.png" />
-        <meta data-react-helmet="true" property="og:image" content="https://www.tipsspillet.dk/logo-primary.png" />
+        <meta property="og:image" content="https://www.tipsspillet.dk/FBBanner.jpg" />
+        <meta data-react-helmet="true" property="og:image" content="https://www.tipsspillet.dk/FBBanner.jpg" />
 
         <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon.png" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
