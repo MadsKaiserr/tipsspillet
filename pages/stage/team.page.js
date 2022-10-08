@@ -9,99 +9,116 @@ import Height from '../components/height';
 import Back from "../components/back.js";
 import { getUser } from "../services/authService";
  
-function StageTeam ({data}) {
+function StageTeam () {
+
+    const [isPremium, setIsPremium] = useState(false);
+
+    useEffect(() => {
+        if (getUser()) {
+            if (getUser().rolle !== "none") {
+                setIsPremium(true);
+            }
+        }
+    }, [getUser()])
 
     useEffect(() => {
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
-        const matchID = urlParams.get("team");
-        console.log("Sportmonks - Teams:", data);
-        getTabel(data.data.league.data.current_season_id);
+        fetch("https://soccer.sportmonks.com/api/v2.0/teams/"+urlParams.get('team')+"?api_token="+"kvgDywRFDSqPhS9iYQynEci42JvyVtqLpCXBJlBHrH5v8Br8RtrEayi94Ybf"+"&include=goalscorers.player,goalscorers.team,assistscorers.player,assistscorers.team,league,latest,squad,upcoming,transfers,stats,fifaranking,uefaranking,goalscorers,assistscorers,trophies,rivals,activeSeasons&tz=Europe/Copenhagen")
+        .then(response => response.json())
+        .then(function (data) {
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            const matchID = urlParams.get("team");
+            console.log("Sportmonks - Teams:", data);
+            getTabel(data.data.league.data.current_season_id);
 
-        var topscorerArray = data.data.goalscorers.data;
-        var assistArray = data.data.assistscorers.data;
-        var mostgoalsArray = [];
-        var mostAssistsArray = [];
-        for (var e in topscorerArray) {
-            if (topscorerArray[e].type === "goals" && topscorerArray[e].player.data.team_id === parseInt(matchID)) {
-                var mostGoalsIndex = mostgoalsArray.findIndex(obj => obj.player.data.fullname === topscorerArray[e].player.data.fullname);
-                if (mostGoalsIndex === -1) {
-                    mostgoalsArray.push(topscorerArray[e]);
-                } else {
-                    mostgoalsArray[mostGoalsIndex].goals = mostgoalsArray[mostGoalsIndex].goals + topscorerArray[e].goals;
-                    mostgoalsArray[mostGoalsIndex].penalty_goals = mostgoalsArray[mostGoalsIndex].penalty_goals + topscorerArray[e].penalty_goals;
+            var topscorerArray = data.data.goalscorers.data;
+            var assistArray = data.data.assistscorers.data;
+            var mostgoalsArray = [];
+            var mostAssistsArray = [];
+            for (var e in topscorerArray) {
+                if (topscorerArray[e].type === "goals" && topscorerArray[e].player.data.team_id === parseInt(matchID)) {
+                    var mostGoalsIndex = mostgoalsArray.findIndex(obj => obj.player.data.fullname === topscorerArray[e].player.data.fullname);
+                    if (mostGoalsIndex === -1) {
+                        mostgoalsArray.push(topscorerArray[e]);
+                    } else {
+                        mostgoalsArray[mostGoalsIndex].goals = mostgoalsArray[mostGoalsIndex].goals + topscorerArray[e].goals;
+                        mostgoalsArray[mostGoalsIndex].penalty_goals = mostgoalsArray[mostGoalsIndex].penalty_goals + topscorerArray[e].penalty_goals;
+                    }
                 }
             }
-        }
-        mostgoalsArray.sort((a, b) => {
-            return b.goals - a.goals;
-        });
-        for (var q in assistArray) {
-            var mostAssistsIndex = mostAssistsArray.findIndex(obj => obj.player_id === assistArray[q].player_id);
-            if (mostAssistsIndex === -1) {
-                mostAssistsArray.push(assistArray[q]);
-            } else {
-                mostAssistsArray[mostAssistsIndex].assists = mostAssistsArray[mostAssistsIndex].assists + assistArray[q].assists;
-            }
-        }
-        for (var t in mostAssistsArray) {
-            var mostArrayIndex = mostgoalsArray.findIndex(obj => obj.player_id === mostAssistsArray[t].player_id);
-            if (mostArrayIndex !== -1) {
-                if (mostAssistsArray[t].assists === undefined) {
-                    mostgoalsArray[mostArrayIndex].assists = 0;
+            mostgoalsArray.sort((a, b) => {
+                return b.goals - a.goals;
+            });
+            for (var q in assistArray) {
+                var mostAssistsIndex = mostAssistsArray.findIndex(obj => obj.player_id === assistArray[q].player_id);
+                if (mostAssistsIndex === -1) {
+                    mostAssistsArray.push(assistArray[q]);
                 } else {
-                    mostgoalsArray[mostArrayIndex].assists = mostAssistsArray[t].assists;
+                    mostAssistsArray[mostAssistsIndex].assists = mostAssistsArray[mostAssistsIndex].assists + assistArray[q].assists;
                 }
             }
-        }
-        setMostGoals(mostgoalsArray);
+            for (var t in mostAssistsArray) {
+                var mostArrayIndex = mostgoalsArray.findIndex(obj => obj.player_id === mostAssistsArray[t].player_id);
+                if (mostArrayIndex !== -1) {
+                    if (mostAssistsArray[t].assists === undefined) {
+                        mostgoalsArray[mostArrayIndex].assists = 0;
+                    } else {
+                        mostgoalsArray[mostArrayIndex].assists = mostAssistsArray[t].assists;
+                    }
+                }
+            }
+            setMostGoals(mostgoalsArray);
 
-        var favorit2 = [];
-        if (localStorage.getItem("favoritter")) {
-            favorit2 = JSON.parse(localStorage.getItem("favoritter"));
-        } else {
-            favorit2 = [];
-        }
-        for (var q in favorit2) {
-            if (favorit2[q].id + "" === matchID) {
-                setFavorit(true);
-            }
-        }
-        var latestArray = data.data.latest.data;
-        var matches = "";
-        for (var u in latestArray) {
-            if (matches === "") {
-                matches = latestArray[u].id;
+            var favorit2 = [];
+            if (localStorage.getItem("favoritter")) {
+                favorit2 = JSON.parse(localStorage.getItem("favoritter"));
             } else {
-                matches = matches + "," + latestArray[u].id;
+                favorit2 = [];
             }
-        }
+            for (var q in favorit2) {
+                if (favorit2[q].id + "" === matchID) {
+                    setFavorit(true);
+                }
+            }
+            var latestArray = data.data.latest.data;
+            var matches = "";
+            for (var u in latestArray) {
+                if (matches === "") {
+                    matches = latestArray[u].id;
+                } else {
+                    matches = matches + "," + latestArray[u].id;
+                }
+            }
 
-        var kommendeArray = data.data.upcoming.data;
-        for (var u in kommendeArray) {
-            if (matches === "") {
-                matches = kommendeArray[u].id;
-            } else {
-                matches = matches + "," + kommendeArray[u].id;
+            var kommendeArray = data.data.upcoming.data;
+            for (var u in kommendeArray) {
+                if (matches === "") {
+                    matches = kommendeArray[u].id;
+                } else {
+                    matches = matches + "," + kommendeArray[u].id;
+                }
             }
-        }
-        getGame(matches);
-        setLogo(data.data.logo_path);
-        setSeason(data.data.league.data.current_season_id);
-        setTeam_name(data.data.name);
-        if (data.data.national_team === true) {
-            setNat_team("Landshold");
-        } else {
-            setNat_team(data.data.league.data.name);
-        }
-        setLoadingText("");
-        setSquad(data.data.squad.data);
+            getGame(matches, latestArray, kommendeArray);
+            setLogo(data.data.logo_path);
+            setSeason(data.data.league.data.current_season_id);
+            setTeam_name(data.data.name);
+            if (data.data.national_team === true) {
+                setNat_team("Landshold");
+            } else {
+                setNat_team(data.data.league.data.name);
+            }
+            setLoadingText("");
+            setSquad(data.data.squad.data);
+        })
+        .catch(error => console.log('error', error));
     }, [])
 
     const [loadingText, setLoadingText] = useState("Indlæser...");
 
     useEffect(() => {
-        if (loadingText !== "Indlæser...") {
+        if (loadingText !== "Indlæser..." && document.getElementById("stage-loader1")) {
             document.getElementById("stage-loader1").classList.remove("display");
             document.getElementById("stage-loader2").classList.remove("display");
         }
@@ -124,15 +141,17 @@ function StageTeam ({data}) {
 
     useEffect(() => {
         if (favorit === true) {
-            document.getElementById("favorit").classList.add("favorit-active");
-            document.getElementById("favorit-o").classList.remove("display");
-            document.getElementById("favorit").classList.add("display");
+            if (document.getElementById("favorit")) {
+                document.getElementById("favorit").classList.add("favorit-active");
+                document.getElementById("favorit-o").classList.remove("display");
+                document.getElementById("favorit").classList.add("display");
+            }
         }
     }, [favorit])
 
     const [mostgoals, setMostGoals] = useState([]);
 
-    function getGame(matches) {
+    function getGame(matches, latestArray, kommendeArray) {
         fetch("https://soccer.sportmonks.com/api/v2.0/fixtures/multi/"+matches+"?api_token="+"kvgDywRFDSqPhS9iYQynEci42JvyVtqLpCXBJlBHrH5v8Br8RtrEayi94Ybf"+"&include=localTeam,visitorTeam&tz=Europe/Copenhagen")
         .then(response => response.json())
         .then(function (response) {
@@ -270,7 +289,7 @@ function StageTeam ({data}) {
             document.getElementById("statistikker").classList.remove("display-flex");
             document.getElementById("tabel").classList.add("display-flex");
         }
-      }, [nav])
+    }, [nav])
 
     const [squadO, setSquadO] = useState([]);
     const [squadUsed, setSquadUsed] = useState(false);
@@ -891,56 +910,54 @@ function StageTeam ({data}) {
                                 </div>
                             </div>
                             <div className="team-indhold-side">
-                                {getUser() && <>
-                                    {getUser().rolle !== "none" && <>
-                                        <div className="team-kampe-section" style={{marginBottom: "0px"}}>
-                                            <div className="tabel-top" style={{padding: "10px 25px"}}>
-                                                <p className="stat-p-h1">Topscorere</p>
-                                                <div className="stat-ends">
-                                                    <p className="stat-p-p">M</p>
-                                                    <p className="stat-p-p">S</p>
-                                                    <p className="stat-p-p">A</p>
-                                                </div>
-                                            </div>
-                                            <div className="stage-kampe" id="latest">
-                                                <ul>
-                                                {mostgoals.slice(0,5).map((item, index) => {
-                                                    var assists = item.assists;
-                                                    if (assists === undefined) {
-                                                        assists = 0;
-                                                    }
-                                                    return (
-                                                        <li key={item.player.data.player_id + item.player.data.fullname}>
-                                                            <Link href={"/stage/spiller?id=" + item.player.data.player_id}>
-                                                                <div className="stat-player-element">
-                                                                    <div className="stat-player">
-                                                                        <p className="stat-player-h1">{index + 1}.</p>
-                                                                        <Image width="30" height="30" src={item.player.data.image_path} alt="" className="bench-img-image" />
-                                                                        <Image width="18px" height="18px" src={item.team.data.logo_path} alt="" className="top-img-logo" />
-                                                                        <div className="bench-info" style={{paddingLeft: "11px"}}>
-                                                                            <p className="bench-h1">{item.player.data.display_name}</p>
-                                                                            <p className="bench-h2">{item.player.data.nationality}</p>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div className="stat-int">
-                                                                        <div className="stat-text">
-                                                                            <p className="stat-player-p">{item.goals}</p>
-                                                                            <p className="stat-player-p">{"(" + item.penalty_goals + ")"}</p>
-                                                                            <p className="stat-player-p">{assists}</p>
-                                                                        </div>
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" className="team-icon" viewBox="0 0 16 16">
-                                                                            <path fillRule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
-                                                                        </svg>
-                                                                    </div>
-                                                                </div>
-                                                            </Link>
-                                                        </li>
-                                                    );
-                                                })}
-                                            </ul>
+                                {isPremium && <>
+                                    <div className="team-kampe-section" style={{marginBottom: "0px"}}>
+                                        <div className="tabel-top" style={{padding: "10px 25px"}}>
+                                            <p className="stat-p-h1">Topscorere</p>
+                                            <div className="stat-ends">
+                                                <p className="stat-p-p">M</p>
+                                                <p className="stat-p-p">S</p>
+                                                <p className="stat-p-p">A</p>
                                             </div>
                                         </div>
-                                    </>}
+                                        <div className="stage-kampe" id="latest">
+                                            <ul>
+                                            {mostgoals.slice(0,5).map((item, index) => {
+                                                var assists = item.assists;
+                                                if (assists === undefined) {
+                                                    assists = 0;
+                                                }
+                                                return (
+                                                    <li key={item.player.data.player_id + item.player.data.fullname}>
+                                                        <Link href={"/stage/spiller?id=" + item.player.data.player_id}>
+                                                            <div className="stat-player-element">
+                                                                <div className="stat-player">
+                                                                    <p className="stat-player-h1">{index + 1}.</p>
+                                                                    <Image width="30" height="30" src={item.player.data.image_path} alt="" className="bench-img-image" />
+                                                                    <Image width="18px" height="18px" src={item.team.data.logo_path} alt="" className="top-img-logo" />
+                                                                    <div className="bench-info" style={{paddingLeft: "11px"}}>
+                                                                        <p className="bench-h1">{item.player.data.display_name}</p>
+                                                                        <p className="bench-h2">{item.player.data.nationality}</p>
+                                                                    </div>
+                                                                </div>
+                                                                <div className="stat-int">
+                                                                    <div className="stat-text">
+                                                                        <p className="stat-player-p">{item.goals}</p>
+                                                                        <p className="stat-player-p">{"(" + item.penalty_goals + ")"}</p>
+                                                                        <p className="stat-player-p">{assists}</p>
+                                                                    </div>
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" className="team-icon" viewBox="0 0 16 16">
+                                                                        <path fillRule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+                                                                    </svg>
+                                                                </div>
+                                                            </div>
+                                                        </Link>
+                                                    </li>
+                                                );
+                                            })}
+                                        </ul>
+                                        </div>
+                                    </div>
                                 </>}
                                 <div className="team-kampe-section" style={{marginBottom: "0px"}}>
                                     {getGroups()}
@@ -1502,21 +1519,7 @@ function StageTeam ({data}) {
                             </div>
                         </div>
                         <div className="team-indhold" id="statistikker">
-                            {/* <div className="team-kampe-section" id="seneste">
-                                <p className="team-kampe-h1">Statistikker</p>
-                            </div> */}
-                            {getUser() && <>
-                                {getUser().rolle === "none" && <div style={{width: "100%"}}>
-                                <div className="locked-wrapper">
-                                    <div className="lock">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="var(--primary)" viewBox="0 0 16 16">
-                                            <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>
-                                        </svg>
-                                    </div>
-                                </div>
-                                <p className="lock-p">Dette er en abonnement funktion</p>
-                            </div>}
-                            {getUser().rolle !== "none" && <>
+                            {isPremium && <>
                             <div className="team-kampe-section" id="startopstilling-div">
                                 <div className="tabel-top" style={{padding: "10px 25px"}}>
                                     <p className="stat-p-h1">Topscorere</p>
@@ -1565,7 +1568,16 @@ function StageTeam ({data}) {
                                 </div>
                             </div>
                             </>}
-                            </>}
+                            {!isPremium && <div style={{width: "100%"}}>
+                                <div className="locked-wrapper">
+                                    <div className="lock">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="12px" height="12px" fill="var(--primary)" viewBox="0 0 16 16">
+                                            <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z" />
+                                        </svg>
+                                    </div>
+                                </div>
+                                <p className="lock-p">Dette er en abonnement funktion</p>
+                            </div>}
                         </div>
                         <div className="team-indhold" id="tabel">
                             <div className="team-indhold-side">
@@ -1596,16 +1608,8 @@ export async function getServerSideProps({ res, req, query }) {
     if (!req.cookies.auth) {
         sendRedirectLocation('/signup')
     }
-    const category = query.team;
-    var resp = await axios.get("https://soccer.sportmonks.com/api/v2.0/teams/"+category+"?api_token="+"kvgDywRFDSqPhS9iYQynEci42JvyVtqLpCXBJlBHrH5v8Br8RtrEayi94Ybf"+"&include=goalscorers.player,goalscorers.team,assistscorers.player,assistscorers.team,league,latest,squad,upcoming,transfers,stats,fifaranking,uefaranking,goalscorers,assistscorers,trophies,rivals,activeSeasons&tz=Europe/Copenhagen");
-    var data = resp.data;
-    if (!data) {
-        return {
-          notFound: true,
-        }
-    }
     return {
-        props: { data },
+        props: { },
     }
 }
  

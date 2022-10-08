@@ -11,6 +11,15 @@ import { getUser } from "../services/authService";
  
 function StageLeague ({data}) {
 
+    const [isPremium, setIsPremium] = useState(false);
+    useEffect(() => {
+        if (getUser()) {
+            if (getUser().rolle !== "none") {
+                setIsPremium(true);
+            }
+        }
+    }, [getUser()])
+
     const [loadingText, setLoadingText] = useState("Indlæser...");
     const [nav, setNav] = useState("popular");
 
@@ -25,113 +34,120 @@ function StageLeague ({data}) {
     }, [favorit])
 
     useEffect(() => {
-        console.log("Sportmonks Liga: ", data);
-        setLoadingText("");
-        setLeague_name(data.data.league.data.name);
-        setSeason_year(data.data.name);
-        setLogo(data.data.league.data.logo_path);
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        fetch("https://soccer.sportmonks.com/api/v2.0/seasons/" + urlParams.get('id') + "?api_token="+"kvgDywRFDSqPhS9iYQynEci42JvyVtqLpCXBJlBHrH5v8Br8RtrEayi94Ybf"+"&include=cardscorers,cardscorers.player,cardscorers.team,assistscorers,goalscorers,goalscorers.team,goalscorers.player,league,stages,groups,results,fixtures.localTeam,fixtures.visitorTeam,fixtures:order(starting_at|desc)&tz=Europe/Copenhagen")
+        .then(response => response.json())
+        .then(function (data) {
+            console.log("Sportmonks Liga: ", data);
+            setLoadingText("");
+            setLeague_name(data.data.league.data.name);
+            setSeason_year(data.data.name);
+            setLogo(data.data.league.data.logo_path);
 
-        if (typeof window !== 'undefined') {
-            const queryString = window.location.search;
-            const urlParams = new URLSearchParams(queryString);
-            var leagueId = parseInt(urlParams.get("id"));
+            if (typeof window !== 'undefined') {
+                const queryString = window.location.search;
+                const urlParams = new URLSearchParams(queryString);
+                var leagueId = parseInt(urlParams.get("id"));
 
-        var favorit2 = [];
-        if (localStorage.getItem("favoritter")) {
-            favorit2 = JSON.parse(localStorage.getItem("favoritter"));
-        } else {
-            favorit2 = [];
-        }
-        for (var q in favorit2) {
-            if (favorit2[q].id === leagueId) {
-                setFavorit(true);
-            }
-        }
-
-        var topscorerArray = data.data.goalscorers.data;
-        var assistArray = data.data.assistscorers.data;
-        var cardArray = data.data.cardscorers.data;
-        var mostgoalsArray = [];
-        var mostAssistsArray = [];
-        var mostCardsArray = [];
-        for (var e in topscorerArray) {
-            if (topscorerArray[e].type === "goals") {
-                var mostGoalsIndex = mostgoalsArray.findIndex(obj => obj.player.data.fullname === topscorerArray[e].player.data.fullname);
-                if (mostGoalsIndex === -1) {
-                    mostgoalsArray.push(topscorerArray[e]);
+                var favorit2 = [];
+                if (localStorage.getItem("favoritter")) {
+                    favorit2 = JSON.parse(localStorage.getItem("favoritter"));
                 } else {
-                    mostgoalsArray[mostGoalsIndex].goals = mostgoalsArray[mostGoalsIndex].goals + topscorerArray[e].goals;
-                    mostgoalsArray[mostGoalsIndex].penalty_goals = mostgoalsArray[mostGoalsIndex].penalty_goals + topscorerArray[e].penalty_goals;
+                    favorit2 = [];
                 }
-            }
-        }
-        mostgoalsArray.sort((a, b) => {
-            return b.goals - a.goals;
-        });
-        for (var e in cardArray) {
-            if (cardArray[e].type === "cards") {
-                var mostCardsIndex = mostCardsArray.findIndex(obj => obj.player.data.fullname === cardArray[e].player.data.fullname);
-                if (mostCardsIndex === -1) {
-                    mostCardsArray.push(cardArray[e]);
-                } else {
-                    mostCardsArray[mostCardsIndex].yellowcards = mostCardsArray[mostCardsIndex].yellowcards + cardArray[e].yellowcards;
-                    mostCardsArray[mostCardsIndex].redcards = mostCardsArray[mostCardsIndex].redcards + cardArray[e].redcards;
+                for (var q in favorit2) {
+                    if (favorit2[q].id === leagueId) {
+                        setFavorit(true);
+                    }
                 }
-            }
-        }
-        mostCardsArray.sort((a, b) => {
-            return b.yellowcards - a.yellowcards;
-        });
-        for (var q in assistArray) {
-            var mostAssistsIndex = mostAssistsArray.findIndex(obj => obj.player_id === assistArray[q].player_id);
-            if (mostAssistsIndex === -1) {
-                mostAssistsArray.push(assistArray[q]);
-            } else {
-                mostAssistsArray[mostAssistsIndex].assists = mostAssistsArray[mostAssistsIndex].assists + assistArray[q].assists;
-            }
-        }
-        for (var t in mostAssistsArray) {
-            var mostArrayIndex = mostgoalsArray.findIndex(obj => obj.player_id === mostAssistsArray[t].player_id);
-            if (mostArrayIndex !== -1) {
-                if (mostAssistsArray[t].assists === undefined) {
-                    mostgoalsArray[mostArrayIndex].assists = 0;
-                } else {
-                    mostgoalsArray[mostArrayIndex].assists = mostAssistsArray[t].assists;
-                }
-            }
-        }
-        setMostGoals(mostgoalsArray);
-        setMostCards(mostCardsArray);
 
-        var matchArray = data.data.fixtures.data;
-        var matches = "";
-        for (var u in matchArray) {
-            if (matches === "") {
-                matches = matchArray[u].id;
-            } else {
-                matches = matches + "," + matchArray[u].id;
-            }
-        }
+                var topscorerArray = data.data.goalscorers.data;
+                var assistArray = data.data.assistscorers.data;
+                var cardArray = data.data.cardscorers.data;
+                var mostgoalsArray = [];
+                var mostAssistsArray = [];
+                var mostCardsArray = [];
+                for (var e in topscorerArray) {
+                    if (topscorerArray[e].type === "goals") {
+                        var mostGoalsIndex = mostgoalsArray.findIndex(obj => obj.player.data.fullname === topscorerArray[e].player.data.fullname);
+                        if (mostGoalsIndex === -1) {
+                            mostgoalsArray.push(topscorerArray[e]);
+                        } else {
+                            mostgoalsArray[mostGoalsIndex].goals = mostgoalsArray[mostGoalsIndex].goals + topscorerArray[e].goals;
+                            mostgoalsArray[mostGoalsIndex].penalty_goals = mostgoalsArray[mostGoalsIndex].penalty_goals + topscorerArray[e].penalty_goals;
+                        }
+                    }
+                }
+                mostgoalsArray.sort((a, b) => {
+                    return b.goals - a.goals;
+                });
+                for (var e in cardArray) {
+                    if (cardArray[e].type === "cards") {
+                        var mostCardsIndex = mostCardsArray.findIndex(obj => obj.player.data.fullname === cardArray[e].player.data.fullname);
+                        if (mostCardsIndex === -1) {
+                            mostCardsArray.push(cardArray[e]);
+                        } else {
+                            mostCardsArray[mostCardsIndex].yellowcards = mostCardsArray[mostCardsIndex].yellowcards + cardArray[e].yellowcards;
+                            mostCardsArray[mostCardsIndex].redcards = mostCardsArray[mostCardsIndex].redcards + cardArray[e].redcards;
+                        }
+                    }
+                }
+                mostCardsArray.sort((a, b) => {
+                    return b.yellowcards - a.yellowcards;
+                });
+                for (var q in assistArray) {
+                    var mostAssistsIndex = mostAssistsArray.findIndex(obj => obj.player_id === assistArray[q].player_id);
+                    if (mostAssistsIndex === -1) {
+                        mostAssistsArray.push(assistArray[q]);
+                    } else {
+                        mostAssistsArray[mostAssistsIndex].assists = mostAssistsArray[mostAssistsIndex].assists + assistArray[q].assists;
+                    }
+                }
+                for (var t in mostAssistsArray) {
+                    var mostArrayIndex = mostgoalsArray.findIndex(obj => obj.player_id === mostAssistsArray[t].player_id);
+                    if (mostArrayIndex !== -1) {
+                        if (mostAssistsArray[t].assists === undefined) {
+                            mostgoalsArray[mostArrayIndex].assists = 0;
+                        } else {
+                            mostgoalsArray[mostArrayIndex].assists = mostAssistsArray[t].assists;
+                        }
+                    }
+                }
+                setMostGoals(mostgoalsArray);
+                setMostCards(mostCardsArray);
 
-        var timePar = (new Date().getTime()) / 1000;
-        var senesteArray = [];
-        var kommendeArray = [];
-        for (var x in data.data.fixtures.data) {
-            if (data.data.fixtures.data[x].time.starting_at.timestamp < timePar) {
-                senesteArray.push(data.data.fixtures.data[x]);
-            } else {
-                kommendeArray.push(data.data.fixtures.data[x]);
+                var matchArray = data.data.fixtures.data;
+                var matches = "";
+                for (var u in matchArray) {
+                    if (matches === "") {
+                        matches = matchArray[u].id;
+                    } else {
+                        matches = matches + "," + matchArray[u].id;
+                    }
+                }
+
+                var timePar = (new Date().getTime()) / 1000;
+                var senesteArray = [];
+                var kommendeArray = [];
+                for (var x in data.data.fixtures.data) {
+                    if (data.data.fixtures.data[x].time.starting_at.timestamp < timePar) {
+                        senesteArray.push(data.data.fixtures.data[x]);
+                    } else {
+                        kommendeArray.push(data.data.fixtures.data[x]);
+                    }
+                }
+                senesteArray.sort((a, b) => {
+                    return b.time.starting_at.timestamp - a.time.starting_at.timestamp;
+                });
+                setSenesteKampe(senesteArray);
+                kommendeArray.sort((a, b) => {
+                    return a.time.starting_at.timestamp - b.time.starting_at.timestamp;
+                });
+                setKommendeKampe(kommendeArray);
             }
-        }
-        senesteArray.sort((a, b) => {
-            return b.time.starting_at.timestamp - a.time.starting_at.timestamp;
-        });
-        setSenesteKampe(senesteArray);
-        kommendeArray.sort((a, b) => {
-            return a.time.starting_at.timestamp - b.time.starting_at.timestamp;
-        });
-        setKommendeKampe(kommendeArray);
-    }
+        })
+        .catch(error => console.log('error', error));
     }, [])
 
     // useEffect(() => {
@@ -922,8 +938,7 @@ function StageLeague ({data}) {
                             </div>
                         </ul>
                         <ul className="match-odds-contain" id="goal">
-                            {getUser() && <>
-                                {getUser().rolle === "none" && <>
+                            {isPremium && <>
                                 <div className="locked-wrapper">
                                     <div className="lock">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="var(--primary)" viewBox="0 0 16 16">
@@ -933,7 +948,7 @@ function StageLeague ({data}) {
                                 </div>
                                 <p className="lock-p">Dette er en abonnement funktion</p>
                             </>}
-                            {getUser().rolle !== "none" && <>
+                            {!isPremium && <>
                             <div className="league-stats">
                                 <div className="team-kampe-section" id="startopstilling-div">
                                     <div className="tabel-top" style={{padding: "10px 25px"}}>
@@ -1025,7 +1040,6 @@ function StageLeague ({data}) {
                                 </div>
                             </div>
                             </>}
-                            </>}
                         </ul>
                         <ul className="match-odds-contain" id="spillere"></ul>
                     </div>
@@ -1050,16 +1064,8 @@ export async function getServerSideProps({ res, req, query }) {
     if (!req.cookies.auth) {
         sendRedirectLocation('/signup')
     }
-    const category = query.id;
-    var resp = await axios.get("https://soccer.sportmonks.com/api/v2.0/seasons/" + category + "?api_token="+"kvgDywRFDSqPhS9iYQynEci42JvyVtqLpCXBJlBHrH5v8Br8RtrEayi94Ybf"+"&include=cardscorers,cardscorers.player,cardscorers.team,assistscorers,goalscorers,goalscorers.team,goalscorers.player,league,stages,groups,results,fixtures.localTeam,fixtures.visitorTeam,fixtures:order(starting_at|desc)&tz=Europe/Copenhagen");
-    var data = resp.data;
-    if (!data) {
-        return {
-          notFound: true,
-        }
-    }
     return {
-        props: { data },
+        props: { },
     }
 }
  
