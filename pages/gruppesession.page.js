@@ -338,8 +338,8 @@ function Gruppesession ({data}) {
                                 <p className="gruppespil-info-element-h1">{gamePlayers}</p>
                             </div>
                             <div className="gruppespil-info-element" style={{width: "100px", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", margin: "0px"}}>
-                                <p className="gruppespil-info-element-p">Antal Kuponer</p>
-                                <p className="gruppespil-info-element-h1">{kuponer}</p>
+                                <p className="gruppespil-info-element-p">Slutdato</p>
+                                <p className="gruppespil-info-element-h1">{new Date(varighed).getDate().toString().padStart(2, '0') + "/" + (new Date(varighed).getMonth() + 1).toString().padStart(2, '0') + "/" + new Date(varighed).getFullYear().toString().padStart(2, '0')}</p>
                             </div>
                         </div>
                         <button className="gruppeinvite-btn" onClick={() => {tilmeld()}}>{loading && <div className="loader" id="loader"></div>}{!loading && <>Tilmeld</>}</button>
@@ -356,8 +356,8 @@ function Gruppesession ({data}) {
                                 <p className="gruppespil-info-element-h1">{gamePlayers}</p>
                             </div>
                             <div className="gruppespil-info-element" style={{width: "100px", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", margin: "0px"}}>
-                                <p className="gruppespil-info-element-p">Antal Kuponer</p>
-                                <p className="gruppespil-info-element-h1">{kuponer}</p>
+                                <p className="gruppespil-info-element-p">Slutdato</p>
+                                <p className="gruppespil-info-element-h1">{new Date(varighed).getDate().toString().padStart(2, '0') + "/" + (new Date(varighed).getMonth() + 1).toString().padStart(2, '0')}</p>
                             </div>
                         </div>
                         <input type="password" value={password} style={{maxWidth: "250px", marginTop: "40px"}} onChange={event => setPassword(event.target.value)} className="op-input" placeholder='Kodeord' /><br />
@@ -365,39 +365,45 @@ function Gruppesession ({data}) {
                         {password === "" && <button className="gruppeinvite-btn-off">Tilmeld</button>}
                     </div>}
                     {synlighed === "dyst" && <>
+                        <div className="dyst-section">
+                            <p className="dy-h1">Pengepræmier af 1000 kr.</p>
+                            <p className="dy-h2">Top 3 ved slutdatoen modtager gavekort til Intersport af værdi op til 500 kr!</p>
+                        </div>
+                    </>}
+                    {synlighed === "dyst" && <>
                         <div className="gruppespil-section" style={{border: "0px", marginTop: "20px", justifyContent: "center", alignItems: "center", justifyContent: "center", textAlign: "center"}}>
                             <div className="top-container">
                                 <div className="top-element">
-                                    <div className="top-img"></div>
-                                    <p className="top-h1">Andenplads</p>
-                                    <p className="top-h2">3 mdr. Premium abonnemnet</p>
+                                    <div className="top-img">2</div>
+                                    <p className="top-h1">350 kr. til Intersport</p>
+                                    <p className="top-h2">Andenplads</p>
                                 </div>
                                 <div className="top-element-big">
-                                    <div className="top-img"></div>
-                                    <p className="top-h1">Førsteplads</p>
-                                    <p className="top-h2">Gavekort til Intersport - 300 kr.</p>
+                                    <div className="top-img">1</div>
+                                    <p className="top-h1">500 kr. til Intersport</p>
+                                    <p className="top-h2">Førsteplads</p>
                                 </div>
                                 <div className="top-element">
-                                    <div className="top-img"></div>
-                                    <p className="top-h1">Tredjeplads</p>
-                                    <p className="top-h2">1 måned plus abonnement</p>
+                                    <div className="top-img">3</div>
+                                    <p className="top-h1">150 kr. til Intersport</p>
+                                    <p className="top-h2">Tredjeplads</p>
                                 </div>
                             </div>
                             <div className="top-container-mobile">
                                 <div className="top-element">
-                                    <div className="top-img"></div>
-                                    <p className="top-h1">Førsteplads</p>
-                                    <p className="top-h2">Gavekort til Intersport - 300 kr.</p>
+                                    <div className="top-img">1</div>
+                                    <p className="top-h1">500 kr. til Intersport</p>
+                                    <p className="top-h2">Førsteplads</p>
                                 </div>
                                 <div className="top-element">
-                                    <div className="top-img"></div>
-                                    <p className="top-h1">Andenplads</p>
-                                    <p className="top-h2">3 mdr. Premium abonnemnet</p>
+                                    <div className="top-img">2</div>
+                                    <p className="top-h1">350 kr. til Intersport</p>
+                                    <p className="top-h2">Andenplads</p>
                                 </div>
                                 <div className="top-element">
-                                    <div className="top-img"></div>
-                                    <p className="top-h1">Tredjeplads</p>
-                                    <p className="top-h2">1 måned plus abonnement</p>
+                                    <div className="top-img">3</div>
+                                    <p className="top-h1">150 kr. til Intersport</p>
+                                    <p className="top-h2">Tredjeplads</p>
                                 </div>
                             </div>
                         </div>

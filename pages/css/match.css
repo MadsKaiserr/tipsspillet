@@ -1255,12 +1255,16 @@
 }
 
 .bench-img-image {
-    width: 30px !important;
-    height: 30px !important;
-    padding: 3px !important;
-    margin: 0px 5px !important;
-    background-color: var(--stageSurface) !important;
-    border-radius: 50% !important;
+    width: 30px;
+    height: 30px;
+    padding: 3px;
+    margin: 0px 5px;
+    background-color: var(--stageSurface);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
 }
 
 .bench-img-logo {

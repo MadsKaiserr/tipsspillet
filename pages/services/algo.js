@@ -40,6 +40,10 @@ module.exports = {
             return "Begge hold modtager 2+ kort";
         } else if (type === "Own Goal") {
             return "Selvmål";
+        } else if (type.slice(0,-3) === "Team Corners") {
+            return "Over/Under " + type.slice(10) + " hjørnespark";
+        } else if (type.slice(0,-3) === "Team Cards") {
+            return "Over/Under " + type.slice(10) + " hjørnespark";
         } else if (type.slice(0,-3) === "Over/Under") {
             return "Over/Under " + type.slice(10) + " mål";
         } else if (type.slice(0,-4) === "Over/Under") {
@@ -122,6 +126,16 @@ module.exports = {
                 return "2. halvleg";
             } else if (result === "2") {
                 return "Uafgjort";
+            }
+        } else if (type.slice(0,-3) === "Team Cards" || type.slice(0,-3) === "Team Corners") {
+            if (result === "0") {
+                return "Over";
+            } else if (result === "1") {
+                return "Under";
+            } else if (result === "2") {
+                return "Over";
+            } else if (result === "3") {
+                return "Under";
             }
         } else if (type.slice(0,-3) === "Over/Under") {
             if (result === "0") {

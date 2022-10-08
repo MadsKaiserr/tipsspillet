@@ -453,7 +453,7 @@ function StageMatcharticle ({data}) {
             setItems(result.data);
             checkExpired(result.data.time.starting_at.timestamp);
 
-            const wants = ["3Way Result", "Over/Under", "Exact Goals Number", "Team To Score First", "Double Chance", "Highest Scoring Half", "Both Teams To Score", "Time Of First Corner", "Corner Match Bet", "A Red Card in the Match", "First Match Corner", "Both Teams To Receive 2+ Cards", "Last Match Corner", "Both Teams To Receive A Card", "Clean Sheet - Home", "Clean Sheet - Away", "2-Way Corners", "First Card Received", "Time Of First Card", "3Way Result 1st Half", "Team To Score Last", "3Way Result 2nd Half", "Double Chance - 1st Half", "Double Chance - 2nd Half", "Odd/Even", "Own Goal", "Time Of First Corner"];
+            const wants = ["3Way Result", "Over/Under", "Exact Goals Number", "Team To Score First", "Double Chance", "Highest Scoring Half", "Both Teams To Score", "Time Of First Corner", "Corner Match Bet", "A Red Card in the Match", "First Match Corner", "Team Corners", "Team Cards", "Last Match Corner", "Both Teams To Receive A Card", "Clean Sheet - Home", "Clean Sheet - Away", "2-Way Corners", "First Card Received", "Time Of First Card", "3Way Result 1st Half", "Team To Score Last", "3Way Result 2nd Half", "Double Chance - 1st Half", "Double Chance - 2nd Half", "Odd/Even", "Own Goal", "Time Of First Corner"];
             const availOddsReplica = [];
             for (var r in wants) {
                 if (result.data.odds.data.length === 0) {
@@ -495,6 +495,30 @@ function StageMatcharticle ({data}) {
                                     }
                                     setGoalOddArray(result.data.odds.data[m].bookmaker.data[0].odds.data);
                                     availOddsReplica.push(dataBody);
+                                } else if (result.data.odds.data[m].name === "Team Corners" || result.data.odds.data[m].name === "Team Cards") {
+                                    var overArray = [];
+                                    for (var t in result.data.odds.data[m].bookmaker.data[0].odds.data) {
+                                        if (result.data.odds.data[m].bookmaker.data[0].odds.data[t].handicap.slice(0, 4) === "Over") {
+                                            overArray.push(result.data.odds.data[m].bookmaker.data[0].odds.data[t]);
+                                        }
+                                    }
+                                    for (var o in overArray) {
+                                        var index0 = result.data.odds.data[m].bookmaker.data[0].odds.data.findIndex(obj => obj.handicap.substr(obj.handicap.length - 3) === overArray[o].handicap.substr(overArray[o].handicap.length - 3) && obj.handicap.slice(0,4) === "Over" && obj.label === overArray[o].label);
+                                        var yourIndex = result.data.odds.data[m].bookmaker.data[0].odds.data.findIndex(obj => obj.handicap.substr(obj.handicap.length - 3) === overArray[o].handicap.substr(overArray[o].handicap.length - 3) && obj.handicap.slice(0,5) === "Under" && obj.label === overArray[o].label);
+                                        if (yourIndex >= 0) {
+                                            const dataBody = {
+                                                "type": result.data.odds.data[m].name + "" + overArray[o].handicap.substr(overArray[o].handicap.length - 3),
+                                                "type_length": 2,
+                                                "first": overArray[o].value,
+                                                "second": result.data.odds.data[m].bookmaker.data[0].odds.data[yourIndex].value,
+                                                "total": overArray[o].handicap.substr(overArray[o].handicap.length - 3),
+                                                "result0": index0 + "",
+                                                "result1": yourIndex.toString(),
+                                                "team": overArray[o].label
+                                            }
+                                            availOddsReplica.push(dataBody);
+                                        }
+                                    }
                                 } else {
                                     var n2 = result.data.odds.data[m].bookmaker.data[0].odds.data[2].value;
                                     const dataBody = {
@@ -548,6 +572,7 @@ function StageMatcharticle ({data}) {
                     }
                 }
             }
+            console.log(availOddsReplica)
             const availPopular2 = [];
             const availKort2 = [];
             const availCorner2 = [];
@@ -562,10 +587,10 @@ function StageMatcharticle ({data}) {
                 if (availOddsReplica[y].type === "3Way Result 1st Half" || availOddsReplica[y].type === "Goals Over/Under 1st Half0.5" || availOddsReplica[y].type === "Goals Over/Under 1st Half1.5" || availOddsReplica[y].type === "Goals Over/Under 1st Half2.5" || availOddsReplica[y].type === "Goals Over/Under 1st Half3.5" || availOddsReplica[y].type === "Over/Under 2nd Half0.5" || availOddsReplica[y].type === "Over/Under 2nd Half1.5" || availOddsReplica[y].type === "Over/Under 2nd Half2.5" || availOddsReplica[y].type === "Over/Under 2nd Half3.5" || availOddsReplica[y].type === "Highest Scoring Half" || availOddsReplica[y].type === "3Way Result 2nd Half" || availOddsReplica[y].type === "Double Chance - 1st Half" || availOddsReplica[y].type === "Double Chance - 2nd Half") {
                     availMinutter2.push(availOddsReplica[y]);
                 }
-                if (availOddsReplica[y].type === "First Card Received" || availOddsReplica[y].type === "A Red Card in the Match" || availOddsReplica[y].type === "Both Teams To Receive 2+ Cards" || availOddsReplica[y].type === "Both Teams To Receive A Card") {
+                if (availOddsReplica[y].type === "First Card Received" || availOddsReplica[y].type.slice(0,10) === "Team Cards" || availOddsReplica[y].type === "A Red Card in the Match" || availOddsReplica[y].type === "Both Teams To Receive 2+ Cards" || availOddsReplica[y].type === "Both Teams To Receive A Card") {
                     availKort2.push(availOddsReplica[y]);
                 }
-                if (availOddsReplica[y].type === "First Match Corner" || availOddsReplica[y].type === "Last Match Corner" || availOddsReplica[y].type === "Corner Match Bet") {
+                if (availOddsReplica[y].type.slice(0,12) === "Team Corners" || availOddsReplica[y].type === "First Match Corner" || availOddsReplica[y].type === "Last Match Corner" || availOddsReplica[y].type === "Corner Match Bet") {
                     availCorner2.push(availOddsReplica[y]);
                 }
                 if (availOddsReplica[y].type === "Clean Sheet - Home" || availOddsReplica[y].type === "Clean Sheet - Away") {
@@ -2104,15 +2129,61 @@ function StageMatcharticle ({data}) {
             label1 = "Nej";
             overskrift = "Begge hold scorer";
         } else if (item.total !== undefined) {
-            if ((item.type.slice(17)).slice(0,-3) === "1st Half") {
-                overskrift = "Over/Under " + item.total + " mål - 1. Halvleg";
-            } else if ((item.type.slice(11)).slice(0,-3) === "2nd Half") {
-                overskrift = "Over/Under " + item.total + " mål - 2. Halvleg";
+            if (item.type.slice(0,12) === "Team Corners") {
+                if (item.team === "1") {
+                    if ((item.type.slice(17)).slice(0,-3) === "1st Half") {
+                        overskrift = homeTeam + " over/Under " + item.total + " hjørnespark - 1. Halvleg";
+                    } else if ((item.type.slice(11)).slice(0,-3) === "2nd Half") {
+                        overskrift = homeTeam + " over/Under " + item.total + " hjørnespark - 2. Halvleg";
+                    } else {
+                        overskrift = homeTeam + " over/Under " + item.total + " hjørnespark";
+                    }
+                    label0 = "Over";
+                    label1 = "Under"
+                } else {
+                    if ((item.type.slice(17)).slice(0,-3) === "1st Half") {
+                        overskrift = visitorTeam + " over/Under " + item.total + " hjørnespark - 1. Halvleg";
+                    } else if ((item.type.slice(11)).slice(0,-3) === "2nd Half") {
+                        overskrift = visitorTeam + " over/Under " + item.total + " hjørnespark - 2. Halvleg";
+                    } else {
+                        overskrift = visitorTeam + " over/Under " + item.total + " hjørnespark";
+                    }
+                    label0 = "Over";
+                    label1 = "Under"
+                }
+            } else if (item.type.slice(0,10) === "Team Cards") {
+                if (item.team === "1") {
+                    if ((item.type.slice(17)).slice(0,-3) === "1st Half") {
+                        overskrift = homeTeam + " Over/Under " + item.total + " kort - 1. Halvleg";
+                    } else if ((item.type.slice(11)).slice(0,-3) === "2nd Half") {
+                        overskrift = homeTeam + " Over/Under " + item.total + " kort - 2. Halvleg";
+                    } else {
+                        overskrift = homeTeam + " Over/Under " + item.total + " kort";
+                    }
+                    label0 = "Over";
+                    label1 = "Under"
+                } else {
+                    if ((item.type.slice(17)).slice(0,-3) === "1st Half") {
+                        overskrift = visitorTeam + " Over/Under " + item.total + " kort - 1. Halvleg";
+                    } else if ((item.type.slice(11)).slice(0,-3) === "2nd Half") {
+                        overskrift = visitorTeam + " Over/Under " + item.total + " kort - 2. Halvleg";
+                    } else {
+                        overskrift = visitorTeam + " Over/Under " + item.total + " kort";
+                    }
+                    label0 = "Over";
+                    label1 = "Under"
+                }
             } else {
-                overskrift = "Over/Under " + item.total + " mål";
+                if ((item.type.slice(17)).slice(0,-3) === "1st Half") {
+                    overskrift = "Over/Under " + item.total + " mål - 1. Halvleg";
+                } else if ((item.type.slice(11)).slice(0,-3) === "2nd Half") {
+                    overskrift = "Over/Under " + item.total + " mål - 2. Halvleg";
+                } else {
+                    overskrift = "Over/Under " + item.total + " mål";
+                }
+                label0 = "Over";
+                label1 = "Under"
             }
-            label0 = "Over";
-            label1 = "Under"
         } else if (item.type === "Exact Goals Number") {
             overskrift = "Antal mål i kampen";
         } else if (item.type === "Time Of First Card") {
@@ -2561,7 +2632,7 @@ function StageMatcharticle ({data}) {
                                                 oddofforon1 = "match-odds-offer-element-3 odd-used";
                                                 oddofforon2 = "match-odds-offer-element-3 odd-used";
                                                 return (
-                                                    <li key={item.type + matchID}>
+                                                    <li key={item.type + matchID + overskrift}>
                                                         <div className="match-bet">
                                                             <div className="match-bet-top">
                                                                 <p className="match-odds-h1">{overskrift}</p>
@@ -2587,7 +2658,7 @@ function StageMatcharticle ({data}) {
                                                 oddofforon20 = "match-odds-offer-element-2 odd-used";
                                                 oddofforon21 = "match-odds-offer-element-2 odd-used";
                                                 return (
-                                                    <li key={item.type}>
+                                                    <li key={item.type + overskrift}>
                                                         <div className="match-bet">
                                                             <div className="match-bet-top">
                                                                 <p className="match-odds-h1">{overskrift}</p>
@@ -2625,7 +2696,7 @@ function StageMatcharticle ({data}) {
                                                 }
                                             }
                                             return (
-                                                <li key={item.type}>
+                                                <li key={item.type + overskrift}>
                                                     <div className="match-bet">
                                                         <div className="match-bet-top">
                                                             <p className="match-odds-h1">{overskrift}</p>
@@ -2662,7 +2733,7 @@ function StageMatcharticle ({data}) {
                                                 }
                                             }
                                             return(
-                                                <li key={item.type}>
+                                                <li key={item.type + overskrift}>
                                                     <div className="match-bet">
                                                         <div className="match-bet-top">
                                                             <p className="match-odds-h1">{overskrift}</p>
@@ -2689,7 +2760,7 @@ function StageMatcharticle ({data}) {
                                                 }
                                             }
                                             return(
-                                                <li key={item.type}>
+                                                <li key={item.type + overskrift}>
                                                     <div className="match-bet">
                                                         <div className="match-bet-top">
                                                             <p className="match-odds-h1">{overskrift}: {goals}</p>
@@ -2731,7 +2802,7 @@ function StageMatcharticle ({data}) {
                                                 oddofforon1 = "match-odds-offer-element-3 odd-used";
                                                 oddofforon2 = "match-odds-offer-element-3 odd-used";
                                                 return (
-                                                    <li key={item.type + matchID}>
+                                                    <li key={item.type + matchID + overskrift}>
                                                         <div className="match-bet">
                                                             <div className="match-bet-top">
                                                                 <p className="match-odds-h1">{overskrift}</p>
@@ -2757,7 +2828,7 @@ function StageMatcharticle ({data}) {
                                                 oddofforon20 = "match-odds-offer-element-2 odd-used";
                                                 oddofforon21 = "match-odds-offer-element-2 odd-used";
                                                 return (
-                                                    <li key={item.type}>
+                                                    <li key={item.type + overskrift}>
                                                         <div className="match-bet">
                                                             <div className="match-bet-top">
                                                                 <p className="match-odds-h1">{overskrift}</p>
@@ -2795,7 +2866,7 @@ function StageMatcharticle ({data}) {
                                                 }
                                             }
                                             return (
-                                                <li key={item.type}>
+                                                <li key={item.type + overskrift}>
                                                     <div className="match-bet">
                                                         <div className="match-bet-top">
                                                             <p className="match-odds-h1">{overskrift}</p>
@@ -2829,7 +2900,7 @@ function StageMatcharticle ({data}) {
                                                 }
                                             }
                                             return(
-                                                <li key={item.type}>
+                                                <li key={item.type + overskrift}>
                                                     <div className="match-bet">
                                                         <div className="match-bet-top">
                                                             <p className="match-odds-h1">{overskrift}</p>
@@ -2874,7 +2945,7 @@ function StageMatcharticle ({data}) {
                                                 oddofforon1 = "match-odds-offer-element-3 odd-used";
                                                 oddofforon2 = "match-odds-offer-element-3 odd-used";
                                                 return (
-                                                    <li key={item.type + matchID}>
+                                                    <li key={item.type + matchID + overskrift}>
                                                         <div className="match-bet">
                                                             <div className="match-bet-top">
                                                                 <p className="match-odds-h1">{overskrift}</p>
@@ -2900,7 +2971,7 @@ function StageMatcharticle ({data}) {
                                                 oddofforon20 = "match-odds-offer-element-2 odd-used";
                                                 oddofforon21 = "match-odds-offer-element-2 odd-used";
                                                 return (
-                                                    <li key={item.type}>
+                                                    <li key={item.type + overskrift}>
                                                         <div className="match-bet">
                                                             <div className="match-bet-top">
                                                                 <p className="match-odds-h1">{overskrift}</p>
@@ -2938,7 +3009,7 @@ function StageMatcharticle ({data}) {
                                                 }
                                             }
                                             return (
-                                                <li key={item.type}>
+                                                <li key={item.type + overskrift}>
                                                     <div className="match-bet">
                                                         <div className="match-bet-top">
                                                             <p className="match-odds-h1">{overskrift}</p>
@@ -2975,7 +3046,7 @@ function StageMatcharticle ({data}) {
                                                 }
                                             }
                                             return(
-                                                <li key={item.type}>
+                                                <li key={item.type + overskrift}>
                                                     <div className="match-bet">
                                                         <div className="match-bet-top">
                                                             <p className="match-odds-h1">{overskrift}</p>
@@ -3020,7 +3091,7 @@ function StageMatcharticle ({data}) {
                                                 oddofforon1 = "match-odds-offer-element-3 odd-used";
                                                 oddofforon2 = "match-odds-offer-element-3 odd-used";
                                                 return (
-                                                    <li key={item.type + matchID}>
+                                                    <li key={item.type + matchID + overskrift}>
                                                         <div className="match-bet">
                                                             <div className="match-bet-top">
                                                                 <p className="match-odds-h1">{overskrift}</p>
@@ -3046,7 +3117,7 @@ function StageMatcharticle ({data}) {
                                                 oddofforon20 = "match-odds-offer-element-2 odd-used";
                                                 oddofforon21 = "match-odds-offer-element-2 odd-used";
                                                 return (
-                                                    <li key={item.type}>
+                                                    <li key={item.type + overskrift}>
                                                         <div className="match-bet">
                                                             <div className="match-bet-top">
                                                                 <p className="match-odds-h1">{overskrift}</p>
@@ -3084,7 +3155,7 @@ function StageMatcharticle ({data}) {
                                                 }
                                             }
                                             return (
-                                                <li key={item.type}>
+                                                <li key={item.type + overskrift}>
                                                     <div className="match-bet">
                                                         <div className="match-bet-top">
                                                             <p className="match-odds-h1">{overskrift}</p>
@@ -3121,7 +3192,7 @@ function StageMatcharticle ({data}) {
                                                 }
                                             }
                                             return(
-                                                <li key={item.type}>
+                                                <li key={item.type + overskrift}>
                                                     <div className="match-bet">
                                                         <div className="match-bet-top">
                                                             <p className="match-odds-h1">{overskrift}</p>
@@ -3166,7 +3237,7 @@ function StageMatcharticle ({data}) {
                                                 oddofforon1 = "match-odds-offer-element-3 odd-used";
                                                 oddofforon2 = "match-odds-offer-element-3 odd-used";
                                                 return (
-                                                    <li key={item.type + matchID}>
+                                                    <li key={item.type + matchID + overskrift}>
                                                         <div className="match-bet">
                                                             <div className="match-bet-top">
                                                                 <p className="match-odds-h1">{overskrift}</p>
@@ -3192,7 +3263,7 @@ function StageMatcharticle ({data}) {
                                                 oddofforon20 = "match-odds-offer-element-2 odd-used";
                                                 oddofforon21 = "match-odds-offer-element-2 odd-used";
                                                 return (
-                                                    <li key={item.type}>
+                                                    <li key={item.type + overskrift}>
                                                         <div className="match-bet">
                                                             <div className="match-bet-top">
                                                                 <p className="match-odds-h1">{overskrift}</p>
@@ -3230,7 +3301,7 @@ function StageMatcharticle ({data}) {
                                                 }
                                             }
                                             return (
-                                                <li key={item.type}>
+                                                <li key={item.type + overskrift}>
                                                     <div className="match-bet">
                                                         <div className="match-bet-top">
                                                             <p className="match-odds-h1">{overskrift}</p>
@@ -3267,7 +3338,7 @@ function StageMatcharticle ({data}) {
                                                 }
                                             }
                                             return(
-                                                <li key={item.type}>
+                                                <li key={item.type + overskrift}>
                                                     <div className="match-bet">
                                                         <div className="match-bet-top">
                                                             <p className="match-odds-h1">{overskrift}</p>
@@ -3312,7 +3383,7 @@ function StageMatcharticle ({data}) {
                                                 oddofforon1 = "match-odds-offer-element-3 odd-used";
                                                 oddofforon2 = "match-odds-offer-element-3 odd-used";
                                                 return (
-                                                    <li key={item.type + matchID}>
+                                                    <li key={item.type + matchID + overskrift}>
                                                         <div className="match-bet">
                                                             <div className="match-bet-top">
                                                                 <p className="match-odds-h1">{overskrift}</p>
@@ -3338,7 +3409,7 @@ function StageMatcharticle ({data}) {
                                                 oddofforon20 = "match-odds-offer-element-2 odd-used";
                                                 oddofforon21 = "match-odds-offer-element-2 odd-used";
                                                 return (
-                                                    <li key={item.type}>
+                                                    <li key={item.type + overskrift}>
                                                         <div className="match-bet">
                                                             <div className="match-bet-top">
                                                                 <p className="match-odds-h1">{overskrift}</p>
@@ -3376,7 +3447,7 @@ function StageMatcharticle ({data}) {
                                                 }
                                             }
                                             return (
-                                                <li key={item.type}>
+                                                <li key={item.type + overskrift}>
                                                     <div className="match-bet">
                                                         <div className="match-bet-top">
                                                             <p className="match-odds-h1">{overskrift}</p>
@@ -3413,7 +3484,7 @@ function StageMatcharticle ({data}) {
                                                 }
                                             }
                                             return(
-                                                <li key={item.type}>
+                                                <li key={item.type + overskrift}>
                                                     <div className="match-bet">
                                                         <div className="match-bet-top">
                                                             <p className="match-odds-h1">{overskrift}</p>
@@ -3458,7 +3529,7 @@ function StageMatcharticle ({data}) {
                                                 oddofforon1 = "match-odds-offer-element-3 odd-used";
                                                 oddofforon2 = "match-odds-offer-element-3 odd-used";
                                                 return (
-                                                    <li key={item.type + matchID}>
+                                                    <li key={item.type + matchID + overskrift}>
                                                         <div className="match-bet">
                                                             <div className="match-bet-top">
                                                                 <p className="match-odds-h1">{overskrift}</p>
@@ -3484,7 +3555,7 @@ function StageMatcharticle ({data}) {
                                                 oddofforon20 = "match-odds-offer-element-2 odd-used";
                                                 oddofforon21 = "match-odds-offer-element-2 odd-used";
                                                 return (
-                                                    <li key={item.type}>
+                                                    <li key={item.type + overskrift}>
                                                         <div className="match-bet">
                                                             <div className="match-bet-top">
                                                                 <p className="match-odds-h1">{overskrift}</p>
@@ -3522,7 +3593,7 @@ function StageMatcharticle ({data}) {
                                                 }
                                             }
                                             return (
-                                                <li key={item.type}>
+                                                <li key={item.type + overskrift}>
                                                     <div className="match-bet">
                                                         <div className="match-bet-top">
                                                             <p className="match-odds-h1">{overskrift}</p>
@@ -3559,7 +3630,7 @@ function StageMatcharticle ({data}) {
                                                 }
                                             }
                                             return(
-                                                <li key={item.type}>
+                                                <li key={item.type + overskrift}>
                                                     <div className="match-bet">
                                                         <div className="match-bet-top">
                                                             <p className="match-odds-h1">{overskrift}</p>
@@ -4156,7 +4227,9 @@ function StageMatcharticle ({data}) {
                                                     <Link href={"/stage/spiller?id=" + item.player_id}>
                                                         <div className="bench-element">
                                                             <div className="bench-left">
-                                                                <Image height="18px" width="18px" src={item.player.data.image_path} alt="" className="bench-img-image" />
+                                                                <div className="bench-img-image">
+                                                                    <Image height="18px" width="18px" src={item.player.data.image_path} alt="" />
+                                                                </div>
                                                                 <div className="bench-info">
                                                                     <p className="bench-h1">{item.number}. {item.player_name}</p>
                                                                     <p className="bench-h2">{position}</p>
@@ -4204,7 +4277,9 @@ function StageMatcharticle ({data}) {
                                                     <Link href={"/stage/spiller?id=" + item.player_id}>
                                                         <div className="bench-element">
                                                             <div className="bench-left">
-                                                                <Image height="18px" width="18px" src={item.player.data.image_path} alt="" className="bench-img-image" />
+                                                                <div className="bench-img-image">
+                                                                    <Image height="18px" width="18px" src={item.player.data.image_path} alt="" />
+                                                                </div>
                                                                 <div className="bench-info">
                                                                     <p className="bench-h1">{item.number}. {item.player_name}</p>
                                                                     <p className="bench-h2">{position}</p>

@@ -379,39 +379,39 @@ function StageGruppespil ({data}) {
             </div>
             <div className="stage-main-article-container">
                 {activeGame && <>{gameType === "dyst" && <>
-                    <div className="gruppespil-section" style={{justifyContent: "center", alignItems: "center", justifyContent: "center", textAlign: "center"}}>
+                    <div className="gruppespil-section">
                         <div className="top-container">
                             <div className="top-element">
-                                <div className="top-img"></div>
-                                <p className="top-h1">Andenplads</p>
-                                <p className="top-h2">3 mdr. Premium abonnemnet</p>
+                                <div className="top-img">2</div>
+                                <p className="top-h1">350 kr. til Intersport</p>
+                                <p className="top-h2">Andenplads</p>
                             </div>
                             <div className="top-element-big">
-                                <div className="top-img"></div>
-                                <p className="top-h1">Førsteplads</p>
-                                <p className="top-h2">Gavekort til Intersport - 300 kr.</p>
+                                <div className="top-img">1</div>
+                                <p className="top-h1">500 kr. til Intersport</p>
+                                <p className="top-h2">Førsteplads</p>
                             </div>
                             <div className="top-element">
-                                <div className="top-img"></div>
-                                <p className="top-h1">Tredjeplads</p>
-                                <p className="top-h2">1 måned plus abonnement</p>
+                                <div className="top-img">3</div>
+                                <p className="top-h1">150 kr. til Intersport</p>
+                                <p className="top-h2">Tredjeplads</p>
                             </div>
                         </div>
                         <div className="top-container-mobile">
                             <div className="top-element">
-                                <div className="top-img"></div>
-                                <p className="top-h1">Førsteplads</p>
-                                <p className="top-h2">Gavekort til Intersport - 300 kr.</p>
+                                <div className="top-img">1</div>
+                                <p className="top-h1">500 kr. til Intersport</p>
+                                <p className="top-h2">Førsteplads</p>
                             </div>
                             <div className="top-element">
-                                <div className="top-img"></div>
-                                <p className="top-h1">Andenplads</p>
-                                <p className="top-h2">3 mdr. Premium abonnemnet</p>
+                                <div className="top-img">2</div>
+                                <p className="top-h1">350 kr. til Intersport</p>
+                                <p className="top-h2">Andenplads</p>
                             </div>
                             <div className="top-element">
-                                <div className="top-img"></div>
-                                <p className="top-h1">Tredjeplads</p>
-                                <p className="top-h2">1 måned plus abonnement</p>
+                                <div className="top-img">3</div>
+                                <p className="top-h1">150 kr. til Intersport</p>
+                                <p className="top-h2">Tredjeplads</p>
                             </div>
                         </div>
                     </div>

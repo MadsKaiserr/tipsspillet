@@ -140,6 +140,10 @@
   width: 100% !important;
 }
 
+.gs-wrapper .dyst-section {
+  width: 100% !important;
+}
+
 @media only screen and (max-width: 1020px) {
   .stage-kupon {
     position: fixed !important;
@@ -183,6 +187,9 @@
     flex-direction: column !important;
   }
   .gruppespil-section {
+    width: 85% !important;
+  }
+  .dyst-section {
     width: 85% !important;
   }
   .nav-error {
@@ -249,6 +256,9 @@
     width: 100% !important;
   }
   .gruppespil-section {
+    width: 95% !important;
+  }
+  .dyst-section {
     width: 95% !important;
   }
   #faqside {
@@ -1721,10 +1731,19 @@
   .help-container {
     border-radius: 0px !important;
   }
+  .dy-h1 {
+    font-size: 26px !important;
+  }
+  .dy-h2 {
+    font-size: 14px !important;
+  }
 }
 
 @media only screen and (max-width: 430px) {
   .gruppespil-section {
+    padding: 20px 5vw !important;
+  }
+  .dyst-section {
     padding: 20px 5vw !important;
   }
   .info-figure {

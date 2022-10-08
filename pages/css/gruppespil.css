@@ -767,6 +767,24 @@
     box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.05);
 }
 
+.dyst-section {
+    background-color: var(--primaryAccent);
+    padding: 50px;
+    margin: 0px auto;
+    margin-top: 20px !important;
+    z-index: 2;
+    border-radius: 5px;
+    overflow: hidden;
+    width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+    box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.05);
+}
+
 .gruppespil-opret-own {
     font-size: 13px;
     cursor: pointer;
@@ -841,17 +859,29 @@
   flex-direction: column;
 }
 
+.top-element-big .top-img {
+  font-size: 36px !important;
+}
+
 .top-img {
   width: 50px;
   height: 50px;
   margin-bottom: 10px;
   border-radius: 50%;
-  border: 2px var(--primary) dashed;
+  background-color: var(--primary);
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: Inter;
+  font-weight: 600;
+  font-size: 24px;
+  color: #fff;
 }
 
 .top-h1 {
   font-size: 20px;
-  font-weight: 500;
+  font-weight: 600;
   color: #333;
   font-family: Inter;
 }
@@ -1586,17 +1616,6 @@
   flex-direction: column;
 }
 
-.dyst-section {
-  background-color: #fff;
-  padding: 50px 20%;
-  margin: 0px auto;
-  z-index: 2;
-  overflow: hidden;
-  width: 100%;
-  position: relative;
-  box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.05);
-}
-
 .dy-nav {
   width: 100%;
   position: absolute;
@@ -1633,16 +1652,17 @@
 .dy-h2 {
   font-family: Inter;
   color: #fff;
-  font-size: 12px;
+  font-size: 16px;
   font-weight: 400;
   opacity: 0.8;
+  padding-top: 5px;
 }
 
 .dy-h1 {
   font-family: Inter;
   color: #fff;
-  font-size: 58px;
-  font-weight: 700;
+  font-size: 32px;
+  font-weight: 600;
 }
 
 .dy-h3 {
