@@ -2006,6 +2006,14 @@
     font-size: 16px;
   }
 
+  .wc-h4 {
+    font-family: Inter;
+    font-weight: 300;
+    color: #777;
+    padding: 10px 0px;
+    font-size: 14px;
+  }
+
   .wc-1-5 {
     display: flex;
     gap: 10px;
