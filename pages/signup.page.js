@@ -70,6 +70,7 @@ function Signup () {
     const [kodeordVali, setKodeordVali] = useState(false);
     const [username, setUsername] = useState("");
     const [fbEvent, setFbEvent] = useState("");
+    const [fbEventLogo, setFbEventLogo] = useState(0);
 
     useEffect(() => {
         setMessage("");
@@ -221,6 +222,7 @@ function Signup () {
     const fbResponse = (event) => {
         if (event.name !== undefined && event.email !== undefined) {
             setFbEvent(JSON.stringify(event))
+            setFbEventLogo(event.id);
             setMessage("");
             document.getElementById("loginForm").classList.add("display-not");
             document.getElementById("fbForm").classList.remove("display-not");
@@ -240,8 +242,8 @@ function Signup () {
 
         var requestBody = {
             username: username,
-            navn: JSON.parse(fbEvent).name,
-            fb_logo_id: JSON.parse(fbEvent).id,
+            navn: fornavn,
+            fb_logo_id: fbEventLogo,
             email: email.toLowerCase(),
             rolle: "none",
             nyhedsbrev: false,
