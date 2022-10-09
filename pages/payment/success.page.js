@@ -11,52 +11,54 @@ import cookie from 'js-cookie'
 function Success () {
 
     useEffect(() => {
-        const URL = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/retrieve";
-        const queryString = window.location.search;
-        const urlParams = new URLSearchParams(queryString);
-        const session_id = urlParams.get('session_id');
-
-        const requestConfig = {
-            headers: {
-                "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
+        if (getUser()) {
+            const URL = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/retrieve";
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            const session_id = urlParams.get('session_id');
+    
+            const requestConfig = {
+                headers: {
+                    "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
+                }
             }
-        }
-
-        const requestBody = {
-            "session_key": session_id,
-            "email": getUser().email
-        }
-
-        axios.post(URL, requestBody, requestConfig).then(response => {
-            console.log(response);
-            var rolle = "none";
-            var rolle_exp = 0;
-            if (response.data.session.amount_total === 5900) {
-                rolle_exp = new Date((new Date().getMonth() + 2) + "/" + new Date().getDate() + "/" + new Date().getFullYear());
-                rolle = "premium";
-            } else if (response.data.session.amount_total === 3900) {
-                rolle_exp = new Date((new Date().getMonth() + 2) + "/" + new Date().getDate() + "/" + new Date().getFullYear());
-                rolle = "plus";
-            } else if (response.data.session.amount_total === 11700) {
-                rolle_exp = new Date((new Date().getMonth() + 4) + "/" + new Date().getDate() + "/" + new Date().getFullYear());
-                rolle = "premium";
-            } else if (response.data.session.amount_total === 8700) {
-                rolle_exp = new Date((new Date().getMonth() + 4) + "/" + new Date().getDate() + "/" + new Date().getFullYear());
-                rolle = "plus";
-            } else if (response.data.session.amount_total === 34800) {
-                rolle_exp = new Date((new Date().getMonth() + 1) + "/" + new Date().getDate() + "/" + (new Date().getFullYear() + 1));
-                rolle = "premium";
-            } else if (response.data.session.amount_total === 22800) {
-                rolle_exp = new Date((new Date().getMonth() + 1) + "/" + new Date().getDate() + "/" + (new Date().getFullYear() + 1));
-                rolle = "plus";
+    
+            const requestBody = {
+                "session_key": session_id,
+                "email": getUser().email
             }
-            var cookieAuth = JSON.parse(cookie.get("auth"));
-            cookieAuth.rolle = rolle;
-            cookieAuth.rolle_exp = rolle_exp;
-            cookie.set("auth", cookieAuth, {expires: 7});
-        }).catch(error => {
-            console.log("Fejl ved indhentning af data" + error)
-        })
+    
+            axios.post(URL, requestBody, requestConfig).then(response => {
+                console.log(response);
+                var rolle = "none";
+                var rolle_exp = 0;
+                if (response.data.session.amount_total === 5900) {
+                    rolle_exp = new Date((new Date().getMonth() + 2) + "/" + new Date().getDate() + "/" + new Date().getFullYear());
+                    rolle = "premium";
+                } else if (response.data.session.amount_total === 3900) {
+                    rolle_exp = new Date((new Date().getMonth() + 2) + "/" + new Date().getDate() + "/" + new Date().getFullYear());
+                    rolle = "plus";
+                } else if (response.data.session.amount_total === 11700) {
+                    rolle_exp = new Date((new Date().getMonth() + 4) + "/" + new Date().getDate() + "/" + new Date().getFullYear());
+                    rolle = "premium";
+                } else if (response.data.session.amount_total === 8700) {
+                    rolle_exp = new Date((new Date().getMonth() + 4) + "/" + new Date().getDate() + "/" + new Date().getFullYear());
+                    rolle = "plus";
+                } else if (response.data.session.amount_total === 34800) {
+                    rolle_exp = new Date((new Date().getMonth() + 1) + "/" + new Date().getDate() + "/" + (new Date().getFullYear() + 1));
+                    rolle = "premium";
+                } else if (response.data.session.amount_total === 22800) {
+                    rolle_exp = new Date((new Date().getMonth() + 1) + "/" + new Date().getDate() + "/" + (new Date().getFullYear() + 1));
+                    rolle = "plus";
+                }
+                var cookieAuth = JSON.parse(cookie.get("auth"));
+                cookieAuth.rolle = rolle;
+                cookieAuth.rolle_exp = rolle_exp;
+                cookie.set("auth", cookieAuth, {expires: 7});
+            }).catch(error => {
+                console.log("Fejl ved indhentning af data" + error)
+            })
+        }
     }, [])
 
     return (
