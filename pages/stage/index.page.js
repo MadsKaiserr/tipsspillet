@@ -85,20 +85,6 @@ function StageForside ({gruppespil_data, spiller_data}) {
                 md.classList.toggle("md-sticky", window.scrollY > 250);
             }
         })
-    
-        window.addEventListener("resize", function(){
-            if (window.innerWidth < 1020) {
-                if (document.getElementById("kupon")) {
-                    document.getElementById("kupon").classList.add("kupon-min");
-                    document.getElementById("kupon-title").innerHTML = "Tryk for at åbne kupon";
-                }
-            } else {
-                if (document.getElementById("kupon")) {
-                    document.getElementById("kupon").classList.remove("kupon-min");
-                    document.getElementById("kupon-title").innerHTML = kuponType;
-                }
-            }
-        })
         if (document.getElementById('md-wrapper')) {
             document.getElementById('md-wrapper').scrollLeft = 250;
         }
