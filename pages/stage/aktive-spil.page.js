@@ -204,7 +204,7 @@ function StageAktiveSpil ({ data }) {
                         </div>
                     </div>
                 </div>
-                <div className="td-box animation-fadetop" style={{margin: "auto", minHeight: "300px"}}>
+                <div className="td-box animatioypen-fadetop" style={{margin: "auto", minHeight: "300px"}}>
                     <div className="td-top">
                         <div className="td-top-left">
                             <div className="td-input-con">

@@ -30,81 +30,85 @@ function Priser () {
 
     const handlePlus = async e => {
         if (getUser()) {
-            if (plusPrice === 39) {
-                setLoading1(true);
-                const URL = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/payment";
-        
-                const requestConfig = {
-                    headers: {
-                        "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
-                    }
-                }
-        
-                const requestBody = {
-                    "items": [
-                        { 
-                            "id": 4, 
-                            "quantity": 1
+            if (getUser().rolle !== "plus") {
+                if (plusPrice === 39) {
+                    setLoading1(true);
+                    const URL = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/payment";
+            
+                    const requestConfig = {
+                        headers: {
+                            "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
                         }
-                    ]
-                }
+                    }
+            
+                    const requestBody = {
+                        "items": [
+                            { 
+                                "id": 4, 
+                                "quantity": 1
+                            }
+                        ]
+                    }
+            
+                    axios.post(URL, requestBody, requestConfig).then(response => {
+                        console.log(response);
+                        router.push(response.data.url)
+                    }).catch(error => {
+                        console.log("Fejl ved indhentning af data" + error)
+                    })
+                } else if (plusPrice === 29) {
+                    setLoading1(true);
+                    const URL = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/payment";
         
-                axios.post(URL, requestBody, requestConfig).then(response => {
-                    console.log(response);
-                    router.push(response.data.url)
-                }).catch(error => {
-                    console.log("Fejl ved indhentning af data" + error)
-                })
-            } else if (plusPrice === 29) {
-                setLoading1(true);
-                const URL = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/payment";
-    
-                const requestConfig = {
-                    headers: {
-                        "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
-                    }
-                }
-    
-                const requestBody = {
-                    "items": [
-                        { 
-                            "id": 5, 
-                            "quantity": 1
+                    const requestConfig = {
+                        headers: {
+                            "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
                         }
-                    ]
-                }
-    
-                axios.post(URL, requestBody, requestConfig).then(response => {
-                    console.log(response);
-                    router.push(response.data.url)
-                }).catch(error => {
-                    console.log("Fejl ved indhentning af data" + error)
-                })
-            } else if (plusPrice === 19) {
-                setLoading1(true);
-                const URL = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/payment";
-    
-                const requestConfig = {
-                    headers: {
-                        "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
                     }
-                }
-    
-                const requestBody = {
-                    "items": [
-                        { 
-                            "id": 6, 
-                            "quantity": 1
+        
+                    const requestBody = {
+                        "items": [
+                            { 
+                                "id": 5, 
+                                "quantity": 1
+                            }
+                        ]
+                    }
+        
+                    axios.post(URL, requestBody, requestConfig).then(response => {
+                        console.log(response);
+                        router.push(response.data.url)
+                    }).catch(error => {
+                        console.log("Fejl ved indhentning af data" + error)
+                    })
+                } else if (plusPrice === 19) {
+                    setLoading1(true);
+                    const URL = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/payment";
+        
+                    const requestConfig = {
+                        headers: {
+                            "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
                         }
-                    ]
+                    }
+        
+                    const requestBody = {
+                        "items": [
+                            { 
+                                "id": 6, 
+                                "quantity": 1
+                            }
+                        ]
+                    }
+        
+                    axios.post(URL, requestBody, requestConfig).then(response => {
+                        console.log(response);
+                        router.push(response.data.url)
+                    }).catch(error => {
+                        console.log("Fejl ved indhentning af data" + error)
+                    })
                 }
-    
-                axios.post(URL, requestBody, requestConfig).then(response => {
-                    console.log(response);
-                    router.push(response.data.url)
-                }).catch(error => {
-                    console.log("Fejl ved indhentning af data" + error)
-                })
+            } else {
+                setNotiMessage("error", "Du har allerede Plus", "Hvis du vil støtte os i Test-Perioden, kan du kun opgradere til Premium.");
             }
         } else {
             router.push("/signup")
@@ -112,82 +116,86 @@ function Priser () {
     }
 
     const handlePremium = async e => {
-        if (JSON.parse(JSON.stringify(getUser()))) {
-            if (premiumPrice === 59) {
-                setLoading2(true);
-                const URL = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/payment";
-        
-                const requestConfig = {
-                    headers: {
-                        "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
-                    }
-                }
-        
-                const requestBody = {
-                    "items": [
-                        { 
-                            "id": 1, 
-                            "quantity": 1
+        if (getUser()) {
+            if (getUser().rolle !== "premium") {
+                if (premiumPrice === 59) {
+                    setLoading2(true);
+                    const URL = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/payment";
+            
+                    const requestConfig = {
+                        headers: {
+                            "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
                         }
-                    ]
-                }
+                    }
+            
+                    const requestBody = {
+                        "items": [
+                            { 
+                                "id": 1, 
+                                "quantity": 1
+                            }
+                        ]
+                    }
+            
+                    axios.post(URL, requestBody, requestConfig).then(response => {
+                        console.log(response);
+                        router.push(response.data.url)
+                    }).catch(error => {
+                        console.log("Fejl ved indhentning af data" + error)
+                    })
+                } else if (premiumPrice === 39) {
+                    setLoading2(true);
+                    const URL = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/payment";
         
-                axios.post(URL, requestBody, requestConfig).then(response => {
-                    console.log(response);
-                    router.push(response.data.url)
-                }).catch(error => {
-                    console.log("Fejl ved indhentning af data" + error)
-                })
-            } else if (premiumPrice === 39) {
-                setLoading2(true);
-                const URL = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/payment";
-    
-                const requestConfig = {
-                    headers: {
-                        "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
-                    }
-                }
-    
-                const requestBody = {
-                    "items": [
-                        { 
-                            "id": 2, 
-                            "quantity": 1
+                    const requestConfig = {
+                        headers: {
+                            "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
                         }
-                    ]
-                }
-    
-                axios.post(URL, requestBody, requestConfig).then(response => {
-                    console.log(response);
-                    router.push(response.data.url)
-                }).catch(error => {
-                    console.log("Fejl ved indhentning af data" + error)
-                })
-            } else if (premiumPrice === 29) {
-                setLoading2(true);
-                const URL = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/payment";
-    
-                const requestConfig = {
-                    headers: {
-                        "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
                     }
-                }
-    
-                const requestBody = {
-                    "items": [
-                        { 
-                            "id": 3, 
-                            "quantity": 1
+        
+                    const requestBody = {
+                        "items": [
+                            { 
+                                "id": 2, 
+                                "quantity": 1
+                            }
+                        ]
+                    }
+        
+                    axios.post(URL, requestBody, requestConfig).then(response => {
+                        console.log(response);
+                        router.push(response.data.url)
+                    }).catch(error => {
+                        console.log("Fejl ved indhentning af data" + error)
+                    })
+                } else if (premiumPrice === 29) {
+                    setLoading2(true);
+                    const URL = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/payment";
+        
+                    const requestConfig = {
+                        headers: {
+                            "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
                         }
-                    ]
+                    }
+        
+                    const requestBody = {
+                        "items": [
+                            { 
+                                "id": 3, 
+                                "quantity": 1
+                            }
+                        ]
+                    }
+        
+                    axios.post(URL, requestBody, requestConfig).then(response => {
+                        console.log(response);
+                        router.push(response.data.url)
+                    }).catch(error => {
+                        console.log("Fejl ved indhentning af data" + error)
+                    })
                 }
-    
-                axios.post(URL, requestBody, requestConfig).then(response => {
-                    console.log(response);
-                    router.push(response.data.url)
-                }).catch(error => {
-                    console.log("Fejl ved indhentning af data" + error)
-                })
+            } else {
+                setNotiMessage("error", "Du har allerede Premium", "Din konto har allerede Premium abonnementet. Har du ikke dine fordele, skal du kontakte os.");
             }
         } else {
             router.push("/signup")
@@ -216,10 +224,35 @@ function Priser () {
         }
     }
 
+    const [messageType, setMessageType] = useState("error-con-error");
+
+    function setNotiMessage(type, heading, message) {
+        window.scrollBy(0, -400);
+        if (type === "error") {
+            setMessageType("error-con-error");
+        } else if (type === "success") {
+            setMessageType("error-con-success");
+        }
+        document.getElementById("errorCon").classList.add("display");
+        document.getElementById("errorConH").innerHTML = heading;
+        document.getElementById("errorConP").innerHTML = message;
+    }
+
     return (
         <>
             <div className="priser-container">
                 <div className="section-price">
+                    <div className={messageType} id="errorCon">
+                        <div className="error-text">
+                            <div className="error-inline">
+                                <svg xmlns="http://www.w3.org/2000/svg" style={{marginTop: "-3px"}} width="16" height="16" fill="var(--red)" viewBox="0 0 16 16">
+                                    <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                                </svg>
+                                <p className="error-container-h1" id="errorConH">Test fejl</p>
+                            </div>
+                            <p className="error-container-p" id="errorConP">Test besked</p>
+                        </div>
+                    </div>
                     <div className="set-center">
                         <div className="price-input animation-fadeleft animation-delay-400" id="price-input">
                             <div className="price-input-element" id="month" onClick={() => setType("month")}>Månedligt</div>

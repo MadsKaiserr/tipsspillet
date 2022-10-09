@@ -169,7 +169,7 @@ function Login () {
                         className="login-form-input" 
                         />
                         <button value="Login" id="loginBTN" className="main-btn-login" style={{width: "100%"}} type="submit">{loading && <div className="loader" id="loader"></div>}{!loading && <>Log ind</>}</button>
-                        <p className="login-form-label">Har du ikke en konto? <Link href="/signup" className="login-link"><a className="login-link">Opret konto</a></Link></p>
+                        <p className="login-form-label">Har du ikke en konto? <Link href="/signup" className="login-link" onClick={() => remLogin()}><a className="login-link" onClick={() => remLogin()}>Opret konto</a></Link></p>
                     </div>
                 </form>
             </div>

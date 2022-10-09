@@ -331,7 +331,7 @@ function StageTeam () {
             if (localStorage.getItem("favoritter")) {
                 var storage = JSON.parse(localStorage.getItem("favoritter"));
                 const elementPush = {
-                    "id": matchID,
+                    "id": parseInt(matchID),
                     "image": logo,
                     "name": team_name,
                     "liga": nat_team
@@ -359,7 +359,7 @@ function StageTeam () {
             } else {
                 var storageDiv = [];
                 const elementPush = {
-                    "id": matchID,
+                    "id": parseInt(matchID),
                     "image": logo,
                     "name": team_name,
                     "liga": nat_team

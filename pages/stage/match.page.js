@@ -19,6 +19,12 @@ function StageMatcharticle ({data}) {
     const [grLeagues, setGrLeagues] = useState([]);
 
     useEffect(() => {
+        if (!cookie.get("matchVisited")) {
+            cookie.set("matchVisited", "true");
+        }
+    }, [])
+
+    useEffect(() => {
         getGame();
         if (window.innerWidth < 1020) {
             if (document.getElementById("match-kupon")) {
@@ -1742,7 +1748,7 @@ function StageMatcharticle ({data}) {
                 if (localStorage.getItem("favoritter")) {
                     var storage = JSON.parse(localStorage.getItem("favoritter"));
                     const elementPush = {
-                        "id": homeTeamId,
+                        "id": parseInt(homeTeamId),
                         "image": homelogo,
                         "name": homeTeam,
                         "liga": league
@@ -1770,7 +1776,7 @@ function StageMatcharticle ({data}) {
                 } else {
                     var storageDiv = [];
                     const elementPush = {
-                        "id": homeTeamId,
+                        "id": parseInt(homeTeamId),
                         "image": homelogo,
                         "name": homeTeam,
                         "liga": league
@@ -1838,7 +1844,7 @@ function StageMatcharticle ({data}) {
                 if (localStorage.getItem("favoritter")) {
                     var storage = JSON.parse(localStorage.getItem("favoritter"));
                     const elementPush = {
-                        "id": visitorTeamId,
+                        "id": parseInt(visitorTeamId),
                         "image": visitorlogo,
                         "name": visitorTeam,
                         "liga": league
@@ -1866,7 +1872,7 @@ function StageMatcharticle ({data}) {
                 } else {
                     var storageDiv = [];
                     const elementPush = {
-                        "id": visitorTeamId,
+                        "id": parseInt(visitorTeamId),
                         "image": visitorlogo,
                         "name": visitorTeam,
                         "liga": league

@@ -463,7 +463,7 @@ function StageLeague ({data}) {
             if (localStorage.getItem("favoritter")) {
                 var storage = JSON.parse(localStorage.getItem("favoritter"));
                 const elementPush = {
-                    "id": leagueId,
+                    "id": parseInt(leagueId),
                     "image": logo,
                     "name": league_name,
                     "liga": league_name
@@ -491,7 +491,7 @@ function StageLeague ({data}) {
             } else {
                 var storageDiv = [];
                 const elementPush = {
-                    "id": leagueId,
+                    "id": parseInt(leagueId),
                     "image": logo,
                     "name": league_name,
                     "liga": league_name

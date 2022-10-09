@@ -2876,6 +2876,13 @@ function StageForside ({gruppespil_data, spiller_data}) {
         );
     }
 
+    const [tip, setTip] = useState(false);
+    useEffect(() => {
+        if (!cookie.get("matchVisited")) {
+            setTip(true);
+        }
+    }, [])
+
     const [feedback, setFeedback] = useState(false);
     const [feedbackText, setFeedbackText] = useState("");
     const [feedbackMessage, setFeedbackMessage] = useState("");
@@ -2987,8 +2994,9 @@ function StageForside ({gruppespil_data, spiller_data}) {
                         <div className="wc-trans"></div>
                     </div>
                     <div className="wc-content">
-                        <p className="wc-h2">Gratis Premium abonnement i hele Test-Perioden</p>
-                        <p className="wc-h4">For at vise vores taknemlighed, vil vi udlodde gratis Premium abonnement til alle testere på Tipsspillet. Det vil sige du nu kan oprette egne gruppespil, se yderligere statistikker og meget mere!</p>
+                        <p className="wc-h2">Gratis Plus abonnement i hele Test-Perioden</p>
+                        <p className="wc-h4" style={{paddingTop: "10px"}}>For at vise vores taknemlighed, vil vi udlodde gratis Premium abonnement til alle testere på Tipsspillet. Det vil sige du nu kan oprette egne gruppespil, se yderligere statistikker og meget mere!</p>
+                        <p className="wc-h4" style={{paddingBottom: "15px"}}>Hvis du er interesseret i at støtte os, kan du opgradere til Premium på abonnement-siden.</p>
                     </div>
                     <button className="wc-btn" onClick={() => {setFreemium(false); cookie.set("freemium", "true")}}>Indløs</button>
                 </div>
@@ -3074,6 +3082,12 @@ function StageForside ({gruppespil_data, spiller_data}) {
                                     </svg>
                                 </div>
                                 <div className="match-loader display" id="stage-loader1"></div>
+                                {}
+                                {loadingText !== "Indlæser..." && <>
+                                    {favoritItems.length !== 0 && <>
+                                        {tip && <div className="tip-p">Tip: Klik for flere odds<div className="tip-tip"></div></div>}
+                                    </>}
+                                </>}
                                 <ul>
                                     {getMatches("favoritter")}
                                     {loadingText !== "Indlæser..." && <>
@@ -3108,6 +3122,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
                                 </ul>
                             </div>
                         </div>
+                        {loadingText !== "Indlæser..." && <>{favoritItems.length !== 0 && <>{tip && <div className="tip-length"></div>}</>}</>}
                         {/* <amp-ad width="100vw" height="320"
                             type="adsense"
                             data-ad-client="ca-pub-7071523482288616"

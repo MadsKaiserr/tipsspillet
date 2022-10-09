@@ -61,6 +61,7 @@
 .error-con-error {
     background-color: #f9e3e8;
     padding: 20px 20px;
+    margin: auto;
     margin-bottom: 30px;
     display: none;
     width: 74.1%;
@@ -95,6 +96,12 @@
     align-items: flex-start;
     gap: 15px;
     justify-content: space-between;
+}
+
+.error-inline {
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
 .match-info-half {
