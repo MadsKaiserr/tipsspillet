@@ -154,15 +154,7 @@ function Signup () {
         }
 
         if (box2) {
-            requestBody = {
-                username: username,
-                fornavn: fornavn,
-                email: email.toLowerCase(),
-                password: kodeord,
-                rolle: "none",
-                nyhedsbrev: true,
-                type: "email"
-            }
+            requestBody.nyhedsbrev = true;
         }
 
         if (fornavn !== "" && username !== "" && email !== "") {
@@ -251,15 +243,7 @@ function Signup () {
         }
 
         if (box4) {
-            requestBody = {
-                username: username,
-                navn: event.name,
-                fb_logo_id: event.id,
-                email: email.toLowerCase(),
-                rolle: "none",
-                nyhedsbrev: true,
-                type: "facebook"
-            }
+            requestBody.nyhedsbrev = true;
         }
 
         if (username !== "") {
