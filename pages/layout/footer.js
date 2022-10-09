@@ -1,11 +1,23 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import { getUser } from "../services/authService";
 
 import spillemyndighed from './../img/spillemyndighed.png';
 import stopspillet from './../img/stopspillet.png';
 import tlogo from './../img/logo-white.png';
 
 export default function Footer()  {
+    function opretHandler() {
+        if (getUser()) {
+            if (getUser().rolle !== "none") {
+                window.open("/stage/opret", "_self");
+            } else {
+                window.open("/priser", "_self");
+            }
+        } else {
+            window.open("/signup", "_self");
+        }
+    }
     return (
         <footer className="footer-container">
             <div className="footer-sections">
@@ -16,6 +28,7 @@ export default function Footer()  {
                             <p className="footer-h1">Tipsspillet</p>
                         </div>
                     </Link>
+                    <button className="find-btn" style={{marginTop: "0px"}} onClick={() => opretHandler()}>Opret gruppespil</button>
                     <p className="footer-bytext">Opret betting-dyster mod venner <br />og familie, og bet med virtuelle penge.</p>
                     <div className="footer-socials">
                         <svg xmlns="http://www.w3.org/2000/svg" className="footer-icon" viewBox="0 0 16 16">
@@ -61,9 +74,8 @@ export default function Footer()  {
                 </div>
             </div>
             <div className="footer-cert">
-                <a href="https://www.spillemyndigheden.dk/" target="_blank" rel="noreferrer noopener" ><Image width="80px" height="50px" src={spillemyndighed} alt="Spillemyndigheden" className="footer-certs" /></a>
-                <Image width="50px" height="50px" src={tlogo} alt="Tipsspillet logo" className="footer-certs" />
-                <a href="https://www.stopspillet.dk/" target="_blank" rel="noreferrer noopener" ><Image width="100px" height="50px" src={stopspillet} alt="Stopsspillet" className="footer-certs" /></a>
+                <a href="https://www.spillemyndigheden.dk/" target="_blank" rel="noreferrer noopener" ><Image width={80} height={53.3} src={spillemyndighed} alt="Spillemyndigheden" className="footer-certs" /></a>
+                <a href="https://www.stopspillet.dk/" target="_blank" rel="noreferrer noopener" ><Image width={102.4} height={53.3} src={stopspillet} alt="Stopsspillet" className="footer-certs" /></a>
             </div>
             <p className="footer-copyright">©2022 Alle rettigheder forbeholdes | Mads Kaiser | +45 23 96 58 58</p>
         </footer>

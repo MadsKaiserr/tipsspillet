@@ -6,6 +6,7 @@ import Header from '../layout/header';
 import FaqComponent from '../components/faq';
 import axios from "axios";
 import { getUser } from "../services/authService";
+import cookie from 'js-cookie'
 
 function Success () {
 
@@ -23,11 +24,36 @@ function Success () {
 
         const requestBody = {
             "session_key": session_id,
-            "email": getUser() ? getUser().email : ""
+            "email": getUser().email
         }
 
         axios.post(URL, requestBody, requestConfig).then(response => {
             console.log(response);
+            var rolle = "none";
+            var rolle_exp = 0;
+            if (response.data.session.amount_total === 5900) {
+                rolle_exp = new Date((new Date().getMonth() + 2) + "/" + new Date().getDate() + "/" + new Date().getFullYear());
+                rolle = "premium";
+            } else if (response.data.session.amount_total === 3900) {
+                rolle_exp = new Date((new Date().getMonth() + 2) + "/" + new Date().getDate() + "/" + new Date().getFullYear());
+                rolle = "plus";
+            } else if (response.data.session.amount_total === 11700) {
+                rolle_exp = new Date((new Date().getMonth() + 4) + "/" + new Date().getDate() + "/" + new Date().getFullYear());
+                rolle = "premium";
+            } else if (response.data.session.amount_total === 8700) {
+                rolle_exp = new Date((new Date().getMonth() + 4) + "/" + new Date().getDate() + "/" + new Date().getFullYear());
+                rolle = "plus";
+            } else if (response.data.session.amount_total === 34800) {
+                rolle_exp = new Date((new Date().getMonth() + 1) + "/" + new Date().getDate() + "/" + (new Date().getFullYear() + 1));
+                rolle = "premium";
+            } else if (response.data.session.amount_total === 22800) {
+                rolle_exp = new Date((new Date().getMonth() + 1) + "/" + new Date().getDate() + "/" + (new Date().getFullYear() + 1));
+                rolle = "plus";
+            }
+            var cookieAuth = JSON.parse(cookie.get("auth"));
+            cookieAuth.rolle = rolle;
+            cookieAuth.rolle_exp = rolle_exp;
+            cookie.set("auth", cookieAuth, {expires: 7});
         }).catch(error => {
             console.log("Fejl ved indhentning af data" + error)
         })
