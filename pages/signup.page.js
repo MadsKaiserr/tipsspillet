@@ -458,8 +458,8 @@ function Signup () {
                             <h2 className="login-text-h1">Din konto er nu oprettet!&#128640;</h2>
                         </div>
                         <div className="login-form">
-                            <p className="tak-p">Tak for du vil være med til at teste alpha-versionen af Tipsspillet! Det betyder meget!</p>
-                            <p className="tak-p">Da vi stadig er i alpha-test, kan der forekomme fejl, mangler mm., og vi vil derfor være taknemmelige, hvis du kunne anmelde fejl, og komme med generel feedback, som kunne hjælpe os på vej til et fremtidigt launch af hjemmesiden.</p>
+                            <p className="tak-p">Tak for du vil være med til at teste beta-versionen af Tipsspillet! Det betyder meget!</p>
+                            <p className="tak-p">Da vi stadig er i beta-test, kan der forekomme fejl, mangler mm., og vi vil derfor være taknemmelige, hvis du kunne anmelde fejl, og komme med generel feedback, som kunne hjælpe os på vej til en fremtidigt lancering af hjemmesiden. Dette gøres på kommentar knappen nederst i højre hjørne på siden med kampe.</p>
                             <p className="tak-p">Flere ligaer, odds, funktioner mm. er på vej</p>
                             <button className="nav-btn-default" style={{marginLeft: "0px", marginTop: "5px"}} onClick={() => {access()}}>Fortsæt<div className="nav-in-before"></div><span className="nav-in">Begynd at spille</span></button>
                         </div>
