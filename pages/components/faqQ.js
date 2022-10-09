@@ -40,7 +40,7 @@ module.exports = {
                     },
                     {
                         "type": "text",
-                        "text": "Er dette ikke tilfældet, bedes du kontakte os på mail: madskaiser@tipsspillet.dk, eller via vores fejlregistrerings-system på forsiden efter du er logget ind."
+                        "text": "Er dette ikke tilfældet, bedes du kontakte os på mail: mebondekaiser@gmail.dk, eller via vores fejlregistrerings-system på forsiden efter du er logget ind."
                     }
                 ]
             },
@@ -96,7 +96,7 @@ module.exports = {
                 "paragraphs": [
                     {
                         "type": "text",
-                        "text": "Hvis du finder en fejl, bedes du henvende dig via. mail: madskaiser@tipsspillet.dk, eller via vores fejlregistrerings-system på forsiden efter du er logget ind."
+                        "text": "Hvis du finder en fejl, bedes du henvende dig via. mail: mebondekaiser@gmail.dk, eller via vores fejlregistrerings-system på forsiden efter du er logget ind."
                     }
                 ]
             }

@@ -139,8 +139,8 @@ export default function Home() {
         <div className="wrap-wrapper">
             <div className="forside-stats-container">
                 <div className="forside-stats-element animation-fadetop" style={{animationDelay: "0.6s"}}>
-                    <p className="forside-stats-h1">10K+</p>
-                    <p className="forside-stats-h2">Brugere benytter vores side hver måned.</p>
+                    <p className="forside-stats-h1">27+</p>
+                    <p className="forside-stats-h2">Ligaer der kan oddses på</p>
                 </div>
                 <div className="forside-stats-element animation-fadetop" style={{animationDelay: "0.7s"}}>
                     <p className="forside-stats-h1">97%</p>
