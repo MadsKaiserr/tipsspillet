@@ -54,7 +54,7 @@ function Success () {
                 var cookieAuth = JSON.parse(cookie.get("auth"));
                 cookieAuth.rolle = rolle;
                 cookieAuth.rolle_exp = rolle_exp;
-                cookie.set("auth", cookieAuth, {expires: 7});
+                cookie.set("auth", JSON.stringify(cookieAuth), {expires: 7});
             }).catch(error => {
                 console.log("Fejl ved indhentning af data" + error)
             })

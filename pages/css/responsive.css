@@ -156,6 +156,9 @@
     bottom: 60px !important;
     right: 20px !important;
   }
+  .fbck-p {
+    display: none !important;
+  }
   .gs-container {
     padding: 20px 100px !important;
   }

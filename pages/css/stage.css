@@ -1937,6 +1937,32 @@
     transition: 0.2s;
   }
 
+  .fbck-tip {
+    position: absolute;
+    right: 17px;
+    bottom: -3px;
+    width: 10px;
+    border-radius: 2px;
+    height: 10px;
+    background-color: #fff;
+    transform: rotate(45deg);
+  }
+
+  .fbck-p {
+    position: absolute;
+    bottom: 55px;
+    right: 0px;
+    background-color: #fff;
+    border-radius: 100px;
+    box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.06);
+    color: rgba(51, 51, 51, 0.793);
+    font-family: Inter;
+    font-weight: 500;
+    font-size: 11px;
+    white-space: nowrap;
+    padding: 7px 15px;
+  }
+
   .fbck-knap:hover {
     background-color: var(--primaryAccent) !important;
   }
