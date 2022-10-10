@@ -222,9 +222,6 @@
 }
 
 @media only screen and (max-width: 760px) {
-  #inviteInfo {
-    display: none !important;
-  }
   .billet-element {
     width: clamp(300px, 60vw, 500px) !important;
   }
@@ -236,9 +233,6 @@
 @media only screen and (max-width: 700px) {
   .footer-sections {
     flex-direction: column !important;
-  }
-  #inviteInfo {
-    display: none !important;
   }
 }
 

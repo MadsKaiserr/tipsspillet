@@ -194,7 +194,7 @@ function Gruppesession ({data}) {
                         }
                     }).catch(error => {
                         console.log(error);
-                        setNotiMessage("error", "Forkert kodeord", "Du har indtastet en forkert kode til gruppespillet.");
+                        setNotiMessage("error", "Forkert kodeord", "Administratoren af gruppespillet har sat et kodeord på gruppespillet, til at tilmelde sig. Den indtastede kode matcher ikke gruppespillets kode.");
                         setLoading(false);
                     })
                 } else {
@@ -360,9 +360,10 @@ function Gruppesession ({data}) {
                                 <p className="gruppespil-info-element-h1">{new Date(varighed).getDate().toString().padStart(2, '0') + "/" + (new Date(varighed).getMonth() + 1).toString().padStart(2, '0')}</p>
                             </div>
                         </div>
-                        <input type="password" value={password} style={{maxWidth: "250px", marginTop: "40px"}} onChange={event => setPassword(event.target.value)} className="op-input" placeholder='Kodeord' /><br />
+                        <input type="password" value={password} style={{maxWidth: "250px", marginTop: "40px"}} onChange={event => setPassword(event.target.value)} className="op-input" placeholder='Gruppespillets kodeord' /><br />
                         {password !== "" && <button className="gruppeinvite-btn" onClick={() => {tilmeld()}}>{loading && <div className="loader" id="loader"></div>}{!loading && <>Tilmeld</>}</button>}
                         {password === "" && <button className="gruppeinvite-btn-off">Tilmeld</button>}
+                        <p className="gruppespil-info-element-p" style={{maxWidth: "450px", marginTop: "20px", fontWeight: "300", margin: "auto"}}>Gruppespillet er privat, og kræver derfor en adgangskode, som er sat af administratoren, for at du kan tilmelde dig.</p>
                     </div>}
                     {synlighed === "dyst" && <>
                         <div className="dyst-section">
