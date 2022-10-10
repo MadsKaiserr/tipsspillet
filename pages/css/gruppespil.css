@@ -2033,7 +2033,7 @@
   }
 
   #td-synlighed {
-    width: 200px;
+    width: 150px;
   }
 
   #td-spillere {
@@ -2041,16 +2041,19 @@
   }
 
   #td-admin {
-    width: 250px;
+    width: 170px;
   }
 
   .td-btn {
-    padding: 10px 20px;
+    padding: 7px 15px;
     border-radius: 5px;
     color: #fff;
-    font-size: 13px;
+    margin-left: auto;
+    min-width: 111px;
+    font-size: 12px;
+    border: 0px;
     font-weight: 500;
-    margin-top: 18px;
+    white-space: nowrap;
     font-family: Inter;
     cursor: pointer;
     transition: 0.2s;
@@ -2077,6 +2080,11 @@
     overflow: hidden;
     margin-right: -10px;
     position: relative;
+  }
+
+  .tl-fixer {
+    display: flex;
+    align-items: center;
   }
 
   .tl-element {

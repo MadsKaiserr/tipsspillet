@@ -232,6 +232,7 @@ function StageAktiveSpil ({ data }) {
                             </div>
                         </div>
                     </div>
+                    <p className="gruppespil-info-element-p" style={{paddingBottom: "10px",fontSize: "12px", opacity: "0.6"}}>Tryk på et gruppespil, for at sætte det som aktivt</p>
                     <div className="td-wrapper">
                         <div className="td-modifier">
                             <p className="td-modifier-p modifier-mod" id="td-navn">NAVN</p>
@@ -277,6 +278,7 @@ function StageAktiveSpil ({ data }) {
                                                             <p className="td-modifier-p" style={{paddingLeft: "8px"}} id="td-spillere">+{item.players.length - Facebooks} flere</p>
                                                         </div>
                                                 <p className="td-modifier-p" id="td-admin">{item.admin}</p>
+                                                <button className="td-btn">Sæt som aktiv</button>
                                             </li>
                                         );
                                     }
@@ -306,6 +308,7 @@ function StageAktiveSpil ({ data }) {
                                                             <p className="td-modifier-p" style={{paddingLeft: "8px"}} id="td-spillere">+{item.players.length - Facebooks} flere</p>
                                                         </div>
                                                 <p className="td-modifier-p" id="td-admin">{item.admin}</p>
+                                                <button className="td-btn">Sæt som aktiv</button>
                                             </li>
                                         );
                                     }
@@ -335,6 +338,7 @@ function StageAktiveSpil ({ data }) {
                                                             <p className="td-modifier-p" style={{paddingLeft: "8px"}} id="td-spillere">+{item.players.length - Facebooks} flere</p>
                                                         </div>
                                                 <p className="td-modifier-p" id="td-admin">{item.admin}</p>
+                                                <button className="td-btn">Sæt som aktiv</button>
                                             </li>
                                         );
                                     }
@@ -364,6 +368,7 @@ function StageAktiveSpil ({ data }) {
                                                             <p className="td-modifier-p" style={{paddingLeft: "8px"}} id="td-spillere">+{item.players.length - Facebooks} flere</p>
                                                         </div>
                                                 <p className="td-modifier-p" id="td-admin">{item.admin}</p>
+                                                <button className="td-btn">Sæt som aktiv</button>
                                             </li>
                                         );
                                     }

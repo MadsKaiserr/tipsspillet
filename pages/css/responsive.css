@@ -333,6 +333,9 @@
     width: 400px !important;
     height: 400px !important;
   }
+  .td-btn {
+    display: none !important;
+  }
 }
 
 @media only screen and (max-width: 1250px) {
