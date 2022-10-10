@@ -210,6 +210,15 @@ module.exports = {
           },
           {
             "name": "Premier League",
+            "logo_path": "https://cdn.sportmonks.com/images/soccer/leagues/8/8.png",
+            "type": "liga",
+            "url": "/stage/league?id=19734",
+            "land": "England",
+            "season_id": 19734,
+            "id": 8
+          },
+          {
+            "name": "Premier League",
             "logo_path": "https://cdn.sportmonks.com/images/soccer/leagues/6/486.png",
             "type": "liga",
             "url": "/stage/league?id=19781",

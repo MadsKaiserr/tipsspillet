@@ -7,14 +7,23 @@ module.exports = {
                 "paragraphs": [
                     {
                         "type": "text",
-                        "text": "For at oprette et gruppespil kræver det, at du har et Plus eller Premium abonnement, eller har købt en adgangsbillet. Adgangsbilletter er engangsbilletter til at oprette et gruppespil."
+                        "text": "For at oprette et gruppespil kræver det, at du har et Plus eller Premium abonnement. Alle brugere har i test-perioden, mellem 10/10 til 17/11 gratis Plus abonnement, og kan derfor besøge "
+                    },
+                    {
+                        "type": "link",
+                        "to": "/gruppespil",
+                        "text": "Gruppespil"
+                    },
+                    {
+                        "type": "text",
+                        "text": ", for at oprette sit eget gruppespil."
                     },
                     {
                         "type": "br"
                     },
                     {
                         "type": "text",
-                        "text": "Du kan købe Premium abonnement og lave dine egne gruppespil, deltage i præmiedyster, få udvidet statistikker og meget mere, ved at navigere til "
+                        "text": "Du kan købe Premium abonnement for at støtte os, og lave dine egne gruppespil, deltage i præmiedyster, få udvidet statistikker og meget mere, ved at navigere til "
                     },
                     {
                         "type": "link",
@@ -96,8 +105,17 @@ module.exports = {
                 "paragraphs": [
                     {
                         "type": "text",
-                        "text": "Hvis du finder en fejl, bedes du henvende dig via. mail: mebondekaiser@gmail.dk, eller via vores fejlregistrerings-system på forsiden efter du er logget ind."
-                    }
+                        "text": "Hvis du finder en fejl, kan du enten henvende dig i vores "
+                    },
+                    {
+                        "type": "link",
+                        "to": "/kontakt",
+                        "text": "Kontakt"
+                    },
+                    {
+                        "type": "text",
+                        "text": " formular, eller ved at klikke på kommentar ikonet nederst i højre hjørne, der hvor du finder kampe."
+                    },
                 ]
             }
         ]
