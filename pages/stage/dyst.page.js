@@ -436,7 +436,7 @@ function StageDyst ({data}) {
                     <div className="gruppespil-title">
                         <h1 className="gruppespil-h1">{gameName}</h1>
                         <Link href="/stage/aktive-spil">
-                            <button className="gruppespil2-btn">Skift</button>
+                            <button className="gruppespil2-btn">Skift gruppespil</button>
                         </Link>
                         {adminSettings()}
                     </div>

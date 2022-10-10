@@ -896,6 +896,14 @@
   #t1 {
     display: none !important;
   }
+  .op-input {
+    border: 1px solid #ebebeb !important;
+    box-shadow: none !important;
+  }
+  .login-form-input {
+    border: 1px solid #ebebeb !important;
+    box-shadow: none !important;
+  }
   .op-content {
     width: 90% !important;
   }

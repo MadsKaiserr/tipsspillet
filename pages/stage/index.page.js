@@ -1697,7 +1697,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
                                                             </div>
                                                             <div className="stage-indhold-down">
                                                             <Link href={gameURL}>
-                                                                <div className="stage-kampe-hold">
+                                                                <a className="stage-kampe-hold">
                                                                     {item.time.status === "LIVE" &&
                                                                         <div className="stage-live">
                                                                             <div className="stage-live-con">
@@ -1805,7 +1805,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
                                                                             <p className={teamNameVisitor}>{item.visitorTeam.data.name}</p>
                                                                         </div>
                                                                     </div>
-                                                                    </div>
+                                                                    </a>
                                                                 </Link>
                                                                 {item.time.status === "NS" &&
                                                                     <div className="stage-kampe-odds">
@@ -1866,7 +1866,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
                                                             </div>
                                                             <div className="stage-indhold-down">
                                                             <Link href={gameURL}>
-                                                                <div className="stage-kampe-hold">
+                                                                <a className="stage-kampe-hold">
                                                                     {item.time.status === "LIVE" &&
                                                                         <div className="stage-live">
                                                                             <div className="stage-live-con">
@@ -1974,7 +1974,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
                                                                             <p className={teamNameVisitor}>{item.visitorTeam.data.name}</p>
                                                                         </div>
                                                                     </div>
-                                                                    </div>
+                                                                    </a>
                                                                 </Link>
                                                                 {item.time.status === "NS" &&
                                                                     <div className="stage-kampe-odds">
@@ -2040,7 +2040,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
                                                         </div>
                                                         <div className="stage-indhold-down">
                                                         <Link href={gameURL}>
-                                                        <div className="stage-kampe-hold">
+                                                        <a className="stage-kampe-hold">
                                                                     {item.time.status === "LIVE" &&
                                                                         <div className="stage-live">
                                                                             <div className="stage-live-con">
@@ -2148,7 +2148,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
                                                                             <p className={teamNameVisitor}>{item.visitorTeam.data.name}</p>
                                                                         </div>
                                                                     </div>
-                                                                    </div>
+                                                                    </a>
                                                                 </Link>
                                                                 {item.time.status === "NS" &&
                                                                     <div className="stage-kampe-odds">
@@ -2295,7 +2295,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
                                                         </div>
                                                         <div className="stage-indhold-down">
                                                         <Link href={gameURL}>
-                                                            <div className="stage-kampe-hold">
+                                                            <a className="stage-kampe-hold">
                                                                 {item.time.status === "LIVE" &&
                                                                     <div className="stage-live">
                                                                         <div className="stage-live-con">
@@ -2403,7 +2403,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
                                                                         <p className={teamNameVisitor}>{item.visitorTeam.data.name}</p>
                                                                     </div>
                                                                 </div>
-                                                                </div>
+                                                                </a>
                                                             </Link>
                                                             {item.time.status === "NS" &&
                                                                 <div className="stage-kampe-odds">
@@ -2464,7 +2464,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
                                                         </div>
                                                         <div className="stage-indhold-down">
                                                         <Link href={gameURL}>
-                                                            <div className="stage-kampe-hold">
+                                                            <a className="stage-kampe-hold">
                                                                 {item.time.status === "LIVE" &&
                                                                     <div className="stage-live">
                                                                         <div className="stage-live-con">
@@ -2572,7 +2572,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
                                                                         <p className={teamNameVisitor}>{item.visitorTeam.data.name}</p>
                                                                     </div>
                                                                 </div>
-                                                                </div>
+                                                                </a>
                                                             </Link>
                                                             {item.time.status === "NS" &&
                                                                 <div className="stage-kampe-odds">
@@ -2638,7 +2638,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
                                                     </div>
                                                     <div className="stage-indhold-down">
                                                     <Link href={gameURL}>
-                                                    <div className="stage-kampe-hold">
+                                                    <a className="stage-kampe-hold">
                                                                 {item.time.status === "LIVE" &&
                                                                     <div className="stage-live">
                                                                         <div className="stage-live-con">
@@ -2746,7 +2746,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
                                                                         <p className={teamNameVisitor}>{item.visitorTeam.data.name}</p>
                                                                     </div>
                                                                 </div>
-                                                                </div>
+                                                                </a>
                                                             </Link>
                                                             {item.time.status === "NS" &&
                                                                 <div className="stage-kampe-odds">
@@ -3035,7 +3035,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
                     <p className="info-h1">Velkommen, {auth && <>{auth.username}</>}</p>
                     <p className="info-p">Valgte spil: <span className="info-p-span">{activeGameName}
                         <Link href="/stage/aktive-spil">
-                            <button className="gruppespil2-btn" style={{marginTop: "0px"}}>Skift</button>
+                            <button className="gruppespil2-btn" style={{marginTop: "0px"}}>Skift gruppespil</button>
                         </Link>
                     </span></p><br />
                     <p className="info-p">Kapital: <span className="info-p-span">{parseInt(currentMoney)},00 kr.</span></p><br />
