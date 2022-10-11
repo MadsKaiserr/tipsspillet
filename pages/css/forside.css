@@ -393,9 +393,9 @@
   }
   
   .hero-info {
-    margin-top: 45px;
-    padding-bottom: 15px;
-    min-height: 84px;
+    margin-top: 35px;
+    padding-bottom: 20px;
+    white-space: nowrap;
   }
 
   .wrap-h2 {
@@ -440,12 +440,13 @@
   
   .hero-info-block {
     display: inline-block;
-    padding: 0px 35px;
+    padding: 0px 0px;
+    width: 100px;
   }
   
   .hero-info-block-h1 {
     color: var(--black);
-    font-size: clamp(32px, 5vw, 44px);
+    font-size: 32px;
     font-family: Inter;
     font-weight: 600;
   }
@@ -479,7 +480,7 @@
   
   .hero-info-block-h1 span {
     color: var(--blackAccent);
-    font-size: 44px;
+    font-size: 32px;
     font-family: Inter;
     font-weight: 700;
   }
@@ -517,7 +518,7 @@
   
   .hero-info-block-h2 {
     color: #566578;
-    font-size: clamp(10px, 2vw, 13px);
+    font-size: 10px;
     font-family: Inter;
     font-weight: 600;
     text-transform: uppercase;
@@ -525,7 +526,7 @@
   
   .hero-info-block-h2 span {
     color: #566578;
-    font-size: clamp(10px, 2vw, 13px);
+    font-size: 10px;
     font-family: Inter;
     font-weight: 600;
     text-transform: uppercase;

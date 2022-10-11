@@ -155,6 +155,17 @@ function StageAktiveSpil ({ data }) {
 
     const [currentType, setCurrentType] = useState("alle");
 
+    function getTopN(arr, n) {
+        var clone = arr.slice(0);
+        // sort descending
+        clone.sort(function(x, y) {
+            if (x.info.money === y.info.money) return 0;
+            else if (parseInt(x.info.money) < parseInt(y.info.money)) return 1;
+            else return -1;
+        });
+        return clone.slice(0, n);
+    }
+
     return (
         <>
             <Head>
@@ -204,173 +215,76 @@ function StageAktiveSpil ({ data }) {
                         </div>
                     </div>
                 </div>
-                <div className="td-box animatioypen-fadetop" style={{margin: "auto", minHeight: "300px"}}>
-                    <div className="td-top">
-                        <div className="td-top-left">
-                            <div className="td-input-con">
-                                <div className="td-input">
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="td-input-icon" viewBox="0 0 16 16">
-                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                                    </svg>
-                                    <input type="text" className="td-input-field" onChange={event => setQuery(event.target.value)} placeholder="Søg i gruppespil..." />
-                                </div>
-                                <button className="td-btn-search" style={{marginLeft: "0px", borderRadius: "5px"}} onClick={() => {makeSearch()}}>Søg</button>
-                            </div>
-                        </div>
-                        <div className="td-top-right">
-                            <div className="td-radio">
-                                <div className="td-radio-element-active">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="var(--softBlack)" opacity={0.6} viewBox="0 0 16 16">
-                                        <path fillRule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
-                                    </svg>
-                                </div>
-                                <div className="td-radio-element">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="var(--softBlack)" opacity={0.6} viewBox="0 0 16 16">
-                                        <path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5v-3zM2.5 2a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zm6.5.5A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zM1 10.5A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zm6.5.5A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3z"/>
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <p className="gruppespil-info-element-p" style={{paddingBottom: "10px",fontSize: "12px", opacity: "0.6"}}>Tryk på et gruppespil, for at sætte det som aktivt</p>
+                <div className="td-box animation-fadetop" style={{margin: "auto", minHeight: "300px", backgroundColor: "transparent", paddingLeft: "0px", paddingRight: "0px", boxShadow: "none"}}>
                     <div className="td-wrapper">
-                        <div className="td-modifier">
-                            <p className="td-modifier-p modifier-mod" id="td-navn">NAVN</p>
-                            <p className="td-modifier-p modifier-mod" id="td-synlighed">SYNLIGHED</p>
-                            <p className="td-modifier-p modifier-mod"id="td-spillere">SPILLERE</p>
-                            <p className="td-modifier-p modifier-mod" id="td-admin">ADMINISTRATOR</p>
-                        </div>
                         <div className="match-loader display" id="stage-loader1"></div>
-                        <ul className="td-table">
+                        <ul className="td-table" style={{maxHeight: "none"}}>
                             {search.map((item) => {
                                 const index = item.players.findIndex(obj => obj.player === getUser().email);
                                 var Facebooks = 0;
                                 var facebookArray = [];
+                                var activeKupon = 0;
                                 for (var u in item.players) {
                                     if (item.players[u].fb_logo_id) {
                                         Facebooks = Facebooks + 1;
                                         facebookArray.push(item.players[u]);
                                     }
+                                    if (item.players[u].player === getUser().email) {
+                                        for (var q in item.players[u].odds) {
+                                            if (item.players[u].odds[q].calculated === "false") {
+                                                activeKupon = activeKupon + 1;
+                                            }
+                                        }
+                                    }
                                 }
+                                var position = 0;
+                                var topScorers = getTopN(item.players, item.players.length);
+                                topScorers.forEach(function(gameItem, index2) {
+                                    if (gameItem.player === getUser().email) {
+                                        position = index2 + 1;
+                                    }
+                                });
+
+                                var returnable = 
+                                <li key={item.id} className="as-element" onClick={() => setActiveGame(item.id, index, item.name)}>
+                                    <div>
+                                        <p className="as-h1">{item.name}</p>
+                                        <p className="as-h2">Spillet slutter {item.varighed}</p>
+                                        <div className="hero-info">
+                                            <div className="hero-info-block">
+                                                <p className="hero-info-block-h1">{item.players.length}</p>
+                                                <p className="hero-info-block-h2">Spillere</p>
+                                            </div>
+                                            <div className="hero-info-block">
+                                                <p className="hero-info-block-h1">{position}</p>
+                                                <p className="hero-info-block-h2">Din position</p>
+                                            </div>
+                                            <div className="hero-info-block">
+                                                <p className="hero-info-block-h1">{activeKupon}</p>
+                                                <p className="hero-info-block-h2">Aktive kuponer</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {cookie.get("activeGame") && <>
+                                        {cookie.get("activeGame") !== item.id && <><button className="td-outline">Allerede aktivt</button></>}
+                                        {cookie.get("activeGame") === item.id && <><button className="td-btn">Sæt som aktiv</button></>}
+                                    </>}
+                                </li>;
                                 if (currentType === "alle") {
                                     if (new Date(item.varighed).getTime() > new Date().getTime()) {
-                                        return (
-                                            <li key={item.id} className="tl-element" onClick={() => setActiveGame(item.id, index, item.name)}>
-                                                <div className="tl-wrapper" id="td-navn">
-                                                    <div className="tl-img">
-                                                        {item.name.slice(0,1)}
-                                                    </div>
-                                                    <p className="td-modifier-p" style={{fontWeight: "500"}}>{item.name}</p>
-                                                </div>
-                                                <p className="td-modifier-p" id="td-synlighed">{item.synlighed}</p>
-                                                <div className="tl-wrapper" id="td-spillere">
-                                                            <ul className="tl-players">
-                                                                {facebookArray.slice(0,5).map((spiller) => {
-                                                                    if (spiller.fb_logo_id) {
-                                                                        return (
-                                                                                <li key={spiller.fb_logo_id} className="td-player-img">
-                                                                                    <Image layout="fill" src={"http://graph.facebook.com/"+ spiller.fb_logo_id +"/picture?type=square"} />
-                                                                                </li>
-                                                                        );
-                                                                    }
-                                                                })}
-                                                            </ul>
-                                                            <p className="td-modifier-p" style={{paddingLeft: "8px"}} id="td-spillere">+{item.players.length - Facebooks} flere</p>
-                                                        </div>
-                                                <p className="td-modifier-p" id="td-admin">{item.admin}</p>
-                                                <button className="td-btn">Sæt som aktiv</button>
-                                            </li>
-                                        );
+                                        return returnable;
                                     }
                                 } else if (currentType === "gruppespil") {
                                     if ((item.synlighed === "offentlig" || item.synlighed === "privat") && new Date(item.varighed).getTime() > new Date().getTime()) {
-                                        return (
-                                            <li key={item.id} className="tl-element" onClick={() => setActiveGame(item.id, index, item.name)}>
-                                                <div className="tl-wrapper" id="td-navn">
-                                                    <div className="tl-img">
-                                                        {item.name.slice(0,1)}
-                                                    </div>
-                                                    <p className="td-modifier-p" style={{fontWeight: "500"}}>{item.name}</p>
-                                                </div>
-                                                <p className="td-modifier-p" id="td-synlighed">{item.synlighed}</p>
-                                                <div className="tl-wrapper" id="td-spillere">
-                                                            <ul className="tl-players">
-                                                                {facebookArray.slice(0,5).map((spiller) => {
-                                                                    if (spiller.fb_logo_id) {
-                                                                        return (
-                                                                                <li key={spiller.fb_logo_id} className="td-player-img">
-                                                                                    <Image layout="fill" src={"http://graph.facebook.com/"+ spiller.fb_logo_id +"/picture?type=square"} />
-                                                                                </li>
-                                                                        );
-                                                                    }
-                                                                })}
-                                                            </ul>
-                                                            <p className="td-modifier-p" style={{paddingLeft: "8px"}} id="td-spillere">+{item.players.length - Facebooks} flere</p>
-                                                        </div>
-                                                <p className="td-modifier-p" id="td-admin">{item.admin}</p>
-                                                <button className="td-btn">Sæt som aktiv</button>
-                                            </li>
-                                        );
+                                        return returnable;
                                     }
                                 } else if (currentType === "afsluttede") {
                                     if (new Date(item.varighed).getTime() < new Date().getTime()) {
-                                        return (
-                                            <li key={item.id} className="tl-element" onClick={() => setActiveGame(item.id, index, item.name)}>
-                                                <div className="tl-wrapper" id="td-navn">
-                                                    <div className="tl-img">
-                                                        {item.name.slice(0,1)}
-                                                    </div>
-                                                    <p className="td-modifier-p" style={{fontWeight: "500"}}>{item.name}</p>
-                                                </div>
-                                                <p className="td-modifier-p" id="td-synlighed">{item.synlighed}</p>
-                                                <div className="tl-wrapper" id="td-spillere">
-                                                            <ul className="tl-players">
-                                                                {facebookArray.slice(0,5).map((spiller) => {
-                                                                    if (spiller.fb_logo_id) {
-                                                                        return (
-                                                                                <li key={spiller.fb_logo_id} className="td-player-img">
-                                                                                    <Image layout="fill" src={"http://graph.facebook.com/"+ spiller.fb_logo_id +"/picture?type=square"} />
-                                                                                </li>
-                                                                        );
-                                                                    }
-                                                                })}
-                                                            </ul>
-                                                            <p className="td-modifier-p" style={{paddingLeft: "8px"}} id="td-spillere">+{item.players.length - Facebooks} flere</p>
-                                                        </div>
-                                                <p className="td-modifier-p" id="td-admin">{item.admin}</p>
-                                                <button className="td-btn">Sæt som aktiv</button>
-                                            </li>
-                                        );
+                                        return returnable;
                                     }
                                 } else if (currentType === "dyster") {
                                     if (item.synlighed === "dyst" && new Date(item.varighed).getTime() > new Date().getTime()) {
-                                        return (
-                                            <li key={item.id} className="tl-element" onClick={() => setActiveGame(item.id, index, item.name)}>
-                                                <div className="tl-wrapper" id="td-navn">
-                                                    <div className="tl-img">
-                                                        {item.name.slice(0,1)}
-                                                    </div>
-                                                    <p className="td-modifier-p" style={{fontWeight: "500"}}>{item.name}</p>
-                                                </div>
-                                                <p className="td-modifier-p" id="td-synlighed">{item.synlighed}</p>
-                                                <div className="tl-wrapper" id="td-spillere">
-                                                            <ul className="tl-players">
-                                                                {facebookArray.slice(0,5).map((spiller) => {
-                                                                    if (spiller.fb_logo_id) {
-                                                                        return (
-                                                                                <li key={spiller.fb_logo_id} className="td-player-img">
-                                                                                    <Image layout="fill" src={"http://graph.facebook.com/"+ spiller.fb_logo_id +"/picture?type=square"} />
-                                                                                </li>
-                                                                        );
-                                                                    }
-                                                                })}
-                                                            </ul>
-                                                            <p className="td-modifier-p" style={{paddingLeft: "8px"}} id="td-spillere">+{item.players.length - Facebooks} flere</p>
-                                                        </div>
-                                                <p className="td-modifier-p" id="td-admin">{item.admin}</p>
-                                                <button className="td-btn">Sæt som aktiv</button>
-                                            </li>
-                                        );
+                                        return returnable;
                                     }
                                 }
                             })}
