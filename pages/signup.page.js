@@ -300,7 +300,7 @@ function Signup () {
     }
 
     function access() {
-        router.push("/signup/abonnement");
+        router.push("/stage/setup");
     }
 
     function setPriceActive(type) {

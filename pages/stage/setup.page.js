@@ -243,6 +243,8 @@ function Setup () {
         document.getElementById("errorConP").innerHTML = message;
     }
 
+    const [freemium, setFreemium] = useState(true);
+
     return (
         <>
             <Head>
@@ -250,6 +252,23 @@ function Setup () {
                 <meta name="robots" content="noindex" />
             </Head>
             <StageHeader />
+            {freemium && <div className="wc-container" id="wc-container">
+                <div className="wc-wrapper">
+                    <div className="wc-top">
+                        <div className="wc-circles">
+                            <div className="wc-cir1"><div className="wc-cir2"><div className="wc-cir3"></div></div></div>
+                        </div>
+                        <p className="wc-h1">Yayy! <span style={{color: "var(--primary)", fontWeight: "600"}}>Gratis</span> abonnement.</p>
+                        <div className="wc-trans"></div>
+                    </div>
+                    <div className="wc-content">
+                        <p className="wc-h2">Gratis Plus abonnement i hele Test-Perioden</p>
+                        <p className="wc-h4" style={{paddingTop: "10px"}}>For at vise vores taknemlighed, vil vi udlodde gratis Premium abonnement til alle testere på Tipsspillet. Det vil sige du nu kan oprette egne gruppespil, se yderligere statistikker og meget mere!</p>
+                        <p className="wc-h4" style={{paddingBottom: "15px"}}>Hvis du er interesseret i at støtte os, kan du opgradere til Premium på abonnement-siden.</p>
+                    </div>
+                    <button className="wc-btn" onClick={() => {setFreemium(false); cookie.set("freemium", "true")}}>Indløs</button>
+                </div>
+            </div>}
             <div className="main-loader display-not" id="loadingScreen"><div className="main-site-loader"></div></div>
             <div className="setup-container">
                 <div className="setup-content">

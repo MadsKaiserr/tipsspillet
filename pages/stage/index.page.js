@@ -2874,18 +2874,6 @@ function StageForside ({gruppespil_data, spiller_data}) {
     const [feedbackMessage, setFeedbackMessage] = useState("");
     const [feedbackBox, setFeedbackBox] = useState(0);
 
-    const [freemium, setFreemium] = useState(false);
-
-    useEffect(() => {
-        if (cookie.get("freemium")) {
-            if (cookie.get("freemium") === "false") {
-                setFreemium(true);
-            }
-        } else {
-            setFreemium(true);
-        }
-    }, [])
-
     return (
         <>
         <Head>
@@ -2966,25 +2954,6 @@ function StageForside ({gruppespil_data, spiller_data}) {
                         {feedbackText === "" && <button className="wc-btn-off">Indsend</button>}
                     </>}
                     {feedbackBox <= 0 && <button className="wc-btn-off">Indsend</button>}
-                </div>
-            </div>
-        </>}
-        {freemium && <>
-            <div className="wc-container" id="wc-container">
-                <div className="wc-wrapper">
-                    <div className="wc-top">
-                        <div className="wc-circles">
-                            <div className="wc-cir1"><div className="wc-cir2"><div className="wc-cir3"></div></div></div>
-                        </div>
-                        <p className="wc-h1">Yayy! <span style={{color: "var(--primary)", fontWeight: "600"}}>Gratis</span> abonnement.</p>
-                        <div className="wc-trans"></div>
-                    </div>
-                    <div className="wc-content">
-                        <p className="wc-h2">Gratis Plus abonnement i hele Test-Perioden</p>
-                        <p className="wc-h4" style={{paddingTop: "10px"}}>For at vise vores taknemlighed, vil vi udlodde gratis Premium abonnement til alle testere på Tipsspillet. Det vil sige du nu kan oprette egne gruppespil, se yderligere statistikker og meget mere!</p>
-                        <p className="wc-h4" style={{paddingBottom: "15px"}}>Hvis du er interesseret i at støtte os, kan du opgradere til Premium på abonnement-siden.</p>
-                    </div>
-                    <button className="wc-btn" onClick={() => {setFreemium(false); cookie.set("freemium", "true")}}>Indløs</button>
                 </div>
             </div>
         </>}

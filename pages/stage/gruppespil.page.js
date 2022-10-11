@@ -602,39 +602,27 @@ function StageGruppespil ({data}) {
                                                 afgjort = "Alle afgjort";
                                                 afgjortStyle = {color: "var(--primary)"};
                                             }
+                                            var dato_time_string = new Date(item.iat).getHours().toString().padStart(2, '0') + ":" + new Date(item.iat).getMinutes().toString().padStart(2, '0');
 
                                             var dato_string = "";
-                                            var dato_time_string = "";
                                             var dato_day;
                                             var dato_month;
                                             var dato_year;
 
-                                            var dato_minutes;
-                                            var dato_hours;
-                                            if (item.iat !== undefined) {
-                                                dato_minutes = new Date(item.iat).getMinutes();
-                                                dato_hours = new Date(item.iat).getHours();
-                                                if ((dato_minutes.toString()).length === 1) {
-                                                    dato_time_string = dato_hours + ":0" + dato_minutes;
+                                            var today_day = new Date().getDate();
+                                            var today_month = new Date().getMonth() + 1;
+                                            var today_year = new Date().getFullYear();
+                                            dato_day = new Date(item.iat).getDate();
+                                            dato_month = new Date(item.iat).getMonth() + 1;
+                                            dato_year = new Date(item.iat).getFullYear();
+                                            if (today_day === dato_day && today_month === dato_month && today_year === dato_year) {
+                                                dato_string = "I dag, " + dato_time_string;
+                                            } else if ((today_day - 1) === dato_day && today_month === dato_month && today_year === dato_year) {
+                                                dato_string = "I går, " + dato_time_string;
+                                            } else if ((today_day - 2) === dato_day && today_month === dato_month && today_year === dato_year) {
+                                                dato_string = "I forgårs, " + dato_time_string;
                                             } else {
-                                                dato_time_string = dato_hours + ":" + dato_minutes;
-                                            }
-
-                                                var today_day = new Date().getDate();
-                                                var today_month = new Date().getMonth() + 1;
-                                                var today_year = new Date().getFullYear();
-                                                dato_day = new Date(item.iat).getDate();
-                                                dato_month = new Date(item.iat).getMonth() + 1;
-                                                dato_year = new Date(item.iat).getFullYear();
-                                                if (today_day === dato_day && today_month === dato_month && today_year === dato_year) {
-                                                    dato_string = "I dag, " + dato_time_string;
-                                                } else if ((today_day - 1) === dato_day && today_month === dato_month && today_year === dato_year) {
-                                                    dato_string = "I går, " + dato_time_string;
-                                                } else if ((today_day - 2) === dato_day && today_month === dato_month && today_year === dato_year) {
-                                                    dato_string = "I forgårs, " + dato_time_string;
-                                                } else {
-                                                    dato_string = dato_day + "/" + dato_month + " - " + dato_time_string;
-                                                }
+                                                dato_string = new Date(item.iat).getDate().toString().padStart(2, '0') + "/" + (new Date(item.iat).getMonth() + 1).toString().padStart(2, '0') + " - " + dato_time_string;
                                             }
                                             if (item.type === "kombination") {
                                                 return (

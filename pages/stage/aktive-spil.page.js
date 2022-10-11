@@ -249,7 +249,7 @@ function StageAktiveSpil ({ data }) {
                                 <li key={item.id} className="as-element" onClick={() => setActiveGame(item.id, index, item.name)}>
                                     <div>
                                         <p className="as-h1">{item.name}</p>
-                                        <p className="as-h2">Spillet slutter {item.varighed}</p>
+                                        <p className="as-h2">Spillet slutter {new Date(item.varighed).getDate().toString().padStart(2, '0') + "/" + (new Date(item.varighed).getMonth() + 1).toString().padStart(2, '0') + "/" + new Date(item.varighed).getFullYear().toString().padStart(2, '0')}</p>
                                         <div className="hero-info">
                                             <div className="hero-info-block">
                                                 <p className="hero-info-block-h1">{item.players.length}</p>
@@ -266,8 +266,8 @@ function StageAktiveSpil ({ data }) {
                                         </div>
                                     </div>
                                     {cookie.get("activeGame") && <>
-                                        {cookie.get("activeGame") !== item.id && <><button className="td-outline">Allerede aktivt</button></>}
-                                        {cookie.get("activeGame") === item.id && <><button className="td-btn">Sæt som aktiv</button></>}
+                                        {cookie.get("activeGame") === item.id && <><button className="td-outline">Allerede aktivt</button></>}
+                                        {cookie.get("activeGame") !== item.id && <><button className="td-btn">Sæt som aktiv</button></>}
                                     </>}
                                 </li>;
                                 if (currentType === "alle") {

@@ -45,18 +45,6 @@ function Search () {
             "id": 18
         })
 
-        //Liverpool
-        array.splice(items.findIndex(obj => obj.id === 8), 1);
-        array.unshift({
-            "name": "Liverpool",
-            "logo_path": "https://cdn.sportmonks.com/images/soccer/teams/8/8.png",
-            "type": "liga",
-            "url": "/stage/team?team=8",
-            "land": "England",
-            "season_id": 19734,
-            "id": 8
-        })
-
         //Brøndby
         array.splice(items.findIndex(obj => obj.id === 293), 1);
         array.unshift({

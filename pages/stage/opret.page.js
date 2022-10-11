@@ -224,7 +224,6 @@ function Opret ({ }) {
                 <title>Opret gruppespil - Tipsspillet</title>
                 <meta name="robots" content="noindex" />
             </Head>
-            <Height />
             <StageHeader />
             <div className="op-container">
                 <div className="op-top">
@@ -238,7 +237,7 @@ function Opret ({ }) {
                     </div>
                     <div className="op-top-element">
                         <div className="op-top-identifier">3</div>
-                        <p className="op-top-p">Offentliggør gruppespil</p>
+                        <p className="op-top-p">Offentliggør</p>
                     </div></>}
                     {nav === "eco" && <><div className="op-top-element-active">
                         <div className="op-top-identifier">1</div>
@@ -250,7 +249,7 @@ function Opret ({ }) {
                     </div>
                     <div className="op-top-element">
                         <div className="op-top-identifier">3</div>
-                        <p className="op-top-p">Offentliggør gruppespil</p>
+                        <p className="op-top-p">Offentliggør</p>
                     </div></>}
                     {nav === "publish" && <><div className="op-top-element-active">
                         <div className="op-top-identifier">1</div>
@@ -262,7 +261,7 @@ function Opret ({ }) {
                     </div>
                     <div className="op-top-element-active">
                         <div className="op-top-identifier">3</div>
-                        <p className="op-top-p">Offentliggør gruppespil</p>
+                        <p className="op-top-p">Offentliggør</p>
                     </div></>}
                 </div>
                 {nav === "generelt" && <div className="op-content">

@@ -789,6 +789,14 @@
   .gruppespil-opret-own {
     display: none !important;
   }
+  .op-top {
+    gap: 15px !important;
+  }
+  .op-top-identifier {
+    width: 25px !important;
+    height: 25px !important;
+    font-size: 13px !important;
+  }
   .gs-container {
     padding: 20px !important;
   }
@@ -882,6 +890,12 @@
 
 @media only screen and (max-width: 650px) {
   #t1 {
+    display: none !important;
+  }
+  .op-cta {
+    width: 90% !important;
+  }
+  .nav-search {
     display: none !important;
   }
   .op-input {
