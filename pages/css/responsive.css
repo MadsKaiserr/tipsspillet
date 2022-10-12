@@ -1769,6 +1769,9 @@
   .footer-section-nav {
     gap: 25px !important;
   }
+  .as-element {
+    padding: 15px 20px !important;
+  }
 }
 
 @media only screen and (max-width: 370px) {

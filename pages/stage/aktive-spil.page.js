@@ -269,6 +269,7 @@ function StageAktiveSpil ({ data }) {
                                         {cookie.get("activeGame") === item.id && <><button className="td-outline">Allerede aktivt</button></>}
                                         {cookie.get("activeGame") !== item.id && <><button className="td-btn">Sæt som aktiv</button></>}
                                     </>}
+                                    {!cookie.get("activeGame") && <><button className="td-btn">Sæt som aktiv</button></>}
                                 </li>;
                                 if (currentType === "alle") {
                                     if (new Date(item.varighed).getTime() > new Date().getTime()) {
