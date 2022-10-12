@@ -3000,26 +3000,39 @@ function StageForside ({gruppespil_data, spiller_data}) {
                 </div>
             </div>
             <div className="stage-main">
-                {activeGame && <div className="info-section">
-                    <p className="info-h1">Velkommen, {auth && <>{auth.username}</>}</p>
-                    <p className="info-p">Valgte spil: <span className="info-p-span">{activeGameName}
+                {activeGame && <>
+                    {activeGameName !== "Indlæser..." && <div className="info-section">
+                        <p className="info-h1">Velkommen, {auth && <>{auth.username}</>}</p>
+                        <p className="info-p">Valgte spil: <span className="info-p-span">{activeGameName}
+                            <Link href="/stage/aktive-spil">
+                                <button className="gruppespil2-btn" style={{marginTop: "0px"}}>Skift gruppespil</button>
+                            </Link>
+                        </span></p><br />
+                        <p className="info-p">Kapital: <span className="info-p-span">{parseInt(currentMoney)},00 kr.</span></p><br />
+                        <p className="info-p">Placering: <span className="info-p-span">{position}</span> af <span className="info-p-span">{positionCount}</span></p><br />
+                        <p className="info-p">Slutdato: <span className="info-p-span">{slutdatostr}</span></p>
+                        <div className="info-figure">
+                            <div className="info-figure1"></div>
+                            <div className="info-figure2"></div>
+                        </div>
+                    </div>}
+                    {activeGameName === "Indlæser..." && <div className="info-section">
+                        <p className="info-h1">Velkommen, {auth && <>{auth.username}</>}</p>
+                        <p className="info-p" style={{fontSize: "16px", color: "#333"}}>Du har ikke noget aktivt gruppespil.</p><br />
                         <Link href="/stage/aktive-spil">
-                            <button className="gruppespil2-btn" style={{marginTop: "0px"}}>Skift gruppespil</button>
+                            <button className="td-btn" style={{marginTop: "10px"}}>Vælg gruppespil</button>
                         </Link>
-                    </span></p><br />
-                    <p className="info-p">Kapital: <span className="info-p-span">{parseInt(currentMoney)},00 kr.</span></p><br />
-                    <p className="info-p">Placering: <span className="info-p-span">{position}</span> af <span className="info-p-span">{positionCount}</span></p><br />
-                    <p className="info-p">Slutdato: <span className="info-p-span">{slutdatostr}</span></p>
-                    <div className="info-figure">
-                        <div className="info-figure1"></div>
-                        <div className="info-figure2"></div>
-                    </div>
-                </div>}
+                        <div className="info-figure">
+                            <div className="info-figure1"></div>
+                            <div className="info-figure2"></div>
+                        </div>
+                    </div>}
+                </>}
                 {!activeGame && <div className="info-section">
                     <p className="info-h1">Velkommen, {auth && <>{auth.username}</>}</p>
-                    <p className="info-p">Du har ikke noget valgt spil.</p>
+                    <p className="info-p" style={{fontSize: "16px", color: "#333"}}>Du har ikke noget aktivt gruppespil.</p><br />
                     <Link href="/stage/aktive-spil">
-                        <button className="gruppespil-btn">Vælg spil</button>
+                        <button className="td-btn" style={{marginTop: "10px"}}>Vælg gruppespil</button>
                     </Link>
                     <div className="info-figure">
                         <div className="info-figure1"></div>
