@@ -41,8 +41,14 @@
     width: 100%;
     padding-bottom: 65px;
     position: relative;
-    background-color: #1b1b1b;
-    background-image: radial-gradient(circle farthest-corner at 100% -30%,#0e0e0e,rgba(14,14,14,0) 56%);
+    background-color: var(--stageSurface);
+  }
+
+  .forside-blob-img {
+    overflow: hidden;
+    position: relative;
+    margin-left: 100px;
+    width: 600px;
   }
 
   .fs-wrapper-h1 {

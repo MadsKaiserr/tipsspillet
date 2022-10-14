@@ -94,81 +94,76 @@ function Opret ({ }) {
 
             axios.get(URL, requestConfig).then(response => {
                 console.log("AWS - Gruppespil:", response)
-                    var gCount = 0;
-                    for (var y in response.data.allGruppespil) {
-                        var varighedDate = new Date(response.data.allGruppespil[y].varighed).getTime();
-                        var nowDate = new Date().getTime();
-                        if (nowDate < varighedDate) {
-                            gCount = gCount + 1;
-                        }
+                var gCount = 0;
+                for (var y in response.data.allGruppespil) {
+                    var varighedDate = new Date(response.data.allGruppespil[y].varighed).getTime();
+                    var nowDate = new Date().getTime();
+                    if (nowDate < varighedDate) {
+                        gCount = gCount + 1;
                     }
-                    if (gCount >= 4) {
-                        setMessage("Du har allerede 5 aktive spil, og du kan derfor ikke oprette flere.");
-                        setLoading(false)
-                    } else {
-                        const gruppespilConfig = {
-                            headers: {
-                                "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
-                            }
-                        }
+                }
+                const gruppespilConfig = {
+                    headers: {
+                        "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
+                    }
+                }
+        
+                var medlemsskab;
+                var userEmail;
+                var username;
                 
-                        var medlemsskab;
-                        var userEmail;
-                        var username;
-                        
-                        if (getUser().email) {
-                            medlemsskab = getUser().rolle;
-                            userEmail = getUser().email;
-                            username = getUser().username;
-                        } else {
-                            medlemsskab = "none";
-                            userEmail = "Ukendt";
-                            username = "Ukendt";
-                        }
-                
-                        const gruppespilBody = {
-                            name: spilNavn,
-                            varighed: spilVarighed,
-                            start_amount: spilStart,
-                            min_amount: 0,
-                            max_amount: 10000,
-                            indskydelse_int: 0,
-                            indskydelse_amount: 0,
-                            ligaer: [],
-                            admin: getUser().username,
-                            synlighed: spilSynlighed,
-                            password: "",
-                            players: [{player: userEmail, username: username, info: {money: spilStart, notifikationer: [], medlemsskab: medlemsskab}, odds: []}]
-                        }
+                if (getUser().email) {
+                    medlemsskab = getUser().rolle;
+                    userEmail = getUser().email;
+                    username = getUser().username;
+                } else {
+                    medlemsskab = "none";
+                    userEmail = "Ukendt";
+                    username = "Ukendt";
+                }
+        
+                const gruppespilBody = {
+                    name: spilNavn,
+                    varighed: spilVarighed,
+                    start_amount: spilStart,
+                    min_amount: 0,
+                    max_amount: 10000,
+                    indskydelse_int: 0,
+                    indskydelse_amount: 0,
+                    ligaer: [],
+                    admin: getUser().username,
+                    synlighed: spilSynlighed,
+                    password: "",
+                    players: [{player: userEmail, username: username, info: {money: spilStart, notifikationer: [], medlemsskab: medlemsskab}, odds: []}]
+                }
 
-                        if (minSetting) {
-                            gruppespilBody.min_amount = spilMin;
-                        }
-                        if (maksSetting) {
-                            gruppespilBody.max_amount = spilMax;
-                        }
-                        if (indskydelseSetting) {
-                            gruppespilBody.indskydelse_amount = indskydelse;
-                        }
-                        if (leagueSetting) {
-                            var leagues = [];
-                            for (var q in favorites) {
-                                leagues.push(favorites[q].id);
-                            }
-                            gruppespilBody.ligaer = leagues;
-                        }
-                        if (spilSynlighed === "privat") {
-                            gruppespilBody.password = password;
-                        }
-                
-                        axios.post(signupURL, gruppespilBody, gruppespilConfig).then(result => {
-                            console.log("AWS - Gruppespil:", result);
-                            window.open("/stage/aktive-spil", "_self");
-                        }).catch(error => {
-                            console.log(error);
-                            setLoading(false)
-                        })
+                if (minSetting) {
+                    gruppespilBody.min_amount = spilMin;
+                }
+                if (maksSetting) {
+                    gruppespilBody.max_amount = spilMax;
+                }
+                if (indskydelseSetting) {
+                    gruppespilBody.indskydelse_amount = indskydelse;
+                }
+                if (leagueSetting) {
+                    var leagues = [];
+                    for (var q in favorites) {
+                        leagues.push(favorites[q].id);
                     }
+                    gruppespilBody.ligaer = leagues;
+                }
+                if (spilSynlighed === "privat") {
+                    gruppespilBody.password = password;
+                }
+        
+                axios.post(signupURL, gruppespilBody, gruppespilConfig).then(result => {
+                    console.log("AWS - Gruppespil:", result);
+                    window.open("/stage/aktive-spil", "_self");
+                }).catch(error => {
+                    console.log(error);
+                    setLoading(false)
+                })
             }).catch(error => {
                 console.log("Fejl ved indhentning af data" + error)
                 setLoading(false)
@@ -439,7 +434,7 @@ function Opret ({ }) {
                     {nav === "eco" && <><button className="op-cta-secondary" onClick={() => setNav("generelt")}>Tilbage</button>
                     <button className="op-cta-primary" onClick={() => setNav("publish")}>Næste</button></>}
                     {nav === "publish" && <><button className="op-cta-secondary" onClick={() => setNav("eco")}>Tilbage</button>
-                    <button className="op-cta-primary" onClick={opretHandler}>Opret gruppespil</button></>}
+                    <button className="op-cta-primary" onClick={opretHandler}>{loading && <div className="loader" id="loader"></div>}{!loading && <>Opret gruppespil</>}</button></>}
                 </div>
             </div>
         </>

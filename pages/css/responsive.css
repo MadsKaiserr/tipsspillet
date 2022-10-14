@@ -1655,6 +1655,12 @@
     width: 90% !important;
     padding: 25px 40px  !important;
   }
+  #td-synlighed {
+    width: 100px !important;
+  }
+  #td-admin {
+    width: 100px !important;
+  }
   .signup-popup {
     width: 85% !important;
   }

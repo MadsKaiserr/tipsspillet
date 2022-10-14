@@ -6,7 +6,7 @@ import PriserComp from './components/priser';
 import { Gradient } from './services/Gradient.js'
 
 import RightArrow from './img/right-arrow.png';
-import Mockup from './img/TipsspilletIphone14Mockup.jpg';
+import Mockup from './img/TipsspilletIphone14Mockup.png';
 import MatchMock from './img/KampIphoneMacbookMockup.jpg';
 import MatchMockMB from './img/KampIphoneMockup.jpg';
 import GrMatchMock from './img/GruppespilMockup.jpg';
@@ -135,6 +135,9 @@ export default function Home() {
         </div>
         <div className="forside-blob">
             <canvas id="gradient-canvas" style={{opacity: "0.5"}} className="mesh-canvas" data-transition-in />
+            <div className="forside-blob-img">
+                <Image src={Mockup} />
+            </div>
         </div>
         <div className="wrap-wrapper">
             <div className="forside-stats-container">
@@ -150,27 +153,6 @@ export default function Home() {
                     <p className="forside-stats-h1">4.5</p>
                     <p className="forside-stats-h2">Stjerner på Trustpilot</p>
                 </div>
-            </div>
-        </div>
-        <div className="forside-black">
-            <h2 className="fs-wrapper-h1">Liveodds fra<br/>verdens førende<br/>betting sider</h2>
-            <h3 className="fs-wrapper-h2">Tag betting til nye højde med vores Livebetting. Placér væddemål i realtid, og forstør chancen for udbytte!</h3>
-            <div className="fs-container">
-                <div className="fs-element">
-                    <div className="fs-element-img" style={{marginTop: "3px"}}>
-                        <Image src={Money} alt="Penge" />
-                    </div>
-                    <p className="fs-element-p">50% Flere penge</p>
-                </div>
-                <div className="fs-element">
-                    <div className="fs-element-img">
-                        <Image src={Chart} alt="Graf" />
-                    </div>
-                    <p className="fs-element-p">100% Flere væddemål</p>
-                </div>
-            </div>
-            <div className="forside-black-blob">
-                <Image src={Mockup} />
             </div>
         </div>
         <div className="db-container">
