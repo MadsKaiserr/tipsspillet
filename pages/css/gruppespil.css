@@ -2063,6 +2063,22 @@
     background: -webkit-linear-gradient(-60deg, #21D4FD -50%, #B721FF 200%);
   }
 
+  .td-btn-off {
+    padding: 10px 15px;
+    border-radius: 3px;
+    color: #fff;
+    opacity: 0.5;
+    min-width: 111px;
+    font-size: 12px;
+    border: 0px;
+    font-weight: 500;
+    white-space: nowrap;
+    font-family: Inter;
+    cursor: pointer;
+    transition: 0.2s;
+    background: -webkit-linear-gradient(-60deg, #21D4FD -50%, #B721FF 200%);
+  }
+
   .tl-wrapper {
     display: flex;
     align-items: center;
@@ -2128,6 +2144,7 @@
     align-items: center;
     padding: 15px 30px;
     cursor: pointer;
+    width: 100%;
     transition: 0.2s;
     border-bottom: var(--surface) 1px solid;
   }

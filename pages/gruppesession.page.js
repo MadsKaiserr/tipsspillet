@@ -18,6 +18,7 @@ function Gruppesession ({data}) {
     const [password, setPassword] = useState("");
 
     const [varighed, setVarighed] = useState("0");
+    const [isTilmeldt, setIsTilmeldt] = useState(false);
     const [gameName, setGameName] = useState("Indlæser...");
     const [gamePlayers, setGamePlayers] = useState("Indlæser...");
     const [gameStart, setGameStart] = useState("Indlæser...");
@@ -76,6 +77,7 @@ function Gruppesession ({data}) {
         var antalKuponer = 0;
         var antalVundet = 0;
         var getForbrug = 0;
+        var validTilmeld = false;
         for (var i in data.players) {
             var kapital = data.players[i].info.money;
             gevinstVar = gevinstVar + (kapital - startValue);
@@ -83,8 +85,8 @@ function Gruppesession ({data}) {
             var playerKuponer = data.players[i].odds.length;
             antalKuponer = antalKuponer + playerKuponer;
             var finalKuponer = antalKuponer + "";
-            if (data.players[i].player === getUser() ? getUser().rolle : "") {
-                localStorage.setItem("notifikationer", data.players[i].info.notifikationer.length);
+            if (data.players[i].player === getUser().email) {
+                validTilmeld = true;
             }
             for (var q in data.players[i].odds) {
                 if (data.players[i].odds[q].vundet === 2) {
@@ -92,6 +94,9 @@ function Gruppesession ({data}) {
                 }
                 getForbrug = getForbrug + data.players[i].odds[q].indsats;
             }
+        }
+        if (validTilmeld) {
+            setIsTilmeldt(true);
         }
         setWinRate((antalVundet/antalKuponer)*100)
         setKuponer(finalKuponer);
@@ -342,7 +347,11 @@ function Gruppesession ({data}) {
                                 <p className="gruppespil-info-element-h1">{new Date(varighed).getDate().toString().padStart(2, '0') + "/" + (new Date(varighed).getMonth() + 1).toString().padStart(2, '0') + "/" + new Date(varighed).getFullYear().toString().padStart(2, '0')}</p>
                             </div>
                         </div>
-                        <button className="gruppeinvite-btn" onClick={() => {tilmeld()}}>{loading && <div className="loader" id="loader"></div>}{!loading && <>Tilmeld</>}</button>
+                        {isTilmeldt && <>
+                            <Link href="/stage"><button className="td-btn" style={{marginTop: "20px", fontSize: "14px"}}>Gå til betting</button></Link>
+                            <p className="gruppespil-info-element-p" style={{maxWidth: "450px", paddingTop: "7px", color: "var(--softBlack)", fontWeight: "300", margin: "auto"}}>Du er allerede tilmeldt dette gruppespil.</p>
+                        </>}
+                        {!isTilmeldt && <button className="td-btn" style={{marginTop: "20px", fontSize: "14px"}} onClick={() => {tilmeld()}}>{loading && <div className="loader" id="loader"></div>}{!loading && <>Tilmeld</>}</button>}
                     </div>}
                     {synlighed === "privat" && <div className="gruppespil-section" style={{justifyContent: "center", alignItems: "center", justifyContent: "center", textAlign: "center"}}>
                         <h1 className="gs-main-h1">{gameName}</h1>
@@ -360,10 +369,16 @@ function Gruppesession ({data}) {
                                 <p className="gruppespil-info-element-h1">{new Date(varighed).getDate().toString().padStart(2, '0') + "/" + (new Date(varighed).getMonth() + 1).toString().padStart(2, '0')}</p>
                             </div>
                         </div>
-                        <input type="password" value={password} style={{maxWidth: "250px", marginTop: "40px"}} onChange={event => setPassword(event.target.value)} className="op-input" placeholder='Gruppespillets kodeord' /><br />
-                        {password !== "" && <button className="gruppeinvite-btn" onClick={() => {tilmeld()}}>{loading && <div className="loader" id="loader"></div>}{!loading && <>Tilmeld</>}</button>}
-                        {password === "" && <button className="gruppeinvite-btn-off">Tilmeld</button>}
-                        <p className="gruppespil-info-element-p" style={{maxWidth: "450px", marginTop: "20px", fontWeight: "300", margin: "auto"}}>Gruppespillet er privat, og kræver derfor en adgangskode, som er sat af administratoren, for at du kan tilmelde dig.</p>
+                        {isTilmeldt && <>
+                            <Link href="/stage"><button className="td-btn" style={{marginTop: "20px"}}>Gå til betting</button></Link>
+                            <p className="gruppespil-info-element-p" style={{maxWidth: "450px", paddingTop: "7px", color: "var(--softBlack)", fontWeight: "300", margin: "auto"}}>Du er allerede tilmeldt dette gruppespil.</p>
+                        </>}
+                        {!isTilmeldt && <>
+                            <input type="password" value={password} style={{maxWidth: "250px", marginTop: "40px"}} onChange={event => setPassword(event.target.value)} className="op-input" placeholder='Gruppespillets kodeord' /><br />
+                            {password !== "" && <button className="td-btn" style={{marginTop: "20px", marginBottom: "10px", fontSize: "14px"}} onClick={() => {tilmeld()}}>{loading && <div className="loader" id="loader"></div>}{!loading && <>Tilmeld</>}</button>}
+                            {password === "" && <button className="td-btn-off" style={{marginTop: "20px", marginBottom: "10px", fontSize: "14px"}}>Tilmeld</button>}
+                            <p className="gruppespil-info-element-p" style={{maxWidth: "450px", marginTop: "20px", fontWeight: "300", margin: "auto"}}>Gruppespillet er privat, og kræver derfor en adgangskode, som er sat af administratoren, for at du kan tilmelde dig.</p>
+                        </>}
                     </div>}
                     {synlighed === "dyst" && <>
                         <div className="dyst-section">

@@ -1070,6 +1070,9 @@ function StageMatcharticle ({data}) {
     }
 
     function chooseOdd(btnId, type, row, result) {
+        if (matchAllowed === false) {
+            setNotiMessage("error", "Kamp er gået i gang", "Du kan ikke spille på en kamp, som allerede er gået i gang, eller er spillet færdig.")
+        }
         if (!notUsableBtn.includes(btnId) && matchAllowed !== false && odds.length < 5) {
             document.getElementById(btnId).classList.add("odd-used");
             setNotUsableBtn([...notUsableBtn, btnId]);
@@ -2487,12 +2490,13 @@ function StageMatcharticle ({data}) {
             </div>
         </div>
         <div className="match-kupon" id="match-kupon">
-            <div className="kupon-top-match">
-                    <svg xmlns="http://www.w3.org/2000/svg" id="kuponRev" onClick={() => {switchKupon()}} className="kupon-minimize deg180" viewBox="0 0 16 16">
-                        <path fillRule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
-                    </svg>
-                    <p className="kupon-header-p" id="kupon-title" onClick={() => {switchKupon()}}>{kuponType}</p>
-                    <p className="kupon-blue-match-p" onClick={() => emptyBets()}>Ryd alle</p>
+            <div className="kupon-top-match" onClick={() => {switchKupon()}}>
+                <svg xmlns="http://www.w3.org/2000/svg" id="kuponRev" className="kupon-minimize deg180" viewBox="0 0 16 16">
+                    <path fillRule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+                </svg>
+                {kuponState === "closed" &&  <p className="kupon-header-p" id="kupon-title">Tryk for at åbne kupon</p>}
+                {kuponState !== "closed" &&  <p className="kupon-header-p" id="kupon-title">{kuponType}</p>}
+                <p className="kupon-blue-match-p" onClick={() => emptyBets()}>Ryd alle</p>
             </div>
             <div className="kupon-type" id="kuponType">
                 <div className="kupon-type-element kupon-type-element-active" id="kombination" onClick={() => {setKuponType("Kombination")}}>Kombination</div>

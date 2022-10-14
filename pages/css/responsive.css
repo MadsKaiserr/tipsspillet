@@ -310,6 +310,9 @@
     position: relative !important;
     top: 0px !important;
   }
+  .forside-blob-img {
+    margin: auto !important;
+  }
   .forside-black-h1 {
     font-size: 44px !important;
     padding-bottom: 5px !important;
@@ -1651,6 +1654,11 @@
     right: -50px !important;
     bottom: -15px !important;
   }
+  .forside-blob-img {
+    width: 500px !important;
+    margin-top: 50px !important;
+    margin-left: -20px !important;
+  }
   .updates-con {
     width: 90% !important;
     padding: 25px 40px  !important;
@@ -1789,6 +1797,9 @@
   }
   #td-synlighed {
     display: none !important;
+  }
+  .forside-blob-img {
+    margin-left: -50px !important;
   }
 }
 
