@@ -428,7 +428,7 @@
   }
 
   .forside-stats-container {
-    background-color: #fff;
+    background-color: var(--surface);
   }
 
   .wrap-wrapper .wrap-container:nth-child(even) {

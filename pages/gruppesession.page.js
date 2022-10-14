@@ -85,8 +85,10 @@ function Gruppesession ({data}) {
             var playerKuponer = data.players[i].odds.length;
             antalKuponer = antalKuponer + playerKuponer;
             var finalKuponer = antalKuponer + "";
-            if (data.players[i].player === getUser().email) {
-                validTilmeld = true;
+            if (getUser()) {
+                if (data.players[i].player === getUser().email) {
+                    validTilmeld = true;
+                }
             }
             for (var q in data.players[i].odds) {
                 if (data.players[i].odds[q].vundet === 2) {
