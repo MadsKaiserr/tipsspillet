@@ -17,6 +17,7 @@ import { getUser } from "../services/authService";
 function StageMatcharticle ({data}) {
 
     const [grLeagues, setGrLeagues] = useState([]);
+    const [smallScreen, setSmallScreen] = useState(false);
 
     useEffect(() => {
         if (!cookie.get("matchVisited")) {
@@ -27,10 +28,13 @@ function StageMatcharticle ({data}) {
     useEffect(() => {
         getGame();
         if (window.innerWidth < 1020) {
+            setSmallScreen(true);
             if (document.getElementById("match-kupon")) {
                 document.getElementById("match-kupon").classList.add("kupon-min");
-                document.getElementById("kupon-title").innerHTML = "Tryk for at åbne kupon";
             }
+        } else {
+            setKuponState("open");
+            setSmallScreen(false);
         }
         if (odds !== null && odds !== undefined) {
             if (sessionStorage.getItem("odds") !== "" && sessionStorage.getItem("odds") !== null && sessionStorage.getItem("odds") !== undefined) {
@@ -55,12 +59,10 @@ function StageMatcharticle ({data}) {
             if (window.innerWidth < 1020) {
                 if (document.getElementById("match-kupon")) {
                     document.getElementById("match-kupon").classList.add("kupon-min");
-                    document.getElementById("kupon-title").innerHTML = "Tryk for at åbne kupon";
                 }
             } else {
                 if (document.getElementById("match-kupon")) {
                     document.getElementById("match-kupon").classList.remove("kupon-min");
-                    document.getElementById("kupon-title").innerHTML = kuponType;
                 }
             }
         })
@@ -2445,12 +2447,10 @@ function StageMatcharticle ({data}) {
             document.getElementById("match-kupon").classList.remove("kupon-min");
             document.getElementById("kuponRev").classList.remove("deg180");
             setKuponState("open");
-            document.getElementById("kupon-title").innerHTML = kuponType;
         } else if (kuponState === "open") {
             document.getElementById("match-kupon").classList.add("kupon-min");
             document.getElementById("kuponRev").classList.add("deg180");
             setKuponState("closed");
-            document.getElementById("kupon-title").innerHTML = "Tryk for at åbne kupon";
         }
     }
 
@@ -2494,8 +2494,13 @@ function StageMatcharticle ({data}) {
                 <svg xmlns="http://www.w3.org/2000/svg" id="kuponRev" className="kupon-minimize deg180" viewBox="0 0 16 16">
                     <path fillRule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
                 </svg>
-                {kuponState === "closed" &&  <p className="kupon-header-p" id="kupon-title">Tryk for at åbne kupon</p>}
-                {kuponState !== "closed" &&  <p className="kupon-header-p" id="kupon-title">{kuponType}</p>}
+                {smallScreen && <>
+                    {kuponState === "closed" &&  <p className="kupon-header-p">Tryk for at åbne kupon</p>}
+                    {kuponState !== "closed" &&  <p className="kupon-header-p">{kuponType}</p>}
+                </>}
+                {!smallScreen && <>
+                    <p className="kupon-header-p">{kuponType}</p>
+                </>}
                 <p className="kupon-blue-match-p" onClick={() => emptyBets()}>Ryd alle</p>
             </div>
             <div className="kupon-type" id="kuponType">

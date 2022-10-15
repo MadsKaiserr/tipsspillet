@@ -1819,6 +1819,6 @@
 
 @media only screen and (min-width: 1020px) {
   .kupon-min {
-    top: 195px !important;
+    top: auto !important;
   }
 }
