@@ -593,7 +593,7 @@ function Gruppesession ({data}) {
                             <div className="inv-element-a" onClick={() => {
                                 const queryString = window.location.search;
                                 const urlParams = new URLSearchParams(queryString);
-                                if (urlParams.get('game')) {navigator.clipboard.writeText("https://www.tipsspillet.dk/gruppesession?game=" + urlParams.get('game') + "&type=invite"); document.getElementById("copied").classList.remove("display-not"); setTimeout(function (){
+                                if (urlParams.get('game') && urlParams.get('game') !== null) {navigator.clipboard.writeText("https://www.tipsspillet.dk/gruppesession?game=" + urlParams.get('game') + "&type=invite"); document.getElementById("copied").classList.remove("display-not"); setTimeout(function (){
                 document.getElementById("copied").classList.add("display-not")
             }, 1000);} else {
                 navigator.clipboard.writeText("https://www.tipsspillet.dk/"); document.getElementById("copied").classList.remove("display-not"); setTimeout(function (){
@@ -632,7 +632,7 @@ function Gruppesession ({data}) {
                         </div>
                         <p className="find-h1">Find nye gruppespil</p>
                         <p className="find-p">Tilmeld dig offentlige eller private gruppespil, og spil mod familie og venner.</p>
-                        <Link href="/gruppespil"><button className="find-btn">Find gruppespil</button></Link>
+                        <Link href="/gruppespil"><button className="find-btn">Find nyt gruppespil</button></Link>
                     </div>
                 </div>
             </div>

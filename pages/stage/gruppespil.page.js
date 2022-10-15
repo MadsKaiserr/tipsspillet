@@ -926,7 +926,10 @@ function StageGruppespil ({data}) {
                                     <p className="gruppespil-scroll">Klik for at kopiere</p>
                                 </div>
                                 <div className="inv-container">
-                                <div className="inv-element-a" onClick={() => {if (activeGame) {navigator.clipboard.writeText("https://www.tipsspillet.dk/gruppesession?game=" + activeGame + "&type=invite"); document.getElementById("copied").classList.remove("display-not"); setTimeout(function (){
+                                <div className="inv-element-a" onClick={() => {
+                                const queryString = window.location.search;
+                                const urlParams = new URLSearchParams(queryString);
+                                if (urlParams.get('game') && urlParams.get('game') !== null) {navigator.clipboard.writeText("https://www.tipsspillet.dk/gruppesession?game=" + urlParams.get('game') + "&type=invite"); document.getElementById("copied").classList.remove("display-not"); setTimeout(function (){
                 document.getElementById("copied").classList.add("display-not")
             }, 1000);} else {
                 navigator.clipboard.writeText("https://www.tipsspillet.dk/"); document.getElementById("copied").classList.remove("display-not"); setTimeout(function (){
@@ -1475,7 +1478,10 @@ function StageGruppespil ({data}) {
                                     <p className="gruppespil-scroll">Klik for at kopiere</p>
                                 </div>
                                 <div className="inv-container">
-                                    <div className="inv-element-a" onClick={() => {if (activeGame) {navigator.clipboard.writeText("https://www.tipsspillet.dk/gruppesession?game=" + activeGame + "&type=invite"); document.getElementById("copied").classList.remove("display-not"); setTimeout(function (){
+                                    <div className="inv-element-a" onClick={() => {
+                                const queryString = window.location.search;
+                                const urlParams = new URLSearchParams(queryString);
+                                if (urlParams.get('game') && urlParams.get('game') !== null) {navigator.clipboard.writeText("https://www.tipsspillet.dk/gruppesession?game=" + urlParams.get('game') + "&type=invite"); document.getElementById("copied").classList.remove("display-not"); setTimeout(function (){
                 document.getElementById("copied").classList.add("display-not")
             }, 1000);} else {
                 navigator.clipboard.writeText("https://www.tipsspillet.dk/"); document.getElementById("copied").classList.remove("display-not"); setTimeout(function (){
@@ -1507,9 +1513,9 @@ function StageGruppespil ({data}) {
                 {!activeGame && <div className="gruppespil-section">
                             <div className="gruppespil-title">
                                 <h1 className="gruppespil-h1">Velkommen, {username && <>{username}</>}</h1><br></br>
-                                <p className="info-p">Du har ikke noget valgt spil.</p>
+                                <p className="info-p">Du har ikke noget valgt gruppespil.</p><br />
                                 <Link href="/stage/aktive-spil">
-                                    <button className="gruppespil-btn">Vælg spil</button>
+                                    <button className="td-btn" style={{marginTop: "10px", fontSize: "14px"}}>Vælg spil</button>
                                 </Link>
                             </div>
                             <div className="info-figure">
@@ -1517,7 +1523,7 @@ function StageGruppespil ({data}) {
                                 <div className="info-figure2"></div>
                             </div>
                 </div>}
-                <div className="gruppespil-section" style={{border: "0px", marginTop: "20px"}}>
+                {activeGame && <div className="gruppespil-section" style={{border: "0px", marginTop: "20px"}}>
                     <p className="find-h1">Opret et gruppespil</p>
                         <p className="find-p">Opret dit eget gruppespil, og inviter familie og venner til kamp.</p>
                     <button className="find-btn" onClick={() => {opretHandler()}}>Opret gruppespil</button>
@@ -1528,8 +1534,8 @@ function StageGruppespil ({data}) {
                     </div>
                     <p className="find-h1">Find nye gruppespil</p>
                     <p className="find-p">Tilmeld dig offentlige eller private gruppespil, og spil mod familie og venner.</p>
-                    <Link href="/gruppespil"><button className="find-btn">Find gruppespil</button></Link>
-                </div>
+                    <Link href="/gruppespil"><button className="find-btn">Find nyt gruppespil</button></Link>
+                </div>}
             </div>
         </>
     )
