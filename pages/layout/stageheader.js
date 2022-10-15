@@ -109,7 +109,7 @@ function StageHeader () {
                                 <Link href="#"><a className="nav-error-a">Find ud af hvorfor</a></Link>
                             </div>
                             <div className="nav-error">
-                                <p className="nav-info-p">Beta - V. 1.1.2</p>
+                                <p className="nav-info-p">Beta - V. 1.1.3</p>
                             </div>
                             <Link href="/stage/indstillinger">
                                 <div className="nav-link">
@@ -240,7 +240,7 @@ function StageHeader () {
                                                 <Link href="#"><a className="nav-error-a">Find ud af hvorfor</a></Link>
                                             </div>
                                             <div className="nav-error">
-                                                <p className="nav-info-p">Beta - V. 1.1.2</p>
+                                                <p className="nav-info-p">Beta - V. 1.1.3</p>
                                             </div>
                                             <Link href="/stage/indstillinger">
                                                 <div className="nav-link">
