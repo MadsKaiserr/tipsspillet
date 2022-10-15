@@ -21,7 +21,7 @@ function StageLeague ({data}) {
     }, [getUser()])
 
     const [loadingText, setLoadingText] = useState("Indlæser...");
-    const [nav, setNav] = useState("popular");
+    const [nav, setNav] = useState("oversigt");
 
     const [favorit, setFavorit] = useState(false);
 
@@ -193,6 +193,13 @@ function StageLeague ({data}) {
         .catch(error => console.log('error', error));
     }
 
+    useEffect(() => {
+        if (nav === "tabel" && !tabelOUsed) {
+            getTabel();
+            setTabelOUsed(true);
+        }
+    }, [nav])
+
     const [messageType, setMessageType] = useState("error-con-error");
     function setNotiMessage(type, heading, message) {
     window.scrollTo(0, 0)
@@ -207,74 +214,6 @@ function StageLeague ({data}) {
         document.getElementById("errorConH").innerHTML = heading;
         document.getElementById("errorConP").innerHTML = message;
     }
-
-    useEffect(() => {
-        if (nav === "popular") {
-            document.getElementById("popular").classList.add("display");
-            document.getElementById("kort").classList.remove("display");
-            document.getElementById("corner").classList.remove("display");
-            document.getElementById("goal").classList.remove("display");
-            document.getElementById("spillere").classList.remove("display");
-
-            document.getElementById("popularN").className = "oddsspil-element-active";
-            document.getElementById("kortN").className = "oddsspil-element";
-            document.getElementById("cornerN").className = "oddsspil-element";
-            document.getElementById("goalN").className = "oddsspil-element";
-            document.getElementById("spillereN").className = "oddsspil-element";
-        } else if (nav === "kort") {
-            document.getElementById("popular").classList.remove("display");
-            document.getElementById("kort").classList.add("display");
-            document.getElementById("corner").classList.remove("display");
-            document.getElementById("goal").classList.remove("display");
-            document.getElementById("spillere").classList.remove("display");
-
-            document.getElementById("popularN").className = "oddsspil-element";
-            document.getElementById("kortN").className = "oddsspil-element-active";
-            document.getElementById("cornerN").className = "oddsspil-element";
-            document.getElementById("goalN").className = "oddsspil-element";
-            document.getElementById("spillereN").className = "oddsspil-element";
-        } else if (nav === "corner") {
-            document.getElementById("popular").classList.remove("display");
-            document.getElementById("kort").classList.remove("display");
-            document.getElementById("corner").classList.add("display");
-            document.getElementById("goal").classList.remove("display");
-            document.getElementById("spillere").classList.remove("display");
-
-            document.getElementById("popularN").className = "oddsspil-element";
-            document.getElementById("kortN").className = "oddsspil-element";
-            document.getElementById("cornerN").className = "oddsspil-element-active";
-            document.getElementById("goalN").className = "oddsspil-element";
-            document.getElementById("spillereN").className = "oddsspil-element";
-
-            if (tabelOUsed === false) {
-                getTabel();
-            }
-        } else if (nav === "goal") {
-            document.getElementById("popular").classList.remove("display");
-            document.getElementById("kort").classList.remove("display");
-            document.getElementById("corner").classList.remove("display");
-            document.getElementById("goal").classList.add("display");
-            document.getElementById("spillere").classList.remove("display");
-
-            document.getElementById("popularN").className = "oddsspil-element";
-            document.getElementById("kortN").className = "oddsspil-element";
-            document.getElementById("cornerN").className = "oddsspil-element";
-            document.getElementById("goalN").className = "oddsspil-element-active";
-            document.getElementById("spillereN").className = "oddsspil-element";
-        } else if (nav === "spillere") {
-            document.getElementById("popular").classList.remove("display");
-            document.getElementById("kort").classList.remove("display");
-            document.getElementById("corner").classList.remove("display");
-            document.getElementById("goal").classList.remove("display");
-            document.getElementById("spillere").classList.add("display");
-
-            document.getElementById("popularN").className = "oddsspil-element";
-            document.getElementById("kortN").className = "oddsspil-element";
-            document.getElementById("cornerN").className = "oddsspil-element";
-            document.getElementById("goalN").className = "oddsspil-element";
-            document.getElementById("spillereN").className = "oddsspil-element-active";
-        }
-    }, [nav])
 
     function getGroups() {
         if (tabelType !== "") {
@@ -609,14 +548,34 @@ function StageLeague ({data}) {
                 </div>
                 <div className="match-info-con" id="team_match">
                     <div className="match-info-half-4">
-                        <div className="match-odds-nav" style={{padding: "0px", paddingBottom: "15px", paddingTop: "10px", overflow: "visible"}}>
-                            <button className="oddsspil-element-active" onClick={() => {setNav("popular")}} id="popularN">Oversigt</button>
-                            <button className="oddsspil-element" onClick={() => {setNav("kort")}} id="kortN">Resultater</button>
-                            <button className="oddsspil-element" onClick={() => {setNav("spillere")}} id="spillereN">Kommende</button>
-                            <button className="oddsspil-element" onClick={() => {setNav("corner")}} id="cornerN">Tabel</button>
-                            <button className="oddsspil-element" onClick={() => {setNav("goal")}} id="goalN">Statistikker</button>
+                        <div className="match-odds-nav">
+                            {nav === "oversigt" && <><button className="oddsspil-element-active" onClick={() => {setNav("oversigt")}} id="popularN">Oversigt</button>
+                            <button className="oddsspil-element" onClick={() => {setNav("resultater")}} id="kortN">Resultater</button>
+                            <button className="oddsspil-element" onClick={() => {setNav("kommende")}} id="spillereN">Kommende</button>
+                            <button className="oddsspil-element" onClick={() => {setNav("tabel")}} id="cornerN">Tabel</button>
+                            <button className="oddsspil-element" onClick={() => {setNav("statistikker")}} id="goalN">Statistikker</button></>}
+                            {nav === "resultater" && <><button className="oddsspil-element" onClick={() => {setNav("oversigt")}} id="popularN">Oversigt</button>
+                            <button className="oddsspil-element-active" onClick={() => {setNav("resultater")}} id="kortN">Resultater</button>
+                            <button className="oddsspil-element" onClick={() => {setNav("kommende")}} id="spillereN">Kommende</button>
+                            <button className="oddsspil-element" onClick={() => {setNav("tabel")}} id="cornerN">Tabel</button>
+                            <button className="oddsspil-element" onClick={() => {setNav("statistikker")}} id="goalN">Statistikker</button></>}
+                            {nav === "kommende" && <><button className="oddsspil-element" onClick={() => {setNav("oversigt")}} id="popularN">Oversigt</button>
+                            <button className="oddsspil-element" onClick={() => {setNav("resultater")}} id="kortN">Resultater</button>
+                            <button className="oddsspil-element-active" onClick={() => {setNav("kommende")}} id="spillereN">Kommende</button>
+                            <button className="oddsspil-element" onClick={() => {setNav("tabel")}} id="cornerN">Tabel</button>
+                            <button className="oddsspil-element" onClick={() => {setNav("statistikker")}} id="goalN">Statistikker</button></>}
+                            {nav === "tabel" && <><button className="oddsspil-element" onClick={() => {setNav("oversigt")}} id="popularN">Oversigt</button>
+                            <button className="oddsspil-element" onClick={() => {setNav("resultater")}} id="kortN">Resultater</button>
+                            <button className="oddsspil-element" onClick={() => {setNav("kommende")}} id="spillereN">Kommende</button>
+                            <button className="oddsspil-element-active" onClick={() => {setNav("tabel")}} id="cornerN">Tabel</button>
+                            <button className="oddsspil-element" onClick={() => {setNav("statistikker")}} id="goalN">Statistikker</button></>}
+                            {nav === "statistikker" && <><button className="oddsspil-element" onClick={() => {setNav("oversigt")}} id="popularN">Oversigt</button>
+                            <button className="oddsspil-element" onClick={() => {setNav("resultater")}} id="kortN">Resultater</button>
+                            <button className="oddsspil-element" onClick={() => {setNav("kommende")}} id="spillereN">Kommende</button>
+                            <button className="oddsspil-element" onClick={() => {setNav("tabel")}} id="cornerN">Tabel</button>
+                            <button className="oddsspil-element-active" onClick={() => {setNav("statistikker")}} id="goalN">Statistikker</button></>}
                         </div>
-                        <ul className="match-odds-contain display" id="popular">
+                        {nav === "oversigt" && <ul className="match-odds-contain">
                             <div className="team-indhold-side">
                                 <div className="team-kampe-section" id="seneste">
                                     <p className="team-kampe-h1">Resultater</p>
@@ -689,7 +648,7 @@ function StageLeague ({data}) {
                                             )}
                                         </ul>
                                         <div className="stage-indhold-down">
-                                            <div className="team-kampe-hold">
+                                            <div className="team-kampe-hold" onClick={() => {setNav("resultater");window.scrollTo(0,0)}}>
                                                 <p className="team-kampe-p">Se alle resultater</p>
                                             </div>
                                         </div>
@@ -766,15 +725,15 @@ function StageLeague ({data}) {
                                             )}
                                         </ul>
                                         <div className="stage-indhold-down">
-                                            <div className="team-kampe-hold">
+                                            <div className="team-kampe-hold" onClick={() => {setNav("kommende");window.scrollTo(0,0)}}>
                                                 <p className="team-kampe-p">Se alle kommende</p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </ul>
-                        <ul className="match-odds-contain" id="kort">
+                        </ul>}
+                        {nav === "resultater" && <ul className="match-odds-contain">
                             <div className="team-kampe-section" id="seneste">
                                 <p className="team-kampe-h1">Resultater</p>
                                 <div className="stage-kampe" id="latest">
@@ -845,15 +804,10 @@ function StageLeague ({data}) {
                                             }
                                         )}
                                     </ul>
-                                    <div className="stage-indhold-down">
-                                        <div className="team-kampe-hold">
-                                            <p className="team-kampe-p">Se alle resultater</p>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
-                        </ul>
-                        <ul className="match-odds-contain" id="spillere">
+                        </ul>}
+                        {nav === "kommende" && <ul className="match-odds-contain">
                             <div className="team-kampe-section" id="seneste">
                                 <p className="team-kampe-h1">Kommende</p>
                                 <div className="stage-kampe" id="latest">
@@ -924,20 +878,15 @@ function StageLeague ({data}) {
                                             }
                                         )}
                                     </ul>
-                                    <div className="stage-indhold-down">
-                                        <div className="team-kampe-hold">
-                                            <p className="team-kampe-p">Se alle resultater</p>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
-                        </ul>
-                        <ul className="match-odds-contain" id="corner">
+                        </ul>}
+                        {nav === "tabel" && <ul className="match-odds-contain">
                             <div className="team-kampe-section" id="seneste">
                                 {getGroups()}
                             </div>
-                        </ul>
-                        <ul className="match-odds-contain" id="goal">
+                        </ul>}
+                        {nav === "statistikker" && <ul className="match-odds-contain">
                             {isPremium && <>
                                 <div className="locked-wrapper">
                                     <div className="lock">
@@ -1040,8 +989,7 @@ function StageLeague ({data}) {
                                 </div>
                             </div>
                             </>}
-                        </ul>
-                        <ul className="match-odds-contain" id="spillere"></ul>
+                        </ul>}
                     </div>
                 </div>
             </div>

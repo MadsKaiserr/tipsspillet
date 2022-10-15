@@ -2598,6 +2598,7 @@ function StageMatcharticle ({data}) {
                     <p className="error-container-p" id="errorConP">Du har ikke placeret nogle væddemål. Placer ét eller flere væddemål, for at lave din kuppon.</p>
                 </div>
             </div>
+            {/* <div className="mf-match"></div> */}
             <Back />
             {getMatchInfo()}
             <div className="match-info-con">

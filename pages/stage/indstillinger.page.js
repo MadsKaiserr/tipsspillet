@@ -144,21 +144,18 @@ function StageIndstillinger ({data}) {
             </Head>
             <StageHeader />
             <div className="op-container">
-                <div className="op-top">
-                    {nav === "generelt" && <><div className="op-top-element-active">
-                        <div className="op-top-identifier">1</div>
-                        <p className="op-top-p">Generelt</p>
-                    </div>
-                    <div className="op-top-element">
-                        <div className="op-top-identifier">2</div>
-                        <p className="op-top-p">Notifikationer</p>
-                    </div>
-                    <div className="op-top-element">
-                        <div className="op-top-identifier">3</div>
-                        <p className="op-top-p">Abonnement</p>
-                    </div></>}
+                <div className="is-top">
+                    {nav === "generelt" && <><p className="is-top-p-active">Generelt</p>
+                    <p className="is-top-p" onClick={() => setNav("notifikationer")}>Notifikationer</p>
+                    <p className="is-top-p" onClick={() => setNav("abonnement")}>Abonnement</p></>}
+                    {nav === "notifikationer" && <><p className="is-top-p" onClick={() => setNav("generelt")}>Generelt</p>
+                    <p className="is-top-p-active">Notifikationer</p>
+                    <p className="is-top-p" onClick={() => setNav("abonnement")}>Abonnement</p></>}
+                    {nav === "abonnement" && <><p className="is-top-p" onClick={() => setNav("generelt")}>Generelt</p>
+                    <p className="is-top-p" onClick={() => setNav("notifikationer")}>Notifikationer</p>
+                    <p className="is-top-p-active">Abonnement</p></>}
                 </div>
-                {nav === "generelt" && <div className="op-content">
+                {nav === "generelt" && <><div className="op-content">
                     <p className="op-h1">Generelt</p>
                     <p className="op-h2">Generelle brugerindstillinger</p>
                     <div className="op-form">
@@ -179,10 +176,10 @@ function StageIndstillinger ({data}) {
                             <input type="password" value={"******"} disabled className="op-input" />
                         </div>
                     </div>
-                </div>}
+                </div>
                 {message !== "" && <p className="og-msg">{message}</p>}
                 {edited && <button className="wc-btn" onClick={() => updateProfile()}>Opdater profil</button>}
-                {!edited && <button className="wc-btn-off">Opdater profil</button>}
+                {!edited && <button className="wc-btn-off">Opdater profil</button>}</>}
             </div>
         </>
     )

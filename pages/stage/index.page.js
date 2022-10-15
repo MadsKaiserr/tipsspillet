@@ -1580,17 +1580,19 @@ function StageForside ({gruppespil_data, spiller_data}) {
                     return (
                         <>
                             <li key={league.season + league.name} className="stage-kampe-section">
-                                <div className="stage-kampe-head" onClick={() => router.push("/stage/league?id=" + league.season)}>
-                                    <p className="stage-league">
-                                        <Image width="18px" height="18px" className="inline-img" src={league.img} alt="" />
-                                        {league.name}{league.round !== undefined && <> | Runde {league.round}</>}
-                                    </p>
-                                    {(JSON.parse(localStorage.getItem("favoritter"))).findIndex(obj => obj.id === league.season) >= 0 && <>
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="var(--primary)" width="17px" height="17px" viewBox="0 0 16 16">
-                                            <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
-                                        </svg>
-                                    </>}
-                                </div>
+                                <Link href={"/stage/league?id=" + league.season}>
+                                    <a className="stage-kampe-head">
+                                        <p className="stage-league">
+                                            <Image width="18px" height="18px" className="inline-img" src={league.img} alt="" />
+                                            {league.name}{league.round !== undefined && <> | Runde {league.round}</>}
+                                        </p>
+                                        {(JSON.parse(localStorage.getItem("favoritter"))).findIndex(obj => obj.id === league.season) >= 0 && <>
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="var(--primary)" width="17px" height="17px" viewBox="0 0 16 16">
+                                                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                            </svg>
+                                        </>}
+                                    </a>
+                                </Link>
                                 <div className="stage-kampe">
                                     {loadingText}
                                     <ul>
@@ -2178,17 +2180,19 @@ function StageForside ({gruppespil_data, spiller_data}) {
                 return (
                     <>
                         <li key={league.season + league.name} className="stage-kampe-section">
-                            <div className="stage-kampe-head" onClick={() => router.push("/stage/league?id=" + league.season)}>
-                                <p className="stage-league">
-                                    <Image width="18px" height="18px" className="inline-img" src={league.img} alt="" />
-                                    {league.name}{league.round !== undefined && <> | Runde {league.round}</>}
-                                </p>
-                                {(JSON.parse(localStorage.getItem("favoritter"))).findIndex(obj => obj.id === league.season) >= 0 && <>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="var(--primary)" width="17px" height="17px" viewBox="0 0 16 16">
-                                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
-                                    </svg>
-                                </>}
-                            </div>
+                            <Link href={"/stage/league?id=" + league.season}>
+                                <a className="stage-kampe-head">
+                                    <p className="stage-league">
+                                        <Image width="18px" height="18px" className="inline-img" src={league.img} alt="" />
+                                        {league.name}{league.round !== undefined && <> | Runde {league.round}</>}
+                                    </p>
+                                    {(JSON.parse(localStorage.getItem("favoritter"))).findIndex(obj => obj.id === league.season) >= 0 && <>
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="var(--primary)" width="17px" height="17px" viewBox="0 0 16 16">
+                                            <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                        </svg>
+                                    </>}
+                                </a>
+                            </Link>
                             <div className="stage-kampe">
                                 {loadingText}
                                 <ul>
@@ -3004,13 +3008,14 @@ function StageForside ({gruppespil_data, spiller_data}) {
                     {activeGameName !== "Indlæser..." && <div className="info-section">
                         <p className="info-h1">Velkommen, {auth && <>{auth.username}</>}</p>
                         <p className="info-p">Valgte spil: <span className="info-p-span">{activeGameName}
-                            <Link href="/stage/aktive-spil">
-                                <button className="gruppespil2-btn" style={{marginTop: "0px"}}>Skift gruppespil</button>
-                            </Link>
                         </span></p><br />
                         <p className="info-p">Kapital: <span className="info-p-span">{parseInt(currentMoney)},00 kr.</span></p><br />
                         <p className="info-p">Placering: <span className="info-p-span">{position}</span> af <span className="info-p-span">{positionCount}</span></p><br />
-                        <p className="info-p">Slutdato: <span className="info-p-span">{slutdatostr}</span></p>
+                        <p className="info-p" style={{paddingBottom: "10px"}}>Slutdato: <span className="info-p-span">{slutdatostr}</span></p>
+                        <br />
+                        <Link href="/stage/aktive-spil">
+                            <button className="gruppespil2-btn" style={{marginTop: "0px"}}>Skift gruppespil</button>
+                        </Link>
                         <div className="info-figure">
                             <div className="info-figure1"></div>
                             <div className="info-figure2"></div>
@@ -3041,6 +3046,9 @@ function StageForside ({gruppespil_data, spiller_data}) {
                 </div>}
                 <div className="stage-main-kampe-section">
                     <div className="stage-main-matches">
+                        <div className="md-header" id="md-container">
+                            {getDates()}
+                        </div>
                         <div className="stage-main-matches-section">
                             <div className="stage-section-indhold" id="stage-main0">
                                 <div className="stage-section-top" onClick={() => {minField("favoritter")}}>
@@ -3152,9 +3160,6 @@ function StageForside ({gruppespil_data, spiller_data}) {
                              <p className="stage-kampe-h1">Kampe {chosenDate}</p>
                         </div>
                         <p className="nogames" id="nogames">Der kunne ikke findes nogen kampe d. {new Date(selected).getDate()}/{new Date(selected).getMonth() + 1}/{new Date(selected).getFullYear()}...</p>
-                        <div className="md-header" id="md-container">
-                            {getDates()}
-                        </div>
                         <ul>
                             {getMatches("dagens")}
                         </ul>
@@ -3174,7 +3179,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
                                                     <li key={item.name + item.image} className="display" style={{width: "100%"}}>
                                                         <div className="stage-team">
                                                             <Link href={"/stage/league?id=" + item.id}>
-                                                                <div className="stage-kampe-team2">
+                                                                <a className="stage-kampe-team2">
                                                                     <div className="stage-kampe-teams-div">
                                                                         <div className="stage-kampe-team">
                                                                             <div className="stage-img">
@@ -3189,7 +3194,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
                                                                     <svg xmlns="http://www.w3.org/2000/svg" className="team-icon" viewBox="0 0 16 16">
                                                                         <path fillRule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
                                                                     </svg>
-                                                                </div>
+                                                                </a>
                                                             </Link>
                                                         </div>
                                                     </li>
@@ -3199,7 +3204,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
                                                     <li key={item.name + item.image} className="display" style={{width: "100%"}}>
                                                         <div className="stage-team">
                                                             <Link href={"/stage/team?team=" + item.id}>
-                                                                <div className="stage-kampe-team2">
+                                                                <a className="stage-kampe-team2">
                                                                     <div className="stage-kampe-teams-div">
                                                                         <div className="stage-kampe-team">
                                                                             <div className="stage-img">
@@ -3214,7 +3219,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
                                                                     <svg xmlns="http://www.w3.org/2000/svg" className="team-icon" viewBox="0 0 16 16">
                                                                         <path fillRule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
                                                                     </svg>
-                                                                </div>
+                                                                </a>
                                                             </Link>
                                                         </div>
                                                     </li>

@@ -1785,6 +1785,15 @@
     background-color: var(--surface);
   }
 
+  .is-top {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+    background-color: var(--surface);
+  }
+
   .op-top-element {
     display: flex;
     align-items: center;
@@ -1892,6 +1901,33 @@
     border: 0px !important;
     background-color: var(--primary) !important;
     color: #fff !important;
+  }
+
+  .is-top-p {
+    font-family: Inter;
+    font-weight: 500;
+    font-size: 14px;
+    color: #333;
+    padding: 20px 10px;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: 0.2s;
+    border-bottom: 2.5px transparent solid;
+  }
+
+  .is-top-p:hover {
+    opacity: 1 !important;
+  }
+
+  .is-top-p-active {
+    font-family: Inter;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    color: #333;
+    padding: 20px 10px;
+    opacity: 1;
+    border-bottom: 2.5px var(--primary) solid;
   }
 
   .op-top-element-active .op-top-p {
@@ -3022,9 +3058,8 @@
     z-index: 2;
     height: 45px;
     background-color: #fff;
-    border-radius: 3px;
+    border-radius: 5px;
     margin-bottom: 15px;
-    margin-top: 5px;
     box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.05);
   }
 
@@ -3208,6 +3243,14 @@
     flex-direction: column;
     margin: 20px auto;
     box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.03);
+}
+
+.noti-section ul {
+  width: 100%;
+}
+
+.noti-section .gruppespil-kupon {
+  width: 100% !important;
 }
 
 .noti-section-success {
