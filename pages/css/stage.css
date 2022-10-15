@@ -2549,10 +2549,6 @@
     flex-flow: row nowrap;
   }
   
-  .kupon-min {
-    top: calc(100% - 46px) !important;
-  }
-  
   .message {
     display: none;
   }
@@ -4018,7 +4014,6 @@
   max-height: 400px;
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
   justify-content: stretch;
 }
 

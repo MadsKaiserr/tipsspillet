@@ -420,7 +420,7 @@ function StageGruppespil ({data}) {
                     {gameType === "dyst" && <div className="gruppespil-section" style={{marginTop: "20px", border: "0px"}}>
                             <a className="gruppespil-opret-own" onClick={() => opretHandler()}>Opret dit eget gruppespil</a>
                             <div className="gruppespil-info">
-                                <div className="gruppespil-title">
+                                <div className="gruppespil-title" style={{display: "flex", alignItems: "center", gap:"10px"}}>
                                     <h1 className="gruppespil-h1">{gameName}</h1>
                                     <Link href="/stage/aktive-spil">
                                         <button className="gruppespil2-btn">Skift gruppespil</button>
@@ -960,7 +960,7 @@ function StageGruppespil ({data}) {
                     {gameType !== "dyst" && <div className="gruppespil-section" style={{marginTop: "20px"}}>
                             <a className="gruppespil-opret-own" onClick={() => opretHandler()}>Opret dit eget gruppespil</a>
                             <div className="gruppespil-info">
-                                <div className="gruppespil-title">
+                                <div className="gruppespil-title" style={{display: "flex", alignItems: "center", gap:"10px"}}>
                                     <h1 className="gruppespil-h1">{gameName}</h1>
                                     <Link href="/stage/aktive-spil">
                                         <button className="gruppespil2-btn">Skift gruppespil</button>

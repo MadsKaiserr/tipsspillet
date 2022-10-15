@@ -218,7 +218,7 @@ function StageAktiveSpil ({ data }) {
                 <div className="td-box animation-fadetop" style={{margin: "auto", minHeight: "300px", backgroundColor: "transparent", paddingLeft: "0px", paddingRight: "0px", boxShadow: "none"}}>
                     <div className="td-wrapper">
                         <div className="match-loader display" id="stage-loader1"></div>
-                        <ul className="td-table" style={{maxHeight: "none"}}>
+                        <ul className="td-table" style={{maxHeight: "none", gap: "10px"}}>
                             {search.map((item) => {
                                 const index = item.players.findIndex(obj => obj.player === getUser().email);
                                 var Facebooks = 0;

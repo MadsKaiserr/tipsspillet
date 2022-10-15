@@ -57,8 +57,9 @@ function StageForside ({gruppespil_data, spiller_data}) {
         if (window.innerWidth < 1020) {
             if (document.getElementById("kupon")) {
                 document.getElementById("kupon").classList.add("kupon-min");
-                document.getElementById("kupon-title").innerHTML = "Tryk for at åbne kupon";
             }
+        } else {
+            setKuponState("open");
         }
 
         if (odds !== null && odds !== undefined) {
@@ -980,6 +981,18 @@ function StageForside ({gruppespil_data, spiller_data}) {
         }
    }, [])
 
+    function checkFeedback() {
+        if (localStorage.getItem("givenFeedback")) {
+            if (localStorage.getItem("givenFeedback") !== "true") {
+                setFeedback(true);
+                localStorage.setItem("givenFeedback", "true");
+            }
+        } else {
+            setFeedback(true);
+            localStorage.setItem("givenFeedback", "true");
+        }
+    }
+
     useEffect(() => {
         console.log("AWS - Gruppespil:", gruppespil_data)
         if (gruppespil_data.admin !== undefined && gruppespil_data.admin !== null) {
@@ -1448,24 +1461,21 @@ function StageForside ({gruppespil_data, spiller_data}) {
         );
     }
 
-    const [kuponState, setKuponState] = useState("");
+    const [kuponState, setKuponState] = useState("closed");
 
     function switchKupon() {
         if (kuponState === "closed") {
             document.getElementById("kupon").classList.remove("kupon-min");
             document.getElementById("kuponRev").classList.remove("deg180");
             setKuponState("open");
-            document.getElementById("kupon-title").innerHTML = kuponType;
         } else if (kuponState === "open") {
             document.getElementById("kupon").classList.add("kupon-min");
             document.getElementById("kuponRev").classList.add("deg180");
             setKuponState("closed");
-            document.getElementById("kupon-title").innerHTML = "Tryk for at åbne kupon";
         } else {
             document.getElementById("kupon").classList.remove("kupon-min");
             document.getElementById("kuponRev").classList.remove("deg180");
             setKuponState("open");
-            document.getElementById("kupon-title").innerHTML = kuponType;
         }
     }
 
@@ -2989,7 +2999,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
                 <p className="con-modal-h1">Din kupon er placeret!</p>
                 <p className="con-modal-p">Tag et kig under dit aktive gruppespil, for at se din kupon.</p>
                 <div className="modal-wrapper">
-                    <button className="con-modal-btn" onClick={() => {document.getElementById("placed-modal").classList.add("display-not")}}>Modtaget</button>
+                    <button className="con-modal-btn" onClick={() => {document.getElementById("placed-modal").classList.add("display-not");checkFeedback()}}>Modtaget</button>
                 </div>
             </div>
         </div>
@@ -3291,8 +3301,13 @@ function StageForside ({gruppespil_data, spiller_data}) {
                     <svg xmlns="http://www.w3.org/2000/svg" id="kuponRev" className="kupon-minimize deg180" viewBox="0 0 16 16">
                         <path fillRule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
                     </svg>
-                    {kuponState === "closed" &&  <p className="kupon-header-p" id="kupon-title">Tryk for at åbne kupon</p>}
-                    {kuponState !== "closed" &&  <p className="kupon-header-p" id="kupon-title">{kuponType}</p>}
+                    {window.innerWidth < 1020 && <>
+                        {kuponState === "closed" &&  <p className="kupon-header-p">Tryk for at åbne kupon</p>}
+                        {kuponState !== "closed" &&  <p className="kupon-header-p">{kuponType}</p>}
+                    </>}
+                    {window.innerWidth >= 1020 && <>
+                        <p className="kupon-header-p">{kuponType}</p>
+                    </>}
                     <p className="kupon-blue-match-p" onClick={() => emptyBets()}>Ryd alle</p>
                 </div>
                 <div className="kupon-type" id="kuponType">

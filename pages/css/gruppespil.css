@@ -1045,12 +1045,6 @@
     position: relative;
 }
 
-.gruppespil-title {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
 .gruppespil-h1 {
     font-family: Inter;
     font-weight: 500;

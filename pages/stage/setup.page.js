@@ -263,7 +263,7 @@ function Setup () {
                     </div>
                     <div className="wc-content">
                         <p className="wc-h2">Gratis Plus abonnement i hele Test-Perioden</p>
-                        <p className="wc-h4" style={{paddingTop: "10px"}}>For at vise vores taknemlighed, vil vi udlodde gratis Premium abonnement til alle testere på Tipsspillet. Det vil sige du nu kan oprette egne gruppespil, se yderligere statistikker og meget mere!</p>
+                        <p className="wc-h4" style={{paddingTop: "10px"}}>For at vise vores taknemlighed, vil vi udlodde gratis Plus abonnement til alle testere på Tipsspillet. Det vil sige du nu kan oprette egne gruppespil, se yderligere statistikker og meget mere!</p>
                         <p className="wc-h4" style={{paddingBottom: "15px"}}>Hvis du er interesseret i at støtte os, kan du opgradere til Premium på abonnement-siden.</p>
                     </div>
                     <button className="wc-btn" onClick={() => {setFreemium(false); cookie.set("freemium", "true")}}>Indløs</button>

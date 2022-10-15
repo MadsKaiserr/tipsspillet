@@ -131,12 +131,6 @@
   visibility: hidden;
 }
 
-@media only screen and (min-width: 1020px) {
-  .kupon-min {
-    top: 210px !important;
-  }
-}
-
 .gs-wrapper .gruppespil-section {
   width: 100% !important;
 }
@@ -542,6 +536,9 @@
 @media only screen and (max-width: 1000px) {
   .gruppetable-number2 {
     display: none !important;
+  }
+  .kupon-min {
+    top: calc(100% - 46px) !important;
   }
   .gruppetable-number2-el2 {
     display: none !important;
@@ -1817,5 +1814,11 @@
   }
   .header-buttons {
     display: none !important;
+  }
+}
+
+@media only screen and (min-width: 1020px) {
+  .kupon-min {
+    top: 195px !important;
   }
 }
