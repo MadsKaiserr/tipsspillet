@@ -22,6 +22,8 @@ function StageForside ({gruppespil_data, spiller_data}) {
 
     const [loading, setLoading] = useState(false);
 
+    const [smallScreen, setSmallScreen] = useState(false);
+
     function indsendFeedback() {
         setLoading(true);
         const signupURL = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/kontakt";
@@ -55,11 +57,13 @@ function StageForside ({gruppespil_data, spiller_data}) {
 
     useEffect(() => {
         if (window.innerWidth < 1020) {
+            setSmallScreen(true);
             if (document.getElementById("kupon")) {
                 document.getElementById("kupon").classList.add("kupon-min");
             }
         } else {
             setKuponState("open");
+            setSmallScreen(false);
         }
 
         if (odds !== null && odds !== undefined) {
@@ -3301,11 +3305,11 @@ function StageForside ({gruppespil_data, spiller_data}) {
                     <svg xmlns="http://www.w3.org/2000/svg" id="kuponRev" className="kupon-minimize deg180" viewBox="0 0 16 16">
                         <path fillRule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
                     </svg>
-                    {window.innerWidth < 1020 && <>
+                    {smallScreen && <>
                         {kuponState === "closed" &&  <p className="kupon-header-p">Tryk for at åbne kupon</p>}
                         {kuponState !== "closed" &&  <p className="kupon-header-p">{kuponType}</p>}
                     </>}
-                    {window.innerWidth >= 1020 && <>
+                    {!smallScreen && <>
                         <p className="kupon-header-p">{kuponType}</p>
                     </>}
                     <p className="kupon-blue-match-p" onClick={() => emptyBets()}>Ryd alle</p>
