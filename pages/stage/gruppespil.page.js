@@ -62,6 +62,7 @@ function StageGruppespil ({data}) {
     const [username, setUsername] = useState("");
 
     const [playerOdds, setPlayerOdds] = useState([]);
+    const [adminUser, setAdminUser] = useState(false);
 
     const [time, setTime] = useState(false);
     const [timeText, setTimeText] = useState("");
@@ -173,6 +174,9 @@ function StageGruppespil ({data}) {
                 setTableArray(newTableArray => [...newTableArray, item]);
             });
             setLoadingText("")
+            if (data.admin === getUser().username) {
+                setAdminUser(true);
+            }
         } else {
             if (cookie.get("activeGame")) {
                 document.getElementById("main-error").classList.add("display-flex");
@@ -181,20 +185,6 @@ function StageGruppespil ({data}) {
             }
         }
     }, [])
-
-    function adminSettings() {
-        if (gameAdmin === getUser().email){
-            return (
-                <Link href="">
-                    <button className="gruppespil3-btn">Indstillinger</button>
-                </Link>
-            );
-        } else {
-            return (
-                <></>
-            );
-        }
-    }
 
     const sendBesked = event => {
         event.preventDefault();
@@ -425,7 +415,6 @@ function StageGruppespil ({data}) {
                                     <Link href="/stage/aktive-spil">
                                         <button className="gruppespil2-btn">Skift gruppespil</button>
                                     </Link>
-                                    {adminSettings()}
                                 </div>
                                 <div className="gruppespil-info-info">
                                     <div className="gruppespil-info-element">
@@ -965,7 +954,13 @@ function StageGruppespil ({data}) {
                                     <Link href="/stage/aktive-spil">
                                         <button className="gruppespil2-btn">Skift gruppespil</button>
                                     </Link>
-                                    {adminSettings()}
+                                    {adminUser && <Link href={"/stage/gruppespil/indstillinger?id=" + activeGame}>
+                                        <button className="gruppespil2-btn">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="14.5" height="14.5" fill="#fff" viewBox="0 0 16 16">
+                                                <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z"/>
+                                            </svg>
+                                        </button>
+                                    </Link>}
                                 </div>
                                 <div className="gruppespil-info-info">
                                     <div className="gruppespil-info-element">

@@ -1786,6 +1786,7 @@
   }
   .as-element {
     padding: 15px 20px !important;
+    max-width: 100% !important;
   }
 }
 

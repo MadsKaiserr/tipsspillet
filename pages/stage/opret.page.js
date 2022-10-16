@@ -220,48 +220,15 @@ function Opret ({ }) {
                 <meta name="robots" content="noindex" />
             </Head>
             <StageHeader />
-            <div className="op-container">
-                <div className="op-top">
-                    {nav === "generelt" && <><div className="op-top-element-active">
-                        <div className="op-top-identifier">1</div>
-                        <p className="op-top-p">Generelt</p>
-                    </div>
-                    <div className="op-top-element">
-                        <div className="op-top-identifier">2</div>
-                        <p className="op-top-p">Økonomi</p>
-                    </div>
-                    <div className="op-top-element">
-                        <div className="op-top-identifier">3</div>
-                        <p className="op-top-p">Offentliggør</p>
-                    </div></>}
-                    {nav === "eco" && <><div className="op-top-element-active">
-                        <div className="op-top-identifier">1</div>
-                        <p className="op-top-p">Generelt</p>
-                    </div>
-                    <div className="op-top-element-active">
-                        <div className="op-top-identifier">2</div>
-                        <p className="op-top-p">Økonomi</p>
-                    </div>
-                    <div className="op-top-element">
-                        <div className="op-top-identifier">3</div>
-                        <p className="op-top-p">Offentliggør</p>
-                    </div></>}
-                    {nav === "publish" && <><div className="op-top-element-active">
-                        <div className="op-top-identifier">1</div>
-                        <p className="op-top-p">Generelt</p>
-                    </div>
-                    <div className="op-top-element-active">
-                        <div className="op-top-identifier">2</div>
-                        <p className="op-top-p">Økonomi</p>
-                    </div>
-                    <div className="op-top-element-active">
-                        <div className="op-top-identifier">3</div>
-                        <p className="op-top-p">Offentliggør</p>
-                    </div></>}
-                </div>
-                {nav === "generelt" && <div className="op-content">
-                    <p className="op-h1">Generelt</p>
-                    <p className="op-h2">Angiv gruppespillets navn, samt datoen gruppespillet skal slutte.</p>
+            <Height />
+            <div className="match-figure" style={{top: "200px"}}>
+                <div className="info-figure1"></div>
+                <div className="info-figure2"></div>
+            </div>
+            <div className="stage-main-article-container">
+                <div className="gruppespil-section">
+                    <p className="op-h1">Opret gruppespil</p>
+                    <p className="op-h2">Opret dit eget gruppespil</p>
                     <div className="op-form">
                         <div className="op-form-element">
                             <p className="op-form-p">Gruppespillets navn</p>
@@ -271,75 +238,28 @@ function Opret ({ }) {
                             <p className="op-form-p">Slutdato</p>
                             <input type="date" value={spilVarighed} onChange={event => setVarighed(event.target.value)} className="op-input" />
                         </div>
-                    </div>
-                </div>}
-                {nav === "eco" && <div className="op-content">
-                    <p className="op-h1">Økonomi</p>
-                    <p className="op-h2">Angiv gruppespillets økonomi. Herunder startbeløb, minimum og maksimum beløb pr væddemål og indskydelse hver uge.</p>
-                    <div className="op-form">
                         <div className="op-form-element">
-                            <p className="op-form-p">Startbeløb</p>
-                            <input type="number" value={spilStart} onChange={event => setStart(event.target.value)} className="op-input" placeholder="0" />
-                        </div>
-                        <div className="op-box" onClick={() => {if (minSetting){setMinSetting(false)}else{setMinSetting(true)}}}>
-                            {minSetting && <div className="op-input-tick-active"><svg xmlns="http://www.w3.org/2000/svg" fill="#fff" width="16" height="16" viewBox="0 0 16 16">
-                                        <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
-                                    </svg></div>}
-                            {!minSetting && <div className="op-input-tick"></div>}
-                            <p className="op-form-p">Tilføj minimumsbeløb</p>
-                        </div>
-                        {minSetting && <div className="op-form-element">
-                            <p className="op-form-p">Mininumbeløb</p>
-                            <input type="number" value={spilMin} onChange={event => setMin(event.target.value)} className="op-input" placeholder="0" />
-                        </div>}
-                        <div className="op-box" onClick={() => {if (maksSetting){setMaksSetting(false)}else{setMaksSetting(true)}}}>
-                            {maksSetting && <div className="op-input-tick-active"><svg xmlns="http://www.w3.org/2000/svg" fill="#fff" width="16" height="16" viewBox="0 0 16 16">
-                                        <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
-                                    </svg></div>}
-                            {!maksSetting && <div className="op-input-tick"></div>}
-                            <p className="op-form-p">Tilføj maksbeløb</p>
-                        </div>
-                        {maksSetting && <div className="op-form-element">
-                            <p className="op-form-p">Maksbeløb</p>
-                            <input type="number" value={spilMax} onChange={event => setMax(event.target.value)} className="op-input" placeholder="0" />
-                        </div>}
-                        <div className="op-box" onClick={() => {if (indskydelseSetting){setIndskydelseSetting(false)}else{setIndskydelseSetting(true)}}}>
-                            {indskydelseSetting && <div className="op-input-tick-active"><svg xmlns="http://www.w3.org/2000/svg" fill="#fff" width="16" height="16" viewBox="0 0 16 16">
-                                        <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
-                                    </svg></div>}
-                            {!indskydelseSetting && <div className="op-input-tick"></div>}
-                            <p className="op-form-p">Tilføj ugentligt indskydelse</p>
-                        </div>
-                        {indskydelseSetting && <div className="op-form-element">
-                            <p className="op-form-p">Ugentligt indskydelse</p>
-                            <input type="number" value={indskydelse} onChange={event => setIndskydelse(event.target.value)} className="op-input" placeholder="0" />
-                        </div>}
-                    </div>
-                </div>}
-                {nav === "publish" && <div className="op-content">
-                    <p className="op-h1">Offentliggør gruppespil</p>
-                    <p className="op-h2">Angiv gruppespillets synlighed og forbyd ligaer.</p>
-                    <div className="op-form">
-                        <div className="op-form-element">
-                            <div className="op-box" style={{marginTop: "0px"}} onClick={() => {if (spilSynlighed === "offentlig"){setSynlighed("privat")}else{setSynlighed("offentlig")}}}>
+                            <p className="op-form-p">Synlighed</p>
+                            <div className="op-box" style={{marginTop: "10px"}} onClick={() => {if (spilSynlighed === "offentlig"){setSynlighed("privat")}else{setSynlighed("offentlig")}}}>
                                 {spilSynlighed === "offentlig" && <div className="op-input-tick-active"><svg xmlns="http://www.w3.org/2000/svg" fill="#fff" width="16" height="16" viewBox="0 0 16 16">
                                         <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
                                     </svg></div>}
                                 {spilSynlighed === "privat" && <div className="op-input-tick"></div>}
-                                <p className="op-form-p">Offentligt gruppespil</p>
+                                <p className="op-form-p" style={{fontWeight: "400", fontSize: "14px"}}>Offentligt gruppespil</p>
                             </div>
                         </div>
                         {spilSynlighed === "privat" && <div className="op-form-element">
                             <p className="op-form-p">Kodeord til tilmelding</p>
                             <input type="password" value={password} onChange={event => setPassword(event.target.value)} className="op-input" autoComplete='off' />
                         </div>}
-                        <div className="op-form-element" style={{marginTop: "10px"}}>
-                            <div className="op-box" style={{marginTop: "0px"}} onClick={() => {if (leagueSetting){setLeagueSetting(false)}else{setLeagueSetting(true)}}}>
+                        <div className="op-form-element">
+                            <p className="op-form-p">Specielle ligaer</p>
+                            <div className="op-box" style={{marginTop: "10px"}} onClick={() => {if (leagueSetting){setLeagueSetting(false)}else{setLeagueSetting(true)}}}>
                                 {!leagueSetting && <div className="op-input-tick-active"><svg xmlns="http://www.w3.org/2000/svg" fill="#fff" width="16" height="16" viewBox="0 0 16 16">
                                         <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
                                     </svg></div>}
                                 {leagueSetting && <div className="op-input-tick"></div>}
-                                <p className="op-form-p">Alle ligaer</p>
+                                <p className="op-form-p" style={{fontWeight: "400", fontSize: "14px"}}>Alle ligaer</p>
                             </div>
                         </div>
                         {leagueSetting && <div className="setup-element">
@@ -425,16 +345,55 @@ function Opret ({ }) {
                                 })}
                             </ul>
                         </div>}
+                        <div className="op-form-element">
+                            <p className="op-form-p">Startbeløb</p>
+                            <input type="number" value={spilStart} onChange={event => setStart(event.target.value)} className="op-input" placeholder="0" />
+                        </div>
+                        <div className="op-form-element">
+                            <p className="op-form-p">Minimumsbeløb</p>
+                            <div className="op-box" style={{marginTop: "10px"}} onClick={() => {if (minSetting){setMinSetting(false)}else{setMinSetting(true)}}}>
+                                {minSetting && <div className="op-input-tick-active"><svg xmlns="http://www.w3.org/2000/svg" fill="#fff" width="16" height="16" viewBox="0 0 16 16">
+                                            <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                                        </svg></div>}
+                                {!minSetting && <div className="op-input-tick"></div>}
+                                <p className="op-form-p" style={{fontWeight: "400", fontSize: "14px"}}>Tilføj minimumsbeløb</p>
+                            </div>
+                        </div>
+                        {minSetting && <div className="op-form-element">
+                            <p className="op-form-p">Mininumbeløb</p>
+                            <input type="number" value={spilMin} onChange={event => setMin(event.target.value)} className="op-input" placeholder="0" />
+                        </div>}
+                        <div className="op-form-element">
+                            <p className="op-form-p">Maksbeløb</p>
+                            <div className="op-box" style={{marginTop: "10px"}} onClick={() => {if (maksSetting){setMaksSetting(false)}else{setMaksSetting(true)}}}>
+                                {maksSetting && <div className="op-input-tick-active"><svg xmlns="http://www.w3.org/2000/svg" fill="#fff" width="16" height="16" viewBox="0 0 16 16">
+                                            <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                                        </svg></div>}
+                                {!maksSetting && <div className="op-input-tick"></div>}
+                                <p className="op-form-p" style={{fontWeight: "400", fontSize: "14px"}}>Tilføj maksbeløb</p>
+                            </div>
+                        </div>
+                        {maksSetting && <div className="op-form-element">
+                            <p className="op-form-p">Maksbeløb</p>
+                            <input type="number" value={spilMax} onChange={event => setMax(event.target.value)} className="op-input" placeholder="0" />
+                        </div>}
+                        <div className="op-form-element">
+                            <p className="op-form-p">Indskydelse</p>
+                            <div className="op-box" style={{marginTop: "10px"}} onClick={() => {if (indskydelseSetting){setIndskydelseSetting(false)}else{setIndskydelseSetting(true)}}}>
+                                {indskydelseSetting && <div className="op-input-tick-active"><svg xmlns="http://www.w3.org/2000/svg" fill="#fff" width="16" height="16" viewBox="0 0 16 16">
+                                            <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                                        </svg></div>}
+                                {!indskydelseSetting && <div className="op-input-tick"></div>}
+                                <p className="op-form-p" style={{fontWeight: "400", fontSize: "14px"}}>Tilføj ugentligt indskydelse</p>
+                            </div>
+                        </div>
+                        {indskydelseSetting && <div className="op-form-element">
+                            <p className="op-form-p">Ugentligt indskydelse</p>
+                            <input type="number" value={indskydelse} onChange={event => setIndskydelse(event.target.value)} className="op-input" placeholder="0" />
+                        </div>}
                     </div>
-                </div>}
-                {message !== "" && <p className="form-error">{message}</p>}
-                <div className="op-cta">
-                    {nav === "generelt" && <><button className="op-cta-secondary" onClick={() => window.open("/stage/aktive-spil", "_self")}>Afbryd</button>
-                    <button className="op-cta-primary" onClick={() => setNav("eco")}>Næste</button></>}
-                    {nav === "eco" && <><button className="op-cta-secondary" onClick={() => setNav("generelt")}>Tilbage</button>
-                    <button className="op-cta-primary" onClick={() => setNav("publish")}>Næste</button></>}
-                    {nav === "publish" && <><button className="op-cta-secondary" onClick={() => setNav("eco")}>Tilbage</button>
-                    <button className="op-cta-primary" onClick={opretHandler}>{loading && <div className="loader" id="loader"></div>}{!loading && <>Opret gruppespil</>}</button></>}
+                    {message !== "" && <p className="form-error">{message}</p>}
+                    <button className="wc-btn" onClick={opretHandler}>{loading && <div className="loader" id="loader"></div>}{!loading && <>Opret Gruppespil</>}</button>
                 </div>
             </div>
         </>

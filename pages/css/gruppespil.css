@@ -1092,6 +1092,9 @@
     font-weight: 400;
     border-radius: 3px;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .gruppespil2-btn:hover {
@@ -2106,6 +2109,7 @@
   .as-element {
     display: flex;
     flex-grow: 1;
+    max-width: 50%;
     align-items: center;
     justify-content: space-between;
     text-align: center;
