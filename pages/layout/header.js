@@ -215,7 +215,7 @@ function Header () {
                                     {Object.keys(auth).length === 0 && <p onClick={() => {showLogin();closeMenu()}} className="sidemenu-p">Log ind</p>}
                                     {Object.keys(auth).length === 0 && <Link href="/signup"><a onClick={() => closeMenu()} className="sidemenu-p">Opret profil</a></Link>}
                                     {Object.keys(auth).length > 0 && <Link href="/stage"><a onClick={() => closeMenu()} className="sidemenu-p">Log ind</a></Link>}
-                                    <Link href="/gruppespil"><a onClick={() => closeMenu()} className="sidemenu-p">Find gruppespil</a></Link>
+                                    <Link href="/gruppespil"><a onClick={() => closeMenu()} className="sidemenu-p">Find nye gruppespil</a></Link>
                                     <Link href="/priser"><a onClick={() => closeMenu()} className="sidemenu-p">Priser - abonnement</a></Link>
                                     <Link href="/blog"><a onClick={() => closeMenu()} className="sidemenu-p">Tipsspillet Blog</a></Link>
                                     <Link href="/faq"><a onClick={() => closeMenu()} className="sidemenu-p">FAQ - Spørgsmål og svar</a></Link>

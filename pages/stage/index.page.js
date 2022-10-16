@@ -2986,7 +2986,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
         {getCurrentLeagues()}
         <div className="modal-test display-not" id="bet-modal">
             <div className="modal-con">
-                <p className="con-modal-p">Er du sikker på, at du vil placere din kupon, med en indsats på {indsats},00 kr? Dette beløb er ikke refunderbart.</p>
+                <p className="con-modal-p">Er du sikker på, at du vil placere din kupon, med en indsats på {indsats},00 kr?</p>
                 <div className="modal-wrapper">
                     <button className="con-modal-btn" id="placeBetBTN1" onClick={() => {var placeBetBTN = document.getElementById("placeBetBTN");
                         placeBetBTN.innerHTML = "<div className='loader'></div>";

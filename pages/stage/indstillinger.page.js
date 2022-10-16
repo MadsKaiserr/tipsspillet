@@ -171,10 +171,6 @@ function StageIndstillinger ({data}) {
                             <p className="op-form-p">Email</p>
                             <input type="text" value={emailField} onChange={event => setEmailField(event.target.value)} className="op-input" />
                         </div>
-                        <div className="op-form-element">
-                            <p className="op-form-p">Kodeord</p>
-                            <input type="password" value={"******"} disabled className="op-input" />
-                        </div>
                     </div>
                 </div>
                 {message !== "" && <p className="og-msg">{message}</p>}

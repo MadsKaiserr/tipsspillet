@@ -349,7 +349,6 @@ function StageHeader () {
                                             <Link href="/stage"><a className="sidemenu-p" onClick={() => closeMenu()}>Lav kupon</a></Link>
                                             <Link href="/stage/gruppespil"><a className="sidemenu-p" onClick={() => closeMenu()}>Gruppespil</a></Link>
                                             <Link href="/priser"><a className="sidemenu-p" onClick={() => closeMenu()}>Abonnement</a></Link>
-                                            <Link href="/gruppespil"><a className="sidemenu-p" onClick={() => closeMenu()}>Opret/Find gruppespil</a></Link>
                                             <Link href="/stage/faq"><a className="sidemenu-p" onClick={() => closeMenu()}>Spørgsmål og svar</a></Link>
                                             <p onClick={() => logout()} className="sidemenu-p">Log ud</p>
                                         </div>
@@ -371,9 +370,6 @@ function StageHeader () {
                     </div>
                     <div className="nav-link-container">
                         <Link href="/priser"><a className="nav-p-stage">Abonnement</a></Link>
-                    </div>
-                    <div className="nav-link-container">
-                        <Link href="/gruppespil"><a className="nav-p-stage">Find gruppespil</a></Link>
                     </div>
                 </nav>
             </header>
