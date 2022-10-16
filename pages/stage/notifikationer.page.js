@@ -78,7 +78,7 @@ function StageNotifikationer () {
                                             {noti.type === "bet_won" && <><p className="noti-sec-h1">Du har <span style={{color: "var(--green)"}}>vundet</span> en kupon</p>
                                             <p className="noti-sec-p">Du har vundet følgende kupon, og modtaget en udbetaling på <span className="noti-span">{noti.udbetaling} kr.</span></p></>}
                                             {noti.type === "bet_lose" && <><p className="noti-sec-h1">Du har <span style={{color: "var(--red)"}}>tabt</span> en kupon</p>
-                                            <p className="noti-sec-p">Du har tabt følgende kupon med <span className="noti-span">{noti.odds} væddemål.</span></p></>}
+                                            <p className="noti-sec-p">Du har tabt følgende kupon med <span className="noti-span">{noti.kupon[0].bets.length} væddemål.</span></p></>}
                                             <p className="noti-sec-dato">{new Date(noti.date).getDate().toString().padStart(2, '0') + "/" + (new Date(noti.date).getMonth() + 1).toString().padStart(2, '0') + " - " + new Date(noti.date).getHours().toString().padStart(2, '0') + ":" + new Date(noti.date).getMinutes().toString().padStart(2, '0')}</p>
                                         </div>
                                         <ul>

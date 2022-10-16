@@ -2552,6 +2552,15 @@
   .message {
     display: none;
   }
+
+  .ad-con {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 15px 0px;
+  }
   
   .message-none {
     display: none;

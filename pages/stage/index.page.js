@@ -3284,6 +3284,28 @@ function StageForside ({gruppespil_data, spiller_data}) {
                                     })}
                                 </div>
                         </div>
+                        {activeGame !== "1663746422584-482" && <div className="stage-main-small-section" style={{borderTop: "4px solid var(--primary)"}}>
+                            <div className="ad-con">
+                                <p className="as-h1" style={{fontSize: "22px"}}>Tipsspillet Præmiedyst</p>
+                                <p className="as-h2">Vind gavekort til Intersport op til 1000,-</p>
+                                {/* <p className="as-h2">Spillet slutter 14/11/2022</p> */}
+                                <div className="hero-info" style={{marginTop: "20px"}}>
+                                    <div className="hero-info-block" style={{width: "110px"}}>
+                                        <p className="hero-info-block-h1" style={{fontSize: "24px"}}>15</p>
+                                        <p className="hero-info-block-h2">Spillere</p>
+                                    </div>
+                                    <div className="hero-info-block" style={{width: "110px"}}>
+                                        <p className="hero-info-block-h1" style={{fontSize: "24px"}}>1000,-</p>
+                                        <p className="hero-info-block-h2">Startbeløb</p>
+                                    </div>
+                                    <div className="hero-info-block" style={{width: "110px"}}>
+                                        <p className="hero-info-block-h1" style={{fontSize: "24px"}}>14/11</p>
+                                        <p className="hero-info-block-h2">Slutdato</p>
+                                    </div>
+                                </div>
+                                <Link href="/gruppesession?game=1663746422584-482"><button className="td-btn">Tilmeld</button></Link>
+                            </div>
+                        </div>}
                         {/* <div className="stage-main-small-section">
                             <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7071523482288616"
                                 crossOrigin="anonymous"></script>
