@@ -3303,7 +3303,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
                                         <p className="hero-info-block-h2">Slutdato</p>
                                     </div>
                                 </div>
-                                <Link href="/gruppesession?game=1663746422584-482"><button className="td-btn">Tilmeld</button></Link>
+                                <button className="td-btn" onClick={() => window.open("/gruppesession?game=1663746422584-482", "_self")}>Tilmeld</button>
                             </div>
                         </div>}
                         {/* <div className="stage-main-small-section">

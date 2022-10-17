@@ -314,8 +314,7 @@ function Setup () {
                                         }
                                     }
                                     var returnable = <li key={item.id} className="tl-element">
-                                        <Link href={"/gruppesession?game=" + item.id}>
-                                        <div style={{width: "100%", height: "100%", display: "flex", alignItems: "center"}}>
+                                        <div style={{width: "100%", height: "100%", display: "flex", alignItems: "center"}} onClick={() => window.open("/gruppesession?game=" + item.id, "_self")}>
                                             <div className="tl-wrapper" id="td-navn">
                                                 <div className="tl-img">
                                                     {item.name.slice(0,1)}
@@ -344,8 +343,7 @@ function Setup () {
                                                 <p className="td-modifier-p" style={{paddingLeft: "8px"}} id="td-spillere">{item.players.length}</p>
                                             </div>}
                                             <p className="td-modifier-p" id="td-admin">{item.admin}</p>
-                                            </div>
-                                        </Link>
+                                        </div>
                                     </li>;
                                     if (currentType === "offentlige") {
                                         if (item.synlighed === "offentlig") {

@@ -165,38 +165,36 @@ function Gruppespil ({data, responseTime}) {
                                         }
                                     }
                                     var returnable = <li key={item.id} className="tl-element">
-                                        <Link href={"/gruppesession?game=" + item.id}>
-                                        <div style={{width: "100%", height: "100%", display: "flex", alignItems: "center"}}>
-                                            <div className="tl-wrapper" id="td-navn">
-                                                <div className="tl-img">
-                                                    {item.name.slice(0,1)}
-                                                </div>
-                                                <p className="td-modifier-p" style={{fontWeight: "500"}}>{item.name}</p>
+                                        <div style={{width: "100%", height: "100%", display: "flex", alignItems: "center"}} onClick={() => window.open("/gruppesession?game=" + item.id, "_self")}>
+                                        <div className="tl-wrapper" id="td-navn">
+                                            <div className="tl-img">
+                                                {item.name.slice(0,1)}
                                             </div>
-                                            <p className="td-modifier-p" id="td-synlighed">{item.synlighed}</p>
-                                            {facebookArray.length > 0 && <div className="tl-wrapper-show" id="td-spillere">
-                                                <ul className="tl-players">
-                                                    {facebookArray.slice(0,5).map((spiller) => {
-                                                        if (spiller.fb_logo_id) {
-                                                            return (
-                                                                <li key={spiller.fb_logo_id} className="td-player-img">
-                                                                    <Image layout="fill" src={"http://graph.facebook.com/"+ spiller.fb_logo_id +"/picture?type=square"} />
-                                                                </li>
-                                                            );
-                                                        }
-                                                    })}
-                                                </ul>
-                                                <p className="td-modifier-p" style={{paddingLeft: "8px", whiteSpace: "nowrap"}} id="td-spillere">+{item.players.length - Facebooks} flere</p>
-                                            </div>}
-                                            {facebookArray.length > 0 && <div className="tl-wrapper-hide" id="td-spillere">
-                                                <p className="td-modifier-p" style={{paddingLeft: "8px"}} id="td-spillere">{item.players.length}</p>
-                                            </div>}
-                                            {facebookArray.length <= 0 && <div className="tl-wrapper" id="td-spillere">
-                                                <p className="td-modifier-p" style={{paddingLeft: "8px"}} id="td-spillere">{item.players.length}</p>
-                                            </div>}
-                                            <p className="td-modifier-p" id="td-admin">{item.admin}</p>
-                                            </div>
-                                        </Link>
+                                            <p className="td-modifier-p" style={{fontWeight: "500"}}>{item.name}</p>
+                                        </div>
+                                        <p className="td-modifier-p" id="td-synlighed">{item.synlighed}</p>
+                                        {facebookArray.length > 0 && <div className="tl-wrapper-show" id="td-spillere">
+                                            <ul className="tl-players">
+                                                {facebookArray.slice(0,5).map((spiller) => {
+                                                    if (spiller.fb_logo_id) {
+                                                        return (
+                                                            <li key={spiller.fb_logo_id} className="td-player-img">
+                                                                <Image layout="fill" src={"http://graph.facebook.com/"+ spiller.fb_logo_id +"/picture?type=square"} />
+                                                            </li>
+                                                        );
+                                                    }
+                                                })}
+                                            </ul>
+                                            <p className="td-modifier-p" style={{paddingLeft: "8px", whiteSpace: "nowrap"}} id="td-spillere">+{item.players.length - Facebooks} flere</p>
+                                        </div>}
+                                        {facebookArray.length > 0 && <div className="tl-wrapper-hide" id="td-spillere">
+                                            <p className="td-modifier-p" style={{paddingLeft: "8px"}} id="td-spillere">{item.players.length}</p>
+                                        </div>}
+                                        {facebookArray.length <= 0 && <div className="tl-wrapper" id="td-spillere">
+                                            <p className="td-modifier-p" style={{paddingLeft: "8px"}} id="td-spillere">{item.players.length}</p>
+                                        </div>}
+                                        <p className="td-modifier-p" id="td-admin">{item.admin}</p>
+                                        </div>
                                     </li>;
                                     if (currentType === "offentlige") {
                                         if (item.synlighed === "offentlig") {

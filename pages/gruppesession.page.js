@@ -10,7 +10,7 @@ import { useRouter } from 'next/router'
 import { getUser } from "./services/authService";
 import Back from './components/back';
  
-function Gruppesession ({data}) {
+function Gruppesession ({data, allowed}) {
     const router = useRouter()
     const [tableArray, setTableArray] = useState([]);
 
@@ -44,65 +44,67 @@ function Gruppesession ({data}) {
 
     useEffect(() => {
         console.log("AWS - Gruppesession:", data)
-        setActiveGame(data);
-        setGameName(data.name);
-        setGamePlayers(data.players.length);
-        setGameStart(data.start_amount + " kr.");
-        setSynlighed(data.synlighed);
-        setVarighed(data.varighed);
-        setStartAm(data.start_amount);
-        const queryString = window.location.search;
-        const urlParams = new URLSearchParams(queryString);
-        var GetgameId = urlParams.get("game");
-        setGameId(GetgameId);
-
-        function getTopN(arr, n) {
-            var clone = arr.slice(0);
-            clone.sort(function(x, y) {
-                if (x.info.money === y.info.money) return 0;
-                else if (parseInt(x.info.money) < parseInt(y.info.money)) return 1;
-                else return -1;
+        if (allowed) {
+            setActiveGame(data);
+            setGameName(data.name);
+            setGamePlayers(data.players.length);
+            setGameStart(data.start_amount + " kr.");
+            setSynlighed(data.synlighed);
+            setVarighed(data.varighed);
+            setStartAm(data.start_amount);
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            var GetgameId = urlParams.get("game");
+            setGameId(GetgameId);
+    
+            function getTopN(arr, n) {
+                var clone = arr.slice(0);
+                clone.sort(function(x, y) {
+                    if (x.info.money === y.info.money) return 0;
+                    else if (parseInt(x.info.money) < parseInt(y.info.money)) return 1;
+                    else return -1;
+                });
+                return clone.slice(0, n);
+            }
+    
+            var n = data.players.length;
+            var topScorers = getTopN(data.players, n);
+            topScorers.forEach(function(item) {
+                setTableArray(tableArray => [...tableArray, item]);
             });
-            return clone.slice(0, n);
-        }
-
-        var n = data.players.length;
-        var topScorers = getTopN(data.players, n);
-        topScorers.forEach(function(item) {
-            setTableArray(tableArray => [...tableArray, item]);
-        });
-
-        var startValue = parseInt(data.start_amount);
-        var gevinstVar = 0;
-        var antalKuponer = 0;
-        var antalVundet = 0;
-        var getForbrug = 0;
-        var validTilmeld = false;
-        for (var i in data.players) {
-            var kapital = data.players[i].info.money;
-            gevinstVar = gevinstVar + (kapital - startValue);
-
-            var playerKuponer = data.players[i].odds.length;
-            antalKuponer = antalKuponer + playerKuponer;
-            var finalKuponer = antalKuponer + "";
-            if (getUser()) {
-                if (data.players[i].player === getUser().email) {
-                    validTilmeld = true;
+    
+            var startValue = parseInt(data.start_amount);
+            var gevinstVar = 0;
+            var antalKuponer = 0;
+            var antalVundet = 0;
+            var getForbrug = 0;
+            var validTilmeld = false;
+            for (var i in data.players) {
+                var kapital = data.players[i].info.money;
+                gevinstVar = gevinstVar + (kapital - startValue);
+    
+                var playerKuponer = data.players[i].odds.length;
+                antalKuponer = antalKuponer + playerKuponer;
+                var finalKuponer = antalKuponer + "";
+                if (getUser()) {
+                    if (data.players[i].player === getUser().email) {
+                        validTilmeld = true;
+                    }
+                }
+                for (var q in data.players[i].odds) {
+                    if (data.players[i].odds[q].vundet === 2) {
+                        antalVundet = antalVundet + 1;
+                    }
+                    getForbrug = getForbrug + data.players[i].odds[q].indsats;
                 }
             }
-            for (var q in data.players[i].odds) {
-                if (data.players[i].odds[q].vundet === 2) {
-                    antalVundet = antalVundet + 1;
-                }
-                getForbrug = getForbrug + data.players[i].odds[q].indsats;
+            if (validTilmeld) {
+                setIsTilmeldt(true);
             }
+            setWinRate((antalVundet/antalKuponer)*100)
+            setKuponer(finalKuponer);
+            setForbrug(getForbrug);
         }
-        if (validTilmeld) {
-            setIsTilmeldt(true);
-        }
-        setWinRate((antalVundet/antalKuponer)*100)
-        setKuponer(finalKuponer);
-        setForbrug(getForbrug);
     }, [])
 
     function tilmeld() {
@@ -662,8 +664,25 @@ export async function getServerSideProps({ req, res, query }) {
           notFound: true,
         }
     }
+    var allowed = {hent: false};
+    const sendRedirectLocation = (location) => {
+        res.writeHead(302, {
+            Location: location,
+        });
+        res.end();
+        return { props: {data, allowed} };
+    };
+    if (req.cookies.auth) {
+        for (var q in data.players) {
+            if (data.players[q].player === JSON.parse(req.cookies.auth).email) {
+                res.setHeader('set-cookie', ['activeGame=' + data.id])
+                sendRedirectLocation('/stage/gruppespil');
+            }
+        }
+    }
+    allowed = {hent: true};
     return {
-        props: { data },
+        props: { data, allowed },
     }
 }
  
