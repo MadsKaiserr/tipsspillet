@@ -903,6 +903,7 @@ function StageMatcharticle ({data}) {
                             document.getElementById("placed-modal").classList.remove("display-not");
                             // document.getElementById("singler-modal").classList.add("display-not")
                             console.log("AWS - Oprettet:", betBody, response)
+                            cookie.set("notifikationer", parseInt(cookie.get("notifikationer")) + 1, {expires: 7});
                             setCurrentMoney(currentMoney - indsats);
                             emptyBets();
                             setNotiMessage("success", "Væddemål placeret", "Dit væddemål er nu placeret. Gå til 'Mine gruppespil' for at se dine væddemål.");
@@ -1022,6 +1023,7 @@ function StageMatcharticle ({data}) {
             
                     axios.patch(placeBetUrl, betBody, betConfig).then(response => {
                         document.getElementById("bet-modal").classList.add("display-not");
+                        cookie.set("notifikationer", parseInt(cookie.get("notifikationer")) + 1, {expires: 7});
                         // document.getElementById("singler-modal").classList.add("display-not")
                         document.getElementById("placed-modal").classList.remove("display-not");
                         console.log("AWS - Oprettet:", betBody, response)

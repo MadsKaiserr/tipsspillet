@@ -45,6 +45,7 @@ function StageNotifikationer () {
             setErrorText("Tilmed dig et gruppespil, for at få notifikationer fra det...")
             setLoadingText("")
         }
+        cookie.set("notifikationer", 0, {expires: 7});
     }, [])
     
     useEffect(() => {

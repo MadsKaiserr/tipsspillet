@@ -545,6 +545,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
                             document.getElementById("placed-modal").classList.remove("display-not");
                             // document.getElementById("singler-modal").classList.add("display-not")
                             console.log("AWS - Oprettet:", betBody, response)
+                            cookie.set("notifikationer", parseInt(cookie.get("notifikationer")) + 1, {expires: 7});
                             setCurrentMoney(currentMoney - indsats);
                             emptyBets();
                             setNotiMessage("success", "Væddemål placeret", "Dit væddemål er nu placeret. Gå til 'Mine gruppespil' for at se dine væddemål.");
@@ -3443,10 +3444,6 @@ export async function getServerSideProps({ req, res }) {
     if (!req.cookies.auth) {
         sendRedirectLocation('/signup')
     }
-    res.setHeader(
-        'Cache-Control',
-        'public, s-maxage=10, stale-while-revalidate=11'
-    )
     const requestConfig = {
         headers: {
             "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"

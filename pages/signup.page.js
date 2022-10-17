@@ -448,7 +448,6 @@ function Signup () {
                         </form>
                     </div>
                     <div className="signup-popup display-not" id="info2">
-                        <Link href="/"><Image className="signup-logo" alt="Tipsspillet logo" src={PrimaryLogo} height="55px" width="55px" /></Link>
                         <div className="login-text" style={{paddingTop: "30px"}}>
                             <h2 className="login-text-h1">Din konto er nu oprettet!&#128640;</h2>
                         </div>

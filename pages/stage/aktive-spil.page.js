@@ -57,8 +57,9 @@ function StageAktiveSpil ({ data }) {
         }
     }, [loading])
 
-    function setActiveGame(id, index, name) {
+    function setActiveGame(id, index, name, notifikationer) {
         cookie.set("activeGame", id, {expires: 7});
+        cookie.set("notifikationer", notifikationer, {expires: 7});
         localStorage.setItem("activeGame", id);
         localStorage.setItem("playerIndex", index);
         localStorage.setItem("aktive-spil-suspend", "null");
@@ -246,7 +247,7 @@ function StageAktiveSpil ({ data }) {
                                 });
 
                                 var returnable = 
-                                <li key={item.id} className="as-element" onClick={() => setActiveGame(item.id, index, item.name)}>
+                                <li key={item.id} className="as-element" onClick={() => setActiveGame(item.id, index, item.name, item.players[index].info.notifikationer.length)}>
                                     <div>
                                         <p className="as-h1">{item.name}</p>
                                         <p className="as-h2">Spillet slutter {new Date(item.varighed).getDate().toString().padStart(2, '0') + "/" + (new Date(item.varighed).getMonth() + 1).toString().padStart(2, '0') + "/" + new Date(item.varighed).getFullYear().toString().padStart(2, '0')}</p>
