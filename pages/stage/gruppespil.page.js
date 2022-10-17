@@ -916,7 +916,7 @@ function StageGruppespil ({data}) {
                                 </div>
                                 <div className="inv-container">
                                 <div className="inv-element-a" onClick={() => {
-                                if (activeGame && activeGame !== null) {navigator.clipboard.writeText("https://www.tipsspillet.dk/gruppesession?game=" + activeGame + "&type=invite"); document.getElementById("copied").classList.remove("display-not"); setTimeout(function (){
+                                if (activeGame && activeGame !== null && activeGame !== undefined) {navigator.clipboard.writeText("https://www.tipsspillet.dk/gruppesession?game=" + activeGame + "&type=invite"); document.getElementById("copied").classList.remove("display-not"); setTimeout(function (){
                 document.getElementById("copied").classList.add("display-not")
             }, 1000);} else {
                 navigator.clipboard.writeText("https://www.tipsspillet.dk/"); document.getElementById("copied").classList.remove("display-not"); setTimeout(function (){
@@ -1476,7 +1476,7 @@ function StageGruppespil ({data}) {
                                     <div className="inv-element-a" onClick={() => {
                                 const queryString = window.location.search;
                                 const urlParams = new URLSearchParams(queryString);
-                                if (urlParams.get('game') && urlParams.get('game') !== null) {navigator.clipboard.writeText("https://www.tipsspillet.dk/gruppesession?game=" + urlParams.get('game') + "&type=invite"); document.getElementById("copied").classList.remove("display-not"); setTimeout(function (){
+                                if (urlParams.get('game') && urlParams.get('game') !== null && activeGame !== undefined) {navigator.clipboard.writeText("https://www.tipsspillet.dk/gruppesession?game=" + urlParams.get('game') + "&type=invite"); document.getElementById("copied").classList.remove("display-not"); setTimeout(function (){
                 document.getElementById("copied").classList.add("display-not")
             }, 1000);} else {
                 navigator.clipboard.writeText("https://www.tipsspillet.dk/"); document.getElementById("copied").classList.remove("display-not"); setTimeout(function (){
