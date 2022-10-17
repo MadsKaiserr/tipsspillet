@@ -78,6 +78,10 @@
   .billet-element {
     width: clamp(355px, 40vw, 500px) !important;
   }
+  .gs-container {
+    padding-left: 100px !important;
+    padding-right: 100px !important;
+  }
 }
 
 @media only screen and (max-width: 1080px) {
@@ -97,6 +101,10 @@
   }
   .match-info-half-2 {
     padding: 20px !important;
+  }
+  .gs-container {
+    padding-left: 70px !important;
+    padding-right: 70px !important;
   }
   .sq-section {
     width: 100% !important;
@@ -146,6 +154,12 @@
     right: 30px !important;
     top: inherit !important;
     z-index: 11 !important;
+  }
+  .tl-wrapper-show {
+    display: none !important;
+  }
+  .tl-wrapper-hide {
+    display: flex !important;
   }
   .fbck-knap {
     bottom: 60px !important;
@@ -394,9 +408,6 @@
     padding: 0px 0px !important;
     padding-bottom: 20px !important;
   }
-  .signup-popup {
-    width: 40% !important;
-  }
   .signup-logo {
     display: none !important;
   }
@@ -560,9 +571,6 @@
     height: 22px !important;
     margin-right: -8px !important;
   }
-  #td-spillere {
-    padding-left: 3px !important;
-  }
   .gruppetable-navn2 {
     width: 250px !important;
   }
@@ -605,6 +613,12 @@
 @media only screen and (max-width: 835px) {
   .stage-indstillinger-sidebar {
     display: none !important;
+  }
+  .signup-tilbage {
+    display: none !important;
+  }
+  .signup-container {
+    padding-top: 20px !important;
   }
   .main-component-h-fix {
     justify-content: center !important;
@@ -651,9 +665,6 @@
   .td-type-drop {
     right: 0 !important;
     left: auto !important;
-  }
-  .signup-popup {
-    width: 60% !important;
   }
   .find-div {
     width: 85% !important;
@@ -838,6 +849,9 @@
   .plans-con {
     flex-direction: column;
   }
+  .side-nav-bar {
+    padding: 0px 20px !important;
+  }
   .plan-element {
     width: clamp(237px, 45vw, 400px);
   }
@@ -895,6 +909,10 @@
 @media only screen and (max-width: 650px) {
   #t1 {
     display: none !important;
+  }
+  .signup-container {
+    padding-left: 8% !important;
+    padding-right: 8% !important;
   }
   .op-cta {
     width: 90% !important;
@@ -1040,6 +1058,13 @@
   .kontakt-btn {
     width: 100% !important;
   }
+  .signup-container {
+    padding-left: 5% !important;
+    padding-right: 5% !important;
+  }
+  .signup-section {
+    padding: 30px !important;
+  }
   .kontakt-btn-off {
     width: 100% !important;
   }
@@ -1139,20 +1164,20 @@
   .tl-element {
     padding: 10px !important;
   }
-  #td-spillere {
-    display: none !important;
-  }
   .td-modifier-p {
     font-size: 11px !important;
   }
   #td-spillere {
-    width: 130px !important;
-  }
-  #td-admin {
-    width: 150px !important;
+    display: none !important;
   }
   #td-navn {
-    max-width: 150px !important;
+    width: 44% !important;
+  }
+  #td-synlighed {
+    width: 25% !important;
+  }
+  #td-admin {
+    width: 27% !important;
   }
   .td-input-element {
     font-size: 11px !important;
@@ -1556,9 +1581,6 @@
     overflow-y: visible;
     padding-top: 15px !important;
   }
-  .signup-popup {
-    width: 75% !important;
-  }
   .stage-kampe-h1 {
     padding-bottom: 0px !important;
   }
@@ -1663,15 +1685,6 @@
   .updates-con {
     width: 90% !important;
     padding: 25px 40px  !important;
-  }
-  #td-synlighed {
-    width: 100px !important;
-  }
-  #td-admin {
-    width: 100px !important;
-  }
-  .signup-popup {
-    width: 85% !important;
   }
   .price-input-element {
     padding: 6px 10px !important;
@@ -1800,8 +1813,17 @@
   #td-synlighed {
     display: none !important;
   }
+  #td-navn {
+    width: 60% !important;
+  }
+  #td-admin {
+    width: 40% !important;
+  }
   .forside-blob-img {
     margin-left: -50px !important;
+  }
+  .td-radio {
+    display: none !important;
   }
 }
 

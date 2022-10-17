@@ -8,6 +8,7 @@ function Kontakt() {
 
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState("");
+    const [modal, setModal] = useState(false);
 
     const [besked, setBesked] = useState("");
     const [email, setEmail] = useState("");
@@ -36,11 +37,13 @@ function Kontakt() {
                 setEmail("");
                 setNavn("");
                 setMessage("Beskeden er sendt!")
+                setModal(true);
                 setLoading(false);
             }).catch(error => {
                 setLoading(false);
                 console.log(error);
                 setMessage("Der skete en fejl - Din besked blev ikke sendt.")
+                setModal(false);
             })
         } else {
             setLoading(false);
@@ -63,6 +66,14 @@ function Kontakt() {
                 <meta property="og:description" content="Kontaktside for Tipsspillet - Få svar på spørgsmål du ikke finder på siden, anmeld fejl eller kom i kontakt med os." />
             </Head>
             <Header />
+            {modal && <div className="modal-test">
+                <div className="modal-con">
+                    <p className="con-modal-p">Tak for din henvendelse! Vi vil svare dig hurtigst muligt på den angivede email-addresse.</p>
+                    <div className="modal-wrapper">
+                        <button className="con-modal-btn" onClick={() => setModal(false)}>Okay</button>
+                    </div>
+                </div>
+            </div>}
             <div className="gs-container">
                 <div className="main-block-container">
                     <div className="hero-text">

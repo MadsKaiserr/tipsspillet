@@ -293,36 +293,218 @@ function Setup () {
                             <div className="setup-search">
                                 <input type="text" placeholder="Søg i gruppespil" className="setup-input" onChange={event => setGruppespilSearchStr(event.target.value)} />
                             </div>
-                            <div className="td-wrapper" style={{paddingTop: "15px"}}>
-                                <div className="td-modifier">
+                            <div className="td-wrapper">
+                            <div className="td-modifier">
+                                <div style={{width: "100%", height: "100%", display: "flex", alignItems: "center"}}>
                                     <p className="td-modifier-p modifier-mod" id="td-navn">NAVN</p>
                                     <p className="td-modifier-p modifier-mod" id="td-synlighed">SYNLIGHED</p>
                                     <p className="td-modifier-p modifier-mod" id="td-spillere">SPILLERE</p>
                                     <p className="td-modifier-p modifier-mod" id="td-admin">ADMINISTRATOR</p>
                                 </div>
-                                <div className="match-loader display" id="stage-loader1"></div>
-                                <ul className="td-table">
-                                    {gruppespilsearch.map((item) => {
-                                        return (
-                                            <li key={item.id} className="tl-element" id={"gruppespil-" + item.id} style={{flexDirection: "column", alignItems: "flex-start", paddingLeft: "20px"}}>
-                                                <Link href={"/gruppesession?game=" + item.id + "&res=setup"}>
-                                                    <div style={{width: "100%", height: "100%", display: "flex", alignItems: "center"}}>
-                                                        <div className="tl-wrapper" id="td-navn">
-                                                            <div className="tl-img">
-                                                                {item.name.slice(0,1)}
-                                                            </div>
-                                                            <p className="td-modifier-p" style={{fontWeight: "500"}}>{item.name}</p>
-                                                        </div>
-                                                        <p className="td-modifier-p" id="td-synlighed">{item.synlighed}</p>
-                                                        <p className="td-modifier-p" id="td-spillere">{item.players.length}</p>
-                                                        <p className="td-modifier-p" id="td-admin">{item.admin}</p>
-                                                    </div>
-                                                </Link>
-                                            </li>
-                                        );
-                                    })}
-                                </ul>
                             </div>
+                            <div className="match-loader display" id="stage-loader1"></div>
+                            <ul className="td-table">
+                                {search.map((item) => {
+                                    var Facebooks = 0;
+                                    var facebookArray = [];
+                                    for (var u in item.players) {
+                                        if (item.players[u].fb_logo_id) {
+                                            Facebooks = Facebooks + 1;
+                                            facebookArray.push(item.players[u]);
+                                        }
+                                    }
+                                    var returnable = <li key={item.id} className="tl-element">
+                                        <Link href={"/gruppesession?game=" + item.id}>
+                                        <div style={{width: "100%", height: "100%", display: "flex", alignItems: "center"}}>
+                                            <div className="tl-wrapper" id="td-navn">
+                                                <div className="tl-img">
+                                                    {item.name.slice(0,1)}
+                                                </div>
+                                                <p className="td-modifier-p" style={{fontWeight: "500"}}>{item.name}</p>
+                                            </div>
+                                            <p className="td-modifier-p" id="td-synlighed">{item.synlighed}</p>
+                                            {facebookArray.length > 0 && <div className="tl-wrapper-show" id="td-spillere">
+                                                <ul className="tl-players">
+                                                    {facebookArray.slice(0,5).map((spiller) => {
+                                                        if (spiller.fb_logo_id) {
+                                                            return (
+                                                                <li key={spiller.fb_logo_id} className="td-player-img">
+                                                                    <Image layout="fill" src={"http://graph.facebook.com/"+ spiller.fb_logo_id +"/picture?type=square"} />
+                                                                </li>
+                                                            );
+                                                        }
+                                                    })}
+                                                </ul>
+                                                <p className="td-modifier-p" style={{paddingLeft: "8px", whiteSpace: "nowrap"}} id="td-spillere">+{item.players.length - Facebooks} flere</p>
+                                            </div>}
+                                            {facebookArray.length > 0 && <div className="tl-wrapper-hide" id="td-spillere">
+                                                <p className="td-modifier-p" style={{paddingLeft: "8px"}} id="td-spillere">{item.players.length}</p>
+                                            </div>}
+                                            {facebookArray.length <= 0 && <div className="tl-wrapper" id="td-spillere">
+                                                <p className="td-modifier-p" style={{paddingLeft: "8px"}} id="td-spillere">{item.players.length}</p>
+                                            </div>}
+                                            <p className="td-modifier-p" id="td-admin">{item.admin}</p>
+                                            </div>
+                                        </Link>
+                                    </li>;
+                                    if (currentType === "offentlige") {
+                                        if (item.synlighed === "offentlig") {
+                                            return returnable;
+                                        }
+                                    } else if (currentType === "private") {
+                                        if (item.synlighed === "privat") {
+                                            return returnable;
+                                        }
+                                    } else if (currentType === "dyster") {
+                                        if (item.synlighed === "dyst") {
+                                            return returnable;
+                                        }
+                                    } else if (currentType === "alle") {
+                                        return returnable;
+                                    }
+                                })}
+                                {currentType === "offentlige" && <>
+                                    {search.filter(function( obj ) { return obj.synlighed === 'offentlig' && new Date(obj.varighed).getTime() > new Date().getTime() }).length === 0 && <>
+                                        <div className="td-empty-container">
+                                            <div className="td-empty-bg"></div>
+                                            <div className="td-empty-element" style={{marginLeft: "-50px"}}>
+                                                <div className="td-empty-logo">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="#fff" viewBox="0 0 16 16">
+                                                        <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"/>
+                                                    </svg>
+                                                </div>
+                                                <div className="td-empty-p"></div>
+                                            </div>
+                                            <div className="td-empty-element" style={{marginLeft: "50px"}}>
+                                                <div className="td-empty-logo">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="#fff" viewBox="0 0 16 16">
+                                                        <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"/>
+                                                    </svg>
+                                                </div>
+                                                <div className="td-empty-p"></div>
+                                            </div>
+                                            <div className="td-empty-element" style={{marginLeft: "-50px"}}>
+                                                <div className="td-empty-logo">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="#fff" viewBox="0 0 16 16">
+                                                        <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"/>
+                                                    </svg>
+                                                </div>
+                                                <div className="td-empty-p"></div>
+                                            </div>
+                                            <div className="td-empty-cta">
+                                                <p className="td-empty-h1">Ingen offentlige gruppespil</p>
+                                                <p className="td-empty-cta-p">Find eller opret et gruppespil for at komme igang</p>
+                                            </div>
+                                        </div>
+                                    </>}
+                                </>}
+                                {currentType === "private" && <>
+                                    {search.filter(function( obj ) { return obj.synlighed === 'privat' && new Date(obj.varighed).getTime() < new Date().getTime() }).length === 0 && <>
+                                        <div className="td-empty-container">
+                                            <div className="td-empty-bg"></div>
+                                            <div className="td-empty-element" style={{marginLeft: "-50px"}}>
+                                                <div className="td-empty-logo">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="#fff" viewBox="0 0 16 16">
+                                                        <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"/>
+                                                    </svg>
+                                                </div>
+                                                <div className="td-empty-p"></div>
+                                            </div>
+                                            <div className="td-empty-element" style={{marginLeft: "50px"}}>
+                                                <div className="td-empty-logo">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="#fff" viewBox="0 0 16 16">
+                                                        <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"/>
+                                                    </svg>
+                                                </div>
+                                                <div className="td-empty-p"></div>
+                                            </div>
+                                            <div className="td-empty-element" style={{marginLeft: "-50px"}}>
+                                                <div className="td-empty-logo">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="#fff" viewBox="0 0 16 16">
+                                                        <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"/>
+                                                    </svg>
+                                                </div>
+                                                <div className="td-empty-p"></div>
+                                            </div>
+                                            <div className="td-empty-cta">
+                                                <p className="td-empty-h1">Ingen private gruppespil</p>
+                                                <p className="td-empty-cta-p">Find eller opret et gruppespil for at komme igang</p>
+                                            </div>
+                                        </div>
+                                    </>}
+                                </>}
+                                {currentType === "dyster" && <>
+                                    {search.filter(function( obj ) { return obj.synlighed === 'dyst' && new Date(obj.varighed).getTime() > new Date().getTime() }).length === 0 && <>
+                                        <div className="td-empty-container">
+                                            <div className="td-empty-bg"></div>
+                                            <div className="td-empty-element" style={{marginLeft: "-50px"}}>
+                                                <div className="td-empty-logo">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="#fff" viewBox="0 0 16 16">
+                                                        <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"/>
+                                                    </svg>
+                                                </div>
+                                                <div className="td-empty-p"></div>
+                                            </div>
+                                            <div className="td-empty-element" style={{marginLeft: "50px"}}>
+                                                <div className="td-empty-logo">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="#fff" viewBox="0 0 16 16">
+                                                        <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"/>
+                                                    </svg>
+                                                </div>
+                                                <div className="td-empty-p"></div>
+                                            </div>
+                                            <div className="td-empty-element" style={{marginLeft: "-50px"}}>
+                                                <div className="td-empty-logo">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="#fff" viewBox="0 0 16 16">
+                                                        <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"/>
+                                                    </svg>
+                                                </div>
+                                                <div className="td-empty-p"></div>
+                                            </div>
+                                            <div className="td-empty-cta">
+                                                <p className="td-empty-h1">Ingen aktive dyster</p>
+                                                <p className="td-empty-cta-p">Find aktive præmiedyster for at komme igang</p>
+                                            </div>
+                                        </div>
+                                    </>}
+                                </>}
+                                {currentType === "alle" && <>
+                                    {search.filter(function( obj ) { return new Date(obj.varighed).getTime() > new Date().getTime() }).length === 0 && <>
+                                        <div className="td-empty-container">
+                                            <div className="td-empty-bg"></div>
+                                            <div className="td-empty-element" style={{marginLeft: "-50px"}}>
+                                                <div className="td-empty-logo">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="#fff" viewBox="0 0 16 16">
+                                                        <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"/>
+                                                    </svg>
+                                                </div>
+                                                <div className="td-empty-p"></div>
+                                            </div>
+                                            <div className="td-empty-element" style={{marginLeft: "50px"}}>
+                                                <div className="td-empty-logo">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="#fff" viewBox="0 0 16 16">
+                                                        <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"/>
+                                                    </svg>
+                                                </div>
+                                                <div className="td-empty-p"></div>
+                                            </div>
+                                            <div className="td-empty-element" style={{marginLeft: "-50px"}}>
+                                                <div className="td-empty-logo">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="#fff" viewBox="0 0 16 16">
+                                                        <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"/>
+                                                    </svg>
+                                                </div>
+                                                <div className="td-empty-p"></div>
+                                            </div>
+                                            <div className="td-empty-cta">
+                                                <p className="td-empty-h1">Ingen gruppespil</p>
+                                                <p className="td-empty-cta-p">Find eller opret et gruppespil for at komme igang</p>
+                                            </div>
+                                        </div>
+                                    </>}
+                                </>}
+                            </ul>
+                        </div>
                             {/* <div className="setup-hit-wrapper">
                                 <div className="setup-inline" id="setup-1">
                                     <p className="setup-p-fat">NAVN</p>

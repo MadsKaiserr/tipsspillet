@@ -2017,19 +2017,19 @@
   }
 
   #td-navn {
-    width: 300px !important;
+    width: 35%;
   }
 
   #td-synlighed {
-    width: 150px;
+    width: 18%;
   }
 
   #td-spillere {
-    width: 200px;
+    width: 24%;
   }
 
   #td-admin {
-    width: 170px;
+    width: 20%;
   }
 
   .td-outline {
@@ -2080,6 +2080,18 @@
   }
 
   .tl-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .tl-wrapper-hide {
+    align-items: center;
+    gap: 10px;
+    display: none;
+  }
+
+  .tl-wrapper-show {
     display: flex;
     align-items: center;
     gap: 10px;

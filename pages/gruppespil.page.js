@@ -146,10 +146,12 @@ function Gruppespil ({data, responseTime}) {
                         </div>
                         <div className="td-wrapper">
                             <div className="td-modifier">
-                                <p className="td-modifier-p modifier-mod" id="td-navn">NAVN</p>
-                                <p className="td-modifier-p modifier-mod" id="td-synlighed">SYNLIGHED</p>
-                                <p className="td-modifier-p modifier-mod" id="td-spillere">SPILLERE</p>
-                                <p className="td-modifier-p modifier-mod" id="td-admin">ADMINISTRATOR</p>
+                                <div style={{width: "100%", height: "100%", display: "flex", alignItems: "center"}}>
+                                    <p className="td-modifier-p modifier-mod" id="td-navn">NAVN</p>
+                                    <p className="td-modifier-p modifier-mod" id="td-synlighed">SYNLIGHED</p>
+                                    <p className="td-modifier-p modifier-mod" id="td-spillere">SPILLERE</p>
+                                    <p className="td-modifier-p modifier-mod" id="td-admin">ADMINISTRATOR</p>
+                                </div>
                             </div>
                             <div className="match-loader display" id="stage-loader1"></div>
                             <ul className="td-table">
@@ -162,136 +164,54 @@ function Gruppespil ({data, responseTime}) {
                                             facebookArray.push(item.players[u]);
                                         }
                                     }
+                                    var returnable = <li key={item.id} className="tl-element">
+                                        <Link href={"/gruppesession?game=" + item.id}>
+                                        <div style={{width: "100%", height: "100%", display: "flex", alignItems: "center"}}>
+                                            <div className="tl-wrapper" id="td-navn">
+                                                <div className="tl-img">
+                                                    {item.name.slice(0,1)}
+                                                </div>
+                                                <p className="td-modifier-p" style={{fontWeight: "500"}}>{item.name}</p>
+                                            </div>
+                                            <p className="td-modifier-p" id="td-synlighed">{item.synlighed}</p>
+                                            {facebookArray.length > 0 && <div className="tl-wrapper-show" id="td-spillere">
+                                                <ul className="tl-players">
+                                                    {facebookArray.slice(0,5).map((spiller) => {
+                                                        if (spiller.fb_logo_id) {
+                                                            return (
+                                                                <li key={spiller.fb_logo_id} className="td-player-img">
+                                                                    <Image layout="fill" src={"http://graph.facebook.com/"+ spiller.fb_logo_id +"/picture?type=square"} />
+                                                                </li>
+                                                            );
+                                                        }
+                                                    })}
+                                                </ul>
+                                                <p className="td-modifier-p" style={{paddingLeft: "8px", whiteSpace: "nowrap"}} id="td-spillere">+{item.players.length - Facebooks} flere</p>
+                                            </div>}
+                                            {facebookArray.length > 0 && <div className="tl-wrapper-hide" id="td-spillere">
+                                                <p className="td-modifier-p" style={{paddingLeft: "8px"}} id="td-spillere">{item.players.length}</p>
+                                            </div>}
+                                            {facebookArray.length <= 0 && <div className="tl-wrapper" id="td-spillere">
+                                                <p className="td-modifier-p" style={{paddingLeft: "8px"}} id="td-spillere">{item.players.length}</p>
+                                            </div>}
+                                            <p className="td-modifier-p" id="td-admin">{item.admin}</p>
+                                            </div>
+                                        </Link>
+                                    </li>;
                                     if (currentType === "offentlige") {
                                         if (item.synlighed === "offentlig") {
-                                            return (
-                                                    <li key={item.id} className="tl-element">
-                                                        <Link href={"/gruppesession?game=" + item.id}>
-                                                            <div style={{width: "100%", height: "100%", display: "flex", alignItems: "center"}}>
-                                                                <div className="tl-wrapper" id="td-navn">
-                                                                    <div className="tl-img">
-                                                                        {item.name.slice(0,1)}
-                                                                    </div>
-                                                                    <p className="td-modifier-p" style={{fontWeight: "500"}}>{item.name}</p>
-                                                                </div>
-                                                                <p className="td-modifier-p" id="td-synlighed">{item.synlighed}</p>
-                                                                <div className="tl-wrapper" id="td-spillere">
-                                                            <ul className="tl-players">
-                                                                {facebookArray.slice(0,5).map((spiller) => {
-                                                                    if (spiller.fb_logo_id) {
-                                                                        return (
-                                                                                <li key={spiller.fb_logo_id} className="td-player-img">
-                                                                                    <Image layout="fill" src={"http://graph.facebook.com/"+ spiller.fb_logo_id +"/picture?type=square"} />
-                                                                                </li>
-                                                                        );
-                                                                    }
-                                                                })}
-                                                            </ul>
-                                                            <p className="td-modifier-p" style={{paddingLeft: "8px"}} id="td-spillere">+{item.players.length - Facebooks} flere</p>
-                                                        </div>
-                                                                <p className="td-modifier-p" id="td-admin">{item.admin}</p>
-                                                            </div>
-                                                        </Link>
-                                                    </li>
-                                            );
+                                            return returnable;
                                         }
                                     } else if (currentType === "private") {
                                         if (item.synlighed === "privat") {
-                                            return (
-                                                    <li key={item.id} className="tl-element">
-                                                        <Link href={"/gruppesession?game=" + item.id}>
-                                                        <div style={{width: "100%", height: "100%", display: "flex", alignItems: "center"}}>
-                                                            <div className="tl-wrapper" id="td-navn">
-                                                                <div className="tl-img">
-                                                                    {item.name.slice(0,1)}
-                                                                </div>
-                                                                <p className="td-modifier-p" style={{fontWeight: "500"}}>{item.name}</p>
-                                                            </div>
-                                                            <p className="td-modifier-p" id="td-synlighed">{item.synlighed}</p>
-                                                            <div className="tl-wrapper" id="td-spillere">
-                                                            <ul className="tl-players">
-                                                                {facebookArray.slice(0,5).map((spiller) => {
-                                                                    if (spiller.fb_logo_id) {
-                                                                        return (
-                                                                                <li key={spiller.fb_logo_id} className="td-player-img">
-                                                                                    <Image layout="fill" src={"http://graph.facebook.com/"+ spiller.fb_logo_id +"/picture?type=square"} />
-                                                                                </li>
-                                                                        );
-                                                                    }
-                                                                })}
-                                                            </ul>
-                                                            <p className="td-modifier-p" style={{paddingLeft: "8px"}} id="td-spillere">+{item.players.length - Facebooks} flere</p>
-                                                        </div>
-                                                            <p className="td-modifier-p" id="td-admin">{item.admin}</p>
-                                                            </div>
-                                                        </Link>
-                                                    </li>
-                                            );
+                                            return returnable;
                                         }
                                     } else if (currentType === "dyster") {
                                         if (item.synlighed === "dyst") {
-                                            return (
-                                                    <li key={item.id} className="tl-element">
-                                                        <Link href={"/gruppesession?game=" + item.id}>
-                                                        <div style={{width: "100%", height: "100%", display: "flex", alignItems: "center"}}>
-                                                            <div className="tl-wrapper" id="td-navn">
-                                                                <div className="tl-img">
-                                                                    {item.name.slice(0,1)}
-                                                                </div>
-                                                                <p className="td-modifier-p" style={{fontWeight: "500"}}>{item.name}</p>
-                                                            </div>
-                                                            <p className="td-modifier-p" id="td-synlighed">{item.synlighed}</p>
-                                                            <div className="tl-wrapper" id="td-spillere">
-                                                            <ul className="tl-players">
-                                                                {facebookArray.slice(0,5).map((spiller) => {
-                                                                    if (spiller.fb_logo_id) {
-                                                                        return (
-                                                                                <li key={spiller.fb_logo_id} className="td-player-img">
-                                                                                    <Image layout="fill" src={"http://graph.facebook.com/"+ spiller.fb_logo_id +"/picture?type=square"} />
-                                                                                </li>
-                                                                        );
-                                                                    }
-                                                                })}
-                                                            </ul>
-                                                            <p className="td-modifier-p" style={{paddingLeft: "8px"}} id="td-spillere">+{item.players.length - Facebooks} flere</p>
-                                                        </div>
-                                                            <p className="td-modifier-p" id="td-admin">{item.admin}</p>
-                                                            </div>
-                                                        </Link>
-                                                    </li>
-                                            );
+                                            return returnable;
                                         }
                                     } else if (currentType === "alle") {
-                                        return (
-                                                <li key={item.id} className="tl-element">
-                                                    <Link href={"/gruppesession?game=" + item.id}>
-                                                    <div style={{width: "100%", height: "100%", display: "flex", alignItems: "center"}}>
-                                                        <div className="tl-wrapper" id="td-navn">
-                                                            <div className="tl-img">
-                                                                {item.name.slice(0,1)}
-                                                            </div>
-                                                            <p className="td-modifier-p" style={{fontWeight: "500"}}>{item.name}</p>
-                                                        </div>
-                                                        <p className="td-modifier-p" id="td-synlighed">{item.synlighed}</p>
-                                                        <div className="tl-wrapper" id="td-spillere">
-                                                            <ul className="tl-players">
-                                                                {facebookArray.slice(0,5).map((spiller) => {
-                                                                    if (spiller.fb_logo_id) {
-                                                                        return (
-                                                                                <li key={spiller.fb_logo_id} className="td-player-img">
-                                                                                    <Image layout="fill" src={"http://graph.facebook.com/"+ spiller.fb_logo_id +"/picture?type=square"} />
-                                                                                </li>
-                                                                        );
-                                                                    }
-                                                                })}
-                                                            </ul>
-                                                            <p className="td-modifier-p" style={{paddingLeft: "8px"}} id="td-spillere">+{item.players.length - Facebooks} flere</p>
-                                                        </div>
-                                                        <p className="td-modifier-p" id="td-admin">{item.admin}</p>
-                                                        </div>
-                                                    </Link>
-                                                </li>
-                                        );
+                                        return returnable;
                                     }
                                 })}
                                 {currentType === "offentlige" && <>
