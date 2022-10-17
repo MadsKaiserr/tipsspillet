@@ -314,7 +314,7 @@ function Setup () {
                                         }
                                     }
                                     var returnable = <li key={item.id} className="tl-element">
-                                        <div style={{width: "100%", height: "100%", display: "flex", alignItems: "center"}} onClick={() => window.open("/gruppesession?game=" + item.id, "_self")}>
+                                        <div style={{width: "100%", height: "100%", display: "flex", alignItems: "center"}} onClick={() => window.open("/gruppesession?game=" + item.id + "&res=setup", "_self")}>
                                             <div className="tl-wrapper" id="td-navn">
                                                 <div className="tl-img">
                                                     {item.name.slice(0,1)}
