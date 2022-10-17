@@ -1508,7 +1508,7 @@ function StageGruppespil ({data}) {
                 {!activeGame && <div className="gruppespil-section">
                             <div className="gruppespil-title">
                                 <h1 className="gruppespil-h1">Velkommen, {username && <>{username}</>}</h1><br></br>
-                                <p className="info-p">Du har ikke noget valgt gruppespil.</p><br />
+                                <p className="info-p">Du har ikke noget aktivt gruppespil.</p><br />
                                 <Link href="/stage/aktive-spil">
                                     <button className="td-btn" style={{marginTop: "10px", fontSize: "14px"}}>Vælg spil</button>
                                 </Link>

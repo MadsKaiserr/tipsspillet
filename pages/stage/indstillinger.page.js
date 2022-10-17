@@ -15,6 +15,8 @@ function StageIndstillinger ({data}) {
     const [ognavn, setogNavn] = useState("Indlæser...")
 
     const [message, setMessage] = useState("");
+    const [modal, setModal] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const [user, setUser] = useState("");
     const [usernameField, setUsernameField] = useState("Indlæser...");
@@ -107,6 +109,7 @@ function StageIndstillinger ({data}) {
     const [edited, setEdited] = useState(false);
 
     function updateProfile() {
+        setLoading(true);
         if (handlinger.findIndex(obj => obj.type === "ProfilChange" && ((new Date().getTime() - obj.iat) / 1000 / 60 / 60 / 24) < 7) < 0) {
             const loginURL2 = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/updateuser";
             const requestConfig2 = {
@@ -124,14 +127,19 @@ function StageIndstillinger ({data}) {
     
             axios.patch(loginURL2, requestBody2, requestConfig2).then(response => {
                 console.log("AWS - Update user:", response);
+                setLoading(false);
                 setogNavn(navn);
                 setogUsernameField(usernameField);
                 setMessage("Profiloplysninger opdateret!");
+                setModal(true);
                 setHandlinger(response.data.Item.Attributes.handlinger);
             }).catch(error => {
                 console.log(error);
+                setMessage("Der skete en fejl. Prøv igen senere, eller kontakt os");
+                setLoading(false);
             })
         } else {
+            setLoading(false);
             setMessage("Det er mindre end 7 dage siden du sidst opdaterede dine oplysninger. Vent til " + new Date(handlinger[handlinger.findIndex(obj => obj.type === "ProfilChange" && ((new Date().getTime() - obj.iat) / 1000 / 60 / 60 / 24) < 7)].iat + 1000 * 60 * 60 * 24 * 7).getDate() + "/" + (new Date(handlinger[handlinger.findIndex(obj => obj.type === "ProfilChange" && ((new Date().getTime() - obj.iat) / 1000 / 60 / 60 / 24) < 7)].iat + 1000 * 60 * 60 * 24 * 7).getMonth() + 1) + "/" + new Date(handlinger[handlinger.findIndex(obj => obj.type === "ProfilChange" && ((new Date().getTime() - obj.iat) / 1000 / 60 / 60 / 24) < 7)].iat + 1000 * 60 * 60 * 24 * 7).getFullYear() + " før du prøver igen.")
         }
     }
@@ -143,6 +151,14 @@ function StageIndstillinger ({data}) {
                 <meta name="robots" content="noindex" />
             </Head>
             <StageHeader />
+            {modal && <div className="modal-test">
+                <div className="modal-con">
+                    <p className="con-modal-p">Dine profiloplysninger blev opdateret</p>
+                    <div className="modal-wrapper">
+                        <button className="con-modal-btn" onClick={() => setModal(false)}>Okay</button>
+                    </div>
+                </div>
+            </div>}
             <div className="op-container">
                 <div className="is-top">
                     {nav === "generelt" && <><p className="is-top-p-active">Generelt</p>
@@ -174,7 +190,7 @@ function StageIndstillinger ({data}) {
                     </div>
                 </div>
                 {message !== "" && <p className="og-msg">{message}</p>}
-                {edited && <button className="wc-btn" onClick={() => updateProfile()}>Opdater profil</button>}
+                {edited && <button className="wc-btn" onClick={() => updateProfile()}>{loading && <div className="loader" id="loader"></div>}{!loading && <>Opdater profil</>}</button>}
                 {!edited && <button className="wc-btn-off">Opdater profil</button>}</>}
             </div>
         </>

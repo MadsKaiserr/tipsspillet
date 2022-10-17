@@ -21,6 +21,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
     const router = useRouter()
 
     const [loading, setLoading] = useState(false);
+    const [modal, setModal] = useState(false);
 
     const [smallScreen, setSmallScreen] = useState(false);
 
@@ -43,6 +44,8 @@ function StageForside ({gruppespil_data, spiller_data}) {
 
         axios.post(signupURL, requestBody, requestConfig).then(response => {
             console.log("AWS - Besked sendt:", response);
+            setModal(true);
+            setFeedback(false);
             setLoading(false);
             setFeedbackMessage("Tak for din feedback!");
             setFeedbackBox(0);
@@ -2976,6 +2979,14 @@ function StageForside ({gruppespil_data, spiller_data}) {
                 </div>
             </div>
         </>}
+        {modal && <div className="modal-test">
+            <div className="modal-con">
+                <p className="con-modal-p">Tak for din feedback! Vi er i konstant udvikling, og er glad for, at du giver feedback.</p>
+                <div className="modal-wrapper">
+                    <button className="con-modal-btn" onClick={() => setModal(false)}>Okay</button>
+                </div>
+            </div>
+        </div>}
         <div className="fbck-knap" onClick={() => setFeedback(true)}>
             <div className="fbck-p">Lad os høre din mening<div className="fbck-tip"></div></div>
             <svg xmlns="http://www.w3.org/2000/svg" fill="#fff" viewBox="0 0 16 16">
