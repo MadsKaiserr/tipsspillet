@@ -134,7 +134,7 @@ function Opret ({ }) {
                     admin: getUser().username,
                     synlighed: spilSynlighed,
                     password: "",
-                    players: [{player: userEmail, username: username, info: {money: spilStart, notifikationer: [], medlemsskab: medlemsskab}, odds: []}]
+                    players: [{player: userEmail, username: username, info: {money: parseInt(spilStart), notifikationer: [], medlemsskab: medlemsskab}, odds: []}]
                 }
 
                 if (minSetting) {
