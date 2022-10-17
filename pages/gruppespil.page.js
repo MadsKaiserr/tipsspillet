@@ -34,6 +34,11 @@ function Gruppespil ({data, responseTime}) {
         setSearch(newDupli);
     }
 
+    function remSearch() {
+        setQuery("");
+        setSearch(items);
+    }
+
     useEffect(() => {
         if (loading !== "Indlæser...") {
             document.getElementById("stage-loader1").classList.remove("display");
@@ -124,9 +129,10 @@ function Gruppespil ({data, responseTime}) {
                                         <svg xmlns="http://www.w3.org/2000/svg" className="td-input-icon" viewBox="0 0 16 16">
                                             <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
                                         </svg>
-                                        <input type="text" className="td-input-field" onChange={event => setQuery(event.target.value)} placeholder="Søg i gruppespil..." />
+                                        <input type="text" className="td-input-field" value={query} onChange={event => setQuery(event.target.value)} placeholder="Søg i gruppespil..." />
                                     </div>
                                     <button className="td-btn-search" style={{marginLeft: "0px", borderRadius: "5px"}} onClick={() => {makeSearch()}}>Søg</button>
+                                    <button className="td-btn-clear" style={{marginLeft: "0px", borderRadius: "5px"}} onClick={() => {remSearch()}}>Ryd søgning</button>
                                 </div>
                             </div>
                             <div className="td-top-right">

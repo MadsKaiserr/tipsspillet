@@ -1057,6 +1057,7 @@
     padding: 10px 15px;
     color: var(--primary);
     font-weight: 500;
+    white-space: nowrap;
     font-family: Inter;
     font-size: 12px;
     border-radius: 3px;
@@ -1072,6 +1073,27 @@
   .td-btn-search:hover {
     background-color: var(--primary);
     color: #fff;
+  }
+
+  .td-btn-clear {
+    padding: 10px 15px;
+    color: var(--primary);
+    font-weight: 500;
+    white-space: nowrap;
+    font-family: Inter;
+    font-size: 12px;
+    border-radius: 3px;
+    border: 0px;
+    cursor: pointer;
+    background-color: transparent;
+    transition: 0.2s;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+  }
+  
+  .td-btn-clear:hover {
+    text-decoration: underline dashed;
   }
   
   .nav-btn-default {

@@ -1677,6 +1677,9 @@
     right: -50px !important;
     bottom: -15px !important;
   }
+  .td-radio {
+    display: none !important;
+  }
   .forside-blob-img {
     width: 500px !important;
     margin-top: 50px !important;
@@ -1821,9 +1824,6 @@
   }
   .forside-blob-img {
     margin-left: -50px !important;
-  }
-  .td-radio {
-    display: none !important;
   }
 }
 
