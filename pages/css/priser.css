@@ -11,10 +11,30 @@
     gap: 20px;
 }
 
+.st-plans-con {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
 .plan-spar {
   position: absolute;
   top: 0px;
   right: -10px;
+  background-color: var(--third);
+  color: var(--primary);
+  font-family: Inter;
+  padding: 5px 10px;
+  border-radius: 500px;
+  font-weight: 600;
+  font-size: 11px;
+}
+
+.st-plan-spar {
+  position: absolute;
+  top: -3px;
+  right: -15px;
   background-color: var(--third);
   color: var(--primary);
   font-family: Inter;

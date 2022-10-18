@@ -25,90 +25,37 @@ function Priser () {
     const [loading1, setLoading1] = useState(false);
     const [loading2, setLoading2] = useState(false);
 
+    const [priceInterval, setPriceInterval] = useState(3);
     const [plusPrice, setPlusPrice] = useState(29);
     const [premiumPrice, setPremiumPrice] = useState(39);
 
     const handlePlus = async e => {
+        setLoading1(true);
         if (getUser()) {
-            if (getUser().rolle !== "plus") {
-                if (plusPrice === 39) {
-                    setLoading1(true);
-                    const URL = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/payment";
-            
-                    const requestConfig = {
-                        headers: {
-                            "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
-                        }
+            if (getUser().rolle === "none") {
+                const URL = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/subscribe";
+                const requestConfig = {
+                    headers: {
+                        "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
                     }
-            
-                    const requestBody = {
-                        "items": [
-                            { 
-                                "id": 4, 
-                                "quantity": 1
-                            }
-                        ]
-                    }
-            
-                    axios.post(URL, requestBody, requestConfig).then(response => {
-                        console.log(response);
-                        router.push(response.data.url)
-                    }).catch(error => {
-                        console.log("Fejl ved indhentning af data" + error)
-                    })
-                } else if (plusPrice === 29) {
-                    setLoading1(true);
-                    const URL = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/payment";
-        
-                    const requestConfig = {
-                        headers: {
-                            "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
-                        }
-                    }
-        
-                    const requestBody = {
-                        "items": [
-                            { 
-                                "id": 5, 
-                                "quantity": 1
-                            }
-                        ]
-                    }
-        
-                    axios.post(URL, requestBody, requestConfig).then(response => {
-                        console.log(response);
-                        router.push(response.data.url)
-                    }).catch(error => {
-                        console.log("Fejl ved indhentning af data" + error)
-                    })
-                } else if (plusPrice === 19) {
-                    setLoading1(true);
-                    const URL = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/payment";
-        
-                    const requestConfig = {
-                        headers: {
-                            "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
-                        }
-                    }
-        
-                    const requestBody = {
-                        "items": [
-                            { 
-                                "id": 6, 
-                                "quantity": 1
-                            }
-                        ]
-                    }
-        
-                    axios.post(URL, requestBody, requestConfig).then(response => {
-                        console.log(response);
-                        router.push(response.data.url)
-                    }).catch(error => {
-                        console.log("Fejl ved indhentning af data" + error)
-                    })
                 }
+        
+                const requestBody = {
+                    email: getUser().email,
+                    navn: getUser().username,
+                    subscription: "plus" + priceInterval
+                }
+
+                axios.post(URL, requestBody, requestConfig).then(response => {
+                    console.log(response);
+                    router.push(response.data.session.url)
+                }).catch(error => {
+                    console.log("Fejl ved indhentning af data" + error)
+                    setLoading1(false);
+                })
             } else {
-                setNotiMessage("error", "Du har allerede Plus", "Hvis du vil støtte os i Test-Perioden, kan du kun opgradere til Premium.");
+                setLoading1(false);
+                setNotiMessage("error", "Du har allerede abonnement", "Gå til indstillinger på din profil, og herunder abonnement, for at ændre dit nuværende abonnement. Se også https://www.tipsspillet.dk/stage/indstillinger");
             }
         } else {
             router.push("/signup")
@@ -116,86 +63,31 @@ function Priser () {
     }
 
     const handlePremium = async e => {
+        setLoading2(true);
         if (getUser()) {
-            if (getUser().rolle !== "premium") {
-                if (premiumPrice === 59) {
-                    setLoading2(true);
-                    const URL = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/payment";
-            
-                    const requestConfig = {
-                        headers: {
-                            "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
-                        }
+            if (getUser().rolle === "none") {
+                const URL = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/subscribe";
+                const requestConfig = {
+                    headers: {
+                        "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
                     }
-            
-                    const requestBody = {
-                        "items": [
-                            { 
-                                "id": 1, 
-                                "quantity": 1
-                            }
-                        ]
-                    }
-            
-                    axios.post(URL, requestBody, requestConfig).then(response => {
-                        console.log(response);
-                        router.push(response.data.url)
-                    }).catch(error => {
-                        console.log("Fejl ved indhentning af data" + error)
-                    })
-                } else if (premiumPrice === 39) {
-                    setLoading2(true);
-                    const URL = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/payment";
-        
-                    const requestConfig = {
-                        headers: {
-                            "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
-                        }
-                    }
-        
-                    const requestBody = {
-                        "items": [
-                            { 
-                                "id": 2, 
-                                "quantity": 1
-                            }
-                        ]
-                    }
-        
-                    axios.post(URL, requestBody, requestConfig).then(response => {
-                        console.log(response);
-                        router.push(response.data.url)
-                    }).catch(error => {
-                        console.log("Fejl ved indhentning af data" + error)
-                    })
-                } else if (premiumPrice === 29) {
-                    setLoading2(true);
-                    const URL = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/payment";
-        
-                    const requestConfig = {
-                        headers: {
-                            "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
-                        }
-                    }
-        
-                    const requestBody = {
-                        "items": [
-                            { 
-                                "id": 3, 
-                                "quantity": 1
-                            }
-                        ]
-                    }
-        
-                    axios.post(URL, requestBody, requestConfig).then(response => {
-                        console.log(response);
-                        router.push(response.data.url)
-                    }).catch(error => {
-                        console.log("Fejl ved indhentning af data" + error)
-                    })
                 }
+        
+                const requestBody = {
+                    email: getUser().email,
+                    navn: getUser().username,
+                    subscription: "premium" + priceInterval
+                }
+                axios.post(URL, requestBody, requestConfig).then(response => {
+                    console.log(response);
+                    router.push(response.data.session.url)
+                }).catch(error => {
+                    console.log("Fejl ved indhentning af data" + error)
+                    setLoading2(false);
+                })
             } else {
-                setNotiMessage("error", "Du har allerede Premium", "Din konto har allerede Premium abonnementet. Har du ikke dine fordele, skal du kontakte os.");
+                setLoading2(false);
+                setNotiMessage("error", "Du har allerede abonnement", "Gå til indstillinger på din profil, og herunder abonnement, for at ændre dit nuværende abonnement. Se også https://www.tipsspillet.dk/stage/indstillinger");
             }
         } else {
             router.push("/signup")
@@ -255,9 +147,9 @@ function Priser () {
                     </div>
                     <div className="set-center">
                         <div className="price-input animation-fadeleft animation-delay-400" id="price-input">
-                            <div className="price-input-element" id="month" onClick={() => setType("month")}>Månedligt</div>
-                            <div className="price-input-element-active" id="quarter" onClick={() => setType("quarter")}>Kvartalvis</div>
-                            <div className="price-input-element" id="year" onClick={() => setType("year")}>Årligt</div>
+                            <div className="price-input-element" id="month" onClick={() => {setType("month");setPriceInterval(1)}}>Månedligt</div>
+                            <div className="price-input-element-active" id="quarter" onClick={() => {setType("quarter");setPriceInterval(3)}}>Kvartalvis</div>
+                            <div className="price-input-element" id="year" onClick={() => {setType("year");setPriceInterval(12)}}>Årligt</div>
                         </div>
                     </div>
                     <div className="plans-container">

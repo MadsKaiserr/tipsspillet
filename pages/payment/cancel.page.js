@@ -21,9 +21,6 @@ function Cancel () {
                     <h2 className="main-component-h3 animation-fadetop animation-delay-300">Du har ikke gennemført dit køb - Gå tilbage og prøv igen, eller kontant os ved gentagende annulleringer.</h2>
                 </div>
             </div>
-            <div className="priser-container">
-                
-            </div>
             <FaqComponent />
         </>
     )

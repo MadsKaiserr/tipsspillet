@@ -1267,6 +1267,16 @@
   .standard2 {
     background-color: var(--primary) !important;
   }
+
+  .st-plan-element {
+    width: 33%;
+    vertical-align: top;
+    border-radius: 3px;
+    display: inline-block;
+    text-align: left;
+    position: relative;
+    padding: 20px 15px;
+  }
   
   .plan-element {
     width: clamp(237px, 35vw, 400px);
@@ -1356,6 +1366,10 @@
   .plan-element-top {
     padding-bottom: 30px;
   }
+
+  .st-plan-element-top {
+    padding-bottom: 15px;
+  }
   
   .billet-element .plan-element-divider {
     background-color: #fff;
@@ -1392,6 +1406,14 @@
     font-weight: 500;
   }
 
+  .st-plan-element-identifier {
+    font-size: 17px;
+    color: var(--softBlack);
+    font-family: Inter;
+    padding-bottom: 5px;
+    font-weight: 500;
+  }
+
   .plan-prices {
     display: inline-flex;
     align-items: center;
@@ -1406,6 +1428,13 @@
     font-family: Inter;
     font-weight: 500;
   }
+
+  .st-plan-element-prisp {
+    font-size: 18px;
+    color: var(--black);
+    font-family: Inter;
+    font-weight: 500;
+  }
   
   .plan-element-pris {
     font-size: 52px;
@@ -1413,9 +1442,24 @@
     font-family: Inter;
     font-weight: 600;
   }
+
+  .st-plan-element-pris {
+    font-size: 42px;
+    color: var(--black);
+    font-family: Inter;
+    font-weight: 600;
+  }
   
   .plan-element-binding {
     font-size: 16px;
+    opacity: 0.85;
+    color: var(--softBlack);
+    font-family: Inter;
+    font-weight: 300;
+  }
+
+  .st-plan-element-binding {
+    font-size: 14px;
     opacity: 0.85;
     color: var(--softBlack);
     font-family: Inter;
@@ -1455,6 +1499,24 @@
   
   .plan-btn {
     width: 100% !important;
+    font-weight: 500;
+  }
+
+  .plan-btn-off {
+    width: 100% !important;
+    background-color: var(--stageSurface);
+    color: rgba(51, 51, 51, 0.775);
+    border: 1px #ebebeb solid;
+    opacity: 0.8;
+    font-weight: 500;
+  }
+
+  .plan-btn-off:hover {
+    background-color: var(--stageSurface);
+    color: rgba(51, 51, 51, 0.775);
+    border: 1px #ebebeb solid;
+    opacity: 0.8;
+    cursor: default;
   }
   
   .plan-element-perk {
@@ -1478,7 +1540,18 @@
     fill: var(--softBlack);
   }
 
+  .st-plan-element-perk-icon {
+    width: 16px;
+    height: 16px;
+    fill: var(--softBlack);
+  }
+
   .plan-element-perk .plan-element-perk-icon {
+    transform: scale(1.5);
+    fill: var(--primary) !important;
+  }
+
+  .plan-element-perk .st-plan-element-perk-icon {
     transform: scale(1.5);
     fill: var(--primary) !important;
   }
@@ -1497,6 +1570,20 @@
     font-family: Inter;
     font-weight: 500;
     color: var(--softBlack);
+  }
+
+  .st-plan-element-perk-desc {
+    font-size: 14px;
+    font-family: Inter;
+    font-weight: 500;
+    color: var(--softBlack);
+  }
+
+  .st-plan-element-perk-desc-active {
+    font-size: 14px;
+    font-family: Inter;
+    font-weight: 500;
+    color: var(--primary) !important;
   }
 
   .plan-element-perk-desc-active {

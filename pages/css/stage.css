@@ -1814,6 +1814,59 @@
     padding-top: 50px;
   }
 
+  .is-section {
+    background-color: var(--surface);
+    border-radius: 5px;
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    padding: 20px 20px;
+    flex-direction: column;
+    margin-bottom: 15px;
+  }
+
+  .plan-progress {
+    width: 100%;
+    border-radius: 3px;
+    background-color: #fff;
+    height: 15px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .is-h1 {
+    font-family: Inter;
+    font-weight: 500;
+    color: var(--softBlack);
+    font-size: 14px;
+    padding-bottom: 5px;
+  }
+
+  .is-p {
+    font-family: Inter;
+    font-weight: 300;
+    color: var(--softBlack);
+    font-size: 12px;
+    opacity: 0.6;
+    padding-top: 5px;
+  }
+
+  .plan-progress-id {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .plan-user {
+    background-color: var(--primary);
+    width: 33%;
+    height: 100%;
+    border-radius: 3px;
+  }
+
   .op-h1 {
     font-family: Inter;
     font-weight: 500;
@@ -1872,6 +1925,45 @@
     padding: 10px 0px;
   }
 
+  .op-form-tick {
+    padding: 10px 0px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .op-form-tick-off {
+    padding: 10px 0px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .op-form-tick-off .form-tick {
+    background-color: #ebebeb !important;
+    justify-content: flex-start !important;
+    box-shadow: none !important;
+  }
+
+  .form-tick {
+    width: 50px;
+    background-color: var(--primary);
+    margin-top: 5px;
+    height: 25px;
+    padding: 0px 2.5px;
+    cursor: pointer;
+    border-radius: 500px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.05);
+  }
+
+  .form-tick-btn {
+    width: 20px;
+    height: 20px;
+    background-color: #fff;
+    border-radius: 50%;
+  }
+
   .op-input {
     width: 100%;
     padding: 12px 10px;
@@ -1887,6 +1979,15 @@
     font-weight: 500;
     font-size: 15px;
     color: var(--softBlack);
+  }
+
+  .op-form-by {
+    font-family: Inter;
+    font-weight: 400;
+    font-size: 13px;
+    padding-top: 2px;
+    color: var(--softBlack);
+    opacity: 0.8;
   }
 
   .op-container {
