@@ -11,6 +11,7 @@ import cookie from 'js-cookie'
 function Success () {
 
     const [success, setSuccess] = useState(false);
+    const [fail, setFail] = useState(false);
 
     useEffect(() => {
         if (getUser()) {
@@ -72,17 +73,17 @@ function Success () {
                         const test_premium3 = "price_1LuMVMDgBSgfAmE24WJZ75vz";
                         const test_premium12 = "price_1LuMVMDgBSgfAmE2jnAUOR2m";
                         var rolle = "";
-                        if (body.priceId === test_plus1) {
+                        if (result.data.plan.id === test_plus1) {
                             rolle = "plus";
-                        } else if (body.priceId === test_plus3) {
+                        } else if (result.data.plan.id === test_plus3) {
                             rolle = "plus";
-                        } else if (body.priceId === test_plus12) {
+                        } else if (result.data.plan.id === test_plus12) {
                             rolle = "plus";
-                        } else if (body.priceId === test_premium1) {
+                        } else if (result.data.plan.id === test_premium1) {
                             rolle = "premium";
-                        } else if (body.priceId === test_premium3) {
+                        } else if (result.data.plan.id === test_premium3) {
                             rolle = "premium";
-                        } else if (body.priceId === test_premium12) {
+                        } else if (result.data.plan.id === test_premium12) {
                             rolle = "premium";
                         }
                         var cookieAuth = JSON.parse(cookie.get("auth"));
@@ -91,17 +92,19 @@ function Success () {
                         cookie.set("auth", JSON.stringify(cookieAuth), {expires: 7});
                     }).catch(error => {
                         console.log("Fejl ved indhentning af data" + error)
+                        setFail(true);
                     })
                 }).catch(error => {
                     console.log("Fejl ved indhentning af data" + error)
+                    setFail(true);
                 })
             }).catch(error => {
                 console.log("Fejl ved indhentning af data" + error)
+                setFail(true);
             })
         } else {
-            console.log("NO USER")
+            setFail(true);
         }
-        console.log("EFFECT RUN")
     }, [])
 
     return (
@@ -111,6 +114,9 @@ function Success () {
                 <meta name="robots" content="noindex" />
             </Head>
             <Header />
+            {!success && <>
+                {!fail && <div className="match-loader display" id="stage-loader1"></div>}
+            </>}
             {success && <div className="main-block-container">
                 <div className="hero-text">
                     <p className="main-component-p animation-fadeleft">Gennemført køb</p>
@@ -119,7 +125,7 @@ function Success () {
                 </div>
                 <Link href="/stage"><a className="faq-btn">Begynd at bette</a></Link>
             </div>}
-            {!success && <div className="main-block-container">
+            {fail && <div className="main-block-container">
                 <div className="hero-text">
                     <p className="main-component-p animation-fadeleft">Ups... der skete en fejl</p>
                     <h1 className="main-component-h1 red-gradient animation-fadeleft animation-delay-200">Det ser ud til, at der skete en fejl</h1>
