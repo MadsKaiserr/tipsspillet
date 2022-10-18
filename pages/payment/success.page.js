@@ -98,7 +98,10 @@ function Success () {
             }).catch(error => {
                 console.log("Fejl ved indhentning af data" + error)
             })
+        } else {
+            console.log("NO USER")
         }
+        console.log("EFFECT RUN")
     }, [])
 
     return (
