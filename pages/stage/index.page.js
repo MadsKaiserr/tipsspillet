@@ -282,7 +282,6 @@ function StageForside ({gruppespil_data, spiller_data}) {
             document.getElementById("stage-main1").classList.add("display-not");
         }
         leagueQuery = "fixtures/between/" + new Date(selected).getFullYear() + "-" + checkMonths + "-" + checkDays + "/" + new Date(selected).getFullYear() + "-" + checkMonths2 + "-" + checkDay2s;
-        apiCall();
         
         var tMonth = (new Date(selected).getMonth() + 1) + "";
         if (tMonth.length === 1) {
@@ -715,7 +714,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
         }
     }
 
-    function apiCall() {
+    useEffect(() => {
         var t0 = new Date().getTime();
         fetch("https://soccer.sportmonks.com/api/v2.0/"+leagueQuery+"?api_token="+"kvgDywRFDSqPhS9iYQynEci42JvyVtqLpCXBJlBHrH5v8Br8RtrEayi94Ybf"+"&include=localTeam,visitorTeam,odds,league,league.country,league.round&bookmakers=2&tz=Europe/Copenhagen&per_page=150")
         .then(response => response.json())
@@ -751,10 +750,6 @@ function StageForside ({gruppespil_data, spiller_data}) {
                         kommendeItemsArray.sort((a, b) => {
                             return a.time.starting_at.timestamp - b.time.starting_at.timestamp;
                         });
-                        favoritArr.sort((a, b) => {
-                            return a.time.starting_at.timestamp - b.time.starting_at.timestamp;
-                        });
-                        setFavoritItems(favoritArr);
                         setKommendeItems(kommendeItemsArray);
                     }
                     setLoadingText("");
@@ -768,29 +763,30 @@ function StageForside ({gruppespil_data, spiller_data}) {
                 for (var i in result.data) {
                     if (result.data[i].odds.data.length > 0) {
                         if (result.data[i].time.status !== "FT" && result.data[i].odds.data[0].bookmaker.data[0].odds.data[0] && result.data[i].odds.data[0].bookmaker.data[0].odds.data[1] && result.data[i].odds.data[0].bookmaker.data[0].odds.data[2] && (parseInt(favoritArrSes.findIndex(obj => obj.id === result.data[i].localTeam.data.id)) >= 0 || parseInt(favoritArrSes.findIndex(obj => obj.id === result.data[i].visitorTeam.data.id)) >= 0)) {
-                            favoritArr.push(result.data[i]);
+                            if (result.data[i].time.starting_at.date === new Date(selected).getFullYear() + "-" + (new Date(selected).getMonth() + 1).toString().padStart(2, '0') + "-" + new Date(selected).getDate().toString().padStart(2, '0')) {
+                                favoritArr.push(result.data[i]);
+                            }
                         }
                         if (result.data[i].time.status !== "FT" && result.data[i].odds.data[0].bookmaker.data[0].odds.data[0] && result.data[i].odds.data[0].bookmaker.data[0].odds.data[1] && result.data[i].odds.data[0].bookmaker.data[0].odds.data[2]) {
                             kommendeItemsArray.push(result.data[i]);
                         }
                     }
                 }
+                favoritArr.sort((a, b) => {
+                    return a.time.starting_at.timestamp - b.time.starting_at.timestamp;
+                });
+                setFavoritItems(favoritArr);
                 if (leagueQuery.slice(17) === (new Date().getFullYear() + "-" + checkMonth + "-" + checkDay) + "/" + (new Date().getFullYear() + "-" + checkMonth + "-" + checkDay2)) {
                     kommendeItemsArray.sort((a, b) => {
                         return a.time.starting_at.timestamp - b.time.starting_at.timestamp;
                     });
-                    favoritArr.sort((a, b) => {
-                        return a.time.starting_at.timestamp - b.time.starting_at.timestamp;
-                    });
-                    console.log(favoritArr)
-                    setFavoritItems(favoritArr);
                     setKommendeItems(kommendeItemsArray);
                 }
                 setLoadingText("");
             }
             })
             .catch(error => console.log('error', error));
-    }
+    }, [selected])
 
     function multiFetch(l,checkArray, calcUdbetaling, odd_ids, k, kupon, type) {
         if (type === "kombination") {
@@ -3117,7 +3113,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
                                                         <div className="chat-empty-p" style={{width: "60%"}}></div>
                                                     </div>
                                                 </div>
-                                                <p className="chat-empty-h1">Ingen hold du følger spiller i dag</p>
+                                                <p className="chat-empty-h1">Ingen hold du følger spiller {chosenDate}</p>
                                             </div>
                                         </>}
                                     </>}
@@ -3252,7 +3248,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
                                                 );
                                             }
                                         })}
-                                        {favoritter.length <= 0 && <Link href="/stage/search"><div className="stage-team" style={{backgroundColor: "var(--surface)", marginBottom: "15px"}}>
+                                        {favoritter.length <= 0 && <Link href="/stage/setup?rel=hold"><div className="stage-team" style={{backgroundColor: "var(--surface)", marginBottom: "15px"}}>
                     <div className="stage-kampe-team2">
                         <div className="stage-kampe-teams-div">
                             <svg xmlns="http://www.w3.org/2000/svg" className="stage-teams-img" style={{opacity: "0.2"}} viewBox="0 0 16 16">

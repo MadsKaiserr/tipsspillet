@@ -405,7 +405,8 @@ function StageLeague ({data}) {
                     "id": parseInt(leagueId),
                     "image": logo,
                     "name": league_name,
-                    "liga": league_name
+                    "liga": league_name,
+                    "type": "liga"
                 };
                 storage.push(elementPush);
                 localStorage.setItem("favoritter", JSON.stringify(storage));

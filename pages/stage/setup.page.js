@@ -21,6 +21,8 @@ function Setup () {
         var GetRes = urlParams.get("rel");
         if (GetRes) {
             next("hold");
+        } else {
+            setFreemium(true);
         }
     }, [])
 
@@ -243,7 +245,7 @@ function Setup () {
         document.getElementById("errorConP").innerHTML = message;
     }
 
-    const [freemium, setFreemium] = useState(true);
+    const [freemium, setFreemium] = useState(false);
 
     return (
         <>
