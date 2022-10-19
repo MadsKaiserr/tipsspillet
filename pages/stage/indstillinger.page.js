@@ -1,46 +1,155 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
-import FacebookLogin from 'react-facebook-login';
 import Head from 'next/head'
 import StageHeader from '../layout/stageheader';
 import axios from "axios";
 import Link from 'next/link'
 import cookie from 'js-cookie'
-import Height from '../components/heightLight';
+import Image from 'next/image'
 import { getUser } from "../services/authService";
-import { set } from 'nprogress';
+import Mastercard from '../img/mastercard.png';
+import { useRouter } from 'next/router'
+import Visa from '../img/visa.png';
  
 function StageIndstillinger ({data}) {
+    const router = useRouter()
 
-    useEffect(() => {
-        if (document.getElementById("loader1")) {
-            document.getElementById("loader1").classList.add("display-not");
-        }
-        if (document.getElementById("loader2")) {
-            document.getElementById("loader2").classList.add("display-not");
-        }
-        // window.addEventListener("scroll", function(){
-        //     if (document.getElementById("price-input")) {
-        //         document.getElementById("price-input").classList.toggle("price-fixed", window.scrollY > 305);
-        //     }
-        // })
-    }, [])
+    const [canModal, setCanModal] = useState(false);
+    const [afbrydModal, setAfbrydModal] = useState(false);
+    const [cardOnline, setCardOnline] = useState(false);
+    const [last4, setLast4] = useState("xxxx");
+    const [cardName, setCardName] = useState("Indlæser...");
+    const [cardBrand, setCardBrand] = useState("");
+    const [subId, setSubId] = useState("");
+    const [afbrudt, setAfbrudt] = useState(false);
 
     const [loading1, setLoading1] = useState(false);
     const [loading2, setLoading2] = useState(false);
 
-    const [plusPrice, setPlusPrice] = useState(29);
-    const [premiumPrice, setPremiumPrice] = useState(39);
+    const [priceInterval, setPriceInterval] = useState(1);
+    const [plusPrice, setPlusPrice] = useState(39);
+    const [premiumPrice, setPremiumPrice] = useState(59);
     const [abonnement, setAbonnement] = useState("none");
     const [rolleExp, setRolleExp] = useState(0);
     const [rolleIat, setRolleIat] = useState(0);
 
+    useEffect(() => {
+        if (getUser().customer_id || JSON.parse(cookie.get("auth")).customer_id) {
+            var customer_id = "";
+            if (getUser().customer_id) {
+                customer_id = getUser().customer_id;
+            } else {
+                customer_id = JSON.parse(cookie.get("auth")).customer_id;
+            }
+            const loginURL2 = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/retrievecard";
+            const requestConfig2 = {
+                headers: {
+                    "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
+                }
+            }
+    
+            const requestBody2 = {
+                customer_id: customer_id
+            }
+    
+            axios.post(loginURL2, requestBody2, requestConfig2).then(response => {
+                console.log("AWS - Retrieve card:", response);
+                setLast4(response.data.payment.card.last4)
+                setCardName(response.data.payment.billing_details.name)
+                setCardBrand(response.data.payment.card.brand)
+                setCardOnline(true);
+                setSubId(response.data.subId)
+            }).catch(error => {
+                console.log(error);
+            })
+        }
+    }, [])
+
+    function cancelSub() {
+        const loginURL2 = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/cancelsub";
+        const requestConfig2 = {
+            headers: {
+                "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
+            }
+        }
+
+        const requestBody2 = {
+            sub_id: subId
+        }
+
+        axios.post(loginURL2, requestBody2, requestConfig2).then(response => {
+            console.log("AWS - Retrieve card:", response);
+            setCanModal(true);
+            setAfbrydModal(false)
+            setAfbrudt(true);
+        }).catch(error => {
+            console.log(error);
+        })
+    }
+
     const handlePlus = async e => {
+        setLoading1(true);
+        if (getUser()) {
+            if (getUser().rolle === "none") {
+                const URL = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/subscribe";
+                const requestConfig = {
+                    headers: {
+                        "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
+                    }
+                }
         
+                const requestBody = {
+                    email: getUser().email,
+                    navn: getUser().username,
+                    subscription: "plus" + priceInterval
+                }
+
+                axios.post(URL, requestBody, requestConfig).then(response => {
+                    console.log(response);
+                    router.push(response.data.session.url)
+                }).catch(error => {
+                    console.log("Fejl ved indhentning af data" + error)
+                    setLoading1(false);
+                })
+            } else {
+                setLoading1(false);
+                setNotiMessage("error", "Du har allerede abonnement", "Gå til indstillinger på din profil, og herunder abonnement, for at ændre dit nuværende abonnement. Se også https://www.tipsspillet.dk/stage/indstillinger");
+            }
+        } else {
+            router.push("/signup")
+        }
     }
 
     const handlePremium = async e => {
+        setLoading2(true);
+        if (getUser()) {
+            if (getUser().rolle === "none") {
+                const URL = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/subscribe";
+                const requestConfig = {
+                    headers: {
+                        "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
+                    }
+                }
         
+                const requestBody = {
+                    email: getUser().email,
+                    navn: getUser().username,
+                    subscription: "premium" + priceInterval
+                }
+                axios.post(URL, requestBody, requestConfig).then(response => {
+                    console.log(response);
+                    router.push(response.data.session.url)
+                }).catch(error => {
+                    console.log("Fejl ved indhentning af data" + error)
+                    setLoading2(false);
+                })
+            } else {
+                setLoading2(false);
+                setNotiMessage("error", "Du har allerede abonnement", "Gå til indstillinger på din profil, og herunder abonnement, for at ændre dit nuværende abonnement. Se også https://www.tipsspillet.dk/stage/indstillinger");
+            }
+        } else {
+            router.push("/signup")
+        }
     }
 
     const [ogusernameField, setogUsernameField] = useState("Indlæser...");
@@ -65,10 +174,6 @@ function StageIndstillinger ({data}) {
     const [nav, setNav] = useState("generelt");
 
     useEffect(() => {
-        setFavorites(JSON.parse(localStorage.getItem("favoritter")));
-    }, []);
-
-    useEffect(() => {
         setUser(JSON.stringify(data));
         setUsernameField(data["username"]);
         setEmailField(data["email"]);
@@ -85,7 +190,7 @@ function StageIndstillinger ({data}) {
         setNotiKuponOG(data.notifikationer.kupon);
         setRolleExp(data.rolle_exp * 1000);
         setRolleIat(data.rolle_iat * 1000);
-        setAbonnement(getUser().rolle);
+        setAbonnement(JSON.parse(cookie.get("auth")).rolle);
         setProgress(parseInt(((new Date().getTime() - (data.rolle_iat * 1000))/((data.rolle_exp*1000) - (data.rolle_iat*1000)))*100));
         setDayProgress(parseInt(((data.rolle_exp*1000)-new Date().getTime())/1000/60/60/24))
         if (data.type === "facebook") {
@@ -257,6 +362,23 @@ function StageIndstillinger ({data}) {
                     </div>
                 </div>
             </div>}
+            {afbrydModal && <div className="modal-test">
+                <div className="modal-con">
+                    <p className="con-modal-p">Er du sikker på, at du vil afbryde dit abonnement? Du vil stadig have dit abonnements fordele indtil enden af din betalingsperiode.</p>
+                    <div className="modal-wrapper">
+                        <button className="con-modal-btn" onClick={() => cancelSub()}>Slut abonnement</button>
+                        <button className="con-modal-afbryd" onClick={() => setAfbrydModal(false)}>Gå tilbage</button>
+                    </div>
+                </div>
+            </div>}
+            {canModal && <div className="modal-test">
+                <div className="modal-con">
+                    <p className="con-modal-p">Dit abonnement er blevet afbrudt. Du vil stadig have dit abonnements fordele indtil enden af din betalingsperiode.</p>
+                    <div className="modal-wrapper">
+                        <button className="con-modal-btn" onClick={() => setCanModal(false)}>Okay</button>
+                    </div>
+                </div>
+            </div>}
             <div className="op-container">
                 <div className="is-top">
                     {nav === "generelt" && <><p className="is-top-p-active">Generelt</p>
@@ -288,7 +410,7 @@ function StageIndstillinger ({data}) {
                     </div>
                 </div>
                 {message !== "" && <p className="og-msg">{message}</p>}
-                {edited && <button className="wc-btn" onClick={() => updateProfile()}>{loading && <div className="loader" id="loader"></div>}{!loading && <>Opdater profil</>}</button>}
+                {edited && <button className="wc-btn" onClick={() => updateProfile()}>{loading && <div className="loader"></div>}{!loading && <>Opdater profil</>}</button>}
                 {!edited && <button className="wc-btn-off">Opdater profil</button>}
                 </>}
                 {nav === "notifikationer" && <><div className="op-content">
@@ -352,15 +474,16 @@ function StageIndstillinger ({data}) {
                     </div>
                 </div>
                 {message !== "" && <p className="og-msg">{message}</p>}
-                {editedNoti && <button className="wc-btn" style={{marginTop: "30px"}} onClick={() => updateNotifikationer()}>{loading && <div className="loader" id="loader"></div>}{!loading && <>Opdater indstillinger</>}</button>}
+                {editedNoti && <button className="wc-btn" style={{marginTop: "30px"}} onClick={() => updateNotifikationer()}>{loading && <div className="loader"></div>}{!loading && <>Opdater indstillinger</>}</button>}
                 {!editedNoti && <button className="wc-btn-off" style={{marginTop: "30px"}}>Opdater indstillinger</button>}
                 </>}
                 {nav === "abonnement" && <><div className="op-content" style={{maxWidth: "950px", minHeight: "750px"}}>
                     <p className="op-h1">Abonnement</p>
                     <p className="op-h2">Indstillinger for abonnement</p>
                     <div className="op-form">
-                        <div className="is-section">
-                            <p className="is-h1">{dayProgress} dage til næste betaling</p>
+                        {afbrudt && <>
+                            <p className="is-h1">Betalingsoversigt</p>
+                            <p className="is-h2">{dayProgress} dage tilbage af dit abonnement</p>
                             <div className="plan-progress">
                                 <div className="plan-user" style={{width: progress + "%"}}></div>
                             </div>
@@ -368,7 +491,71 @@ function StageIndstillinger ({data}) {
                                 <p className="is-p">{new Date(rolleIat).getDate().toString().padStart(2, '0') + "/" + (new Date(rolleIat).getMonth() + 1).toString().padStart(2, '0')}</p>
                                 <p className="is-p">{new Date(rolleExp).getDate().toString().padStart(2, '0') + "/" + (new Date(rolleExp).getMonth() + 1).toString().padStart(2, '0')}</p>
                             </div>
-                        </div>
+                        </>}
+                        {!afbrudt && <>
+                            {cardOnline && <div className="sub-data">
+                            <p className="is-h1">Betalingsoversigt</p>
+                            <p className="is-h2">{dayProgress} dage til næste betaling</p>
+                            <div className="plan-progress">
+                                <div className="plan-user" style={{width: progress + "%"}}></div>
+                            </div>
+                            <div className="plan-progress-id">
+                                <p className="is-p">{new Date(rolleIat).getDate().toString().padStart(2, '0') + "/" + (new Date(rolleIat).getMonth() + 1).toString().padStart(2, '0')}</p>
+                                <p className="is-p">{new Date(rolleExp).getDate().toString().padStart(2, '0') + "/" + (new Date(rolleExp).getMonth() + 1).toString().padStart(2, '0')}</p>
+                            </div>
+                            <div className="sub-card">
+                                <div className="sub-span">
+                                    <div className="sub-status"></div>
+                                    <p className="sub-status-p">Aktiv</p>
+                                </div>
+                                <svg xmlns="http://www.w3.org/2000/svg" className="sub-icon" viewBox="0 0 16 16">
+                                    <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v1h14V4a1 1 0 0 0-1-1H2zm13 4H1v5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V7z"/>
+                                    <path d="M2 10a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-1z"/>
+                                </svg>
+                                <p className="sub-card-p">{cardName}</p>
+                                <div className="sub-span">
+                                    <p className="sub-card-p">•••• •••• ••••</p>
+                                    <p className="sub-card-p">{last4}</p>
+                                </div>
+                                <div className="sub-span">
+                                    <div className="sub-span">
+                                        <p className="sub-card-p" style={{opacity: "0.75"}}>EXP</p>
+                                        <p className="sub-card-p">••/••</p>
+                                    </div>
+                                    <div className="sub-span" style={{paddingLeft: "8px"}}>
+                                        <p className="sub-card-p" style={{opacity: "0.75"}}>CVC</p>
+                                        <p className="sub-card-p">•••</p>
+                                    </div>
+                                </div>
+                                <div className="sub-img">
+                                    {cardBrand === "visa" && <Image src={Visa} />}
+                                    {cardBrand === "mastercard" && <Image src={Mastercard} />}
+                                </div>
+                            </div>
+                            <div className="card-cta">
+                                <button className="card-cta-btn-active" onClick={() => setAfbrydModal(true)}>Afbryd abonnement</button>
+                                <button className="card-cta-btn">Opgrader</button>
+                                <button className="card-cta-btn">Læs mere</button>
+                            </div>
+                            </div>}
+                            {!cardOnline && <>
+                                {getUser().rolle !== "none" && <>
+                                    <p className="is-h1">Betalingsoversigt</p>
+                                    <p className="is-h2">{dayProgress} dage tilbage af dit abonnement</p>
+                                    <div className="plan-progress">
+                                        <div className="plan-user" style={{width: progress + "%"}}></div>
+                                    </div>
+                                    <div className="plan-progress-id">
+                                        <p className="is-p">{new Date(rolleIat).getDate().toString().padStart(2, '0') + "/" + (new Date(rolleIat).getMonth() + 1).toString().padStart(2, '0')}</p>
+                                        <p className="is-p">{new Date(rolleExp).getDate().toString().padStart(2, '0') + "/" + (new Date(rolleExp).getMonth() + 1).toString().padStart(2, '0')}</p>
+                                    </div>
+                                </>}
+                                {getUser().rolle === "none" && <>
+                                    <p className="is-h1">Betalingsoversigt</p>
+                                    <p className="is-h2">Du har ikke noget abonnement</p>
+                                </>}
+                            </>}
+                        </>}
                         <div className="st-plans-con">
                             <div className="st-plan-element">
                                 <div className="st-plan-element-top">
@@ -429,8 +616,8 @@ function StageIndstillinger ({data}) {
                                         <p className="st-plan-element-perk-desc">Ingen reklamer</p>
                                     </div>
                                 </div>
-                                {abonnement === "none" && <button className="square-btn-default plan-btn-off" style={{fontSize: "13px"}}>Nuværende</button>}
-                                {abonnement !== "none" && <button className="square-btn-default plan-btn" style={{fontSize: "13px"}}>Nedgrader</button>}
+                                {abonnement === "none" && <button className="square-btn-default plan-btn-off">Nuværende</button>}
+                                {abonnement !== "none" && <button className="square-btn-default plan-btn">Nedgrader</button>}
                             </div>
                             <div className="st-plan-element">
                                 <div className="st-plan-element-top">
@@ -490,9 +677,9 @@ function StageIndstillinger ({data}) {
                                         <p className="st-plan-element-perk-desc">Ingen reklamer</p>
                                     </div>
                                 </div>
-                                {abonnement === "none" && <button className="square-btn-default plan-btn" style={{fontSize: "13px"}} onClick={handlePlus}>{loading1 && <div className="loader" id="loader1"></div>}{!loading1 && <>Opgrader</>}</button>}
-                                {abonnement === "premium" && <button className="square-btn-default plan-btn" style={{fontSize: "13px"}} onClick={handlePlus}>{loading1 && <div className="loader" id="loader1"></div>}{!loading1 && <>Nedgrader</>}</button>}
-                                {abonnement === "plus" && <button className="square-btn-default plan-btn-off" style={{fontSize: "13px"}}>Nuværende</button>}
+                                {abonnement === "none" && <button className="square-btn-default plan-btn" onClick={handlePlus}>{loading1 && <div className="loader"></div>}{!loading1 && <>Opgrader</>}</button>}
+                                {abonnement === "premium" && <button className="square-btn-default plan-btn" onClick={handlePlus}>{loading1 && <div className="loader"></div>}{!loading1 && <>Nedgrader</>}</button>}
+                                {abonnement === "plus" && <button className="square-btn-default plan-btn-off">Nuværende</button>}
                             </div>
                             <div className="st-plan-element">
                                 <div className="st-plan-element-top">
@@ -550,9 +737,9 @@ function StageIndstillinger ({data}) {
                                         <p className="st-plan-element-perk-desc">Ingen reklamer</p>
                                     </div>
                                 </div>
-                                {abonnement === "none" && <button className="square-btn-default plan-btn" style={{fontSize: "13px"}} onClick={handlePremium}>{loading2 && <div className="loader" id="loader1"></div>}{!loading1 && <>Opgrader</>}</button>}
-                                {abonnement === "plus" && <button className="square-btn-default plan-btn" style={{fontSize: "13px"}} onClick={handlePremium}>{loading2 && <div className="loader" id="loader1"></div>}{!loading1 && <>Opgrader</>}</button>}
-                                {abonnement === "premium" && <button className="square-btn-default plan-btn-off" style={{fontSize: "13px"}}>Nuværende</button>}
+                                {abonnement === "none" && <button className="square-btn-default plan-btn" onClick={handlePremium}>{loading2 && <div className="loader"></div>}{!loading2 && <>Opgrader</>}</button>}
+                                {abonnement === "plus" && <button className="square-btn-default plan-btn" onClick={handlePremium}>{loading2 && <div className="loader"></div>}{!loading2 && <>Opgrader</>}</button>}
+                                {abonnement === "premium" && <button className="square-btn-default plan-btn-off">Nuværende</button>}
                             </div>
                         </div>
                     </div>

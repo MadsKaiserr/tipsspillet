@@ -71,9 +71,9 @@
     border: 0px;
     font-family: Inter;
     font-weight: 400;
-    width: 120px;
     transition: 0.2s;
     cursor: pointer;
+    white-space: nowrap;
   }
   
   .con-modal-btn:hover {
@@ -1820,15 +1820,102 @@
     width: 100%;
     display: flex;
     align-items: flex-start;
-    padding: 20px 20px;
     flex-direction: column;
+    padding: 20px 20px;
     margin-bottom: 15px;
+  }
+
+  .sub-card {
+    width: 100%;
+    background-color: var(--stageSurface);
+    border-radius: 5px;
+    margin-top: 15px;
+    padding: 15px 20px;
+    position: relative;
+  }
+
+  .card-cta {
+    display: flex;
+    align-items: center;
+    padding-top: 10px;
+    justify-content: space-between;
+  }
+
+  .card-cta-btn-active {
+    padding: 6px 12px;
+    background-color: var(--stageSurface);
+    border-radius: 500px;
+    color: #444;
+    font-family: Inter;
+    font-weight: 400;
+    font-size: 12px;
+    border: 0px;
+    cursor: pointer;
+  }
+
+  .card-cta-btn {
+    padding: 6px 12px;
+    background-color: transparent;
+    border-radius: 500px;
+    color: #444;
+    font-family: Inter;
+    font-weight: 400;
+    font-size: 12px;
+    border: 0px;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+
+  .card-cta-btn:hover {
+    background-color: var(--stageSurface);
+  }
+
+  .sub-span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .sub-img {
+    position: absolute;
+    right: 20px;
+    bottom: 15px;
+    width: 45px;
+  }
+
+  .sub-status {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background-color: var(--green);
+  }
+
+  .sub-status-p {
+    font-family: Inter;
+    font-weight: 400;
+    color: var(--softBlack);
+    font-size: 12px;
+  }
+
+  .sub-card-p {
+    font-family: Inter;
+    font-weight: 400;
+    color: #333;
+    font-size: 13px;
+    padding-top: 5px;
+  }
+
+  .sub-icon {
+    fill: #9fa4af;
+    height: 25px;
+    width: 25px;
+    margin-top: 15px;
   }
 
   .plan-progress {
     width: 100%;
-    border-radius: 3px;
-    background-color: #fff;
+    border-radius: 2px;
+    background-color: var(--stageSurface);
     height: 15px;
     overflow: hidden;
     display: flex;
@@ -1836,11 +1923,26 @@
     justify-content: flex-start;
   }
 
+  .sub-data {
+    max-width: 350px;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.05);
+    padding: 15px 20px;
+    border-radius: 5px;
+  }
+
   .is-h1 {
     font-family: Inter;
     font-weight: 500;
+    color: #333;
+    font-size: 17px;
+    padding-bottom: 10px;
+  }
+
+  .is-h2 {
+    font-family: Inter;
+    font-weight: 400;
     color: var(--softBlack);
-    font-size: 14px;
+    font-size: 13px;
     padding-bottom: 5px;
   }
 

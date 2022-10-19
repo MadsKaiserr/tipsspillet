@@ -1499,7 +1499,6 @@
   
   .plan-btn {
     width: 100% !important;
-    font-weight: 500;
   }
 
   .plan-btn-off {
@@ -1508,7 +1507,6 @@
     color: rgba(51, 51, 51, 0.775);
     border: 1px #ebebeb solid;
     opacity: 0.8;
-    font-weight: 500;
   }
 
   .plan-btn-off:hover {
