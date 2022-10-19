@@ -44,6 +44,13 @@ function StageGruppespil ({data}) {
                 }
             });
         }
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        if (urlParams.get("stilling")) {
+            if (document.getElementById("stilling")) {
+                document.getElementById("stilling").scrollIntoView();
+            }
+        }
     })
 
     useEffect(() => {
@@ -833,7 +840,7 @@ function StageGruppespil ({data}) {
                                     </ul>
                                 </div>
                             </div>
-                            <div className="gruppespil-info">
+                            <div className="gruppespil-info" id="stilling">
                                 <div className="gruppespil-title">
                                     <h2 className="gs-h2">Spildeltagere</h2>
                                     <p className="gs-h4">Klik for at se mere info</p>
@@ -1391,7 +1398,7 @@ function StageGruppespil ({data}) {
                                     </ul>
                                 </div>
                             </div>
-                            <div className="gruppespil-info">
+                            <div className="gruppespil-info" id="stilling">
                                 <div className="gruppespil-title">
                                     <h2 className="gs-h2">Spildeltagere</h2>
                                     <p className="gs-h4">Klik for at se mere info</p>

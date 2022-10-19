@@ -2544,7 +2544,7 @@ gap: 8px;
     font-weight: 400;
     color: var(--black);
     font-family: Inter;
-    font-size: 14px;
+    font-size: 16px;
     opacity: 0.8;
   }
 
@@ -2552,10 +2552,10 @@ gap: 8px;
     font-weight: 300;
     color: var(--softBlack);
     font-family: Inter;
-    font-size: 11px;
+    font-size: 13px;
     opacity: 0.6;
     padding-top: 3px;
-    max-width: 170px;
+    max-width: 190px;
   }
 
   .td-empty-btn {

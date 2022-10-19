@@ -3036,7 +3036,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
                         <p className="info-p">Valgte spil: <span className="info-p-span">{activeGameName}
                         </span></p><br />
                         <p className="info-p">Kapital: <span className="info-p-span">{parseInt(currentMoney)},00 kr.</span></p><br />
-                        <p className="info-p">Placering: <span className="info-p-span">{position}</span> af <span className="info-p-span">{positionCount}</span></p><br />
+                        <p className="info-p">Placering: <span className="info-p-span">{position}</span> af <span className="info-p-span">{positionCount}</span><Link href="/stage/gruppespil?stilling=true"><span className="stilling-p">Se stilling</span></Link></p><br />
                         <p className="info-p" style={{paddingBottom: "10px"}}>Slutdato: <span className="info-p-span">{slutdatostr}</span></p>
                         <br />
                         <Link href="/stage/aktive-spil">
