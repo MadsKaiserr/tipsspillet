@@ -195,7 +195,7 @@ function StageSpiller ({ data }) {
                                                                                 <div className="kupon-content">
                                                                                     <div className="kupon-info">
                                                                                         <p className="kupon-h1">{element.hometeam} - {element.visitorteam}</p>
-                                                                                        <p className="kupon-p">{getKupon(element.betType,element.hometeam,element.visitorteam)}: <span className="weight600">{element.label}</span></p>
+                                                                                        <p className="kupon-p">{getKupon(element.betType,element.hometeam,element.visitorteam)}: <span className="weight600">{element.label && element.label}{!element.label && getString(element.betType,element.result,element.hometeam,element.visitorteam)}</span></p>
                                                                                     </div>
                                                                                     <div className="kupon-odds">
                                                                                         <p className="kupon-h2">{(Number(element.probability)).toFixed(2)}</p>
@@ -319,7 +319,7 @@ function StageSpiller ({ data }) {
                                                                                 <div className="kupon-content">
                                                                                     <div className="kupon-info">
                                                                                         <p className="kupon-h1">{element.hometeam} - {element.visitorteam}</p>
-                                                                                        <p className="kupon-p">{getKupon(element.betType,element.hometeam,element.visitorteam)}: <span className="weight600">{element.label}</span></p>
+                                                                                        <p className="kupon-p">{getKupon(element.betType,element.hometeam,element.visitorteam)}: <span className="weight600">{element.label && element.label}{!element.label && getString(element.betType,element.result,element.hometeam,element.visitorteam)}</span></p>
                                                                                     </div>
                                                                                     <div className="kupon-odds">
                                                                                         <p className="kupon-h2">{(Number(element.probability)).toFixed(2)}</p>
