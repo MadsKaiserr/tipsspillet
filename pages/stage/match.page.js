@@ -13,6 +13,7 @@ import Congrats from '../img/congrats.svg';
 import StageHeader from '../layout/stageheader';
 import Height from '../components/height';
 import { getUser } from "../services/authService";
+import DownArrow from './../img/down-arrow.png';
 
 function StageMatcharticle ({data}) {
 
@@ -1606,121 +1607,7 @@ function StageMatcharticle ({data}) {
         );
     }
 
-    function setOddNav(oddNav) {
-        if (oddNav === "popular") {
-            document.getElementById("popular").classList.add("show-nav");
-            document.getElementById("kort").classList.remove("show-nav");
-            document.getElementById("corner").classList.remove("show-nav");
-            document.getElementById("goal").classList.remove("show-nav");
-            document.getElementById("spillere").classList.remove("show-nav");
-            document.getElementById("specials").classList.remove("show-nav");
-            document.getElementById("minutter").classList.remove("show-nav");
-
-            document.getElementById("popularN").className = "oddsspil-element-active";
-            document.getElementById("kortN").className = "oddsspil-element";
-            document.getElementById("cornerN").className = "oddsspil-element";
-            document.getElementById("goalN").className = "oddsspil-element";
-            document.getElementById("spillereN").className = "oddsspil-element";
-            document.getElementById("specialsN").className = "oddsspil-element";
-            document.getElementById("minutterN").className = "oddsspil-element";
-        } else if (oddNav === "kort") {
-            document.getElementById("popular").classList.remove("show-nav");
-            document.getElementById("kort").classList.add("show-nav");
-            document.getElementById("corner").classList.remove("show-nav");
-            document.getElementById("goal").classList.remove("show-nav");
-            document.getElementById("spillere").classList.remove("show-nav");
-            document.getElementById("specials").classList.remove("show-nav");
-            document.getElementById("minutter").classList.remove("show-nav");
-
-            document.getElementById("popularN").className = "oddsspil-element";
-            document.getElementById("kortN").className = "oddsspil-element-active";
-            document.getElementById("cornerN").className = "oddsspil-element";
-            document.getElementById("goalN").className = "oddsspil-element";
-            document.getElementById("spillereN").className = "oddsspil-element";
-            document.getElementById("specialsN").className = "oddsspil-element";
-            document.getElementById("minutterN").className = "oddsspil-element";
-        } else if (oddNav === "corner") {
-            document.getElementById("popular").classList.remove("show-nav");
-            document.getElementById("kort").classList.remove("show-nav");
-            document.getElementById("corner").classList.add("show-nav");
-            document.getElementById("goal").classList.remove("show-nav");
-            document.getElementById("spillere").classList.remove("show-nav");
-            document.getElementById("specials").classList.remove("show-nav");
-            document.getElementById("minutter").classList.remove("show-nav");
-
-            document.getElementById("popularN").className = "oddsspil-element";
-            document.getElementById("kortN").className = "oddsspil-element";
-            document.getElementById("cornerN").className = "oddsspil-element-active";
-            document.getElementById("goalN").className = "oddsspil-element";
-            document.getElementById("spillereN").className = "oddsspil-element";
-            document.getElementById("specialsN").className = "oddsspil-element";
-            document.getElementById("minutterN").className = "oddsspil-element";
-        } else if (oddNav === "goal") {
-            document.getElementById("popular").classList.remove("show-nav");
-            document.getElementById("kort").classList.remove("show-nav");
-            document.getElementById("corner").classList.remove("show-nav");
-            document.getElementById("goal").classList.add("show-nav");
-            document.getElementById("spillere").classList.remove("show-nav");
-            document.getElementById("specials").classList.remove("show-nav");
-            document.getElementById("minutter").classList.remove("show-nav");
-
-            document.getElementById("popularN").className = "oddsspil-element";
-            document.getElementById("kortN").className = "oddsspil-element";
-            document.getElementById("cornerN").className = "oddsspil-element";
-            document.getElementById("goalN").className = "oddsspil-element-active";
-            document.getElementById("spillereN").className = "oddsspil-element";
-            document.getElementById("specialsN").className = "oddsspil-element";
-            document.getElementById("minutterN").className = "oddsspil-element";
-        } else if (oddNav === "spillere") {
-            document.getElementById("popular").classList.remove("show-nav");
-            document.getElementById("kort").classList.remove("show-nav");
-            document.getElementById("corner").classList.remove("show-nav");
-            document.getElementById("goal").classList.remove("show-nav");
-            document.getElementById("spillere").classList.add("show-nav");
-            document.getElementById("specials").classList.remove("show-nav");
-            document.getElementById("minutter").classList.remove("show-nav");
-
-            document.getElementById("popularN").className = "oddsspil-element";
-            document.getElementById("kortN").className = "oddsspil-element";
-            document.getElementById("cornerN").className = "oddsspil-element";
-            document.getElementById("goalN").className = "oddsspil-element";
-            document.getElementById("spillereN").className = "oddsspil-element-active";
-            document.getElementById("specialsN").className = "oddsspil-element";
-            document.getElementById("minutterN").className = "oddsspil-element";
-        } else if (oddNav === "specials") {
-            document.getElementById("popular").classList.remove("show-nav");
-            document.getElementById("kort").classList.remove("show-nav");
-            document.getElementById("corner").classList.remove("show-nav");
-            document.getElementById("goal").classList.remove("show-nav");
-            document.getElementById("spillere").classList.remove("show-nav");
-            document.getElementById("specials").classList.add("show-nav");
-            document.getElementById("minutter").classList.remove("show-nav");
-
-            document.getElementById("popularN").className = "oddsspil-element";
-            document.getElementById("kortN").className = "oddsspil-element";
-            document.getElementById("cornerN").className = "oddsspil-element";
-            document.getElementById("goalN").className = "oddsspil-element";
-            document.getElementById("spillereN").className = "oddsspil-element";
-            document.getElementById("specialsN").className = "oddsspil-element-active";
-            document.getElementById("minutterN").className = "oddsspil-element";
-        } else if (oddNav === "minutter") {
-            document.getElementById("popular").classList.remove("show-nav");
-            document.getElementById("kort").classList.remove("show-nav");
-            document.getElementById("corner").classList.remove("show-nav");
-            document.getElementById("goal").classList.remove("show-nav");
-            document.getElementById("spillere").classList.remove("show-nav");
-            document.getElementById("specials").classList.remove("show-nav");
-            document.getElementById("minutter").classList.add("show-nav");
-
-            document.getElementById("popularN").className = "oddsspil-element";
-            document.getElementById("kortN").className = "oddsspil-element";
-            document.getElementById("cornerN").className = "oddsspil-element";
-            document.getElementById("goalN").className = "oddsspil-element";
-            document.getElementById("spillereN").className = "oddsspil-element";
-            document.getElementById("specialsN").className = "oddsspil-element";
-            document.getElementById("minutterN").className = "oddsspil-element-active";
-        }
-    }
+    const [oddNav, setOddNav] = useState("popular");
 
     function favoritHover(n) {
         if (n === 1) {
@@ -2613,1066 +2500,2004 @@ function StageMatcharticle ({data}) {
                     <div className="match-odds-con">
                         <div className="match-odds-nav-fix">
                             <div className="match-odds-nav" style={{paddingTop: "10px"}}>
-                                <button className="oddsspil-element-active" onClick={() => {setOddNav("popular")}} id="popularN">Populære</button>
-                                <button className="oddsspil-element" onClick={() => {setOddNav("minutter")}} id="minutterN">Halvleg</button>
-                                <button className="oddsspil-element" onClick={() => {setOddNav("kort")}} id="kortN">Kort</button>
-                                <button className="oddsspil-element" onClick={() => {setOddNav("corner")}} id="cornerN">Hjørnespark</button>
-                                <button className="oddsspil-element" onClick={() => {setOddNav("goal")}} id="goalN">Mål</button>
-                                <button className="oddsspil-element" onClick={() => {setOddNav("spillere")}} id="spillereN">Spillere</button>
-                                <button className="oddsspil-element" onClick={() => {setOddNav("specials")}} id="specialsN">Specials</button>
+                                {oddNav === "popular" && <button className="oddsspil-element-active" onClick={() => {setOddNav("popular")}}>Populære</button>}
+                                {oddNav !== "popular" && <button className="oddsspil-element" onClick={() => {setOddNav("popular")}}>Populære</button>}
+                                {oddNav === "build" && <button className="oddsspil-element-active" onClick={() => {setOddNav("build")}}>Byg væddemål</button>}
+                                {oddNav !== "build" && <button className="oddsspil-element" onClick={() => {setOddNav("build")}}>Byg væddemål</button>}
+                                {oddNav === "minutter" && <button className="oddsspil-element-active" onClick={() => {setOddNav("minutter")}}>Halvleg</button>}
+                                {oddNav !== "minutter" && <button className="oddsspil-element" onClick={() => {setOddNav("minutter")}}>Halvleg</button>}
+                                {oddNav === "kort" && <button className="oddsspil-element-active" onClick={() => {setOddNav("kort")}}>Kort</button>}
+                                {oddNav !== "kort" && <button className="oddsspil-element" onClick={() => {setOddNav("kort")}}>Kort</button>}
+                                {oddNav === "corner" && <button className="oddsspil-element-active" onClick={() => {setOddNav("corner")}}>Hjørnespark</button>}
+                                {oddNav !== "corner" && <button className="oddsspil-element" onClick={() => {setOddNav("corner")}}>Hjørnespark</button>}
+                                {oddNav === "goal" && <button className="oddsspil-element-active" onClick={() => {setOddNav("goal")}}>Mål</button>}
+                                {oddNav !== "goal" && <button className="oddsspil-element" onClick={() => {setOddNav("goal")}}>Mål</button>}
+                                {oddNav === "spillere" && <button className="oddsspil-element-active" onClick={() => {setOddNav("spillere")}}>Spillere</button>}
+                                {oddNav !== "spillere" && <button className="oddsspil-element" onClick={() => {setOddNav("spillere")}}>Spillere</button>}
+                                {oddNav === "specials" && <button className="oddsspil-element-active" onClick={() => {setOddNav("specials")}}>Specials</button>}
+                                {oddNav !== "specials" && <button className="oddsspil-element" onClick={() => {setOddNav("specials")}}>Specials</button>}
                             </div>
                         </div>
                         <div className="match-odds-show">
-                        <div className="match-odds-container">
-                            <div className="match-odds-section">
-                                {!matchUpdated && <p className="match-odds-error">Odds ikke opdateret</p>}
-                                <ul className="match-odds-cont show-nav" id="popular">
-                                    {availPopular.map((item) => {
-                                        var label0 = getLabel(item, 0);
-                                        var label1 = getLabel(item, 1);
-                                        var label2 = getLabel(item, 2);
-                                        var overskrift = getLabel(item, 3);
+                            <div className="match-odds-container">
+                                <div className="match-odds-section">
+                                    {!matchUpdated && <p className="match-odds-error">Odds ikke opdateret</p>}
+                                    {oddNav === "popular" && <ul className="match-odds-cont">
+                                        <div className="match-odds-id">
+                                            <div className="match-odds-id-top" onClick={() => document.getElementById("build-popular").classList.toggle("display")}>
+                                                <p className="match-odds-id-h1">Populære</p>
+                                                <p className="match-odds-id-p">{availPopular.length}</p>
+                                            </div>
+                                            <ul className="match-odds-id-con display" id="build-popular">
+                                                {availPopular.map((item) => {
+                                                var label0 = getLabel(item, 0);
+                                                var label1 = getLabel(item, 1);
+                                                var label2 = getLabel(item, 2);
+                                                var overskrift = getLabel(item, 3);
 
-                                        var oddofforon0 = "match-odds-offer-element-3";
-                                        var oddofforon1 = "match-odds-offer-element-3";
-                                        var oddofforon2 = "match-odds-offer-element-3";
+                                                var oddofforon0 = "match-odds-offer-element-3";
+                                                var oddofforon1 = "match-odds-offer-element-3";
+                                                var oddofforon2 = "match-odds-offer-element-3";
 
-                                        var oddofforon20 = "match-odds-offer-element-2";
-                                        var oddofforon21 = "match-odds-offer-element-2";
+                                                var oddofforon20 = "match-odds-offer-element-2";
+                                                var oddofforon21 = "match-odds-offer-element-2";
 
-                                        var oddofforon10 = "match-odds-offer-element-1";
+                                                var oddofforon10 = "match-odds-offer-element-1";
 
-                                        var nowDate = new Date().getTime();
-                                        var thistime = (nowDate.toString()).slice(0, -3);
-                                        if (items["time"].starting_at.timestamp < thistime) {
-                                            if (item.type_length === 3) {
-                                                oddofforon0 = "match-odds-offer-element-3 odd-used";
-                                                oddofforon1 = "match-odds-offer-element-3 odd-used";
-                                                oddofforon2 = "match-odds-offer-element-3 odd-used";
-                                                return (
-                                                    <li key={item.type + matchID + overskrift}>
-                                                        <div className="match-bet">
-                                                            <div className="match-bet-top">
-                                                                <p className="match-odds-h1">{overskrift}</p>
-                                                            </div>
-                                                            <div className="match-odds-offer">
-                                                                <div className={oddofforon0} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
-                                                                    <p className="match-odds-offer-h1">{label0}</p>
-                                                                    <p className="match-odds-offer-h2">{item.first}</p>
+                                                var nowDate = new Date().getTime();
+                                                var thistime = (nowDate.toString()).slice(0, -3);
+                                                if (items["time"].starting_at.timestamp < thistime) {
+                                                    if (item.type_length === 3) {
+                                                        oddofforon0 = "match-odds-offer-element-3 odd-used";
+                                                        oddofforon1 = "match-odds-offer-element-3 odd-used";
+                                                        oddofforon2 = "match-odds-offer-element-3 odd-used";
+                                                        return (
+                                                            <li key={item.type + matchID + overskrift}>
+                                                                <div className="match-bet">
+                                                                    <div className="match-bet-top">
+                                                                        <p className="match-odds-h1">{overskrift}</p>
+                                                                    </div>
+                                                                    <div className="match-odds-offer">
+                                                                        <div className={oddofforon0} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
+                                                                            <p className="match-odds-offer-h1">{label0}</p>
+                                                                            <p className="match-odds-offer-h2">{item.first}</p>
+                                                                        </div>
+                                                                        <div className={oddofforon1} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
+                                                                            <p className="match-odds-offer-h1">{label1}</p>
+                                                                            <p className="match-odds-offer-h2">{item.second}</p>
+                                                                        </div>
+                                                                        <div className={oddofforon2} id={item.type + matchID + "-" + item.result2} onClick={() => chooseOdd(item.type + matchID + "-" + item.result2, item.type, item.result2, item.third)}>
+                                                                            <p className="match-odds-offer-h1">{label2}</p>
+                                                                            <p className="match-odds-offer-h2">{item.third}</p>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
-                                                                <div className={oddofforon1} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
-                                                                    <p className="match-odds-offer-h1">{label1}</p>
-                                                                    <p className="match-odds-offer-h2">{item.second}</p>
-                                                                </div>
-                                                                <div className={oddofforon2} id={item.type + matchID + "-" + item.result2} onClick={() => chooseOdd(item.type + matchID + "-" + item.result2, item.type, item.result2, item.third)}>
-                                                                    <p className="match-odds-offer-h1">{label2}</p>
-                                                                    <p className="match-odds-offer-h2">{item.third}</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                );
-                                            } else if (item.type_length === 2) {
-                                                oddofforon20 = "match-odds-offer-element-2 odd-used";
-                                                oddofforon21 = "match-odds-offer-element-2 odd-used";
-                                                return (
-                                                    <li key={item.type + overskrift}>
-                                                        <div className="match-bet">
-                                                            <div className="match-bet-top">
-                                                                <p className="match-odds-h1">{overskrift}</p>
-                                                            </div>
-                                                            <div className="match-odds-offer">
-                                                                <div className={oddofforon20} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
-                                                                    <p className="match-odds-offer-h1">{label0}</p>
-                                                                    <p className="match-odds-offer-h2">{item.first}</p>
-                                                                </div>
-                                                                <div className={oddofforon21} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
-                                                                    <p className="match-odds-offer-h1">{label1}</p>
-                                                                    <p className="match-odds-offer-h2">{item.second}</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                </li>
-                                                );
-                                            }
-                                        } else {
-
-                                        if (item.type_length === 3) {
-                                            if (sessionStorage.getItem("notUsableBtn")) {
-                                                const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
-                                                for (var i = 0; i < 3; i++) {
-                                                    const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + i);
-                                                    if (repliceIndex >= 0) {
-                                                        if (i === 0) {
-                                                            oddofforon0 = "match-odds-offer-element-3 odd-used";
-                                                        } else if (i === 1) {
-                                                            oddofforon1 = "match-odds-offer-element-3 odd-used";
-                                                        } else if (i === 2) {
-                                                            oddofforon2 = "match-odds-offer-element-3 odd-used";
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                            return (
-                                                <li key={item.type + overskrift}>
-                                                    <div className="match-bet">
-                                                        <div className="match-bet-top">
-                                                            <p className="match-odds-h1">{overskrift}</p>
-                                                        </div>
-                                                        <div className="match-odds-offer">
-                                                            <div className={oddofforon0} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
-                                                                <p className="match-odds-offer-h1">{label0}</p>
-                                                                <p className="match-odds-offer-h2">{item.first}</p>
-                                                            </div>
-                                                            <div className={oddofforon1} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
-                                                                <p className="match-odds-offer-h1">{label1}</p>
-                                                                <p className="match-odds-offer-h2">{item.second}</p>
-                                                            </div>
-                                                            <div className={oddofforon2} id={item.type + matchID + "-" + item.result2} onClick={() => chooseOdd(item.type + matchID + "-" + item.result2, item.type, item.result2, item.third)}>
-                                                                <p className="match-odds-offer-h1">{label2}</p>
-                                                                <p className="match-odds-offer-h2">{item.third}</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                            );
-                                        } else if (item.type_length === 2) {
-                                            if (sessionStorage.getItem("notUsableBtn")) {
-                                                const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
-                                                for (var o = 0; o < 2; o++) {
-                                                    const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + o);
-                                                    if (repliceIndex >= 0) {
-                                                        if (o === 0) {
-                                                            oddofforon20 = "match-odds-offer-element-2 odd-used";
-                                                        } else if (o === 1) {
-                                                            oddofforon21 = "match-odds-offer-element-2 odd-used";
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                            return(
-                                                <li key={item.type + overskrift}>
-                                                    <div className="match-bet">
-                                                        <div className="match-bet-top">
-                                                            <p className="match-odds-h1">{overskrift}</p>
-                                                        </div>
-                                                        <div className="match-odds-offer">
-                                                            <div className={oddofforon20} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
-                                                                <p className="match-odds-offer-h1">{label0}</p>
-                                                                <p className="match-odds-offer-h2">{item.first}</p>
-                                                            </div>
-                                                            <div className={oddofforon21} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
-                                                                <p className="match-odds-offer-h1">{label1}</p>
-                                                                <p className="match-odds-offer-h2">{item.second}</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                            );
-                                        } else if (item.type_length === 7) {
-                                            if (sessionStorage.getItem("notUsableBtn")) {
-                                                const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
-                                                const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + goals);
-                                                if (repliceIndex >= 0) {
-                                                    oddofforon10 = "match-odds-offer-element-1 odd-used";
-                                                }
-                                            }
-                                            return(
-                                                <li key={item.type + overskrift}>
-                                                    <div className="match-bet">
-                                                        <div className="match-bet-top">
-                                                            <p className="match-odds-h1">{overskrift}: {goals}</p>
-                                                        </div>
-                                                        <input type="range" className="match-odds-slider" min="0" max="7" defaultValue={goals} onChange={event => setGoals(event.target.value)}  step="1"/>
-                                                        <div className="match-odds-offer">
-                                                            <div className={oddofforon10} id={item.type + matchID + "-" + goals} onClick={() => chooseOdd(item.type + matchID + "-" + goals, item.type, goals, goalsOdds)}>
-                                                                <p className="match-odds-offer-h1">Tilføj til væddemål</p>
-                                                                <p className="match-odds-offer-h2">{goalsOdds}</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                            );
-                                        }
-                                        }
-                                        }
-                                    )}
-                                </ul>
-                                <ul className="match-odds-cont" id="kort">
-                                    {availKort.map((item) => {
-                                        var label0 = getLabel(item, 0);
-                                        var label1 = getLabel(item, 1);
-                                        var label2 = getLabel(item, 2);
-                                        var overskrift = getLabel(item, 3);
-
-                                        var oddofforon0 = "match-odds-offer-element-3";
-                                        var oddofforon1 = "match-odds-offer-element-3";
-                                        var oddofforon2 = "match-odds-offer-element-3";
-
-                                        var oddofforon20 = "match-odds-offer-element-2";
-                                        var oddofforon21 = "match-odds-offer-element-2";
-
-                                        var nowDate = new Date().getTime();
-                                        var thistime = (nowDate.toString()).slice(0, -3);
-                                        if (items["time"].starting_at.timestamp < thistime) {
-                                            if (item.type_length === 3) {
-                                                oddofforon0 = "match-odds-offer-element-3 odd-used";
-                                                oddofforon1 = "match-odds-offer-element-3 odd-used";
-                                                oddofforon2 = "match-odds-offer-element-3 odd-used";
-                                                return (
-                                                    <li key={item.type + matchID + overskrift}>
-                                                        <div className="match-bet">
-                                                            <div className="match-bet-top">
-                                                                <p className="match-odds-h1">{overskrift}</p>
-                                                            </div>
-                                                            <div className="match-odds-offer">
-                                                                <div className={oddofforon0} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
-                                                                    <p className="match-odds-offer-h1">{label0}</p>
-                                                                    <p className="match-odds-offer-h2">{item.first}</p>
-                                                                </div>
-                                                                <div className={oddofforon1} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
-                                                                    <p className="match-odds-offer-h1">{label1}</p>
-                                                                    <p className="match-odds-offer-h2">{item.second}</p>
-                                                                </div>
-                                                                <div className={oddofforon2} id={item.type + matchID + "-" + item.result2} onClick={() => chooseOdd(item.type + matchID + "-" + item.result2, item.type, item.result2, item.third)}>
-                                                                    <p className="match-odds-offer-h1">{label2}</p>
-                                                                    <p className="match-odds-offer-h2">{item.third}</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                );
-                                            } else if (item.type_length === 2) {
-                                                oddofforon20 = "match-odds-offer-element-2 odd-used";
-                                                oddofforon21 = "match-odds-offer-element-2 odd-used";
-                                                return (
-                                                    <li key={item.type + overskrift}>
-                                                        <div className="match-bet">
-                                                            <div className="match-bet-top">
-                                                                <p className="match-odds-h1">{overskrift}</p>
-                                                            </div>
-                                                            <div className="match-odds-offer">
-                                                                <div className={oddofforon20} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
-                                                                    <p className="match-odds-offer-h1">{label0}</p>
-                                                                    <p className="match-odds-offer-h2">{item.first}</p>
-                                                                </div>
-                                                                <div className={oddofforon21} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
-                                                                    <p className="match-odds-offer-h1">{label1}</p>
-                                                                    <p className="match-odds-offer-h2">{item.second}</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                </li>
-                                                );
-                                            }
-                                        } else {
-
-                                        if (item.type_length === 3) {
-                                            if (sessionStorage.getItem("notUsableBtn")) {
-                                                const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
-                                                for (var i = 0; i < 3; i++) {
-                                                    const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + i);
-                                                    if (repliceIndex >= 0) {
-                                                        if (i === 0) {
-                                                            oddofforon0 = "match-odds-offer-element-3 odd-used";
-                                                        } else if (i === 1) {
-                                                            oddofforon1 = "match-odds-offer-element-3 odd-used";
-                                                        } else if (i === 2) {
-                                                            oddofforon2 = "match-odds-offer-element-3 odd-used";
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                            return (
-                                                <li key={item.type + overskrift}>
-                                                    <div className="match-bet">
-                                                        <div className="match-bet-top">
-                                                            <p className="match-odds-h1">{overskrift}</p>
-                                                        </div>
-                                                        <div className="match-odds-offer">
-                                                            <div className={oddofforon0} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
-                                                                <p className="match-odds-offer-h1">{label0}</p>
-                                                                <p className="match-odds-offer-h2">{item.first}</p>
-                                                            </div>
-                                                            <div className={oddofforon1} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
-                                                                <p className="match-odds-offer-h1">{label1}</p>
-                                                                <p className="match-odds-offer-h2">{item.second}</p>
-                                                            </div>
-                                                            <div className={oddofforon2} id={item.type + matchID + "-" + item.result2} onClick={() => chooseOdd(item.type + matchID + "-" + item.result2, item.type, item.result2, item.third)}>
-                                                                <p className="match-odds-offer-h1">{label2}</p>
-                                                                <p className="match-odds-offer-h2">{item.third}</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                            );
-                                        } else {
-                                            if (sessionStorage.getItem("notUsableBtn")) {
-                                                const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
-                                                for (var o in btnReplica) {
-                                                    if (btnReplica[o] === item.type + matchID + "-" + item.result0) {
+                                                            </li>
+                                                        );
+                                                    } else if (item.type_length === 2) {
                                                         oddofforon20 = "match-odds-offer-element-2 odd-used";
-                                                    } else if (btnReplica[o] === item.type + matchID + "-" + item.result1) {
                                                         oddofforon21 = "match-odds-offer-element-2 odd-used";
+                                                        return (
+                                                            <li key={item.type + overskrift}>
+                                                                <div className="match-bet">
+                                                                    <div className="match-bet-top">
+                                                                        <p className="match-odds-h1">{overskrift}</p>
+                                                                    </div>
+                                                                    <div className="match-odds-offer">
+                                                                        <div className={oddofforon20} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
+                                                                            <p className="match-odds-offer-h1">{label0}</p>
+                                                                            <p className="match-odds-offer-h2">{item.first}</p>
+                                                                        </div>
+                                                                        <div className={oddofforon21} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
+                                                                            <p className="match-odds-offer-h1">{label1}</p>
+                                                                            <p className="match-odds-offer-h2">{item.second}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                        </li>
+                                                        );
                                                     }
-                                                }
-                                            }
-                                            return(
-                                                <li key={item.type + overskrift}>
-                                                    <div className="match-bet">
-                                                        <div className="match-bet-top">
-                                                            <p className="match-odds-h1">{overskrift}</p>
-                                                        </div>
-                                                        <div className="match-odds-offer">
-                                                            <div className={oddofforon20} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
-                                                                <p className="match-odds-offer-h1">{label0}</p>
-                                                                <p className="match-odds-offer-h2">{item.first}</p>
-                                                            </div>
-                                                            <div className={oddofforon21} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
-                                                                <p className="match-odds-offer-h1">{label1}</p>
-                                                                <p className="match-odds-offer-h2">{item.second}</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                            );
-                                        }
-                                        }
-                                        }
-                                    )}
-                                </ul>
-                                <ul className="match-odds-cont" id="corner">
-                                    {availCorner.map((item) => {
-                                        var label0 = getLabel(item, 0);
-                                        var label1 = getLabel(item, 1);
-                                        var label2 = getLabel(item, 2);
-                                        var overskrift = getLabel(item, 3);
+                                                } else {
 
-                                        var oddofforon0 = "match-odds-offer-element-3";
-                                        var oddofforon1 = "match-odds-offer-element-3";
-                                        var oddofforon2 = "match-odds-offer-element-3";
-
-                                        var oddofforon20 = "match-odds-offer-element-2";
-                                        var oddofforon21 = "match-odds-offer-element-2";
-
-                                        var nowDate = new Date().getTime();
-                                        var thistime = (nowDate.toString()).slice(0, -3);
-                                        if (items["time"].starting_at.timestamp < thistime) {
-                                            if (item.type_length === 3) {
-                                                oddofforon0 = "match-odds-offer-element-3 odd-used";
-                                                oddofforon1 = "match-odds-offer-element-3 odd-used";
-                                                oddofforon2 = "match-odds-offer-element-3 odd-used";
-                                                return (
-                                                    <li key={item.type + matchID + overskrift}>
-                                                        <div className="match-bet">
-                                                            <div className="match-bet-top">
-                                                                <p className="match-odds-h1">{overskrift}</p>
-                                                            </div>
-                                                            <div className="match-odds-offer">
-                                                                <div className={oddofforon0} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
-                                                                    <p className="match-odds-offer-h1">{label0}</p>
-                                                                    <p className="match-odds-offer-h2">{item.first}</p>
-                                                                </div>
-                                                                <div className={oddofforon1} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
-                                                                    <p className="match-odds-offer-h1">{label1}</p>
-                                                                    <p className="match-odds-offer-h2">{item.second}</p>
-                                                                </div>
-                                                                <div className={oddofforon2} id={item.type + matchID + "-" + item.result2} onClick={() => chooseOdd(item.type + matchID + "-" + item.result2, item.type, item.result2, item.third)}>
-                                                                    <p className="match-odds-offer-h1">{label2}</p>
-                                                                    <p className="match-odds-offer-h2">{item.third}</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                );
-                                            } else if (item.type_length === 2) {
-                                                oddofforon20 = "match-odds-offer-element-2 odd-used";
-                                                oddofforon21 = "match-odds-offer-element-2 odd-used";
-                                                return (
-                                                    <li key={item.type + overskrift}>
-                                                        <div className="match-bet">
-                                                            <div className="match-bet-top">
-                                                                <p className="match-odds-h1">{overskrift}</p>
-                                                            </div>
-                                                            <div className="match-odds-offer">
-                                                                <div className={oddofforon20} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
-                                                                    <p className="match-odds-offer-h1">{label0}</p>
-                                                                    <p className="match-odds-offer-h2">{item.first}</p>
-                                                                </div>
-                                                                <div className={oddofforon21} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
-                                                                    <p className="match-odds-offer-h1">{label1}</p>
-                                                                    <p className="match-odds-offer-h2">{item.second}</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                </li>
-                                                );
-                                            }
-                                        } else {
-
-                                        if (item.type_length === 3) {
-                                            if (sessionStorage.getItem("notUsableBtn")) {
-                                                const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
-                                                for (var i = 0; i < 3; i++) {
-                                                    const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + i);
-                                                    if (repliceIndex >= 0) {
-                                                        if (i === 0) {
-                                                            oddofforon0 = "match-odds-offer-element-3 odd-used";
-                                                        } else if (i === 1) {
-                                                            oddofforon1 = "match-odds-offer-element-3 odd-used";
-                                                        } else if (i === 2) {
-                                                            oddofforon2 = "match-odds-offer-element-3 odd-used";
+                                                if (item.type_length === 3) {
+                                                    if (sessionStorage.getItem("notUsableBtn")) {
+                                                        const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
+                                                        for (var i = 0; i < 3; i++) {
+                                                            const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + i);
+                                                            if (repliceIndex >= 0) {
+                                                                if (i === 0) {
+                                                                    oddofforon0 = "match-odds-offer-element-3 odd-used";
+                                                                } else if (i === 1) {
+                                                                    oddofforon1 = "match-odds-offer-element-3 odd-used";
+                                                                } else if (i === 2) {
+                                                                    oddofforon2 = "match-odds-offer-element-3 odd-used";
+                                                                }
+                                                            }
                                                         }
                                                     }
-                                                }
-                                            }
-                                            return (
-                                                <li key={item.type + overskrift}>
-                                                    <div className="match-bet">
-                                                        <div className="match-bet-top">
-                                                            <p className="match-odds-h1">{overskrift}</p>
-                                                        </div>
-                                                        <div className="match-odds-offer">
-                                                            <div className={oddofforon0} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
-                                                                <p className="match-odds-offer-h1">{label0}</p>
-                                                                <p className="match-odds-offer-h2">{item.first}</p>
+                                                    return (
+                                                        <li key={item.type + overskrift}>
+                                                            <div className="match-bet">
+                                                                <div className="match-bet-top">
+                                                                    <p className="match-odds-h1">{overskrift}</p>
+                                                                </div>
+                                                                <div className="match-odds-offer">
+                                                                    <div className={oddofforon0} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
+                                                                        <p className="match-odds-offer-h1">{label0}</p>
+                                                                        <p className="match-odds-offer-h2">{item.first}</p>
+                                                                    </div>
+                                                                    <div className={oddofforon1} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
+                                                                        <p className="match-odds-offer-h1">{label1}</p>
+                                                                        <p className="match-odds-offer-h2">{item.second}</p>
+                                                                    </div>
+                                                                    <div className={oddofforon2} id={item.type + matchID + "-" + item.result2} onClick={() => chooseOdd(item.type + matchID + "-" + item.result2, item.type, item.result2, item.third)}>
+                                                                        <p className="match-odds-offer-h1">{label2}</p>
+                                                                        <p className="match-odds-offer-h2">{item.third}</p>
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                            <div className={oddofforon1} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
-                                                                <p className="match-odds-offer-h1">{label1}</p>
-                                                                <p className="match-odds-offer-h2">{item.second}</p>
-                                                            </div>
-                                                            <div className={oddofforon2} id={item.type + matchID + "-" + item.result2} onClick={() => chooseOdd(item.type + matchID + "-" + item.result2, item.type, item.result2, item.third)}>
-                                                                <p className="match-odds-offer-h1">{label2}</p>
-                                                                <p className="match-odds-offer-h2">{item.third}</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                            );
-                                        } else {
-                                            if (sessionStorage.getItem("notUsableBtn")) {
-                                                const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
-                                                for (var o = 0; o < 2; o++) {
-                                                    const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + o);
-                                                    if (repliceIndex >= 0) {
-                                                        if (o === 0) {
-                                                            oddofforon20 = "match-odds-offer-element-2 odd-used";
-                                                        } else if (o === 1) {
-                                                            oddofforon21 = "match-odds-offer-element-2 odd-used";
+                                                        </li>
+                                                    );
+                                                } else if (item.type_length === 2) {
+                                                    if (sessionStorage.getItem("notUsableBtn")) {
+                                                        const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
+                                                        for (var o = 0; o < 2; o++) {
+                                                            const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + o);
+                                                            if (repliceIndex >= 0) {
+                                                                if (o === 0) {
+                                                                    oddofforon20 = "match-odds-offer-element-2 odd-used";
+                                                                } else if (o === 1) {
+                                                                    oddofforon21 = "match-odds-offer-element-2 odd-used";
+                                                                }
+                                                            }
                                                         }
                                                     }
-                                                }
-                                            }
-                                            return(
-                                                <li key={item.type + overskrift}>
-                                                    <div className="match-bet">
-                                                        <div className="match-bet-top">
-                                                            <p className="match-odds-h1">{overskrift}</p>
-                                                        </div>
-                                                        <div className="match-odds-offer">
-                                                            <div className={oddofforon20} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
-                                                                <p className="match-odds-offer-h1">{label0}</p>
-                                                                <p className="match-odds-offer-h2">{item.first}</p>
-                                                            </div>
-                                                            <div className={oddofforon21} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
-                                                                <p className="match-odds-offer-h1">{label1}</p>
-                                                                <p className="match-odds-offer-h2">{item.second}</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                            );
-                                        }
-                                        }
-                                        }
-                                    )}
-                                </ul>
-                                <ul className="match-odds-cont" id="goal">
-                                    {availGoal.map((item) => {
-                                        var label0 = getLabel(item, 0);
-                                        var label1 = getLabel(item, 1);
-                                        var label2 = getLabel(item, 2);
-                                        var overskrift = getLabel(item, 3);
-
-                                        var oddofforon0 = "match-odds-offer-element-3";
-                                        var oddofforon1 = "match-odds-offer-element-3";
-                                        var oddofforon2 = "match-odds-offer-element-3";
-
-                                        var oddofforon20 = "match-odds-offer-element-2";
-                                        var oddofforon21 = "match-odds-offer-element-2";
-
-                                        var nowDate = new Date().getTime();
-                                        var thistime = (nowDate.toString()).slice(0, -3);
-                                        if (items["time"].starting_at.timestamp < thistime) {
-                                            if (item.type_length === 3) {
-                                                oddofforon0 = "match-odds-offer-element-3 odd-used";
-                                                oddofforon1 = "match-odds-offer-element-3 odd-used";
-                                                oddofforon2 = "match-odds-offer-element-3 odd-used";
-                                                return (
-                                                    <li key={item.type + matchID + overskrift}>
-                                                        <div className="match-bet">
-                                                            <div className="match-bet-top">
-                                                                <p className="match-odds-h1">{overskrift}</p>
-                                                            </div>
-                                                            <div className="match-odds-offer">
-                                                                <div className={oddofforon0} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
-                                                                    <p className="match-odds-offer-h1">{label0}</p>
-                                                                    <p className="match-odds-offer-h2">{item.first}</p>
+                                                    return(
+                                                        <li key={item.type + overskrift}>
+                                                            <div className="match-bet">
+                                                                <div className="match-bet-top">
+                                                                    <p className="match-odds-h1">{overskrift}</p>
                                                                 </div>
-                                                                <div className={oddofforon1} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
-                                                                    <p className="match-odds-offer-h1">{label1}</p>
-                                                                    <p className="match-odds-offer-h2">{item.second}</p>
-                                                                </div>
-                                                                <div className={oddofforon2} id={item.type + matchID + "-" + item.result2} onClick={() => chooseOdd(item.type + matchID + "-" + item.result2, item.type, item.result2, item.third)}>
-                                                                    <p className="match-odds-offer-h1">{label2}</p>
-                                                                    <p className="match-odds-offer-h2">{item.third}</p>
+                                                                <div className="match-odds-offer">
+                                                                    <div className={oddofforon20} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
+                                                                        <p className="match-odds-offer-h1">{label0}</p>
+                                                                        <p className="match-odds-offer-h2">{item.first}</p>
+                                                                    </div>
+                                                                    <div className={oddofforon21} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
+                                                                        <p className="match-odds-offer-h1">{label1}</p>
+                                                                        <p className="match-odds-offer-h2">{item.second}</p>
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                    </li>
-                                                );
-                                            } else if (item.type_length === 2) {
-                                                oddofforon20 = "match-odds-offer-element-2 odd-used";
-                                                oddofforon21 = "match-odds-offer-element-2 odd-used";
-                                                return (
-                                                    <li key={item.type + overskrift}>
-                                                        <div className="match-bet">
-                                                            <div className="match-bet-top">
-                                                                <p className="match-odds-h1">{overskrift}</p>
-                                                            </div>
-                                                            <div className="match-odds-offer">
-                                                                <div className={oddofforon20} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
-                                                                    <p className="match-odds-offer-h1">{label0}</p>
-                                                                    <p className="match-odds-offer-h2">{item.first}</p>
-                                                                </div>
-                                                                <div className={oddofforon21} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
-                                                                    <p className="match-odds-offer-h1">{label1}</p>
-                                                                    <p className="match-odds-offer-h2">{item.second}</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                </li>
-                                                );
-                                            }
-                                        } else {
-
-                                        if (item.type_length === 3) {
-                                            if (sessionStorage.getItem("notUsableBtn")) {
-                                                const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
-                                                for (var i = 0; i < 3; i++) {
-                                                    const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + i);
-                                                    if (repliceIndex >= 0) {
-                                                        if (i === 0) {
-                                                            oddofforon0 = "match-odds-offer-element-3 odd-used";
-                                                        } else if (i === 1) {
-                                                            oddofforon1 = "match-odds-offer-element-3 odd-used";
-                                                        } else if (i === 2) {
-                                                            oddofforon2 = "match-odds-offer-element-3 odd-used";
+                                                        </li>
+                                                    );
+                                                } else if (item.type_length === 7) {
+                                                    if (sessionStorage.getItem("notUsableBtn")) {
+                                                        const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
+                                                        const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + goals);
+                                                        if (repliceIndex >= 0) {
+                                                            oddofforon10 = "match-odds-offer-element-1 odd-used";
                                                         }
                                                     }
+                                                    return(
+                                                        <li key={item.type + overskrift}>
+                                                            <div className="match-bet">
+                                                                <div className="match-bet-top">
+                                                                    <p className="match-odds-h1">{overskrift}: {goals}</p>
+                                                                </div>
+                                                                <input type="range" className="match-odds-slider" min="0" max="7" defaultValue={goals} onChange={event => setGoals(event.target.value)}  step="1"/>
+                                                                <div className="match-odds-offer">
+                                                                    <div className={oddofforon10} id={item.type + matchID + "-" + goals} onClick={() => chooseOdd(item.type + matchID + "-" + goals, item.type, goals, goalsOdds)}>
+                                                                        <p className="match-odds-offer-h1">Tilføj til væddemål</p>
+                                                                        <p className="match-odds-offer-h2">{goalsOdds}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    );
                                                 }
-                                            }
-                                            return (
-                                                <li key={item.type + overskrift}>
-                                                    <div className="match-bet">
-                                                        <div className="match-bet-top">
-                                                            <p className="match-odds-h1">{overskrift}</p>
-                                                        </div>
-                                                        <div className="match-odds-offer">
-                                                            <div className={oddofforon0} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
-                                                                <p className="match-odds-offer-h1">{label0}</p>
-                                                                <p className="match-odds-offer-h2">{item.first}</p>
-                                                            </div>
-                                                            <div className={oddofforon1} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
-                                                                <p className="match-odds-offer-h1">{label1}</p>
-                                                                <p className="match-odds-offer-h2">{item.second}</p>
-                                                            </div>
-                                                            <div className={oddofforon2} id={item.type + matchID + "-" + item.result2} onClick={() => chooseOdd(item.type + matchID + "-" + item.result2, item.type, item.result2, item.third)}>
-                                                                <p className="match-odds-offer-h1">{label2}</p>
-                                                                <p className="match-odds-offer-h2">{item.third}</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                            );
-                                        } else {
-                                            if (sessionStorage.getItem("notUsableBtn")) {
-                                                const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
-                                                for (var o = 0; o < 2; o++) {
-                                                    const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + o);
-                                                    if (repliceIndex >= 0) {
-                                                        if (o === 0) {
-                                                            oddofforon20 = "match-odds-offer-element-2 odd-used";
-                                                        } else if (o === 1) {
-                                                            oddofforon21 = "match-odds-offer-element-2 odd-used";
+                                                }
+                                                }
+                                                )}
+                                            </ul>
+                                        </div>
+                                    </ul>}
+                                    {oddNav === "build" && <div className="match-odds-cont">
+                                        <div className="match-odds-id">
+                                            <div className="match-odds-id-top" onClick={() => document.getElementById("build-popular").classList.toggle("display")}>
+                                                <p className="match-odds-id-h1">Populære</p>
+                                                <p className="match-odds-id-p">{availPopular.length}</p>
+                                            </div>
+                                            <ul className="match-odds-id-con" id="build-popular">
+                                                {availPopular.map((item) => {
+                                                var label0 = getLabel(item, 0);
+                                                var label1 = getLabel(item, 1);
+                                                var label2 = getLabel(item, 2);
+                                                var overskrift = getLabel(item, 3);
+
+                                                var oddofforon0 = "match-odds-offer-element-3";
+                                                var oddofforon1 = "match-odds-offer-element-3";
+                                                var oddofforon2 = "match-odds-offer-element-3";
+
+                                                var oddofforon20 = "match-odds-offer-element-2";
+                                                var oddofforon21 = "match-odds-offer-element-2";
+
+                                                var oddofforon10 = "match-odds-offer-element-1";
+
+                                                var nowDate = new Date().getTime();
+                                                var thistime = (nowDate.toString()).slice(0, -3);
+                                                if (items["time"].starting_at.timestamp < thistime) {
+                                                    if (item.type_length === 3) {
+                                                        oddofforon0 = "match-odds-offer-element-3 odd-used";
+                                                        oddofforon1 = "match-odds-offer-element-3 odd-used";
+                                                        oddofforon2 = "match-odds-offer-element-3 odd-used";
+                                                        return (
+                                                            <li key={item.type + matchID + overskrift}>
+                                                                <div className="match-bet">
+                                                                    <div className="match-bet-top">
+                                                                        <p className="match-odds-h1">{overskrift}</p>
+                                                                    </div>
+                                                                    <div className="match-odds-offer">
+                                                                        <div className={oddofforon0} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
+                                                                            <p className="match-odds-offer-h1">{label0}</p>
+                                                                            <p className="match-odds-offer-h2">{item.first}</p>
+                                                                        </div>
+                                                                        <div className={oddofforon1} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
+                                                                            <p className="match-odds-offer-h1">{label1}</p>
+                                                                            <p className="match-odds-offer-h2">{item.second}</p>
+                                                                        </div>
+                                                                        <div className={oddofforon2} id={item.type + matchID + "-" + item.result2} onClick={() => chooseOdd(item.type + matchID + "-" + item.result2, item.type, item.result2, item.third)}>
+                                                                            <p className="match-odds-offer-h1">{label2}</p>
+                                                                            <p className="match-odds-offer-h2">{item.third}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        );
+                                                    } else if (item.type_length === 2) {
+                                                        oddofforon20 = "match-odds-offer-element-2 odd-used";
+                                                        oddofforon21 = "match-odds-offer-element-2 odd-used";
+                                                        return (
+                                                            <li key={item.type + overskrift}>
+                                                                <div className="match-bet">
+                                                                    <div className="match-bet-top">
+                                                                        <p className="match-odds-h1">{overskrift}</p>
+                                                                    </div>
+                                                                    <div className="match-odds-offer">
+                                                                        <div className={oddofforon20} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
+                                                                            <p className="match-odds-offer-h1">{label0}</p>
+                                                                            <p className="match-odds-offer-h2">{item.first}</p>
+                                                                        </div>
+                                                                        <div className={oddofforon21} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
+                                                                            <p className="match-odds-offer-h1">{label1}</p>
+                                                                            <p className="match-odds-offer-h2">{item.second}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                        </li>
+                                                        );
+                                                    }
+                                                } else {
+
+                                                if (item.type_length === 3) {
+                                                    if (sessionStorage.getItem("notUsableBtn")) {
+                                                        const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
+                                                        for (var i = 0; i < 3; i++) {
+                                                            const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + i);
+                                                            if (repliceIndex >= 0) {
+                                                                if (i === 0) {
+                                                                    oddofforon0 = "match-odds-offer-element-3 odd-used";
+                                                                } else if (i === 1) {
+                                                                    oddofforon1 = "match-odds-offer-element-3 odd-used";
+                                                                } else if (i === 2) {
+                                                                    oddofforon2 = "match-odds-offer-element-3 odd-used";
+                                                                }
+                                                            }
                                                         }
                                                     }
-                                                }
-                                            }
-                                            return(
-                                                <li key={item.type + overskrift}>
-                                                    <div className="match-bet">
-                                                        <div className="match-bet-top">
-                                                            <p className="match-odds-h1">{overskrift}</p>
-                                                        </div>
-                                                        <div className="match-odds-offer">
-                                                            <div className={oddofforon20} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
-                                                                <p className="match-odds-offer-h1">{label0}</p>
-                                                                <p className="match-odds-offer-h2">{item.first}</p>
-                                                            </div>
-                                                            <div className={oddofforon21} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
-                                                                <p className="match-odds-offer-h1">{label1}</p>
-                                                                <p className="match-odds-offer-h2">{item.second}</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                            );
-                                        }
-                                        }
-                                        }
-                                    )}
-                                </ul>
-                                <ul className="match-odds-cont" id="spillere">
-                                    {availSpillere.map((item) => {
-                                        var label0 = getLabel(item, 0);
-                                        var label1 = getLabel(item, 1);
-                                        var label2 = getLabel(item, 2);
-                                        var overskrift = getLabel(item, 3);
-
-                                        var oddofforon0 = "match-odds-offer-element-3";
-                                        var oddofforon1 = "match-odds-offer-element-3";
-                                        var oddofforon2 = "match-odds-offer-element-3";
-
-                                        var oddofforon20 = "match-odds-offer-element-2";
-                                        var oddofforon21 = "match-odds-offer-element-2";
-
-                                        var nowDate = new Date().getTime();
-                                        var thistime = (nowDate.toString()).slice(0, -3);
-                                        if (items["time"].starting_at.timestamp < thistime) {
-                                            if (item.type_length === 3) {
-                                                oddofforon0 = "match-odds-offer-element-3 odd-used";
-                                                oddofforon1 = "match-odds-offer-element-3 odd-used";
-                                                oddofforon2 = "match-odds-offer-element-3 odd-used";
-                                                return (
-                                                    <li key={item.type + matchID + overskrift}>
-                                                        <div className="match-bet">
-                                                            <div className="match-bet-top">
-                                                                <p className="match-odds-h1">{overskrift}</p>
-                                                            </div>
-                                                            <div className="match-odds-offer">
-                                                                <div className={oddofforon0} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
-                                                                    <p className="match-odds-offer-h1">{label0}</p>
-                                                                    <p className="match-odds-offer-h2">{item.first}</p>
+                                                    return (
+                                                        <li key={item.type + overskrift}>
+                                                            <div className="match-bet">
+                                                                <div className="match-bet-top">
+                                                                    <p className="match-odds-h1">{overskrift}</p>
                                                                 </div>
-                                                                <div className={oddofforon1} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
-                                                                    <p className="match-odds-offer-h1">{label1}</p>
-                                                                    <p className="match-odds-offer-h2">{item.second}</p>
-                                                                </div>
-                                                                <div className={oddofforon2} id={item.type + matchID + "-" + item.result2} onClick={() => chooseOdd(item.type + matchID + "-" + item.result2, item.type, item.result2, item.third)}>
-                                                                    <p className="match-odds-offer-h1">{label2}</p>
-                                                                    <p className="match-odds-offer-h2">{item.third}</p>
+                                                                <div className="match-odds-offer">
+                                                                    <div className={oddofforon0} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
+                                                                        <p className="match-odds-offer-h1">{label0}</p>
+                                                                        <p className="match-odds-offer-h2">{item.first}</p>
+                                                                    </div>
+                                                                    <div className={oddofforon1} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
+                                                                        <p className="match-odds-offer-h1">{label1}</p>
+                                                                        <p className="match-odds-offer-h2">{item.second}</p>
+                                                                    </div>
+                                                                    <div className={oddofforon2} id={item.type + matchID + "-" + item.result2} onClick={() => chooseOdd(item.type + matchID + "-" + item.result2, item.type, item.result2, item.third)}>
+                                                                        <p className="match-odds-offer-h1">{label2}</p>
+                                                                        <p className="match-odds-offer-h2">{item.third}</p>
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                    </li>
-                                                );
-                                            } else if (item.type_length === 2) {
-                                                oddofforon20 = "match-odds-offer-element-2 odd-used";
-                                                oddofforon21 = "match-odds-offer-element-2 odd-used";
-                                                return (
-                                                    <li key={item.type + overskrift}>
-                                                        <div className="match-bet">
-                                                            <div className="match-bet-top">
-                                                                <p className="match-odds-h1">{overskrift}</p>
-                                                            </div>
-                                                            <div className="match-odds-offer">
-                                                                <div className={oddofforon20} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
-                                                                    <p className="match-odds-offer-h1">{label0}</p>
-                                                                    <p className="match-odds-offer-h2">{item.first}</p>
-                                                                </div>
-                                                                <div className={oddofforon21} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
-                                                                    <p className="match-odds-offer-h1">{label1}</p>
-                                                                    <p className="match-odds-offer-h2">{item.second}</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                </li>
-                                                );
-                                            }
-                                        } else {
-
-                                        if (item.type_length === 3) {
-                                            if (sessionStorage.getItem("notUsableBtn")) {
-                                                const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
-                                                for (var i = 0; i < 3; i++) {
-                                                    const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + i);
-                                                    if (repliceIndex >= 0) {
-                                                        if (i === 0) {
-                                                            oddofforon0 = "match-odds-offer-element-3 odd-used";
-                                                        } else if (i === 1) {
-                                                            oddofforon1 = "match-odds-offer-element-3 odd-used";
-                                                        } else if (i === 2) {
-                                                            oddofforon2 = "match-odds-offer-element-3 odd-used";
+                                                        </li>
+                                                    );
+                                                } else if (item.type_length === 2) {
+                                                    if (sessionStorage.getItem("notUsableBtn")) {
+                                                        const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
+                                                        for (var o = 0; o < 2; o++) {
+                                                            const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + o);
+                                                            if (repliceIndex >= 0) {
+                                                                if (o === 0) {
+                                                                    oddofforon20 = "match-odds-offer-element-2 odd-used";
+                                                                } else if (o === 1) {
+                                                                    oddofforon21 = "match-odds-offer-element-2 odd-used";
+                                                                }
+                                                            }
                                                         }
                                                     }
-                                                }
-                                            }
-                                            return (
-                                                <li key={item.type + overskrift}>
-                                                    <div className="match-bet">
-                                                        <div className="match-bet-top">
-                                                            <p className="match-odds-h1">{overskrift}</p>
-                                                        </div>
-                                                        <div className="match-odds-offer">
-                                                            <div className={oddofforon0} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
-                                                                <p className="match-odds-offer-h1">{label0}</p>
-                                                                <p className="match-odds-offer-h2">{item.first}</p>
+                                                    return(
+                                                        <li key={item.type + overskrift}>
+                                                            <div className="match-bet">
+                                                                <div className="match-bet-top">
+                                                                    <p className="match-odds-h1">{overskrift}</p>
+                                                                </div>
+                                                                <div className="match-odds-offer">
+                                                                    <div className={oddofforon20} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
+                                                                        <p className="match-odds-offer-h1">{label0}</p>
+                                                                        <p className="match-odds-offer-h2">{item.first}</p>
+                                                                    </div>
+                                                                    <div className={oddofforon21} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
+                                                                        <p className="match-odds-offer-h1">{label1}</p>
+                                                                        <p className="match-odds-offer-h2">{item.second}</p>
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                            <div className={oddofforon1} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
-                                                                <p className="match-odds-offer-h1">{label1}</p>
-                                                                <p className="match-odds-offer-h2">{item.second}</p>
-                                                            </div>
-                                                            <div className={oddofforon2} id={item.type + matchID + "-" + item.result2} onClick={() => chooseOdd(item.type + matchID + "-" + item.result2, item.type, item.result2, item.third)}>
-                                                                <p className="match-odds-offer-h1">{label2}</p>
-                                                                <p className="match-odds-offer-h2">{item.third}</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                            );
-                                        } else {
-                                            if (sessionStorage.getItem("notUsableBtn")) {
-                                                const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
-                                                for (var o = 0; o < 2; o++) {
-                                                    const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + o);
-                                                    if (repliceIndex >= 0) {
-                                                        if (o === 0) {
-                                                            oddofforon20 = "match-odds-offer-element-2 odd-used";
-                                                        } else if (o === 1) {
-                                                            oddofforon21 = "match-odds-offer-element-2 odd-used";
+                                                        </li>
+                                                    );
+                                                } else if (item.type_length === 7) {
+                                                    if (sessionStorage.getItem("notUsableBtn")) {
+                                                        const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
+                                                        const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + goals);
+                                                        if (repliceIndex >= 0) {
+                                                            oddofforon10 = "match-odds-offer-element-1 odd-used";
                                                         }
                                                     }
+                                                    return(
+                                                        <li key={item.type + overskrift}>
+                                                            <div className="match-bet">
+                                                                <div className="match-bet-top">
+                                                                    <p className="match-odds-h1">{overskrift}: {goals}</p>
+                                                                </div>
+                                                                <input type="range" className="match-odds-slider" min="0" max="7" defaultValue={goals} onChange={event => setGoals(event.target.value)}  step="1"/>
+                                                                <div className="match-odds-offer">
+                                                                    <div className={oddofforon10} id={item.type + matchID + "-" + goals} onClick={() => chooseOdd(item.type + matchID + "-" + goals, item.type, goals, goalsOdds)}>
+                                                                        <p className="match-odds-offer-h1">Tilføj til væddemål</p>
+                                                                        <p className="match-odds-offer-h2">{goalsOdds}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    );
                                                 }
-                                            }
-                                            return(
-                                                <li key={item.type + overskrift}>
-                                                    <div className="match-bet">
-                                                        <div className="match-bet-top">
-                                                            <p className="match-odds-h1">{overskrift}</p>
-                                                        </div>
-                                                        <div className="match-odds-offer">
-                                                            <div className={oddofforon20} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
-                                                                <p className="match-odds-offer-h1">{label0}</p>
-                                                                <p className="match-odds-offer-h2">{item.first}</p>
-                                                            </div>
-                                                            <div className={oddofforon21} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
-                                                                <p className="match-odds-offer-h1">{label1}</p>
-                                                                <p className="match-odds-offer-h2">{item.second}</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                            );
-                                        }
-                                        }
-                                        }
-                                    )}
-                                </ul>
-                                <ul className="match-odds-cont" id="specials">
-                                    {availSpecials.map((item) => {
-                                        var label0 = getLabel(item, 0);
-                                        var label1 = getLabel(item, 1);
-                                        var label2 = getLabel(item, 2);
-                                        var overskrift = getLabel(item, 3);
+                                                }
+                                                }
+                                                )}
+                                            </ul>
+                                        </div>
+                                        <div className="match-odds-id">
+                                            <div className="match-odds-id-top" onClick={() => document.getElementById("build-spillere").classList.toggle("display")}>
+                                                <p className="match-odds-id-h1">Spiller</p>
+                                                <p className="match-odds-id-p">{availSpillere.length}</p>
+                                            </div>
+                                            <ul className="match-odds-id-con" id="build-spillere">
+                                                {availSpillere.map((item) => {
+                                                var label0 = getLabel(item, 0);
+                                                var label1 = getLabel(item, 1);
+                                                var label2 = getLabel(item, 2);
+                                                var overskrift = getLabel(item, 3);
 
-                                        var oddofforon0 = "match-odds-offer-element-3";
-                                        var oddofforon1 = "match-odds-offer-element-3";
-                                        var oddofforon2 = "match-odds-offer-element-3";
+                                                var oddofforon0 = "match-odds-offer-element-3";
+                                                var oddofforon1 = "match-odds-offer-element-3";
+                                                var oddofforon2 = "match-odds-offer-element-3";
 
-                                        var oddofforon20 = "match-odds-offer-element-2";
-                                        var oddofforon21 = "match-odds-offer-element-2";
+                                                var oddofforon20 = "match-odds-offer-element-2";
+                                                var oddofforon21 = "match-odds-offer-element-2";
 
-                                        var nowDate = new Date().getTime();
-                                        var thistime = (nowDate.toString()).slice(0, -3);
-                                        if (items["time"].starting_at.timestamp < thistime) {
-                                            if (item.type_length === 3) {
-                                                oddofforon0 = "match-odds-offer-element-3 odd-used";
-                                                oddofforon1 = "match-odds-offer-element-3 odd-used";
-                                                oddofforon2 = "match-odds-offer-element-3 odd-used";
-                                                return (
-                                                    <li key={item.type + matchID + overskrift}>
-                                                        <div className="match-bet">
-                                                            <div className="match-bet-top">
-                                                                <p className="match-odds-h1">{overskrift}</p>
-                                                            </div>
-                                                            <div className="match-odds-offer">
-                                                                <div className={oddofforon0} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
-                                                                    <p className="match-odds-offer-h1">{label0}</p>
-                                                                    <p className="match-odds-offer-h2">{item.first}</p>
-                                                                </div>
-                                                                <div className={oddofforon1} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
-                                                                    <p className="match-odds-offer-h1">{label1}</p>
-                                                                    <p className="match-odds-offer-h2">{item.second}</p>
-                                                                </div>
-                                                                <div className={oddofforon2} id={item.type + matchID + "-" + item.result2} onClick={() => chooseOdd(item.type + matchID + "-" + item.result2, item.type, item.result2, item.third)}>
-                                                                    <p className="match-odds-offer-h1">{label2}</p>
-                                                                    <p className="match-odds-offer-h2">{item.third}</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                );
-                                            } else if (item.type_length === 2) {
-                                                oddofforon20 = "match-odds-offer-element-2 odd-used";
-                                                oddofforon21 = "match-odds-offer-element-2 odd-used";
-                                                return (
-                                                    <li key={item.type + overskrift}>
-                                                        <div className="match-bet">
-                                                            <div className="match-bet-top">
-                                                                <p className="match-odds-h1">{overskrift}</p>
-                                                            </div>
-                                                            <div className="match-odds-offer">
-                                                                <div className={oddofforon20} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
-                                                                    <p className="match-odds-offer-h1">{label0}</p>
-                                                                    <p className="match-odds-offer-h2">{item.first}</p>
-                                                                </div>
-                                                                <div className={oddofforon21} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
-                                                                    <p className="match-odds-offer-h1">{label1}</p>
-                                                                    <p className="match-odds-offer-h2">{item.second}</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                </li>
-                                                );
-                                            }
-                                        } else {
+                                                var oddofforon10 = "match-odds-offer-element-1";
 
-                                        if (item.type_length === 3) {
-                                            if (sessionStorage.getItem("notUsableBtn")) {
-                                                const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
-                                                for (var i = 0; i < 3; i++) {
-                                                    const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + i);
-                                                    if (repliceIndex >= 0) {
-                                                        if (i === 0) {
-                                                            oddofforon0 = "match-odds-offer-element-3 odd-used";
-                                                        } else if (i === 1) {
-                                                            oddofforon1 = "match-odds-offer-element-3 odd-used";
-                                                        } else if (i === 2) {
-                                                            oddofforon2 = "match-odds-offer-element-3 odd-used";
+                                                var nowDate = new Date().getTime();
+                                                var thistime = (nowDate.toString()).slice(0, -3);
+                                                if (items["time"].starting_at.timestamp < thistime) {
+                                                    if (item.type_length === 3) {
+                                                        oddofforon0 = "match-odds-offer-element-3 odd-used";
+                                                        oddofforon1 = "match-odds-offer-element-3 odd-used";
+                                                        oddofforon2 = "match-odds-offer-element-3 odd-used";
+                                                        return (
+                                                            <li key={item.type + matchID + overskrift}>
+                                                                <div className="match-bet">
+                                                                    <div className="match-bet-top">
+                                                                        <p className="match-odds-h1">{overskrift}</p>
+                                                                    </div>
+                                                                    <div className="match-odds-offer">
+                                                                        <div className={oddofforon0} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
+                                                                            <p className="match-odds-offer-h1">{label0}</p>
+                                                                            <p className="match-odds-offer-h2">{item.first}</p>
+                                                                        </div>
+                                                                        <div className={oddofforon1} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
+                                                                            <p className="match-odds-offer-h1">{label1}</p>
+                                                                            <p className="match-odds-offer-h2">{item.second}</p>
+                                                                        </div>
+                                                                        <div className={oddofforon2} id={item.type + matchID + "-" + item.result2} onClick={() => chooseOdd(item.type + matchID + "-" + item.result2, item.type, item.result2, item.third)}>
+                                                                            <p className="match-odds-offer-h1">{label2}</p>
+                                                                            <p className="match-odds-offer-h2">{item.third}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        );
+                                                    } else if (item.type_length === 2) {
+                                                        oddofforon20 = "match-odds-offer-element-2 odd-used";
+                                                        oddofforon21 = "match-odds-offer-element-2 odd-used";
+                                                        return (
+                                                            <li key={item.type + overskrift}>
+                                                                <div className="match-bet">
+                                                                    <div className="match-bet-top">
+                                                                        <p className="match-odds-h1">{overskrift}</p>
+                                                                    </div>
+                                                                    <div className="match-odds-offer">
+                                                                        <div className={oddofforon20} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
+                                                                            <p className="match-odds-offer-h1">{label0}</p>
+                                                                            <p className="match-odds-offer-h2">{item.first}</p>
+                                                                        </div>
+                                                                        <div className={oddofforon21} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
+                                                                            <p className="match-odds-offer-h1">{label1}</p>
+                                                                            <p className="match-odds-offer-h2">{item.second}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                        </li>
+                                                        );
+                                                    }
+                                                } else {
+
+                                                if (item.type_length === 3) {
+                                                    if (sessionStorage.getItem("notUsableBtn")) {
+                                                        const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
+                                                        for (var i = 0; i < 3; i++) {
+                                                            const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + i);
+                                                            if (repliceIndex >= 0) {
+                                                                if (i === 0) {
+                                                                    oddofforon0 = "match-odds-offer-element-3 odd-used";
+                                                                } else if (i === 1) {
+                                                                    oddofforon1 = "match-odds-offer-element-3 odd-used";
+                                                                } else if (i === 2) {
+                                                                    oddofforon2 = "match-odds-offer-element-3 odd-used";
+                                                                }
+                                                            }
                                                         }
                                                     }
-                                                }
-                                            }
-                                            return (
-                                                <li key={item.type + overskrift}>
-                                                    <div className="match-bet">
-                                                        <div className="match-bet-top">
-                                                            <p className="match-odds-h1">{overskrift}</p>
-                                                        </div>
-                                                        <div className="match-odds-offer">
-                                                            <div className={oddofforon0} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
-                                                                <p className="match-odds-offer-h1">{label0}</p>
-                                                                <p className="match-odds-offer-h2">{item.first}</p>
+                                                    return (
+                                                        <li key={item.type + overskrift}>
+                                                            <div className="match-bet">
+                                                                <div className="match-bet-top">
+                                                                    <p className="match-odds-h1">{overskrift}</p>
+                                                                </div>
+                                                                <div className="match-odds-offer">
+                                                                    <div className={oddofforon0} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
+                                                                        <p className="match-odds-offer-h1">{label0}</p>
+                                                                        <p className="match-odds-offer-h2">{item.first}</p>
+                                                                    </div>
+                                                                    <div className={oddofforon1} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
+                                                                        <p className="match-odds-offer-h1">{label1}</p>
+                                                                        <p className="match-odds-offer-h2">{item.second}</p>
+                                                                    </div>
+                                                                    <div className={oddofforon2} id={item.type + matchID + "-" + item.result2} onClick={() => chooseOdd(item.type + matchID + "-" + item.result2, item.type, item.result2, item.third)}>
+                                                                        <p className="match-odds-offer-h1">{label2}</p>
+                                                                        <p className="match-odds-offer-h2">{item.third}</p>
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                            <div className={oddofforon1} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
-                                                                <p className="match-odds-offer-h1">{label1}</p>
-                                                                <p className="match-odds-offer-h2">{item.second}</p>
-                                                            </div>
-                                                            <div className={oddofforon2} id={item.type + matchID + "-" + item.result2} onClick={() => chooseOdd(item.type + matchID + "-" + item.result2, item.type, item.result2, item.third)}>
-                                                                <p className="match-odds-offer-h1">{label2}</p>
-                                                                <p className="match-odds-offer-h2">{item.third}</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                            );
-                                        } else {
-                                            if (sessionStorage.getItem("notUsableBtn")) {
-                                                const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
-                                                for (var o = 0; o < 2; o++) {
-                                                    const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + o);
-                                                    if (repliceIndex >= 0) {
-                                                        if (o === 0) {
-                                                            oddofforon20 = "match-odds-offer-element-2 odd-used";
-                                                        } else if (o === 1) {
-                                                            oddofforon21 = "match-odds-offer-element-2 odd-used";
+                                                        </li>
+                                                    );
+                                                } else if (item.type_length === 2) {
+                                                    if (sessionStorage.getItem("notUsableBtn")) {
+                                                        const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
+                                                        for (var o = 0; o < 2; o++) {
+                                                            const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + o);
+                                                            if (repliceIndex >= 0) {
+                                                                if (o === 0) {
+                                                                    oddofforon20 = "match-odds-offer-element-2 odd-used";
+                                                                } else if (o === 1) {
+                                                                    oddofforon21 = "match-odds-offer-element-2 odd-used";
+                                                                }
+                                                            }
                                                         }
                                                     }
-                                                }
-                                            }
-                                            return(
-                                                <li key={item.type + overskrift}>
-                                                    <div className="match-bet">
-                                                        <div className="match-bet-top">
-                                                            <p className="match-odds-h1">{overskrift}</p>
-                                                        </div>
-                                                        <div className="match-odds-offer">
-                                                            <div className={oddofforon20} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
-                                                                <p className="match-odds-offer-h1">{label0}</p>
-                                                                <p className="match-odds-offer-h2">{item.first}</p>
-                                                            </div>
-                                                            <div className={oddofforon21} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
-                                                                <p className="match-odds-offer-h1">{label1}</p>
-                                                                <p className="match-odds-offer-h2">{item.second}</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                            );
-                                        }
-                                        }
-                                        }
-                                    )}
-                                </ul>
-                                <ul className="match-odds-cont" id="minutter">
-                                    {availMinutter.map((item) => {
-                                        var label0 = getLabel(item, 0);
-                                        var label1 = getLabel(item, 1);
-                                        var label2 = getLabel(item, 2);
-                                        var overskrift = getLabel(item, 3);
-
-                                        var oddofforon0 = "match-odds-offer-element-3";
-                                        var oddofforon1 = "match-odds-offer-element-3";
-                                        var oddofforon2 = "match-odds-offer-element-3";
-
-                                        var oddofforon20 = "match-odds-offer-element-2";
-                                        var oddofforon21 = "match-odds-offer-element-2";
-
-                                        var nowDate = new Date().getTime();
-                                        var thistime = (nowDate.toString()).slice(0, -3);
-                                        if (items["time"].starting_at.timestamp < thistime) {
-                                            if (item.type_length === 3) {
-                                                oddofforon0 = "match-odds-offer-element-3 odd-used";
-                                                oddofforon1 = "match-odds-offer-element-3 odd-used";
-                                                oddofforon2 = "match-odds-offer-element-3 odd-used";
-                                                return (
-                                                    <li key={item.type + matchID + overskrift}>
-                                                        <div className="match-bet">
-                                                            <div className="match-bet-top">
-                                                                <p className="match-odds-h1">{overskrift}</p>
-                                                            </div>
-                                                            <div className="match-odds-offer">
-                                                                <div className={oddofforon0} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
-                                                                    <p className="match-odds-offer-h1">{label0}</p>
-                                                                    <p className="match-odds-offer-h2">{item.first}</p>
+                                                    return(
+                                                        <li key={item.type + overskrift}>
+                                                            <div className="match-bet">
+                                                                <div className="match-bet-top">
+                                                                    <p className="match-odds-h1">{overskrift}</p>
                                                                 </div>
-                                                                <div className={oddofforon1} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
-                                                                    <p className="match-odds-offer-h1">{label1}</p>
-                                                                    <p className="match-odds-offer-h2">{item.second}</p>
-                                                                </div>
-                                                                <div className={oddofforon2} id={item.type + matchID + "-" + item.result2} onClick={() => chooseOdd(item.type + matchID + "-" + item.result2, item.type, item.result2, item.third)}>
-                                                                    <p className="match-odds-offer-h1">{label2}</p>
-                                                                    <p className="match-odds-offer-h2">{item.third}</p>
+                                                                <div className="match-odds-offer">
+                                                                    <div className={oddofforon20} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
+                                                                        <p className="match-odds-offer-h1">{label0}</p>
+                                                                        <p className="match-odds-offer-h2">{item.first}</p>
+                                                                    </div>
+                                                                    <div className={oddofforon21} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
+                                                                        <p className="match-odds-offer-h1">{label1}</p>
+                                                                        <p className="match-odds-offer-h2">{item.second}</p>
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                    </li>
-                                                );
-                                            } else if (item.type_length === 2) {
-                                                oddofforon20 = "match-odds-offer-element-2 odd-used";
-                                                oddofforon21 = "match-odds-offer-element-2 odd-used";
-                                                return (
-                                                    <li key={item.type + overskrift}>
-                                                        <div className="match-bet">
-                                                            <div className="match-bet-top">
-                                                                <p className="match-odds-h1">{overskrift}</p>
-                                                            </div>
-                                                            <div className="match-odds-offer">
-                                                                <div className={oddofforon20} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
-                                                                    <p className="match-odds-offer-h1">{label0}</p>
-                                                                    <p className="match-odds-offer-h2">{item.first}</p>
-                                                                </div>
-                                                                <div className={oddofforon21} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
-                                                                    <p className="match-odds-offer-h1">{label1}</p>
-                                                                    <p className="match-odds-offer-h2">{item.second}</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                </li>
-                                                );
-                                            }
-                                        } else {
-
-                                        if (item.type_length === 3) {
-                                            if (sessionStorage.getItem("notUsableBtn")) {
-                                                const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
-                                                for (var i = 0; i < 3; i++) {
-                                                    const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + i);
-                                                    if (repliceIndex >= 0) {
-                                                        if (i === 0) {
-                                                            oddofforon0 = "match-odds-offer-element-3 odd-used";
-                                                        } else if (i === 1) {
-                                                            oddofforon1 = "match-odds-offer-element-3 odd-used";
-                                                        } else if (i === 2) {
-                                                            oddofforon2 = "match-odds-offer-element-3 odd-used";
+                                                        </li>
+                                                    );
+                                                } else if (item.type_length === 7) {
+                                                    if (sessionStorage.getItem("notUsableBtn")) {
+                                                        const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
+                                                        const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + goals);
+                                                        if (repliceIndex >= 0) {
+                                                            oddofforon10 = "match-odds-offer-element-1 odd-used";
                                                         }
                                                     }
+                                                    return(
+                                                        <li key={item.type + overskrift}>
+                                                            <div className="match-bet">
+                                                                <div className="match-bet-top">
+                                                                    <p className="match-odds-h1">{overskrift}: {goals}</p>
+                                                                </div>
+                                                                <input type="range" className="match-odds-slider" min="0" max="7" defaultValue={goals} onChange={event => setGoals(event.target.value)}  step="1"/>
+                                                                <div className="match-odds-offer">
+                                                                    <div className={oddofforon10} id={item.type + matchID + "-" + goals} onClick={() => chooseOdd(item.type + matchID + "-" + goals, item.type, goals, goalsOdds)}>
+                                                                        <p className="match-odds-offer-h1">Tilføj til væddemål</p>
+                                                                        <p className="match-odds-offer-h2">{goalsOdds}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    );
                                                 }
-                                            }
-                                            return (
-                                                <li key={item.type + overskrift}>
-                                                    <div className="match-bet">
-                                                        <div className="match-bet-top">
-                                                            <p className="match-odds-h1">{overskrift}</p>
-                                                        </div>
-                                                        <div className="match-odds-offer">
-                                                            <div className={oddofforon0} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
-                                                                <p className="match-odds-offer-h1">{label0}</p>
-                                                                <p className="match-odds-offer-h2">{item.first}</p>
-                                                            </div>
-                                                            <div className={oddofforon1} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
-                                                                <p className="match-odds-offer-h1">{label1}</p>
-                                                                <p className="match-odds-offer-h2">{item.second}</p>
-                                                            </div>
-                                                            <div className={oddofforon2} id={item.type + matchID + "-" + item.result2} onClick={() => chooseOdd(item.type + matchID + "-" + item.result2, item.type, item.result2, item.third)}>
-                                                                <p className="match-odds-offer-h1">{label2}</p>
-                                                                <p className="match-odds-offer-h2">{item.third}</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                            );
-                                        } else {
-                                            if (sessionStorage.getItem("notUsableBtn")) {
-                                                const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
-                                                for (var o = 0; o < 2; o++) {
-                                                    const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + o);
-                                                    if (repliceIndex >= 0) {
-                                                        if (o === 0) {
-                                                            oddofforon20 = "match-odds-offer-element-2 odd-used";
-                                                        } else if (o === 1) {
-                                                            oddofforon21 = "match-odds-offer-element-2 odd-used";
+                                                }
+                                                }
+                                                )}
+                                            </ul>
+                                        </div>
+                                        <div className="match-odds-id">
+                                            <div className="match-odds-id-top" onClick={() => document.getElementById("build-minutter").classList.toggle("display")}>
+                                                <p className="match-odds-id-h1">Halvleg</p>
+                                                <p className="match-odds-id-p">{availMinutter.length}</p>
+                                            </div>
+                                            <ul className="match-odds-id-con" id="build-minutter">
+                                                {availMinutter.map((item) => {
+                                                var label0 = getLabel(item, 0);
+                                                var label1 = getLabel(item, 1);
+                                                var label2 = getLabel(item, 2);
+                                                var overskrift = getLabel(item, 3);
+
+                                                var oddofforon0 = "match-odds-offer-element-3";
+                                                var oddofforon1 = "match-odds-offer-element-3";
+                                                var oddofforon2 = "match-odds-offer-element-3";
+
+                                                var oddofforon20 = "match-odds-offer-element-2";
+                                                var oddofforon21 = "match-odds-offer-element-2";
+
+                                                var oddofforon10 = "match-odds-offer-element-1";
+
+                                                var nowDate = new Date().getTime();
+                                                var thistime = (nowDate.toString()).slice(0, -3);
+                                                if (items["time"].starting_at.timestamp < thistime) {
+                                                    if (item.type_length === 3) {
+                                                        oddofforon0 = "match-odds-offer-element-3 odd-used";
+                                                        oddofforon1 = "match-odds-offer-element-3 odd-used";
+                                                        oddofforon2 = "match-odds-offer-element-3 odd-used";
+                                                        return (
+                                                            <li key={item.type + matchID + overskrift}>
+                                                                <div className="match-bet">
+                                                                    <div className="match-bet-top">
+                                                                        <p className="match-odds-h1">{overskrift}</p>
+                                                                    </div>
+                                                                    <div className="match-odds-offer">
+                                                                        <div className={oddofforon0} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
+                                                                            <p className="match-odds-offer-h1">{label0}</p>
+                                                                            <p className="match-odds-offer-h2">{item.first}</p>
+                                                                        </div>
+                                                                        <div className={oddofforon1} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
+                                                                            <p className="match-odds-offer-h1">{label1}</p>
+                                                                            <p className="match-odds-offer-h2">{item.second}</p>
+                                                                        </div>
+                                                                        <div className={oddofforon2} id={item.type + matchID + "-" + item.result2} onClick={() => chooseOdd(item.type + matchID + "-" + item.result2, item.type, item.result2, item.third)}>
+                                                                            <p className="match-odds-offer-h1">{label2}</p>
+                                                                            <p className="match-odds-offer-h2">{item.third}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        );
+                                                    } else if (item.type_length === 2) {
+                                                        oddofforon20 = "match-odds-offer-element-2 odd-used";
+                                                        oddofforon21 = "match-odds-offer-element-2 odd-used";
+                                                        return (
+                                                            <li key={item.type + overskrift}>
+                                                                <div className="match-bet">
+                                                                    <div className="match-bet-top">
+                                                                        <p className="match-odds-h1">{overskrift}</p>
+                                                                    </div>
+                                                                    <div className="match-odds-offer">
+                                                                        <div className={oddofforon20} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
+                                                                            <p className="match-odds-offer-h1">{label0}</p>
+                                                                            <p className="match-odds-offer-h2">{item.first}</p>
+                                                                        </div>
+                                                                        <div className={oddofforon21} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
+                                                                            <p className="match-odds-offer-h1">{label1}</p>
+                                                                            <p className="match-odds-offer-h2">{item.second}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                        </li>
+                                                        );
+                                                    }
+                                                } else {
+
+                                                if (item.type_length === 3) {
+                                                    if (sessionStorage.getItem("notUsableBtn")) {
+                                                        const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
+                                                        for (var i = 0; i < 3; i++) {
+                                                            const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + i);
+                                                            if (repliceIndex >= 0) {
+                                                                if (i === 0) {
+                                                                    oddofforon0 = "match-odds-offer-element-3 odd-used";
+                                                                } else if (i === 1) {
+                                                                    oddofforon1 = "match-odds-offer-element-3 odd-used";
+                                                                } else if (i === 2) {
+                                                                    oddofforon2 = "match-odds-offer-element-3 odd-used";
+                                                                }
+                                                            }
                                                         }
                                                     }
+                                                    return (
+                                                        <li key={item.type + overskrift}>
+                                                            <div className="match-bet">
+                                                                <div className="match-bet-top">
+                                                                    <p className="match-odds-h1">{overskrift}</p>
+                                                                </div>
+                                                                <div className="match-odds-offer">
+                                                                    <div className={oddofforon0} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
+                                                                        <p className="match-odds-offer-h1">{label0}</p>
+                                                                        <p className="match-odds-offer-h2">{item.first}</p>
+                                                                    </div>
+                                                                    <div className={oddofforon1} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
+                                                                        <p className="match-odds-offer-h1">{label1}</p>
+                                                                        <p className="match-odds-offer-h2">{item.second}</p>
+                                                                    </div>
+                                                                    <div className={oddofforon2} id={item.type + matchID + "-" + item.result2} onClick={() => chooseOdd(item.type + matchID + "-" + item.result2, item.type, item.result2, item.third)}>
+                                                                        <p className="match-odds-offer-h1">{label2}</p>
+                                                                        <p className="match-odds-offer-h2">{item.third}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    );
+                                                } else if (item.type_length === 2) {
+                                                    if (sessionStorage.getItem("notUsableBtn")) {
+                                                        const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
+                                                        for (var o = 0; o < 2; o++) {
+                                                            const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + o);
+                                                            if (repliceIndex >= 0) {
+                                                                if (o === 0) {
+                                                                    oddofforon20 = "match-odds-offer-element-2 odd-used";
+                                                                } else if (o === 1) {
+                                                                    oddofforon21 = "match-odds-offer-element-2 odd-used";
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                    return(
+                                                        <li key={item.type + overskrift}>
+                                                            <div className="match-bet">
+                                                                <div className="match-bet-top">
+                                                                    <p className="match-odds-h1">{overskrift}</p>
+                                                                </div>
+                                                                <div className="match-odds-offer">
+                                                                    <div className={oddofforon20} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
+                                                                        <p className="match-odds-offer-h1">{label0}</p>
+                                                                        <p className="match-odds-offer-h2">{item.first}</p>
+                                                                    </div>
+                                                                    <div className={oddofforon21} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
+                                                                        <p className="match-odds-offer-h1">{label1}</p>
+                                                                        <p className="match-odds-offer-h2">{item.second}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    );
+                                                } else if (item.type_length === 7) {
+                                                    if (sessionStorage.getItem("notUsableBtn")) {
+                                                        const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
+                                                        const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + goals);
+                                                        if (repliceIndex >= 0) {
+                                                            oddofforon10 = "match-odds-offer-element-1 odd-used";
+                                                        }
+                                                    }
+                                                    return(
+                                                        <li key={item.type + overskrift}>
+                                                            <div className="match-bet">
+                                                                <div className="match-bet-top">
+                                                                    <p className="match-odds-h1">{overskrift}: {goals}</p>
+                                                                </div>
+                                                                <input type="range" className="match-odds-slider" min="0" max="7" defaultValue={goals} onChange={event => setGoals(event.target.value)}  step="1"/>
+                                                                <div className="match-odds-offer">
+                                                                    <div className={oddofforon10} id={item.type + matchID + "-" + goals} onClick={() => chooseOdd(item.type + matchID + "-" + goals, item.type, goals, goalsOdds)}>
+                                                                        <p className="match-odds-offer-h1">Tilføj til væddemål</p>
+                                                                        <p className="match-odds-offer-h2">{goalsOdds}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    );
                                                 }
-                                            }
-                                            return(
-                                                <li key={item.type + overskrift}>
-                                                    <div className="match-bet">
-                                                        <div className="match-bet-top">
-                                                            <p className="match-odds-h1">{overskrift}</p>
-                                                        </div>
-                                                        <div className="match-odds-offer">
-                                                            <div className={oddofforon20} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
-                                                                <p className="match-odds-offer-h1">{label0}</p>
-                                                                <p className="match-odds-offer-h2">{item.first}</p>
+                                                }
+                                                }
+                                                )}
+                                            </ul>
+                                        </div>
+                                        <div className="match-odds-id">
+                                            <div className="match-odds-id-top" onClick={() => document.getElementById("build-goal").classList.toggle("display")}>
+                                                <p className="match-odds-id-h1">Mål</p>
+                                                <p className="match-odds-id-p">{availGoal.length}</p>
+                                            </div>
+                                            <ul className="match-odds-id-con" id="build-goal">
+                                                {availGoal.map((item) => {
+                                                var label0 = getLabel(item, 0);
+                                                var label1 = getLabel(item, 1);
+                                                var label2 = getLabel(item, 2);
+                                                var overskrift = getLabel(item, 3);
+
+                                                var oddofforon0 = "match-odds-offer-element-3";
+                                                var oddofforon1 = "match-odds-offer-element-3";
+                                                var oddofforon2 = "match-odds-offer-element-3";
+
+                                                var oddofforon20 = "match-odds-offer-element-2";
+                                                var oddofforon21 = "match-odds-offer-element-2";
+
+                                                var oddofforon10 = "match-odds-offer-element-1";
+
+                                                var nowDate = new Date().getTime();
+                                                var thistime = (nowDate.toString()).slice(0, -3);
+                                                if (items["time"].starting_at.timestamp < thistime) {
+                                                    if (item.type_length === 3) {
+                                                        oddofforon0 = "match-odds-offer-element-3 odd-used";
+                                                        oddofforon1 = "match-odds-offer-element-3 odd-used";
+                                                        oddofforon2 = "match-odds-offer-element-3 odd-used";
+                                                        return (
+                                                            <li key={item.type + matchID + overskrift}>
+                                                                <div className="match-bet">
+                                                                    <div className="match-bet-top">
+                                                                        <p className="match-odds-h1">{overskrift}</p>
+                                                                    </div>
+                                                                    <div className="match-odds-offer">
+                                                                        <div className={oddofforon0} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
+                                                                            <p className="match-odds-offer-h1">{label0}</p>
+                                                                            <p className="match-odds-offer-h2">{item.first}</p>
+                                                                        </div>
+                                                                        <div className={oddofforon1} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
+                                                                            <p className="match-odds-offer-h1">{label1}</p>
+                                                                            <p className="match-odds-offer-h2">{item.second}</p>
+                                                                        </div>
+                                                                        <div className={oddofforon2} id={item.type + matchID + "-" + item.result2} onClick={() => chooseOdd(item.type + matchID + "-" + item.result2, item.type, item.result2, item.third)}>
+                                                                            <p className="match-odds-offer-h1">{label2}</p>
+                                                                            <p className="match-odds-offer-h2">{item.third}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        );
+                                                    } else if (item.type_length === 2) {
+                                                        oddofforon20 = "match-odds-offer-element-2 odd-used";
+                                                        oddofforon21 = "match-odds-offer-element-2 odd-used";
+                                                        return (
+                                                            <li key={item.type + overskrift}>
+                                                                <div className="match-bet">
+                                                                    <div className="match-bet-top">
+                                                                        <p className="match-odds-h1">{overskrift}</p>
+                                                                    </div>
+                                                                    <div className="match-odds-offer">
+                                                                        <div className={oddofforon20} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
+                                                                            <p className="match-odds-offer-h1">{label0}</p>
+                                                                            <p className="match-odds-offer-h2">{item.first}</p>
+                                                                        </div>
+                                                                        <div className={oddofforon21} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
+                                                                            <p className="match-odds-offer-h1">{label1}</p>
+                                                                            <p className="match-odds-offer-h2">{item.second}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                        </li>
+                                                        );
+                                                    }
+                                                } else {
+
+                                                if (item.type_length === 3) {
+                                                    if (sessionStorage.getItem("notUsableBtn")) {
+                                                        const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
+                                                        for (var i = 0; i < 3; i++) {
+                                                            const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + i);
+                                                            if (repliceIndex >= 0) {
+                                                                if (i === 0) {
+                                                                    oddofforon0 = "match-odds-offer-element-3 odd-used";
+                                                                } else if (i === 1) {
+                                                                    oddofforon1 = "match-odds-offer-element-3 odd-used";
+                                                                } else if (i === 2) {
+                                                                    oddofforon2 = "match-odds-offer-element-3 odd-used";
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                    return (
+                                                        <li key={item.type + overskrift}>
+                                                            <div className="match-bet">
+                                                                <div className="match-bet-top">
+                                                                    <p className="match-odds-h1">{overskrift}</p>
+                                                                </div>
+                                                                <div className="match-odds-offer">
+                                                                    <div className={oddofforon0} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
+                                                                        <p className="match-odds-offer-h1">{label0}</p>
+                                                                        <p className="match-odds-offer-h2">{item.first}</p>
+                                                                    </div>
+                                                                    <div className={oddofforon1} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
+                                                                        <p className="match-odds-offer-h1">{label1}</p>
+                                                                        <p className="match-odds-offer-h2">{item.second}</p>
+                                                                    </div>
+                                                                    <div className={oddofforon2} id={item.type + matchID + "-" + item.result2} onClick={() => chooseOdd(item.type + matchID + "-" + item.result2, item.type, item.result2, item.third)}>
+                                                                        <p className="match-odds-offer-h1">{label2}</p>
+                                                                        <p className="match-odds-offer-h2">{item.third}</p>
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                            <div className={oddofforon21} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
-                                                                <p className="match-odds-offer-h1">{label1}</p>
-                                                                <p className="match-odds-offer-h2">{item.second}</p>
+                                                        </li>
+                                                    );
+                                                } else if (item.type_length === 2) {
+                                                    if (sessionStorage.getItem("notUsableBtn")) {
+                                                        const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
+                                                        for (var o = 0; o < 2; o++) {
+                                                            const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + o);
+                                                            if (repliceIndex >= 0) {
+                                                                if (o === 0) {
+                                                                    oddofforon20 = "match-odds-offer-element-2 odd-used";
+                                                                } else if (o === 1) {
+                                                                    oddofforon21 = "match-odds-offer-element-2 odd-used";
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                    return(
+                                                        <li key={item.type + overskrift}>
+                                                            <div className="match-bet">
+                                                                <div className="match-bet-top">
+                                                                    <p className="match-odds-h1">{overskrift}</p>
+                                                                </div>
+                                                                <div className="match-odds-offer">
+                                                                    <div className={oddofforon20} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
+                                                                        <p className="match-odds-offer-h1">{label0}</p>
+                                                                        <p className="match-odds-offer-h2">{item.first}</p>
+                                                                    </div>
+                                                                    <div className={oddofforon21} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
+                                                                        <p className="match-odds-offer-h1">{label1}</p>
+                                                                        <p className="match-odds-offer-h2">{item.second}</p>
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                            );
-                                        }
-                                        }
-                                        }
-                                    )}
-                                </ul>
+                                                        </li>
+                                                    );
+                                                } else if (item.type_length === 7) {
+                                                    if (sessionStorage.getItem("notUsableBtn")) {
+                                                        const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
+                                                        const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + goals);
+                                                        if (repliceIndex >= 0) {
+                                                            oddofforon10 = "match-odds-offer-element-1 odd-used";
+                                                        }
+                                                    }
+                                                    return(
+                                                        <li key={item.type + overskrift}>
+                                                            <div className="match-bet">
+                                                                <div className="match-bet-top">
+                                                                    <p className="match-odds-h1">{overskrift}: {goals}</p>
+                                                                </div>
+                                                                <input type="range" className="match-odds-slider" min="0" max="7" defaultValue={goals} onChange={event => setGoals(event.target.value)}  step="1"/>
+                                                                <div className="match-odds-offer">
+                                                                    <div className={oddofforon10} id={item.type + matchID + "-" + goals} onClick={() => chooseOdd(item.type + matchID + "-" + goals, item.type, goals, goalsOdds)}>
+                                                                        <p className="match-odds-offer-h1">Tilføj til væddemål</p>
+                                                                        <p className="match-odds-offer-h2">{goalsOdds}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    );
+                                                }
+                                                }
+                                                }
+                                                )}
+                                            </ul>
+                                        </div>
+                                    </div>}
+                                    {oddNav === "minutter" && <ul className="match-odds-cont">
+                                        <div className="match-odds-id">
+                                            <div className="match-odds-id-top" onClick={() => document.getElementById("build-popular").classList.toggle("display")}>
+                                                <p className="match-odds-id-h1">Halvleg</p>
+                                                <p className="match-odds-id-p">{availMinutter.length}</p>
+                                            </div>
+                                            <ul className="match-odds-id-con display" id="build-popular">
+                                                {availMinutter.map((item) => {
+                                                var label0 = getLabel(item, 0);
+                                                var label1 = getLabel(item, 1);
+                                                var label2 = getLabel(item, 2);
+                                                var overskrift = getLabel(item, 3);
+
+                                                var oddofforon0 = "match-odds-offer-element-3";
+                                                var oddofforon1 = "match-odds-offer-element-3";
+                                                var oddofforon2 = "match-odds-offer-element-3";
+
+                                                var oddofforon20 = "match-odds-offer-element-2";
+                                                var oddofforon21 = "match-odds-offer-element-2";
+
+                                                var oddofforon10 = "match-odds-offer-element-1";
+
+                                                var nowDate = new Date().getTime();
+                                                var thistime = (nowDate.toString()).slice(0, -3);
+                                                if (items["time"].starting_at.timestamp < thistime) {
+                                                    if (item.type_length === 3) {
+                                                        oddofforon0 = "match-odds-offer-element-3 odd-used";
+                                                        oddofforon1 = "match-odds-offer-element-3 odd-used";
+                                                        oddofforon2 = "match-odds-offer-element-3 odd-used";
+                                                        return (
+                                                            <li key={item.type + matchID + overskrift}>
+                                                                <div className="match-bet">
+                                                                    <div className="match-bet-top">
+                                                                        <p className="match-odds-h1">{overskrift}</p>
+                                                                    </div>
+                                                                    <div className="match-odds-offer">
+                                                                        <div className={oddofforon0} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
+                                                                            <p className="match-odds-offer-h1">{label0}</p>
+                                                                            <p className="match-odds-offer-h2">{item.first}</p>
+                                                                        </div>
+                                                                        <div className={oddofforon1} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
+                                                                            <p className="match-odds-offer-h1">{label1}</p>
+                                                                            <p className="match-odds-offer-h2">{item.second}</p>
+                                                                        </div>
+                                                                        <div className={oddofforon2} id={item.type + matchID + "-" + item.result2} onClick={() => chooseOdd(item.type + matchID + "-" + item.result2, item.type, item.result2, item.third)}>
+                                                                            <p className="match-odds-offer-h1">{label2}</p>
+                                                                            <p className="match-odds-offer-h2">{item.third}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        );
+                                                    } else if (item.type_length === 2) {
+                                                        oddofforon20 = "match-odds-offer-element-2 odd-used";
+                                                        oddofforon21 = "match-odds-offer-element-2 odd-used";
+                                                        return (
+                                                            <li key={item.type + overskrift}>
+                                                                <div className="match-bet">
+                                                                    <div className="match-bet-top">
+                                                                        <p className="match-odds-h1">{overskrift}</p>
+                                                                    </div>
+                                                                    <div className="match-odds-offer">
+                                                                        <div className={oddofforon20} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
+                                                                            <p className="match-odds-offer-h1">{label0}</p>
+                                                                            <p className="match-odds-offer-h2">{item.first}</p>
+                                                                        </div>
+                                                                        <div className={oddofforon21} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
+                                                                            <p className="match-odds-offer-h1">{label1}</p>
+                                                                            <p className="match-odds-offer-h2">{item.second}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                        </li>
+                                                        );
+                                                    }
+                                                } else {
+
+                                                if (item.type_length === 3) {
+                                                    if (sessionStorage.getItem("notUsableBtn")) {
+                                                        const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
+                                                        for (var i = 0; i < 3; i++) {
+                                                            const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + i);
+                                                            if (repliceIndex >= 0) {
+                                                                if (i === 0) {
+                                                                    oddofforon0 = "match-odds-offer-element-3 odd-used";
+                                                                } else if (i === 1) {
+                                                                    oddofforon1 = "match-odds-offer-element-3 odd-used";
+                                                                } else if (i === 2) {
+                                                                    oddofforon2 = "match-odds-offer-element-3 odd-used";
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                    return (
+                                                        <li key={item.type + overskrift}>
+                                                            <div className="match-bet">
+                                                                <div className="match-bet-top">
+                                                                    <p className="match-odds-h1">{overskrift}</p>
+                                                                </div>
+                                                                <div className="match-odds-offer">
+                                                                    <div className={oddofforon0} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
+                                                                        <p className="match-odds-offer-h1">{label0}</p>
+                                                                        <p className="match-odds-offer-h2">{item.first}</p>
+                                                                    </div>
+                                                                    <div className={oddofforon1} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
+                                                                        <p className="match-odds-offer-h1">{label1}</p>
+                                                                        <p className="match-odds-offer-h2">{item.second}</p>
+                                                                    </div>
+                                                                    <div className={oddofforon2} id={item.type + matchID + "-" + item.result2} onClick={() => chooseOdd(item.type + matchID + "-" + item.result2, item.type, item.result2, item.third)}>
+                                                                        <p className="match-odds-offer-h1">{label2}</p>
+                                                                        <p className="match-odds-offer-h2">{item.third}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    );
+                                                } else if (item.type_length === 2) {
+                                                    if (sessionStorage.getItem("notUsableBtn")) {
+                                                        const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
+                                                        for (var o = 0; o < 2; o++) {
+                                                            const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + o);
+                                                            if (repliceIndex >= 0) {
+                                                                if (o === 0) {
+                                                                    oddofforon20 = "match-odds-offer-element-2 odd-used";
+                                                                } else if (o === 1) {
+                                                                    oddofforon21 = "match-odds-offer-element-2 odd-used";
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                    return(
+                                                        <li key={item.type + overskrift}>
+                                                            <div className="match-bet">
+                                                                <div className="match-bet-top">
+                                                                    <p className="match-odds-h1">{overskrift}</p>
+                                                                </div>
+                                                                <div className="match-odds-offer">
+                                                                    <div className={oddofforon20} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
+                                                                        <p className="match-odds-offer-h1">{label0}</p>
+                                                                        <p className="match-odds-offer-h2">{item.first}</p>
+                                                                    </div>
+                                                                    <div className={oddofforon21} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
+                                                                        <p className="match-odds-offer-h1">{label1}</p>
+                                                                        <p className="match-odds-offer-h2">{item.second}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    );
+                                                } else if (item.type_length === 7) {
+                                                    if (sessionStorage.getItem("notUsableBtn")) {
+                                                        const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
+                                                        const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + goals);
+                                                        if (repliceIndex >= 0) {
+                                                            oddofforon10 = "match-odds-offer-element-1 odd-used";
+                                                        }
+                                                    }
+                                                    return(
+                                                        <li key={item.type + overskrift}>
+                                                            <div className="match-bet">
+                                                                <div className="match-bet-top">
+                                                                    <p className="match-odds-h1">{overskrift}: {goals}</p>
+                                                                </div>
+                                                                <input type="range" className="match-odds-slider" min="0" max="7" defaultValue={goals} onChange={event => setGoals(event.target.value)}  step="1"/>
+                                                                <div className="match-odds-offer">
+                                                                    <div className={oddofforon10} id={item.type + matchID + "-" + goals} onClick={() => chooseOdd(item.type + matchID + "-" + goals, item.type, goals, goalsOdds)}>
+                                                                        <p className="match-odds-offer-h1">Tilføj til væddemål</p>
+                                                                        <p className="match-odds-offer-h2">{goalsOdds}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    );
+                                                }
+                                                }
+                                                }
+                                                )}
+                                            </ul>
+                                        </div>
+                                    </ul>}
+                                    {oddNav === "goal" && <ul className="match-odds-cont">
+                                        <div className="match-odds-id">
+                                            <div className="match-odds-id-top" onClick={() => document.getElementById("build-popular").classList.toggle("display")}>
+                                                <p className="match-odds-id-h1">Mål</p>
+                                                <p className="match-odds-id-p">{availGoal.length}</p>
+                                            </div>
+                                            <ul className="match-odds-id-con display" id="build-popular">
+                                                {availGoal.map((item) => {
+                                                var label0 = getLabel(item, 0);
+                                                var label1 = getLabel(item, 1);
+                                                var label2 = getLabel(item, 2);
+                                                var overskrift = getLabel(item, 3);
+
+                                                var oddofforon0 = "match-odds-offer-element-3";
+                                                var oddofforon1 = "match-odds-offer-element-3";
+                                                var oddofforon2 = "match-odds-offer-element-3";
+
+                                                var oddofforon20 = "match-odds-offer-element-2";
+                                                var oddofforon21 = "match-odds-offer-element-2";
+
+                                                var oddofforon10 = "match-odds-offer-element-1";
+
+                                                var nowDate = new Date().getTime();
+                                                var thistime = (nowDate.toString()).slice(0, -3);
+                                                if (items["time"].starting_at.timestamp < thistime) {
+                                                    if (item.type_length === 3) {
+                                                        oddofforon0 = "match-odds-offer-element-3 odd-used";
+                                                        oddofforon1 = "match-odds-offer-element-3 odd-used";
+                                                        oddofforon2 = "match-odds-offer-element-3 odd-used";
+                                                        return (
+                                                            <li key={item.type + matchID + overskrift}>
+                                                                <div className="match-bet">
+                                                                    <div className="match-bet-top">
+                                                                        <p className="match-odds-h1">{overskrift}</p>
+                                                                    </div>
+                                                                    <div className="match-odds-offer">
+                                                                        <div className={oddofforon0} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
+                                                                            <p className="match-odds-offer-h1">{label0}</p>
+                                                                            <p className="match-odds-offer-h2">{item.first}</p>
+                                                                        </div>
+                                                                        <div className={oddofforon1} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
+                                                                            <p className="match-odds-offer-h1">{label1}</p>
+                                                                            <p className="match-odds-offer-h2">{item.second}</p>
+                                                                        </div>
+                                                                        <div className={oddofforon2} id={item.type + matchID + "-" + item.result2} onClick={() => chooseOdd(item.type + matchID + "-" + item.result2, item.type, item.result2, item.third)}>
+                                                                            <p className="match-odds-offer-h1">{label2}</p>
+                                                                            <p className="match-odds-offer-h2">{item.third}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        );
+                                                    } else if (item.type_length === 2) {
+                                                        oddofforon20 = "match-odds-offer-element-2 odd-used";
+                                                        oddofforon21 = "match-odds-offer-element-2 odd-used";
+                                                        return (
+                                                            <li key={item.type + overskrift}>
+                                                                <div className="match-bet">
+                                                                    <div className="match-bet-top">
+                                                                        <p className="match-odds-h1">{overskrift}</p>
+                                                                    </div>
+                                                                    <div className="match-odds-offer">
+                                                                        <div className={oddofforon20} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
+                                                                            <p className="match-odds-offer-h1">{label0}</p>
+                                                                            <p className="match-odds-offer-h2">{item.first}</p>
+                                                                        </div>
+                                                                        <div className={oddofforon21} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
+                                                                            <p className="match-odds-offer-h1">{label1}</p>
+                                                                            <p className="match-odds-offer-h2">{item.second}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                        </li>
+                                                        );
+                                                    }
+                                                } else {
+
+                                                if (item.type_length === 3) {
+                                                    if (sessionStorage.getItem("notUsableBtn")) {
+                                                        const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
+                                                        for (var i = 0; i < 3; i++) {
+                                                            const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + i);
+                                                            if (repliceIndex >= 0) {
+                                                                if (i === 0) {
+                                                                    oddofforon0 = "match-odds-offer-element-3 odd-used";
+                                                                } else if (i === 1) {
+                                                                    oddofforon1 = "match-odds-offer-element-3 odd-used";
+                                                                } else if (i === 2) {
+                                                                    oddofforon2 = "match-odds-offer-element-3 odd-used";
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                    return (
+                                                        <li key={item.type + overskrift}>
+                                                            <div className="match-bet">
+                                                                <div className="match-bet-top">
+                                                                    <p className="match-odds-h1">{overskrift}</p>
+                                                                </div>
+                                                                <div className="match-odds-offer">
+                                                                    <div className={oddofforon0} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
+                                                                        <p className="match-odds-offer-h1">{label0}</p>
+                                                                        <p className="match-odds-offer-h2">{item.first}</p>
+                                                                    </div>
+                                                                    <div className={oddofforon1} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
+                                                                        <p className="match-odds-offer-h1">{label1}</p>
+                                                                        <p className="match-odds-offer-h2">{item.second}</p>
+                                                                    </div>
+                                                                    <div className={oddofforon2} id={item.type + matchID + "-" + item.result2} onClick={() => chooseOdd(item.type + matchID + "-" + item.result2, item.type, item.result2, item.third)}>
+                                                                        <p className="match-odds-offer-h1">{label2}</p>
+                                                                        <p className="match-odds-offer-h2">{item.third}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    );
+                                                } else if (item.type_length === 2) {
+                                                    if (sessionStorage.getItem("notUsableBtn")) {
+                                                        const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
+                                                        for (var o = 0; o < 2; o++) {
+                                                            const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + o);
+                                                            if (repliceIndex >= 0) {
+                                                                if (o === 0) {
+                                                                    oddofforon20 = "match-odds-offer-element-2 odd-used";
+                                                                } else if (o === 1) {
+                                                                    oddofforon21 = "match-odds-offer-element-2 odd-used";
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                    return(
+                                                        <li key={item.type + overskrift}>
+                                                            <div className="match-bet">
+                                                                <div className="match-bet-top">
+                                                                    <p className="match-odds-h1">{overskrift}</p>
+                                                                </div>
+                                                                <div className="match-odds-offer">
+                                                                    <div className={oddofforon20} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
+                                                                        <p className="match-odds-offer-h1">{label0}</p>
+                                                                        <p className="match-odds-offer-h2">{item.first}</p>
+                                                                    </div>
+                                                                    <div className={oddofforon21} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
+                                                                        <p className="match-odds-offer-h1">{label1}</p>
+                                                                        <p className="match-odds-offer-h2">{item.second}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    );
+                                                } else if (item.type_length === 7) {
+                                                    if (sessionStorage.getItem("notUsableBtn")) {
+                                                        const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
+                                                        const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + goals);
+                                                        if (repliceIndex >= 0) {
+                                                            oddofforon10 = "match-odds-offer-element-1 odd-used";
+                                                        }
+                                                    }
+                                                    return(
+                                                        <li key={item.type + overskrift}>
+                                                            <div className="match-bet">
+                                                                <div className="match-bet-top">
+                                                                    <p className="match-odds-h1">{overskrift}: {goals}</p>
+                                                                </div>
+                                                                <input type="range" className="match-odds-slider" min="0" max="7" defaultValue={goals} onChange={event => setGoals(event.target.value)}  step="1"/>
+                                                                <div className="match-odds-offer">
+                                                                    <div className={oddofforon10} id={item.type + matchID + "-" + goals} onClick={() => chooseOdd(item.type + matchID + "-" + goals, item.type, goals, goalsOdds)}>
+                                                                        <p className="match-odds-offer-h1">Tilføj til væddemål</p>
+                                                                        <p className="match-odds-offer-h2">{goalsOdds}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    );
+                                                }
+                                                }
+                                                }
+                                                )}
+                                            </ul>
+                                        </div>
+                                    </ul>}
+                                    {oddNav === "kort" && <ul className="match-odds-cont">
+                                        <div className="match-odds-id">
+                                            <div className="match-odds-id-top" onClick={() => document.getElementById("build-popular").classList.toggle("display")}>
+                                                <p className="match-odds-id-h1">Kort</p>
+                                                <p className="match-odds-id-p">{availKort.length}</p>
+                                            </div>
+                                            <ul className="match-odds-id-con display" id="build-popular">
+                                                {availKort.map((item) => {
+                                                var label0 = getLabel(item, 0);
+                                                var label1 = getLabel(item, 1);
+                                                var label2 = getLabel(item, 2);
+                                                var overskrift = getLabel(item, 3);
+
+                                                var oddofforon0 = "match-odds-offer-element-3";
+                                                var oddofforon1 = "match-odds-offer-element-3";
+                                                var oddofforon2 = "match-odds-offer-element-3";
+
+                                                var oddofforon20 = "match-odds-offer-element-2";
+                                                var oddofforon21 = "match-odds-offer-element-2";
+
+                                                var oddofforon10 = "match-odds-offer-element-1";
+
+                                                var nowDate = new Date().getTime();
+                                                var thistime = (nowDate.toString()).slice(0, -3);
+                                                if (items["time"].starting_at.timestamp < thistime) {
+                                                    if (item.type_length === 3) {
+                                                        oddofforon0 = "match-odds-offer-element-3 odd-used";
+                                                        oddofforon1 = "match-odds-offer-element-3 odd-used";
+                                                        oddofforon2 = "match-odds-offer-element-3 odd-used";
+                                                        return (
+                                                            <li key={item.type + matchID + overskrift}>
+                                                                <div className="match-bet">
+                                                                    <div className="match-bet-top">
+                                                                        <p className="match-odds-h1">{overskrift}</p>
+                                                                    </div>
+                                                                    <div className="match-odds-offer">
+                                                                        <div className={oddofforon0} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
+                                                                            <p className="match-odds-offer-h1">{label0}</p>
+                                                                            <p className="match-odds-offer-h2">{item.first}</p>
+                                                                        </div>
+                                                                        <div className={oddofforon1} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
+                                                                            <p className="match-odds-offer-h1">{label1}</p>
+                                                                            <p className="match-odds-offer-h2">{item.second}</p>
+                                                                        </div>
+                                                                        <div className={oddofforon2} id={item.type + matchID + "-" + item.result2} onClick={() => chooseOdd(item.type + matchID + "-" + item.result2, item.type, item.result2, item.third)}>
+                                                                            <p className="match-odds-offer-h1">{label2}</p>
+                                                                            <p className="match-odds-offer-h2">{item.third}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        );
+                                                    } else if (item.type_length === 2) {
+                                                        oddofforon20 = "match-odds-offer-element-2 odd-used";
+                                                        oddofforon21 = "match-odds-offer-element-2 odd-used";
+                                                        return (
+                                                            <li key={item.type + overskrift}>
+                                                                <div className="match-bet">
+                                                                    <div className="match-bet-top">
+                                                                        <p className="match-odds-h1">{overskrift}</p>
+                                                                    </div>
+                                                                    <div className="match-odds-offer">
+                                                                        <div className={oddofforon20} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
+                                                                            <p className="match-odds-offer-h1">{label0}</p>
+                                                                            <p className="match-odds-offer-h2">{item.first}</p>
+                                                                        </div>
+                                                                        <div className={oddofforon21} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
+                                                                            <p className="match-odds-offer-h1">{label1}</p>
+                                                                            <p className="match-odds-offer-h2">{item.second}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                        </li>
+                                                        );
+                                                    }
+                                                } else {
+
+                                                if (item.type_length === 3) {
+                                                    if (sessionStorage.getItem("notUsableBtn")) {
+                                                        const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
+                                                        for (var i = 0; i < 3; i++) {
+                                                            const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + i);
+                                                            if (repliceIndex >= 0) {
+                                                                if (i === 0) {
+                                                                    oddofforon0 = "match-odds-offer-element-3 odd-used";
+                                                                } else if (i === 1) {
+                                                                    oddofforon1 = "match-odds-offer-element-3 odd-used";
+                                                                } else if (i === 2) {
+                                                                    oddofforon2 = "match-odds-offer-element-3 odd-used";
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                    return (
+                                                        <li key={item.type + overskrift}>
+                                                            <div className="match-bet">
+                                                                <div className="match-bet-top">
+                                                                    <p className="match-odds-h1">{overskrift}</p>
+                                                                </div>
+                                                                <div className="match-odds-offer">
+                                                                    <div className={oddofforon0} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
+                                                                        <p className="match-odds-offer-h1">{label0}</p>
+                                                                        <p className="match-odds-offer-h2">{item.first}</p>
+                                                                    </div>
+                                                                    <div className={oddofforon1} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
+                                                                        <p className="match-odds-offer-h1">{label1}</p>
+                                                                        <p className="match-odds-offer-h2">{item.second}</p>
+                                                                    </div>
+                                                                    <div className={oddofforon2} id={item.type + matchID + "-" + item.result2} onClick={() => chooseOdd(item.type + matchID + "-" + item.result2, item.type, item.result2, item.third)}>
+                                                                        <p className="match-odds-offer-h1">{label2}</p>
+                                                                        <p className="match-odds-offer-h2">{item.third}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    );
+                                                } else if (item.type_length === 2) {
+                                                    if (sessionStorage.getItem("notUsableBtn")) {
+                                                        const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
+                                                        for (var o = 0; o < 2; o++) {
+                                                            const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + o);
+                                                            if (repliceIndex >= 0) {
+                                                                if (o === 0) {
+                                                                    oddofforon20 = "match-odds-offer-element-2 odd-used";
+                                                                } else if (o === 1) {
+                                                                    oddofforon21 = "match-odds-offer-element-2 odd-used";
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                    return(
+                                                        <li key={item.type + overskrift}>
+                                                            <div className="match-bet">
+                                                                <div className="match-bet-top">
+                                                                    <p className="match-odds-h1">{overskrift}</p>
+                                                                </div>
+                                                                <div className="match-odds-offer">
+                                                                    <div className={oddofforon20} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
+                                                                        <p className="match-odds-offer-h1">{label0}</p>
+                                                                        <p className="match-odds-offer-h2">{item.first}</p>
+                                                                    </div>
+                                                                    <div className={oddofforon21} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
+                                                                        <p className="match-odds-offer-h1">{label1}</p>
+                                                                        <p className="match-odds-offer-h2">{item.second}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    );
+                                                } else if (item.type_length === 7) {
+                                                    if (sessionStorage.getItem("notUsableBtn")) {
+                                                        const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
+                                                        const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + goals);
+                                                        if (repliceIndex >= 0) {
+                                                            oddofforon10 = "match-odds-offer-element-1 odd-used";
+                                                        }
+                                                    }
+                                                    return(
+                                                        <li key={item.type + overskrift}>
+                                                            <div className="match-bet">
+                                                                <div className="match-bet-top">
+                                                                    <p className="match-odds-h1">{overskrift}: {goals}</p>
+                                                                </div>
+                                                                <input type="range" className="match-odds-slider" min="0" max="7" defaultValue={goals} onChange={event => setGoals(event.target.value)}  step="1"/>
+                                                                <div className="match-odds-offer">
+                                                                    <div className={oddofforon10} id={item.type + matchID + "-" + goals} onClick={() => chooseOdd(item.type + matchID + "-" + goals, item.type, goals, goalsOdds)}>
+                                                                        <p className="match-odds-offer-h1">Tilføj til væddemål</p>
+                                                                        <p className="match-odds-offer-h2">{goalsOdds}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    );
+                                                }
+                                                }
+                                                }
+                                                )}
+                                            </ul>
+                                        </div>
+                                    </ul>}
+                                    {oddNav === "corner" && <ul className="match-odds-cont">
+                                        <div className="match-odds-id">
+                                            <div className="match-odds-id-top" onClick={() => document.getElementById("build-popular").classList.toggle("display")}>
+                                                <p className="match-odds-id-h1">Hjørnespark</p>
+                                                <p className="match-odds-id-p">{availCorner.length}</p>
+                                            </div>
+                                            <ul className="match-odds-id-con display" id="build-popular">
+                                                {availCorner.map((item) => {
+                                                var label0 = getLabel(item, 0);
+                                                var label1 = getLabel(item, 1);
+                                                var label2 = getLabel(item, 2);
+                                                var overskrift = getLabel(item, 3);
+
+                                                var oddofforon0 = "match-odds-offer-element-3";
+                                                var oddofforon1 = "match-odds-offer-element-3";
+                                                var oddofforon2 = "match-odds-offer-element-3";
+
+                                                var oddofforon20 = "match-odds-offer-element-2";
+                                                var oddofforon21 = "match-odds-offer-element-2";
+
+                                                var oddofforon10 = "match-odds-offer-element-1";
+
+                                                var nowDate = new Date().getTime();
+                                                var thistime = (nowDate.toString()).slice(0, -3);
+                                                if (items["time"].starting_at.timestamp < thistime) {
+                                                    if (item.type_length === 3) {
+                                                        oddofforon0 = "match-odds-offer-element-3 odd-used";
+                                                        oddofforon1 = "match-odds-offer-element-3 odd-used";
+                                                        oddofforon2 = "match-odds-offer-element-3 odd-used";
+                                                        return (
+                                                            <li key={item.type + matchID + overskrift}>
+                                                                <div className="match-bet">
+                                                                    <div className="match-bet-top">
+                                                                        <p className="match-odds-h1">{overskrift}</p>
+                                                                    </div>
+                                                                    <div className="match-odds-offer">
+                                                                        <div className={oddofforon0} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
+                                                                            <p className="match-odds-offer-h1">{label0}</p>
+                                                                            <p className="match-odds-offer-h2">{item.first}</p>
+                                                                        </div>
+                                                                        <div className={oddofforon1} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
+                                                                            <p className="match-odds-offer-h1">{label1}</p>
+                                                                            <p className="match-odds-offer-h2">{item.second}</p>
+                                                                        </div>
+                                                                        <div className={oddofforon2} id={item.type + matchID + "-" + item.result2} onClick={() => chooseOdd(item.type + matchID + "-" + item.result2, item.type, item.result2, item.third)}>
+                                                                            <p className="match-odds-offer-h1">{label2}</p>
+                                                                            <p className="match-odds-offer-h2">{item.third}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        );
+                                                    } else if (item.type_length === 2) {
+                                                        oddofforon20 = "match-odds-offer-element-2 odd-used";
+                                                        oddofforon21 = "match-odds-offer-element-2 odd-used";
+                                                        return (
+                                                            <li key={item.type + overskrift}>
+                                                                <div className="match-bet">
+                                                                    <div className="match-bet-top">
+                                                                        <p className="match-odds-h1">{overskrift}</p>
+                                                                    </div>
+                                                                    <div className="match-odds-offer">
+                                                                        <div className={oddofforon20} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
+                                                                            <p className="match-odds-offer-h1">{label0}</p>
+                                                                            <p className="match-odds-offer-h2">{item.first}</p>
+                                                                        </div>
+                                                                        <div className={oddofforon21} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
+                                                                            <p className="match-odds-offer-h1">{label1}</p>
+                                                                            <p className="match-odds-offer-h2">{item.second}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                        </li>
+                                                        );
+                                                    }
+                                                } else {
+
+                                                if (item.type_length === 3) {
+                                                    if (sessionStorage.getItem("notUsableBtn")) {
+                                                        const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
+                                                        for (var i = 0; i < 3; i++) {
+                                                            const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + i);
+                                                            if (repliceIndex >= 0) {
+                                                                if (i === 0) {
+                                                                    oddofforon0 = "match-odds-offer-element-3 odd-used";
+                                                                } else if (i === 1) {
+                                                                    oddofforon1 = "match-odds-offer-element-3 odd-used";
+                                                                } else if (i === 2) {
+                                                                    oddofforon2 = "match-odds-offer-element-3 odd-used";
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                    return (
+                                                        <li key={item.type + overskrift}>
+                                                            <div className="match-bet">
+                                                                <div className="match-bet-top">
+                                                                    <p className="match-odds-h1">{overskrift}</p>
+                                                                </div>
+                                                                <div className="match-odds-offer">
+                                                                    <div className={oddofforon0} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
+                                                                        <p className="match-odds-offer-h1">{label0}</p>
+                                                                        <p className="match-odds-offer-h2">{item.first}</p>
+                                                                    </div>
+                                                                    <div className={oddofforon1} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
+                                                                        <p className="match-odds-offer-h1">{label1}</p>
+                                                                        <p className="match-odds-offer-h2">{item.second}</p>
+                                                                    </div>
+                                                                    <div className={oddofforon2} id={item.type + matchID + "-" + item.result2} onClick={() => chooseOdd(item.type + matchID + "-" + item.result2, item.type, item.result2, item.third)}>
+                                                                        <p className="match-odds-offer-h1">{label2}</p>
+                                                                        <p className="match-odds-offer-h2">{item.third}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    );
+                                                } else if (item.type_length === 2) {
+                                                    if (sessionStorage.getItem("notUsableBtn")) {
+                                                        const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
+                                                        for (var o = 0; o < 2; o++) {
+                                                            const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + o);
+                                                            if (repliceIndex >= 0) {
+                                                                if (o === 0) {
+                                                                    oddofforon20 = "match-odds-offer-element-2 odd-used";
+                                                                } else if (o === 1) {
+                                                                    oddofforon21 = "match-odds-offer-element-2 odd-used";
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                    return(
+                                                        <li key={item.type + overskrift}>
+                                                            <div className="match-bet">
+                                                                <div className="match-bet-top">
+                                                                    <p className="match-odds-h1">{overskrift}</p>
+                                                                </div>
+                                                                <div className="match-odds-offer">
+                                                                    <div className={oddofforon20} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
+                                                                        <p className="match-odds-offer-h1">{label0}</p>
+                                                                        <p className="match-odds-offer-h2">{item.first}</p>
+                                                                    </div>
+                                                                    <div className={oddofforon21} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
+                                                                        <p className="match-odds-offer-h1">{label1}</p>
+                                                                        <p className="match-odds-offer-h2">{item.second}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    );
+                                                } else if (item.type_length === 7) {
+                                                    if (sessionStorage.getItem("notUsableBtn")) {
+                                                        const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
+                                                        const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + goals);
+                                                        if (repliceIndex >= 0) {
+                                                            oddofforon10 = "match-odds-offer-element-1 odd-used";
+                                                        }
+                                                    }
+                                                    return(
+                                                        <li key={item.type + overskrift}>
+                                                            <div className="match-bet">
+                                                                <div className="match-bet-top">
+                                                                    <p className="match-odds-h1">{overskrift}: {goals}</p>
+                                                                </div>
+                                                                <input type="range" className="match-odds-slider" min="0" max="7" defaultValue={goals} onChange={event => setGoals(event.target.value)}  step="1"/>
+                                                                <div className="match-odds-offer">
+                                                                    <div className={oddofforon10} id={item.type + matchID + "-" + goals} onClick={() => chooseOdd(item.type + matchID + "-" + goals, item.type, goals, goalsOdds)}>
+                                                                        <p className="match-odds-offer-h1">Tilføj til væddemål</p>
+                                                                        <p className="match-odds-offer-h2">{goalsOdds}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    );
+                                                }
+                                                }
+                                                }
+                                                )}
+                                            </ul>
+                                        </div>
+                                    </ul>}
+                                    {oddNav === "spillere" && <ul className="match-odds-cont">
+                                        <div className="match-odds-id">
+                                            <div className="match-odds-id-top" onClick={() => document.getElementById("build-popular").classList.toggle("display")}>
+                                                <p className="match-odds-id-h1">Spillere</p>
+                                                <p className="match-odds-id-p">{availSpillere.length}</p>
+                                            </div>
+                                            <ul className="match-odds-id-con display" id="build-popular">
+                                                {availSpillere.map((item) => {
+                                                var label0 = getLabel(item, 0);
+                                                var label1 = getLabel(item, 1);
+                                                var label2 = getLabel(item, 2);
+                                                var overskrift = getLabel(item, 3);
+
+                                                var oddofforon0 = "match-odds-offer-element-3";
+                                                var oddofforon1 = "match-odds-offer-element-3";
+                                                var oddofforon2 = "match-odds-offer-element-3";
+
+                                                var oddofforon20 = "match-odds-offer-element-2";
+                                                var oddofforon21 = "match-odds-offer-element-2";
+
+                                                var oddofforon10 = "match-odds-offer-element-1";
+
+                                                var nowDate = new Date().getTime();
+                                                var thistime = (nowDate.toString()).slice(0, -3);
+                                                if (items["time"].starting_at.timestamp < thistime) {
+                                                    if (item.type_length === 3) {
+                                                        oddofforon0 = "match-odds-offer-element-3 odd-used";
+                                                        oddofforon1 = "match-odds-offer-element-3 odd-used";
+                                                        oddofforon2 = "match-odds-offer-element-3 odd-used";
+                                                        return (
+                                                            <li key={item.type + matchID + overskrift}>
+                                                                <div className="match-bet">
+                                                                    <div className="match-bet-top">
+                                                                        <p className="match-odds-h1">{overskrift}</p>
+                                                                    </div>
+                                                                    <div className="match-odds-offer">
+                                                                        <div className={oddofforon0} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
+                                                                            <p className="match-odds-offer-h1">{label0}</p>
+                                                                            <p className="match-odds-offer-h2">{item.first}</p>
+                                                                        </div>
+                                                                        <div className={oddofforon1} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
+                                                                            <p className="match-odds-offer-h1">{label1}</p>
+                                                                            <p className="match-odds-offer-h2">{item.second}</p>
+                                                                        </div>
+                                                                        <div className={oddofforon2} id={item.type + matchID + "-" + item.result2} onClick={() => chooseOdd(item.type + matchID + "-" + item.result2, item.type, item.result2, item.third)}>
+                                                                            <p className="match-odds-offer-h1">{label2}</p>
+                                                                            <p className="match-odds-offer-h2">{item.third}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        );
+                                                    } else if (item.type_length === 2) {
+                                                        oddofforon20 = "match-odds-offer-element-2 odd-used";
+                                                        oddofforon21 = "match-odds-offer-element-2 odd-used";
+                                                        return (
+                                                            <li key={item.type + overskrift}>
+                                                                <div className="match-bet">
+                                                                    <div className="match-bet-top">
+                                                                        <p className="match-odds-h1">{overskrift}</p>
+                                                                    </div>
+                                                                    <div className="match-odds-offer">
+                                                                        <div className={oddofforon20} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
+                                                                            <p className="match-odds-offer-h1">{label0}</p>
+                                                                            <p className="match-odds-offer-h2">{item.first}</p>
+                                                                        </div>
+                                                                        <div className={oddofforon21} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
+                                                                            <p className="match-odds-offer-h1">{label1}</p>
+                                                                            <p className="match-odds-offer-h2">{item.second}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                        </li>
+                                                        );
+                                                    }
+                                                } else {
+
+                                                if (item.type_length === 3) {
+                                                    if (sessionStorage.getItem("notUsableBtn")) {
+                                                        const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
+                                                        for (var i = 0; i < 3; i++) {
+                                                            const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + i);
+                                                            if (repliceIndex >= 0) {
+                                                                if (i === 0) {
+                                                                    oddofforon0 = "match-odds-offer-element-3 odd-used";
+                                                                } else if (i === 1) {
+                                                                    oddofforon1 = "match-odds-offer-element-3 odd-used";
+                                                                } else if (i === 2) {
+                                                                    oddofforon2 = "match-odds-offer-element-3 odd-used";
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                    return (
+                                                        <li key={item.type + overskrift}>
+                                                            <div className="match-bet">
+                                                                <div className="match-bet-top">
+                                                                    <p className="match-odds-h1">{overskrift}</p>
+                                                                </div>
+                                                                <div className="match-odds-offer">
+                                                                    <div className={oddofforon0} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
+                                                                        <p className="match-odds-offer-h1">{label0}</p>
+                                                                        <p className="match-odds-offer-h2">{item.first}</p>
+                                                                    </div>
+                                                                    <div className={oddofforon1} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
+                                                                        <p className="match-odds-offer-h1">{label1}</p>
+                                                                        <p className="match-odds-offer-h2">{item.second}</p>
+                                                                    </div>
+                                                                    <div className={oddofforon2} id={item.type + matchID + "-" + item.result2} onClick={() => chooseOdd(item.type + matchID + "-" + item.result2, item.type, item.result2, item.third)}>
+                                                                        <p className="match-odds-offer-h1">{label2}</p>
+                                                                        <p className="match-odds-offer-h2">{item.third}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    );
+                                                } else if (item.type_length === 2) {
+                                                    if (sessionStorage.getItem("notUsableBtn")) {
+                                                        const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
+                                                        for (var o = 0; o < 2; o++) {
+                                                            const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + o);
+                                                            if (repliceIndex >= 0) {
+                                                                if (o === 0) {
+                                                                    oddofforon20 = "match-odds-offer-element-2 odd-used";
+                                                                } else if (o === 1) {
+                                                                    oddofforon21 = "match-odds-offer-element-2 odd-used";
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                    return(
+                                                        <li key={item.type + overskrift}>
+                                                            <div className="match-bet">
+                                                                <div className="match-bet-top">
+                                                                    <p className="match-odds-h1">{overskrift}</p>
+                                                                </div>
+                                                                <div className="match-odds-offer">
+                                                                    <div className={oddofforon20} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
+                                                                        <p className="match-odds-offer-h1">{label0}</p>
+                                                                        <p className="match-odds-offer-h2">{item.first}</p>
+                                                                    </div>
+                                                                    <div className={oddofforon21} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
+                                                                        <p className="match-odds-offer-h1">{label1}</p>
+                                                                        <p className="match-odds-offer-h2">{item.second}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    );
+                                                } else if (item.type_length === 7) {
+                                                    if (sessionStorage.getItem("notUsableBtn")) {
+                                                        const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
+                                                        const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + goals);
+                                                        if (repliceIndex >= 0) {
+                                                            oddofforon10 = "match-odds-offer-element-1 odd-used";
+                                                        }
+                                                    }
+                                                    return(
+                                                        <li key={item.type + overskrift}>
+                                                            <div className="match-bet">
+                                                                <div className="match-bet-top">
+                                                                    <p className="match-odds-h1">{overskrift}: {goals}</p>
+                                                                </div>
+                                                                <input type="range" className="match-odds-slider" min="0" max="7" defaultValue={goals} onChange={event => setGoals(event.target.value)}  step="1"/>
+                                                                <div className="match-odds-offer">
+                                                                    <div className={oddofforon10} id={item.type + matchID + "-" + goals} onClick={() => chooseOdd(item.type + matchID + "-" + goals, item.type, goals, goalsOdds)}>
+                                                                        <p className="match-odds-offer-h1">Tilføj til væddemål</p>
+                                                                        <p className="match-odds-offer-h2">{goalsOdds}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    );
+                                                }
+                                                }
+                                                }
+                                                )}
+                                            </ul>
+                                        </div>
+                                    </ul>}
+                                    {oddNav === "specials" && <ul className="match-odds-cont">
+                                        <div className="match-odds-id">
+                                            <div className="match-odds-id-top" onClick={() => document.getElementById("build-popular").classList.toggle("display")}>
+                                                <p className="match-odds-id-h1">Specials</p>
+                                                <p className="match-odds-id-p">{availSpecials.length}</p>
+                                            </div>
+                                            <ul className="match-odds-id-con display" id="build-popular">
+                                                {availSpecials.map((item) => {
+                                                var label0 = getLabel(item, 0);
+                                                var label1 = getLabel(item, 1);
+                                                var label2 = getLabel(item, 2);
+                                                var overskrift = getLabel(item, 3);
+
+                                                var oddofforon0 = "match-odds-offer-element-3";
+                                                var oddofforon1 = "match-odds-offer-element-3";
+                                                var oddofforon2 = "match-odds-offer-element-3";
+
+                                                var oddofforon20 = "match-odds-offer-element-2";
+                                                var oddofforon21 = "match-odds-offer-element-2";
+
+                                                var oddofforon10 = "match-odds-offer-element-1";
+
+                                                var nowDate = new Date().getTime();
+                                                var thistime = (nowDate.toString()).slice(0, -3);
+                                                if (items["time"].starting_at.timestamp < thistime) {
+                                                    if (item.type_length === 3) {
+                                                        oddofforon0 = "match-odds-offer-element-3 odd-used";
+                                                        oddofforon1 = "match-odds-offer-element-3 odd-used";
+                                                        oddofforon2 = "match-odds-offer-element-3 odd-used";
+                                                        return (
+                                                            <li key={item.type + matchID + overskrift}>
+                                                                <div className="match-bet">
+                                                                    <div className="match-bet-top">
+                                                                        <p className="match-odds-h1">{overskrift}</p>
+                                                                    </div>
+                                                                    <div className="match-odds-offer">
+                                                                        <div className={oddofforon0} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
+                                                                            <p className="match-odds-offer-h1">{label0}</p>
+                                                                            <p className="match-odds-offer-h2">{item.first}</p>
+                                                                        </div>
+                                                                        <div className={oddofforon1} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
+                                                                            <p className="match-odds-offer-h1">{label1}</p>
+                                                                            <p className="match-odds-offer-h2">{item.second}</p>
+                                                                        </div>
+                                                                        <div className={oddofforon2} id={item.type + matchID + "-" + item.result2} onClick={() => chooseOdd(item.type + matchID + "-" + item.result2, item.type, item.result2, item.third)}>
+                                                                            <p className="match-odds-offer-h1">{label2}</p>
+                                                                            <p className="match-odds-offer-h2">{item.third}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        );
+                                                    } else if (item.type_length === 2) {
+                                                        oddofforon20 = "match-odds-offer-element-2 odd-used";
+                                                        oddofforon21 = "match-odds-offer-element-2 odd-used";
+                                                        return (
+                                                            <li key={item.type + overskrift}>
+                                                                <div className="match-bet">
+                                                                    <div className="match-bet-top">
+                                                                        <p className="match-odds-h1">{overskrift}</p>
+                                                                    </div>
+                                                                    <div className="match-odds-offer">
+                                                                        <div className={oddofforon20} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
+                                                                            <p className="match-odds-offer-h1">{label0}</p>
+                                                                            <p className="match-odds-offer-h2">{item.first}</p>
+                                                                        </div>
+                                                                        <div className={oddofforon21} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
+                                                                            <p className="match-odds-offer-h1">{label1}</p>
+                                                                            <p className="match-odds-offer-h2">{item.second}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                        </li>
+                                                        );
+                                                    }
+                                                } else {
+
+                                                if (item.type_length === 3) {
+                                                    if (sessionStorage.getItem("notUsableBtn")) {
+                                                        const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
+                                                        for (var i = 0; i < 3; i++) {
+                                                            const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + i);
+                                                            if (repliceIndex >= 0) {
+                                                                if (i === 0) {
+                                                                    oddofforon0 = "match-odds-offer-element-3 odd-used";
+                                                                } else if (i === 1) {
+                                                                    oddofforon1 = "match-odds-offer-element-3 odd-used";
+                                                                } else if (i === 2) {
+                                                                    oddofforon2 = "match-odds-offer-element-3 odd-used";
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                    return (
+                                                        <li key={item.type + overskrift}>
+                                                            <div className="match-bet">
+                                                                <div className="match-bet-top">
+                                                                    <p className="match-odds-h1">{overskrift}</p>
+                                                                </div>
+                                                                <div className="match-odds-offer">
+                                                                    <div className={oddofforon0} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
+                                                                        <p className="match-odds-offer-h1">{label0}</p>
+                                                                        <p className="match-odds-offer-h2">{item.first}</p>
+                                                                    </div>
+                                                                    <div className={oddofforon1} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
+                                                                        <p className="match-odds-offer-h1">{label1}</p>
+                                                                        <p className="match-odds-offer-h2">{item.second}</p>
+                                                                    </div>
+                                                                    <div className={oddofforon2} id={item.type + matchID + "-" + item.result2} onClick={() => chooseOdd(item.type + matchID + "-" + item.result2, item.type, item.result2, item.third)}>
+                                                                        <p className="match-odds-offer-h1">{label2}</p>
+                                                                        <p className="match-odds-offer-h2">{item.third}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    );
+                                                } else if (item.type_length === 2) {
+                                                    if (sessionStorage.getItem("notUsableBtn")) {
+                                                        const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
+                                                        for (var o = 0; o < 2; o++) {
+                                                            const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + o);
+                                                            if (repliceIndex >= 0) {
+                                                                if (o === 0) {
+                                                                    oddofforon20 = "match-odds-offer-element-2 odd-used";
+                                                                } else if (o === 1) {
+                                                                    oddofforon21 = "match-odds-offer-element-2 odd-used";
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                    return(
+                                                        <li key={item.type + overskrift}>
+                                                            <div className="match-bet">
+                                                                <div className="match-bet-top">
+                                                                    <p className="match-odds-h1">{overskrift}</p>
+                                                                </div>
+                                                                <div className="match-odds-offer">
+                                                                    <div className={oddofforon20} id={item.type + matchID + "-" + item.result0} onClick={() => chooseOdd(item.type + matchID + "-" + item.result0, item.type, item.result0, item.first)}>
+                                                                        <p className="match-odds-offer-h1">{label0}</p>
+                                                                        <p className="match-odds-offer-h2">{item.first}</p>
+                                                                    </div>
+                                                                    <div className={oddofforon21} id={item.type + matchID + "-" + item.result1} onClick={() => chooseOdd(item.type + matchID + "-" + item.result1, item.type, item.result1, item.second)}>
+                                                                        <p className="match-odds-offer-h1">{label1}</p>
+                                                                        <p className="match-odds-offer-h2">{item.second}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    );
+                                                } else if (item.type_length === 7) {
+                                                    if (sessionStorage.getItem("notUsableBtn")) {
+                                                        const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
+                                                        const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + goals);
+                                                        if (repliceIndex >= 0) {
+                                                            oddofforon10 = "match-odds-offer-element-1 odd-used";
+                                                        }
+                                                    }
+                                                    return(
+                                                        <li key={item.type + overskrift}>
+                                                            <div className="match-bet">
+                                                                <div className="match-bet-top">
+                                                                    <p className="match-odds-h1">{overskrift}: {goals}</p>
+                                                                </div>
+                                                                <input type="range" className="match-odds-slider" min="0" max="7" defaultValue={goals} onChange={event => setGoals(event.target.value)}  step="1"/>
+                                                                <div className="match-odds-offer">
+                                                                    <div className={oddofforon10} id={item.type + matchID + "-" + goals} onClick={() => chooseOdd(item.type + matchID + "-" + goals, item.type, goals, goalsOdds)}>
+                                                                        <p className="match-odds-offer-h1">Tilføj til væddemål</p>
+                                                                        <p className="match-odds-offer-h2">{goalsOdds}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    );
+                                                }
+                                                }
+                                                }
+                                                )}
+                                            </ul>
+                                        </div>
+                                    </ul>}
+                                </div>
                             </div>
-                        </div>
                         </div>
                     </div>
                 </div>

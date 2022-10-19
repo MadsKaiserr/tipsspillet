@@ -1354,10 +1354,10 @@
 }
 
 .match-odds-h1 {
-    font-size: 17px;
+    font-size: 15px;
     font-weight: 500;
     font-family: Inter;
-    color: var(--softBlack);
+    color: #333;
 }
 
 .match-showdrop {
@@ -1394,9 +1394,15 @@
 }
 
 .match-odds-cont {
+    width: 100%;
+}
+
+.match-odds-id-con {
+    display: none;
     opacity: 0;
     width: 100%;
-    display: none;
+    animation: 1000ms ease 0s 1 normal none running fadeUp;
+    animation-fill-mode: forwards;
 }
 
 .match-odds-offer-h1 {
@@ -1521,8 +1527,8 @@
 }
 
 .match-bet {
-    padding: 25px 40px;
-    border-bottom: 1px solid #3d6eeb1e;
+    padding: 15px 20px;
+    border-top: 1px solid #3d6eeb1e;
 }
 
 .stats-h1 {
