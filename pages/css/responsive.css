@@ -869,11 +869,12 @@
   .match-odds-offer {
     flex-direction: column !important;
   }
-  .match-odds-offer-element-3 {
+  .match-odds-offer-element {
     width: 100% !important;
+    max-width: 100% !important;
   }
-  .match-odds-offer-element-2 {
-    width: 100% !important;
+  .match-odds-special {
+    flex-direction: column;
   }
   .velkommen-container {
     padding: 30px !important;
