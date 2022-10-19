@@ -296,6 +296,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
     }, [selected])
 
     function place3wayBet(leagueId, btnId, matchId, homeTeam, visitorTeam, probability, oddsResult, oddsDate) {
+        console.log(btnId)
         if (!notUsableBtn.includes(btnId) && odds.length < 6) {
             document.getElementById(btnId).classList.add("odd-used");
             setNotUsableBtn([...notUsableBtn, "3Way Result"+btnId]);
@@ -311,9 +312,17 @@ function StageForside ({gruppespil_data, spiller_data}) {
                 "visitorteam": visitorTeam,
                 "probability": probability,
                 "odds_type": "3Way Result",
-                "odds_result": oddsResult,
+                "odds_result": parseInt(oddsResult),
                 "odds_date": oddsDate,
                 "odds_liga": leagueId
+            }
+
+            if (parseInt(oddsResult) === 0) {
+                jsonNote.label = homeTeam;
+            } else if (parseInt(oddsResult) === 1) {
+                jsonNote.label = "Uafgjort";
+            } else if (parseInt(oddsResult) === 2) {
+                jsonNote.label = visitorTeam;
             }
     
             setOdds([...odds, jsonNote]);
@@ -331,6 +340,8 @@ function StageForside ({gruppespil_data, spiller_data}) {
             sessionStorage.setItem("odds", JSON.stringify([...odds, jsonNote]))
         } else if (odds.length >= 6) {
             setNotiMessage("error", "For mange væddemål", "Du har allerede 6 ud af 6 mulige væddemål pr. kupon.")
+        } else if (notUsableBtn.includes(btnId)) {
+            rem3wayBet(matchId, "3Way Result", oddsResult);
         }
     }
 
@@ -339,13 +350,11 @@ function StageForside ({gruppespil_data, spiller_data}) {
         var udbetalingNew = 0;
         var oddsSession = JSON.parse(sessionStorage.getItem("odds"));
         for (var y in oddsSession) {
-            if (oddsSession[y].odds_result !== result + "") {
+            if (oddsSession[y].odds_result !== parseInt(result)) {
                 returnOddsNew = returnOddsNew * parseFloat(oddsSession[y].probability);
                 udbetalingNew = returnOddsNew * indsats;
             }
-        }
-        for (var y in oddsSession) {
-            if (oddsSession[y].match === parseInt(matchId) && oddsSession[y].odds_result === result + "") {
+            if (oddsSession[y].match === parseInt(matchId) && oddsSession[y].odds_result === parseInt(result)) {
                 const betIdIndex = "3Way Result"+matchId+"-"+oddsSession[y].odds_result;
 
                 var storageReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
@@ -354,7 +363,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
                 setNotUsableBtn(storageReplica);
                 sessionStorage.setItem("notUsableBtn", JSON.stringify(storageReplica));
 
-                var oddsSessionIndex = oddsSession.findIndex(item => item.match === matchId && item.odds_result === result + "");
+                var oddsSessionIndex = oddsSession.findIndex(item => item.match === matchId && item.odds_result === parseInt(result));
                 oddsSession.splice(oddsSessionIndex, 1);
                 setOdds(oddsSession);
                 sessionStorage.setItem("odds", JSON.stringify(oddsSession));
@@ -530,6 +539,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
                             const visitorteamString = odds[m].visitorteam;
                             const hometeamString = odds[m].hometeam;
                             const bet_date = odds[m].odds_date;
+                            const label = odds[m].label;
                 
                             betBody.updateValue.bets[m] = {
                                 "game" : match,
@@ -539,6 +549,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
                                 "hometeam": hometeamString,
                                 "visitorteam": visitorteamString,
                                 "bet_date": bet_date,
+                                "label": label,
                                 "indsats": 0
                             }
                         }
@@ -653,6 +664,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
                         const visitorteamString = odds[m].visitorteam;
                         const hometeamString = odds[m].hometeam;
                         const bet_date = odds[m].odds_date;
+                        const label = odds[m].label;
             
                         betBody.updateValue.bets[m] = {
                             "game" : match,
@@ -662,6 +674,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
                             "hometeam": hometeamString,
                             "visitorteam": visitorteamString,
                             "bet_date": bet_date,
+                            "label": label,
                             "indsats": 0
                         }
                     }
@@ -3363,7 +3376,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
                                     <div className="kupon-content">
                                         <div className="kupon-info">
                                             <p className="kupon-h1">{bet.hometeam} - {bet.visitorteam}</p>
-                                            <p className="kupon-p">{getKupon(bet.odds_type,bet.hometeam,bet.visitorteam)}: <span className="weight600">{getString(bet.odds_type,bet.odds_result,bet.hometeam,bet.visitorteam)}</span></p>
+                                            <p className="kupon-p">{getKupon(bet.odds_type,bet.hometeam,bet.visitorteam)}: <span className="weight600">{bet.label}</span></p>
                                         </div>
                                         <div className="kupon-odds">
                                             <p className="kupon-h2">{bet.probability}</p>
@@ -3385,7 +3398,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
                                     <div className="kupon-content">
                                         <div className="kupon-info">
                                             <p className="kupon-h1">{bet.hometeam} - {bet.visitorteam}</p>
-                                            <p className="kupon-p">{getKupon(bet.odds_type,bet.hometeam,bet.visitorteam)}: <span className="weight600">{getString(bet.odds_type,bet.odds_result,bet.hometeam,bet.visitorteam)}</span></p>
+                                            <p className="kupon-p">{getKupon(bet.odds_type,bet.hometeam,bet.visitorteam)}: <span className="weight600">{bet.label}</span></p>
                                         </div>
                                         <div className="kupon-odds">
                                             <p className="kupon-h2">{bet.probability}</p>

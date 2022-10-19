@@ -40,24 +40,34 @@ module.exports = {
             return "Begge hold modtager 2+ kort";
         } else if (type === "Own Goal") {
             return "Selvmål";
-        } else if (type.slice(0,-3) === "Team Corners") {
-            return "Over/Under " + type.slice(10) + " hjørnespark";
-        } else if (type.slice(0,-3) === "Team Cards") {
-            return "Over/Under " + type.slice(10) + " hjørnespark";
-        } else if (type.slice(0,-3) === "Over/Under") {
-            return "Over/Under " + type.slice(10) + " mål";
-        } else if (type.slice(0,-4) === "Over/Under") {
-            return "Over/Under " + type.slice(10) + " mål";
+        } else if (type === "Over/Under") {
+            return "Mål Over/Under";
         } else if (type === "Exact Goals Number") {
-            return "Antal mål i kampen";
-        } else if (type.slice(0,-3) === "Goals Over/Under 1st Half") {
-            return "Over/Under " + type.slice(-3) + " mål - 1. Halvleg";
-        } else if (type.slice(0,-4) === "Goals Over/Under 1st Half") {
-            return "Over/Under " + type.slice(-4) + " mål - 1. Halvleg";
-        } else if (type.slice(0,-3) === "Over/Under 2nd Half") {
-            return "Over/Under " + type.slice(-3) + " mål - 2. Halvleg";
-        } else if (type.slice(0,-4) === "Over/Under 2nd Half") {
-            return "Over/Under " + type.slice(-4) + " mål - 2. Halvleg";
+            return "Totalt antal mål";
+        } else if (type === "Goalscorer") {
+            return "Målscorer";
+        } else if (type === "Player to be Booked") {
+            return "Advarsel til";
+        } else if (type === "Handicap Result") {
+            return "Handicap Resultat";
+        } else if (type === "1st Half Handicap") {
+            return "Handicap 1. Halvleg";
+        } else if (type === "2nd Half Handicap") {
+            return "Handicap 2. Halvleg";
+        } else if (type === "1st Goal Method") {
+            return "Første mål - Måltype";
+        } else if (type === "Early Goal") {
+            return "Tidligt mål";
+        } else if (type === "Late Goal") {
+            return "Sent mål";
+        } else if (type === "Team Cards") {
+            return "Uddelte kort";
+        } else if (type === "Time Of First Corner") {
+            return "Første hjørnespark";
+        } else if (type === "Total Corners") {
+            return "Totale hjørnespark";
+        } else if (type === "Team Corners") {
+            return "Hjørnespark";
         }
     },
     getString: function(type,result,homeTeam,visitorTeam) {

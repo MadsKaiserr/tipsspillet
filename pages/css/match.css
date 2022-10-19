@@ -1422,8 +1422,26 @@
 
 .match-odds-offer {
     display: flex;
-    flex-grow: column wrap;
     gap: 0.5vh;
+    width: 100%;
+}
+
+.match-bet-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.match-odds-special {
+    display: flex;
+    gap: 0.5vh;
+    max-height: 400px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.match-odds-special .match-odds-offer {
+    flex-direction: column;
 }
 
 .kupon-receipt {
@@ -1491,6 +1509,17 @@
     display: flex;
     align-items: center;
     flex-direction: column;
+}
+
+.match-odds-offer-element {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    padding: 1.4vh 15px;
+    background-color: var(--primary);
+    border-radius: 2px;
+    margin-top: 10px;
+    cursor: pointer;
 }
 
 .match-odds-offer-element-3 {

@@ -409,12 +409,12 @@
   .stage-kupon {
     display: inline-block;
     transition: 0.3s;
+    z-index: 11;
     background-color: #fff;
     border-top: 4px var(--primary) solid;
     border-radius: 3px;
     width: 21.3%;
     top: 195px;
-    z-index: 7;
     min-width: 325px;
     min-height: 150px;
     max-width: 400px;
