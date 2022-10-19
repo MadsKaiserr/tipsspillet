@@ -2510,7 +2510,7 @@ function StageMatcharticle ({data}) {
                                 <div className="match-odds-section">
                                     {!matchUpdated && <p className="match-odds-error">Odds ikke opdateret</p>}
                                     {oddNav === "popular" && <ul className="match-odds-cont">
-                                        <div className="match-odds-id">
+                                        <li key="pupular-popular" className="match-odds-id">
                                             <div className="match-odds-id-top" onClick={() => document.getElementById("popular-popular").classList.toggle("display")}>
                                                 <p className="match-odds-id-h1">Populære</p>
                                                 <p className="match-odds-id-p">{availPopular.length}</p>
@@ -2542,7 +2542,7 @@ function StageMatcharticle ({data}) {
                                                                                     }
                                                                                 }
                                                                                 return (
-                                                                                    <li className={oddofforon} id={item.type + matchID + "-" + index} onClick={() => chooseOdd(item.type + matchID + "-" + index, item.type, index, odd.value, getLabel(item, index))}>
+                                                                                    <li key={item.type + matchID + "-" + index} className={oddofforon} id={item.type + matchID + "-" + index} onClick={() => chooseOdd(item.type + matchID + "-" + index, item.type, index, odd.value, getLabel(item, index))}>
                                                                                         <p className="match-odds-offer-h1">{getLabel(item, index)}</p>
                                                                                         <p className="match-odds-offer-h2">{odd.value}</p>
                                                                                     </li>
@@ -2566,7 +2566,7 @@ function StageMatcharticle ({data}) {
                                                                                     }
                                                                                 }
                                                                                 return (
-                                                                                    <li className={oddofforon} id={item.type + matchID + "-" + (index + (Math.floor(item.data.length/2)))} onClick={() => chooseOdd(item.type + matchID + "-" + (index + (Math.floor(item.data.length/2))), item.type, (index + (Math.floor(item.data.length/2))), odd.value, getLabel(item, (index + (Math.floor(item.data.length/2)))))}>
+                                                                                    <li key={item.type + matchID + "-" + index} className={oddofforon} id={item.type + matchID + "-" + (index + (Math.floor(item.data.length/2)))} onClick={() => chooseOdd(item.type + matchID + "-" + (index + (Math.floor(item.data.length/2))), item.type, (index + (Math.floor(item.data.length/2))), odd.value, getLabel(item, (index + (Math.floor(item.data.length/2)))))}>
                                                                                         <p className="match-odds-offer-h1">{getLabel(item, (index + (Math.floor(item.data.length/2))))}</p>
                                                                                         <p className="match-odds-offer-h2">{odd.value}</p>
                                                                                     </li>
@@ -2607,7 +2607,7 @@ function StageMatcharticle ({data}) {
                                                                                 }
                                                                             }
                                                                             return (
-                                                                                <li className={oddofforon} style={{maxWidth: counted + "%"}} id={item.type + matchID + "-" + index} onClick={() => chooseOdd(item.type + matchID + "-" + index, item.type, index, odd.value, getLabel(item, index))}>
+                                                                                <li key={item.type + matchID + "-" + index} className={oddofforon} style={{maxWidth: counted + "%"}} id={item.type + matchID + "-" + index} onClick={() => chooseOdd(item.type + matchID + "-" + index, item.type, index, odd.value, getLabel(item, index))}>
                                                                                     <p className="match-odds-offer-h1">{getLabel(item, index)}</p>
                                                                                     <p className="match-odds-offer-h2">{odd.value}</p>
                                                                                 </li>
@@ -2621,10 +2621,10 @@ function StageMatcharticle ({data}) {
                                                 }
                                                 )}
                                             </ul>
-                                        </div>
+                                        </li>
                                     </ul>}
                                     {oddNav === "build" && <div className="match-odds-cont">
-                                        <div className="match-odds-id">
+                                        <li key="build-popular" className="match-odds-id">
                                             <div className="match-odds-id-top" onClick={() => document.getElementById("popular-popular").classList.toggle("display")}>
                                                 <p className="match-odds-id-h1">Populære</p>
                                                 <p className="match-odds-id-p">{availPopular.length}</p>
@@ -2656,7 +2656,7 @@ function StageMatcharticle ({data}) {
                                                                                     }
                                                                                 }
                                                                                 return (
-                                                                                    <li className={oddofforon} id={item.type + matchID + "-" + index} onClick={() => chooseOdd(item.type + matchID + "-" + index, item.type, index, odd.value, getLabel(item, index))}>
+                                                                                    <li key={item.type + matchID + "-" + index} className={oddofforon} id={item.type + matchID + "-" + index} onClick={() => chooseOdd(item.type + matchID + "-" + index, item.type, index, odd.value, getLabel(item, index))}>
                                                                                         <p className="match-odds-offer-h1">{getLabel(item, index)}</p>
                                                                                         <p className="match-odds-offer-h2">{odd.value}</p>
                                                                                     </li>
@@ -2680,7 +2680,7 @@ function StageMatcharticle ({data}) {
                                                                                     }
                                                                                 }
                                                                                 return (
-                                                                                    <li className={oddofforon} id={item.type + matchID + "-" + (index + (Math.floor(item.data.length/2)))} onClick={() => chooseOdd(item.type + matchID + "-" + (index + (Math.floor(item.data.length/2))), item.type, (index + (Math.floor(item.data.length/2))), odd.value, getLabel(item, (index + (Math.floor(item.data.length/2)))))}>
+                                                                                    <li key={item.type + matchID + "-" + index} className={oddofforon} id={item.type + matchID + "-" + (index + (Math.floor(item.data.length/2)))} onClick={() => chooseOdd(item.type + matchID + "-" + (index + (Math.floor(item.data.length/2))), item.type, (index + (Math.floor(item.data.length/2))), odd.value, getLabel(item, (index + (Math.floor(item.data.length/2)))))}>
                                                                                         <p className="match-odds-offer-h1">{getLabel(item, (index + (Math.floor(item.data.length/2))))}</p>
                                                                                         <p className="match-odds-offer-h2">{odd.value}</p>
                                                                                     </li>
@@ -2721,7 +2721,7 @@ function StageMatcharticle ({data}) {
                                                                                 }
                                                                             }
                                                                             return (
-                                                                                <li className={oddofforon} style={{maxWidth: counted + "%"}} id={item.type + matchID + "-" + index} onClick={() => chooseOdd(item.type + matchID + "-" + index, item.type, index, odd.value, getLabel(item, index))}>
+                                                                                <li key={item.type + matchID + "-" + index} className={oddofforon} style={{maxWidth: counted + "%"}} id={item.type + matchID + "-" + index} onClick={() => chooseOdd(item.type + matchID + "-" + index, item.type, index, odd.value, getLabel(item, index))}>
                                                                                     <p className="match-odds-offer-h1">{getLabel(item, index)}</p>
                                                                                     <p className="match-odds-offer-h2">{odd.value}</p>
                                                                                 </li>
@@ -2735,8 +2735,8 @@ function StageMatcharticle ({data}) {
                                                 }
                                                 )}
                                             </ul>
-                                        </div>
-                                        <div className="match-odds-id">
+                                        </li>
+                                        <li key="build-spillere" className="match-odds-id">
                                             <div className="match-odds-id-top" onClick={() => document.getElementById("build-spillere").classList.toggle("display")}>
                                                 <p className="match-odds-id-h1">Spiller</p>
                                                 <p className="match-odds-id-p">{availSpillere.length}</p>
@@ -2773,7 +2773,7 @@ function StageMatcharticle ({data}) {
                                                                                 }
                                                                             }
                                                                             return (
-                                                                                <li className={oddofforon} id={item.type + matchID + "-" + index} onClick={() => chooseOdd(item.type + matchID + "-" + index, item.type, index, odd.value, getLabel(item, index))}>
+                                                                                <li key={item.type + matchID + "-" + index} className={oddofforon} id={item.type + matchID + "-" + index} onClick={() => chooseOdd(item.type + matchID + "-" + index, item.type, index, odd.value, getLabel(item, index))}>
                                                                                     <p className="match-odds-offer-h1">{getLabel(item, index)}</p>
                                                                                     <p className="match-odds-offer-h2">{odd.value}</p>
                                                                                 </li>
@@ -2797,7 +2797,7 @@ function StageMatcharticle ({data}) {
                                                                                 }
                                                                             }
                                                                             return (
-                                                                                <li className={oddofforon} id={item.type + matchID + "-" + (index + (Math.ceil(item.data.length/2)))} onClick={() => chooseOdd(item.type + matchID + "-" + (index + (Math.ceil(item.data.length/2))), item.type, (index + (Math.ceil(item.data.length/2))), odd.value, getLabel(item, (index + (Math.ceil(item.data.length/2)))))}>
+                                                                                <li key={item.type + matchID + "-" + index} className={oddofforon} id={item.type + matchID + "-" + (index + (Math.ceil(item.data.length/2)))} onClick={() => chooseOdd(item.type + matchID + "-" + (index + (Math.ceil(item.data.length/2))), item.type, (index + (Math.ceil(item.data.length/2))), odd.value, getLabel(item, (index + (Math.ceil(item.data.length/2)))))}>
                                                                                     <p className="match-odds-offer-h1">{getLabel(item, (index + (Math.ceil(item.data.length/2))))}</p>
                                                                                     <p className="match-odds-offer-h2">{odd.value}</p>
                                                                                 </li>
@@ -2811,8 +2811,8 @@ function StageMatcharticle ({data}) {
                                                 }
                                                 )}
                                             </ul>
-                                        </div>
-                                        <div className="match-odds-id">
+                                        </li>
+                                        <li key="build-halvleg" className="match-odds-id">
                                             <div className="match-odds-id-top" onClick={() => document.getElementById("build-minutter").classList.toggle("display")}>
                                                 <p className="match-odds-id-h1">Halvleg</p>
                                                 <p className="match-odds-id-p">{availMinutter.length}</p>
@@ -2848,7 +2848,7 @@ function StageMatcharticle ({data}) {
                                                                             }
                                                                         }
                                                                         return (
-                                                                            <li className={oddofforon} style={{maxWidth: counted + "%"}} id={item.type + matchID + "-" + index} onClick={() => chooseOdd(item.type + matchID + "-" + index, item.type, index, odd.value, getLabel(item, index))}>
+                                                                            <li key={item.type + matchID + "-" + index} className={oddofforon} style={{maxWidth: counted + "%"}} id={item.type + matchID + "-" + index} onClick={() => chooseOdd(item.type + matchID + "-" + index, item.type, index, odd.value, getLabel(item, index))}>
                                                                                 <p className="match-odds-offer-h1">{getLabel(item, index)}</p>
                                                                                 <p className="match-odds-offer-h2">{odd.value}</p>
                                                                             </li>
@@ -2861,8 +2861,8 @@ function StageMatcharticle ({data}) {
                                                 }
                                                 )}
                                             </ul>
-                                        </div>
-                                        <div className="match-odds-id">
+                                        </li>
+                                        <li key="build-goals"className="match-odds-id">
                                             <div className="match-odds-id-top" onClick={() => document.getElementById("build-goal").classList.toggle("display")}>
                                                 <p className="match-odds-id-h1">Mål</p>
                                                 <p className="match-odds-id-p">{availGoal.length}</p>
@@ -2894,7 +2894,7 @@ function StageMatcharticle ({data}) {
                                                                                     }
                                                                                 }
                                                                                 return (
-                                                                                    <li className={oddofforon} id={item.type + matchID + "-" + index} onClick={() => chooseOdd(item.type + matchID + "-" + index, item.type, index, odd.value, getLabel(item, index))}>
+                                                                                    <li key={item.type + matchID + "-" + index} className={oddofforon} id={item.type + matchID + "-" + index} onClick={() => chooseOdd(item.type + matchID + "-" + index, item.type, index, odd.value, getLabel(item, index))}>
                                                                                         <p className="match-odds-offer-h1">{getLabel(item, index)}</p>
                                                                                         <p className="match-odds-offer-h2">{odd.value}</p>
                                                                                     </li>
@@ -2918,7 +2918,7 @@ function StageMatcharticle ({data}) {
                                                                                     }
                                                                                 }
                                                                                 return (
-                                                                                    <li className={oddofforon} id={item.type + matchID + "-" + (index + (Math.floor(item.data.length/2)))} onClick={() => chooseOdd(item.type + matchID + "-" + (index + (Math.floor(item.data.length/2))), item.type, (index + (Math.floor(item.data.length/2))), odd.value, getLabel(item, (index + (Math.floor(item.data.length/2)))))}>
+                                                                                    <li key={item.type + matchID + "-" + index} className={oddofforon} id={item.type + matchID + "-" + (index + (Math.floor(item.data.length/2)))} onClick={() => chooseOdd(item.type + matchID + "-" + (index + (Math.floor(item.data.length/2))), item.type, (index + (Math.floor(item.data.length/2))), odd.value, getLabel(item, (index + (Math.floor(item.data.length/2)))))}>
                                                                                         <p className="match-odds-offer-h1">{getLabel(item, (index + (Math.floor(item.data.length/2))))}</p>
                                                                                         <p className="match-odds-offer-h2">{odd.value}</p>
                                                                                     </li>
@@ -2960,7 +2960,7 @@ function StageMatcharticle ({data}) {
                                                                                     }
                                                                                 }
                                                                                 return (
-                                                                                    <li className={oddofforon} id={item.type + matchID + "-" + index} onClick={() => chooseOdd(item.type + matchID + "-" + index, item.type, index, odd.value, getLabel(item, index))}>
+                                                                                    <li key={item.type + matchID + "-" + index} className={oddofforon} id={item.type + matchID + "-" + index} onClick={() => chooseOdd(item.type + matchID + "-" + index, item.type, index, odd.value, getLabel(item, index))}>
                                                                                         <p className="match-odds-offer-h1">{getLabel(item, index)}</p>
                                                                                         <p className="match-odds-offer-h2">{odd.value}</p>
                                                                                     </li>
@@ -2984,7 +2984,7 @@ function StageMatcharticle ({data}) {
                                                                                     }
                                                                                 }
                                                                                 return (
-                                                                                    <li className={oddofforon} id={item.type + matchID + "-" + (index + (Math.ceil(item.data.length/2)))} onClick={() => chooseOdd(item.type + matchID + "-" + (index + (Math.ceil(item.data.length/2))), item.type, (index + (Math.ceil(item.data.length/2))), odd.value, getLabel(item, (index + (Math.ceil(item.data.length/2)))))}>
+                                                                                    <li key={item.type + matchID + "-" + index} className={oddofforon} id={item.type + matchID + "-" + (index + (Math.ceil(item.data.length/2)))} onClick={() => chooseOdd(item.type + matchID + "-" + (index + (Math.ceil(item.data.length/2))), item.type, (index + (Math.ceil(item.data.length/2))), odd.value, getLabel(item, (index + (Math.ceil(item.data.length/2)))))}>
                                                                                         <p className="match-odds-offer-h1">{getLabel(item, (index + (Math.ceil(item.data.length/2))))}</p>
                                                                                         <p className="match-odds-offer-h2">{odd.value}</p>
                                                                                     </li>
@@ -3020,7 +3020,7 @@ function StageMatcharticle ({data}) {
                                                                                     }
                                                                                 }
                                                                                 return (
-                                                                                    <li className={oddofforon} id={item.type + matchID + "-" + index} onClick={() => chooseOdd(item.type + matchID + "-" + index, item.type, index, odd.value, getLabel(item, index))}>
+                                                                                    <li key={item.type + matchID + "-" + index} className={oddofforon} id={item.type + matchID + "-" + index} onClick={() => chooseOdd(item.type + matchID + "-" + index, item.type, index, odd.value, getLabel(item, index))}>
                                                                                         <p className="match-odds-offer-h1">{getLabel(item, index)}</p>
                                                                                         <p className="match-odds-offer-h2">{odd.value}</p>
                                                                                     </li>
@@ -3044,7 +3044,7 @@ function StageMatcharticle ({data}) {
                                                                                     }
                                                                                 }
                                                                                 return (
-                                                                                    <li className={oddofforon} id={item.type + matchID + "-" + (index + (Math.floor(item.data.length/2)))} onClick={() => chooseOdd(item.type + matchID + "-" + (index + (Math.floor(item.data.length/2))), item.type, (index + (Math.floor(item.data.length/2))), odd.value, getLabel(item, (index + (Math.floor(item.data.length/2)))))}>
+                                                                                    <li key={item.type + matchID + "-" + index} className={oddofforon} id={item.type + matchID + "-" + (index + (Math.floor(item.data.length/2)))} onClick={() => chooseOdd(item.type + matchID + "-" + (index + (Math.floor(item.data.length/2))), item.type, (index + (Math.floor(item.data.length/2))), odd.value, getLabel(item, (index + (Math.floor(item.data.length/2)))))}>
                                                                                         <p className="match-odds-offer-h1">{getLabel(item, (index + (Math.floor(item.data.length/2))))}</p>
                                                                                         <p className="match-odds-offer-h2">{odd.value}</p>
                                                                                     </li>
@@ -3085,7 +3085,7 @@ function StageMatcharticle ({data}) {
                                                                                 }
                                                                             }
                                                                             return (
-                                                                                <li className={oddofforon} style={{maxWidth: counted + "%"}} id={item.type + matchID + "-" + index} onClick={() => chooseOdd(item.type + matchID + "-" + index, item.type, index, odd.value, getLabel(item, index))}>
+                                                                                <li key={item.type + matchID + "-" + index} className={oddofforon} style={{maxWidth: counted + "%"}} id={item.type + matchID + "-" + index} onClick={() => chooseOdd(item.type + matchID + "-" + index, item.type, index, odd.value, getLabel(item, index))}>
                                                                                     <p className="match-odds-offer-h1">{getLabel(item, index)}</p>
                                                                                     <p className="match-odds-offer-h2">{odd.value}</p>
                                                                                 </li>
@@ -3099,10 +3099,10 @@ function StageMatcharticle ({data}) {
                                                 }
                                                 )}
                                             </ul>
-                                        </div>
+                                        </li>
                                     </div>}
                                     {oddNav === "handicap" && <div className="match-odds-cont">
-                                        <div className="match-odds-id">
+                                        <li key="handicap-handicap" className="match-odds-id">
                                             <div className="match-odds-id-top" onClick={() => document.getElementById("handicap-handicap").classList.toggle("display")}>
                                                 <p className="match-odds-id-h1">Handicap</p>
                                                 <p className="match-odds-id-p">{availHandicap.length}</p>
@@ -3138,7 +3138,7 @@ function StageMatcharticle ({data}) {
                                                                             }
                                                                         }
                                                                         return (
-                                                                            <li className={oddofforon} style={{maxWidth: counted + "%"}} id={item.type + matchID + "-" + index} onClick={() => chooseOdd(item.type + matchID + "-" + index, item.type, index, odd.value, getLabel(item, index))}>
+                                                                            <li key={item.type + matchID + "-" + index} className={oddofforon} style={{maxWidth: counted + "%"}} id={item.type + matchID + "-" + index} onClick={() => chooseOdd(item.type + matchID + "-" + index, item.type, index, odd.value, getLabel(item, index))}>
                                                                                 <p className="match-odds-offer-h1">{getLabel(item, index)}</p>
                                                                                 <p className="match-odds-offer-h2">{odd.value}</p>
                                                                             </li>
@@ -3151,10 +3151,10 @@ function StageMatcharticle ({data}) {
                                                 }
                                                 )}
                                             </ul>
-                                        </div>
+                                        </li>
                                     </div>}
                                     {oddNav === "minutter" && <ul className="match-odds-cont">
-                                        <div className="match-odds-id">
+                                        <li key="minutter-minutter" className="match-odds-id">
                                             <div className="match-odds-id-top" onClick={() => document.getElementById("minutter-minutter").classList.toggle("display")}>
                                                 <p className="match-odds-id-h1">Halvleg</p>
                                                 <p className="match-odds-id-p">{availMinutter.length}</p>
@@ -3190,7 +3190,7 @@ function StageMatcharticle ({data}) {
                                                                             }
                                                                         }
                                                                         return (
-                                                                            <li className={oddofforon} style={{maxWidth: counted + "%"}} id={item.type + matchID + "-" + index} onClick={() => chooseOdd(item.type + matchID + "-" + index, item.type, index, odd.value, getLabel(item, index))}>
+                                                                            <li key={item.type + matchID + "-" + index} className={oddofforon} style={{maxWidth: counted + "%"}} id={item.type + matchID + "-" + index} onClick={() => chooseOdd(item.type + matchID + "-" + index, item.type, index, odd.value, getLabel(item, index))}>
                                                                                 <p className="match-odds-offer-h1">{getLabel(item, index)}</p>
                                                                                 <p className="match-odds-offer-h2">{odd.value}</p>
                                                                             </li>
@@ -3203,10 +3203,10 @@ function StageMatcharticle ({data}) {
                                                 }
                                                 )}
                                             </ul>
-                                        </div>
+                                        </li>
                                     </ul>}
                                     {oddNav === "goal" && <ul className="match-odds-cont">
-                                        <div className="match-odds-id">
+                                        <li key="goal-goal" className="match-odds-id">
                                             <div className="match-odds-id-top" onClick={() => document.getElementById("goal-goal").classList.toggle("display")}>
                                                 <p className="match-odds-id-h1">Mål</p>
                                                 <p className="match-odds-id-p">{availGoal.length}</p>
@@ -3238,7 +3238,7 @@ function StageMatcharticle ({data}) {
                                                                                     }
                                                                                 }
                                                                                 return (
-                                                                                    <li className={oddofforon} id={item.type + matchID + "-" + index} onClick={() => chooseOdd(item.type + matchID + "-" + index, item.type, index, odd.value, getLabel(item, index))}>
+                                                                                    <li key={item.type + matchID + "-" + index} className={oddofforon} id={item.type + matchID + "-" + index} onClick={() => chooseOdd(item.type + matchID + "-" + index, item.type, index, odd.value, getLabel(item, index))}>
                                                                                         <p className="match-odds-offer-h1">{getLabel(item, index)}</p>
                                                                                         <p className="match-odds-offer-h2">{odd.value}</p>
                                                                                     </li>
@@ -3262,7 +3262,7 @@ function StageMatcharticle ({data}) {
                                                                                     }
                                                                                 }
                                                                                 return (
-                                                                                    <li className={oddofforon} id={item.type + matchID + "-" + (index + (Math.floor(item.data.length/2)))} onClick={() => chooseOdd(item.type + matchID + "-" + (index + (Math.floor(item.data.length/2))), item.type, (index + (Math.floor(item.data.length/2))), odd.value, getLabel(item, (index + (Math.floor(item.data.length/2)))))}>
+                                                                                    <li key={item.type + matchID + "-" + index} className={oddofforon} id={item.type + matchID + "-" + (index + (Math.floor(item.data.length/2)))} onClick={() => chooseOdd(item.type + matchID + "-" + (index + (Math.floor(item.data.length/2))), item.type, (index + (Math.floor(item.data.length/2))), odd.value, getLabel(item, (index + (Math.floor(item.data.length/2)))))}>
                                                                                         <p className="match-odds-offer-h1">{getLabel(item, (index + (Math.floor(item.data.length/2))))}</p>
                                                                                         <p className="match-odds-offer-h2">{odd.value}</p>
                                                                                     </li>
@@ -3304,7 +3304,7 @@ function StageMatcharticle ({data}) {
                                                                                     }
                                                                                 }
                                                                                 return (
-                                                                                    <li className={oddofforon} id={item.type + matchID + "-" + index} onClick={() => chooseOdd(item.type + matchID + "-" + index, item.type, index, odd.value, getLabel(item, index))}>
+                                                                                    <li key={item.type + matchID + "-" + index} className={oddofforon} id={item.type + matchID + "-" + index} onClick={() => chooseOdd(item.type + matchID + "-" + index, item.type, index, odd.value, getLabel(item, index))}>
                                                                                         <p className="match-odds-offer-h1">{getLabel(item, index)}</p>
                                                                                         <p className="match-odds-offer-h2">{odd.value}</p>
                                                                                     </li>
@@ -3328,7 +3328,7 @@ function StageMatcharticle ({data}) {
                                                                                     }
                                                                                 }
                                                                                 return (
-                                                                                    <li className={oddofforon} id={item.type + matchID + "-" + (index + (Math.ceil(item.data.length/2)))} onClick={() => chooseOdd(item.type + matchID + "-" + (index + (Math.ceil(item.data.length/2))), item.type, (index + (Math.ceil(item.data.length/2))), odd.value, getLabel(item, (index + (Math.ceil(item.data.length/2)))))}>
+                                                                                    <li key={item.type + matchID + "-" + index} className={oddofforon} id={item.type + matchID + "-" + (index + (Math.ceil(item.data.length/2)))} onClick={() => chooseOdd(item.type + matchID + "-" + (index + (Math.ceil(item.data.length/2))), item.type, (index + (Math.ceil(item.data.length/2))), odd.value, getLabel(item, (index + (Math.ceil(item.data.length/2)))))}>
                                                                                         <p className="match-odds-offer-h1">{getLabel(item, (index + (Math.ceil(item.data.length/2))))}</p>
                                                                                         <p className="match-odds-offer-h2">{odd.value}</p>
                                                                                     </li>
@@ -3364,7 +3364,7 @@ function StageMatcharticle ({data}) {
                                                                                     }
                                                                                 }
                                                                                 return (
-                                                                                    <li className={oddofforon} id={item.type + matchID + "-" + index} onClick={() => chooseOdd(item.type + matchID + "-" + index, item.type, index, odd.value, getLabel(item, index))}>
+                                                                                    <li key={item.type + matchID + "-" + index} className={oddofforon} id={item.type + matchID + "-" + index} onClick={() => chooseOdd(item.type + matchID + "-" + index, item.type, index, odd.value, getLabel(item, index))}>
                                                                                         <p className="match-odds-offer-h1">{getLabel(item, index)}</p>
                                                                                         <p className="match-odds-offer-h2">{odd.value}</p>
                                                                                     </li>
@@ -3388,7 +3388,7 @@ function StageMatcharticle ({data}) {
                                                                                     }
                                                                                 }
                                                                                 return (
-                                                                                    <li className={oddofforon} id={item.type + matchID + "-" + (index + (Math.floor(item.data.length/2)))} onClick={() => chooseOdd(item.type + matchID + "-" + (index + (Math.floor(item.data.length/2))), item.type, (index + (Math.floor(item.data.length/2))), odd.value, getLabel(item, (index + (Math.floor(item.data.length/2)))))}>
+                                                                                    <li key={item.type + matchID + "-" + index} className={oddofforon} id={item.type + matchID + "-" + (index + (Math.floor(item.data.length/2)))} onClick={() => chooseOdd(item.type + matchID + "-" + (index + (Math.floor(item.data.length/2))), item.type, (index + (Math.floor(item.data.length/2))), odd.value, getLabel(item, (index + (Math.floor(item.data.length/2)))))}>
                                                                                         <p className="match-odds-offer-h1">{getLabel(item, (index + (Math.floor(item.data.length/2))))}</p>
                                                                                         <p className="match-odds-offer-h2">{odd.value}</p>
                                                                                     </li>
@@ -3429,7 +3429,7 @@ function StageMatcharticle ({data}) {
                                                                                 }
                                                                             }
                                                                             return (
-                                                                                <li className={oddofforon} style={{maxWidth: counted + "%"}} id={item.type + matchID + "-" + index} onClick={() => chooseOdd(item.type + matchID + "-" + index, item.type, index, odd.value, getLabel(item, index))}>
+                                                                                <li key={item.type + matchID + "-" + index} className={oddofforon} style={{maxWidth: counted + "%"}} id={item.type + matchID + "-" + index} onClick={() => chooseOdd(item.type + matchID + "-" + index, item.type, index, odd.value, getLabel(item, index))}>
                                                                                     <p className="match-odds-offer-h1">{getLabel(item, index)}</p>
                                                                                     <p className="match-odds-offer-h2">{odd.value}</p>
                                                                                 </li>
@@ -3443,10 +3443,10 @@ function StageMatcharticle ({data}) {
                                                 }
                                                 )}
                                             </ul>
-                                        </div>
+                                        </li>
                                     </ul>}
                                     {oddNav === "kort" && <ul className="match-odds-cont">
-                                        <div className="match-odds-id">
+                                        <li key="kort-kort" className="match-odds-id">
                                             <div className="match-odds-id-top" onClick={() => document.getElementById("kort-kort").classList.toggle("display")}>
                                                 <p className="match-odds-id-h1">Kort</p>
                                                 <p className="match-odds-id-p">{availKort.length}</p>
@@ -3484,7 +3484,7 @@ function StageMatcharticle ({data}) {
                                                                                     }
                                                                                 }
                                                                                 return (
-                                                                                    <li className={oddofforon} id={item.type + matchID + "-" + index} onClick={() => chooseOdd(item.type + matchID + "-" + index, item.type, index, odd.value, getLabel(item, index))}>
+                                                                                    <li key={item.type + matchID + "-" + index} className={oddofforon} id={item.type + matchID + "-" + index} onClick={() => chooseOdd(item.type + matchID + "-" + index, item.type, index, odd.value, getLabel(item, index))}>
                                                                                         <p className="match-odds-offer-h1">{getLabel(item, index)}</p>
                                                                                         <p className="match-odds-offer-h2">{odd.value}</p>
                                                                                     </li>
@@ -3508,7 +3508,7 @@ function StageMatcharticle ({data}) {
                                                                                     }
                                                                                 }
                                                                                 return (
-                                                                                    <li className={oddofforon} id={item.type + matchID + "-" + (index + (Math.ceil(item.data.length/2)))} onClick={() => chooseOdd(item.type + matchID + "-" + (index + (Math.ceil(item.data.length/2))), item.type, (index + (Math.ceil(item.data.length/2))), odd.value, getLabel(item, (index + (Math.ceil(item.data.length/2)))))}>
+                                                                                    <li key={item.type + matchID + "-" + index} className={oddofforon} id={item.type + matchID + "-" + (index + (Math.ceil(item.data.length/2)))} onClick={() => chooseOdd(item.type + matchID + "-" + (index + (Math.ceil(item.data.length/2))), item.type, (index + (Math.ceil(item.data.length/2))), odd.value, getLabel(item, (index + (Math.ceil(item.data.length/2)))))}>
                                                                                         <p className="match-odds-offer-h1">{getLabel(item, (index + (Math.ceil(item.data.length/2))))}</p>
                                                                                         <p className="match-odds-offer-h2">{odd.value}</p>
                                                                                     </li>
@@ -3553,11 +3553,11 @@ function StageMatcharticle ({data}) {
                                                                                     }
                                                                                 }
                                                                                 return (<>
-                                                                                        {odd.label === "1" && <li className={oddofforon} id={item.type + matchID + "-" + item.data.findIndex(obj => obj.handicap === odd.handicap && obj.label === odd.label)} onClick={() => chooseOdd(item.type + matchID + "-" + index, item.type, index, odd.value, odd.handicap + " " + homeTeam)}>
+                                                                                        {odd.label === "1" && <li key={item.type + matchID + "-" + index} className={oddofforon} id={item.type + matchID + "-" + item.data.findIndex(obj => obj.handicap === odd.handicap && obj.label === odd.label)} onClick={() => chooseOdd(item.type + matchID + "-" + index, item.type, index, odd.value, odd.handicap + " " + homeTeam)}>
                                                                                             <p className="match-odds-offer-h1">{odd.handicap + " " + homeTeam}</p>
                                                                                             <p className="match-odds-offer-h2">{odd.value}</p>
                                                                                         </li>}
-                                                                                        {odd.label === "2" && <li className={oddofforon} id={item.type + matchID + "-" + item.data.findIndex(obj => obj.handicap === odd.handicap && obj.label === odd.label)} onClick={() => chooseOdd(item.type + matchID + "-" + index, item.type, index, odd.value, odd.handicap + " " + visitorTeam)}>
+                                                                                        {odd.label === "2" && <li key={item.type + matchID + "-" + index} className={oddofforon} id={item.type + matchID + "-" + item.data.findIndex(obj => obj.handicap === odd.handicap && obj.label === odd.label)} onClick={() => chooseOdd(item.type + matchID + "-" + index, item.type, index, odd.value, odd.handicap + " " + visitorTeam)}>
                                                                                             <p className="match-odds-offer-h1">{odd.handicap + " " + visitorTeam}</p>
                                                                                             <p className="match-odds-offer-h2">{odd.value}</p>
                                                                                         </li>}
@@ -3583,11 +3583,11 @@ function StageMatcharticle ({data}) {
                                                                                 }
                                                                                 return (
                                                                                     <>
-                                                                                    {odd.label === "1" && <li className={oddofforon} id={item.type + matchID + "-" + item.data.findIndex(obj => obj.handicap === odd.handicap && obj.label === odd.label)} onClick={() => chooseOdd(item.type + matchID + "-" + (index + (Math.floor(item.data.length/2))), item.type, (index + (Math.floor(item.data.length/2))), odd.value, odd.handicap + " " + homeTeam)}>
+                                                                                    {odd.label === "1" && <li key={item.type + matchID + "-" + index} className={oddofforon} id={item.type + matchID + "-" + item.data.findIndex(obj => obj.handicap === odd.handicap && obj.label === odd.label)} onClick={() => chooseOdd(item.type + matchID + "-" + (index + (Math.floor(item.data.length/2))), item.type, (index + (Math.floor(item.data.length/2))), odd.value, odd.handicap + " " + homeTeam)}>
                                                                                         <p className="match-odds-offer-h1">{odd.handicap + " " + homeTeam}</p>
                                                                                         <p className="match-odds-offer-h2">{odd.value}</p>
                                                                                     </li>}
-                                                                                    {odd.label === "2" && <li className={oddofforon} id={item.type + matchID + "-" + item.data.findIndex(obj => obj.handicap === odd.handicap && obj.label === odd.label)} onClick={() => chooseOdd(item.type + matchID + "-" + (index + (Math.floor(item.data.length/2))), item.type, (index + (Math.floor(item.data.length/2))), odd.value, odd.handicap + " " + visitorTeam)}>
+                                                                                    {odd.label === "2" && <li key={item.type + matchID + "-" + index} className={oddofforon} id={item.type + matchID + "-" + item.data.findIndex(obj => obj.handicap === odd.handicap && obj.label === odd.label)} onClick={() => chooseOdd(item.type + matchID + "-" + (index + (Math.floor(item.data.length/2))), item.type, (index + (Math.floor(item.data.length/2))), odd.value, odd.handicap + " " + visitorTeam)}>
                                                                                         <p className="match-odds-offer-h1">{odd.handicap + " " + visitorTeam}</p>
                                                                                         <p className="match-odds-offer-h2">{odd.value}</p>
                                                                                     </li>}
@@ -3629,7 +3629,7 @@ function StageMatcharticle ({data}) {
                                                                                 }
                                                                             }
                                                                             return (
-                                                                                <li className={oddofforon} style={{maxWidth: counted + "%"}} id={item.type + matchID + "-" + index} onClick={() => chooseOdd(item.type + matchID + "-" + index, item.type, index, odd.value, getLabel(item, index))}>
+                                                                                <li key={item.type + matchID + "-" + index} className={oddofforon} style={{maxWidth: counted + "%"}} id={item.type + matchID + "-" + index} onClick={() => chooseOdd(item.type + matchID + "-" + index, item.type, index, odd.value, getLabel(item, index))}>
                                                                                     <p className="match-odds-offer-h1">{getLabel(item, index)}</p>
                                                                                     <p className="match-odds-offer-h2">{odd.value}</p>
                                                                                 </li>
@@ -3643,10 +3643,10 @@ function StageMatcharticle ({data}) {
                                                 }
                                                 )}
                                             </ul>
-                                        </div>
+                                        </li>
                                     </ul>}
                                     {oddNav === "corner" && <ul className="match-odds-cont">
-                                        <div className="match-odds-id">
+                                        <li key="corner-corner" className="match-odds-id">
                                             <div className="match-odds-id-top" onClick={() => document.getElementById("corner-corner").classList.toggle("display")}>
                                                 <p className="match-odds-id-h1">Hjørnespark</p>
                                                 <p className="match-odds-id-p">{availCorner.length}</p>
@@ -3678,7 +3678,7 @@ function StageMatcharticle ({data}) {
                                                                                     }
                                                                                 }
                                                                                 return (
-                                                                                    <li className={oddofforon} id={item.type + matchID + "-" + index} onClick={() => chooseOdd(item.type + matchID + "-" + index, item.type, index, odd.value, getLabel(item, index))}>
+                                                                                    <li key={item.type + matchID + "-" + index} className={oddofforon} id={item.type + matchID + "-" + index} onClick={() => chooseOdd(item.type + matchID + "-" + index, item.type, index, odd.value, getLabel(item, index))}>
                                                                                         <p className="match-odds-offer-h1">{getLabel(item, index)}</p>
                                                                                         <p className="match-odds-offer-h2">{odd.value}</p>
                                                                                     </li>
@@ -3702,7 +3702,7 @@ function StageMatcharticle ({data}) {
                                                                                     }
                                                                                 }
                                                                                 return (
-                                                                                    <li className={oddofforon} id={item.type + matchID + "-" + (index + (Math.ceil(item.data.length/2)))} onClick={() => chooseOdd(item.type + matchID + "-" + (index + (Math.ceil(item.data.length/2))), item.type, (index + (Math.ceil(item.data.length/2))), odd.value, getLabel(item, (index + (Math.ceil(item.data.length/2)))))}>
+                                                                                    <li key={item.type + matchID + "-" + index} className={oddofforon} id={item.type + matchID + "-" + (index + (Math.ceil(item.data.length/2)))} onClick={() => chooseOdd(item.type + matchID + "-" + (index + (Math.ceil(item.data.length/2))), item.type, (index + (Math.ceil(item.data.length/2))), odd.value, getLabel(item, (index + (Math.ceil(item.data.length/2)))))}>
                                                                                         <p className="match-odds-offer-h1">{getLabel(item, (index + (Math.ceil(item.data.length/2))))}</p>
                                                                                         <p className="match-odds-offer-h2">{odd.value}</p>
                                                                                     </li>
@@ -3747,11 +3747,11 @@ function StageMatcharticle ({data}) {
                                                                                     }
                                                                                 }
                                                                                 return (<>
-                                                                                        {odd.label === "1" && <li className={oddofforon} id={item.type + matchID + "-" + item.data.findIndex(obj => obj.handicap === odd.handicap && obj.label === odd.label)} onClick={() => chooseOdd(item.type + matchID + "-" + index, item.type, index, odd.value, odd.handicap + " " + homeTeam)}>
+                                                                                        {odd.label === "1" && <li key={item.type + matchID + "-" + index} className={oddofforon} id={item.type + matchID + "-" + item.data.findIndex(obj => obj.handicap === odd.handicap && obj.label === odd.label)} onClick={() => chooseOdd(item.type + matchID + "-" + index, item.type, index, odd.value, odd.handicap + " " + homeTeam)}>
                                                                                             <p className="match-odds-offer-h1">{odd.handicap + " " + homeTeam}</p>
                                                                                             <p className="match-odds-offer-h2">{odd.value}</p>
                                                                                         </li>}
-                                                                                        {odd.label === "2" && <li className={oddofforon} id={item.type + matchID + "-" + item.data.findIndex(obj => obj.handicap === odd.handicap && obj.label === odd.label)} onClick={() => chooseOdd(item.type + matchID + "-" + index, item.type, index, odd.value, odd.handicap + " " + visitorTeam)}>
+                                                                                        {odd.label === "2" && <li key={item.type + matchID + "-" + index} className={oddofforon} id={item.type + matchID + "-" + item.data.findIndex(obj => obj.handicap === odd.handicap && obj.label === odd.label)} onClick={() => chooseOdd(item.type + matchID + "-" + index, item.type, index, odd.value, odd.handicap + " " + visitorTeam)}>
                                                                                             <p className="match-odds-offer-h1">{odd.handicap + " " + visitorTeam}</p>
                                                                                             <p className="match-odds-offer-h2">{odd.value}</p>
                                                                                         </li>}
@@ -3776,11 +3776,11 @@ function StageMatcharticle ({data}) {
                                                                                     }
                                                                                 }
                                                                                 return (<>
-                                                                                    {odd.label === "1" && <li className={oddofforon} id={item.type + matchID + "-" + item.data.findIndex(obj => obj.handicap === odd.handicap && obj.label === odd.label)} onClick={() => chooseOdd(item.type + matchID + "-" + (index + (Math.floor(item.data.length/2))), item.type, (index + (Math.floor(item.data.length/2))), odd.value, odd.handicap + " " + homeTeam)}>
+                                                                                    {odd.label === "1" && <li key={item.type + matchID + "-" + index} className={oddofforon} id={item.type + matchID + "-" + item.data.findIndex(obj => obj.handicap === odd.handicap && obj.label === odd.label)} onClick={() => chooseOdd(item.type + matchID + "-" + (index + (Math.floor(item.data.length/2))), item.type, (index + (Math.floor(item.data.length/2))), odd.value, odd.handicap + " " + homeTeam)}>
                                                                                         <p className="match-odds-offer-h1">{odd.handicap + " " + homeTeam}</p>
                                                                                         <p className="match-odds-offer-h2">{odd.value}</p>
                                                                                     </li>}
-                                                                                    {odd.label === "2" && <li className={oddofforon} id={item.type + matchID + "-" + item.data.findIndex(obj => obj.handicap === odd.handicap && obj.label === odd.label)} onClick={() => chooseOdd(item.type + matchID + "-" + (index + (Math.floor(item.data.length/2))), item.type, (index + (Math.floor(item.data.length/2))), odd.value, odd.handicap + " " + visitorTeam)}>
+                                                                                    {odd.label === "2" && <li key={item.type + matchID + "-" + index} className={oddofforon} id={item.type + matchID + "-" + item.data.findIndex(obj => obj.handicap === odd.handicap && obj.label === odd.label)} onClick={() => chooseOdd(item.type + matchID + "-" + (index + (Math.floor(item.data.length/2))), item.type, (index + (Math.floor(item.data.length/2))), odd.value, odd.handicap + " " + visitorTeam)}>
                                                                                         <p className="match-odds-offer-h1">{odd.handicap + " " + visitorTeam}</p>
                                                                                         <p className="match-odds-offer-h2">{odd.value}</p>
                                                                                     </li>}
@@ -3822,7 +3822,7 @@ function StageMatcharticle ({data}) {
                                                                                 }
                                                                             }
                                                                             return (
-                                                                                <li className={oddofforon} style={{maxWidth: counted + "%"}} id={item.type + matchID + "-" + index} onClick={() => chooseOdd(item.type + matchID + "-" + index, item.type, index, odd.value, getLabel(item, index))}>
+                                                                                <li key={item.type + matchID + "-" + index} className={oddofforon} style={{maxWidth: counted + "%"}} id={item.type + matchID + "-" + index} onClick={() => chooseOdd(item.type + matchID + "-" + index, item.type, index, odd.value, getLabel(item, index))}>
                                                                                     <p className="match-odds-offer-h1">{getLabel(item, index)}</p>
                                                                                     <p className="match-odds-offer-h2">{odd.value}</p>
                                                                                 </li>
@@ -3836,10 +3836,10 @@ function StageMatcharticle ({data}) {
                                                 }
                                                 )}
                                             </ul>
-                                        </div>
+                                        </li>
                                     </ul>}
                                     {oddNav === "spillere" && <ul className="match-odds-cont">
-                                        <div className="match-odds-id">
+                                        <li key="spillere-spillere" className="match-odds-id">
                                             <div className="match-odds-id-top" onClick={() => document.getElementById("spillere-spillere").classList.toggle("display")}>
                                                 <p className="match-odds-id-h1">Spillere</p>
                                                 <p className="match-odds-id-p">{availSpillere.length}</p>
@@ -3876,7 +3876,7 @@ function StageMatcharticle ({data}) {
                                                                                 }
                                                                             }
                                                                             return (
-                                                                                <li className={oddofforon} id={item.type + matchID + "-" + index} onClick={() => chooseOdd(item.type + matchID + "-" + index, item.type, index, odd.value, getLabel(item, index))}>
+                                                                                <li key={item.type + matchID + "-" + index} className={oddofforon} id={item.type + matchID + "-" + index} onClick={() => chooseOdd(item.type + matchID + "-" + index, item.type, index, odd.value, getLabel(item, index))}>
                                                                                     <p className="match-odds-offer-h1">{getLabel(item, index)}</p>
                                                                                     <p className="match-odds-offer-h2">{odd.value}</p>
                                                                                 </li>
@@ -3900,7 +3900,7 @@ function StageMatcharticle ({data}) {
                                                                                 }
                                                                             }
                                                                             return (
-                                                                                <li className={oddofforon} id={item.type + matchID + "-" + (index + (Math.ceil(item.data.length/2)))} onClick={() => chooseOdd(item.type + matchID + "-" + (index + (Math.ceil(item.data.length/2))), item.type, (index + (Math.ceil(item.data.length/2))), odd.value, getLabel(item, (index + (Math.ceil(item.data.length/2)))))}>
+                                                                                <li key={item.type + matchID + "-" + index} className={oddofforon} id={item.type + matchID + "-" + (index + (Math.ceil(item.data.length/2)))} onClick={() => chooseOdd(item.type + matchID + "-" + (index + (Math.ceil(item.data.length/2))), item.type, (index + (Math.ceil(item.data.length/2))), odd.value, getLabel(item, (index + (Math.ceil(item.data.length/2)))))}>
                                                                                     <p className="match-odds-offer-h1">{getLabel(item, (index + (Math.ceil(item.data.length/2))))}</p>
                                                                                     <p className="match-odds-offer-h2">{odd.value}</p>
                                                                                 </li>
@@ -3914,10 +3914,10 @@ function StageMatcharticle ({data}) {
                                                 }
                                                 )}
                                             </ul>
-                                        </div>
+                                        </li>
                                     </ul>}
                                     {oddNav === "specials" && <ul className="match-odds-cont">
-                                        <div className="match-odds-id">
+                                        <li key="specials-specials" className="match-odds-id">
                                             <div className="match-odds-id-top" onClick={() => document.getElementById("specials-specials").classList.toggle("display")}>
                                                 <p className="match-odds-id-h1">Specials</p>
                                                 <p className="match-odds-id-p">{availSpecials.length}</p>
@@ -3953,7 +3953,7 @@ function StageMatcharticle ({data}) {
                                                                             }
                                                                         }
                                                                         return (
-                                                                            <li className={oddofforon} style={{maxWidth: counted + "%"}} id={item.type + matchID + "-" + index} onClick={() => chooseOdd(item.type + matchID + "-" + index, item.type, index, odd.value, getLabel(item, index))}>
+                                                                            <li key={item.type + matchID + "-" + index} className={oddofforon} style={{maxWidth: counted + "%"}} id={item.type + matchID + "-" + index} onClick={() => chooseOdd(item.type + matchID + "-" + index, item.type, index, odd.value, getLabel(item, index))}>
                                                                                 <p className="match-odds-offer-h1">{getLabel(item, index)}</p>
                                                                                 <p className="match-odds-offer-h2">{odd.value}</p>
                                                                             </li>
@@ -3966,7 +3966,7 @@ function StageMatcharticle ({data}) {
                                                 }
                                                 )}
                                             </ul>
-                                        </div>
+                                        </li>
                                     </ul>}
                                 </div>
                             </div>
