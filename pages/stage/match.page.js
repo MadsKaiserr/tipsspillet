@@ -3101,7 +3101,7 @@ function StageMatcharticle ({data}) {
                                                                                         teamSite = "visitor"
                                                                                     }
                                                                                     return (
-                                                                                        <li key={obj.label}>
+                                                                                        <li key={odd.label}>
                                                                                             <div className="match-hz">
                                                                                                 <div style={{display: "flex", alignItems: "center", gap: "5px", width: "50%", overflow: "hidden"}}>
                                                                                                     {teamSite === "local" && <div className="match-odds-img"><Image src={homelogo} layout="fill" /></div>}
