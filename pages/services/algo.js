@@ -68,6 +68,8 @@ module.exports = {
             return "Totale hjørnespark";
         } else if (type === "Team Corners") {
             return "Hjørnespark";
+        } else if (type === "Multi Scorers") {
+            return "Målscorer";
         }
     },
     getString: function(type,result,homeTeam,visitorTeam) {

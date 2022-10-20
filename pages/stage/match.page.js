@@ -242,7 +242,7 @@ function StageMatcharticle ({data}) {
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
         const matchIDGet2 = urlParams.get("game");
-        fetch("https://soccer.sportmonks.com/api/v2.0/fixtures/"+matchIDGet2+"?api_token="+"kvgDywRFDSqPhS9iYQynEci42JvyVtqLpCXBJlBHrH5v8Br8RtrEayi94Ybf"+"&include=odds,goals,referee,league.country,aggregate,stats,substitutions,bench,bench.player,lineup,lineup.player,localTeam,league,visitorTeam,localCoach,visitorCoach,venue,events,group,round&bookmakers=2&tz=Europe/Copenhagen")
+        fetch("https://soccer.sportmonks.com/api/v2.0/fixtures/"+matchIDGet2+"?api_token="+"kvgDywRFDSqPhS9iYQynEci42JvyVtqLpCXBJlBHrH5v8Br8RtrEayi94Ybf"+"&include=odds,goals,referee,league.country,aggregate,stats,substitutions,bench,bench.player,lineup,lineup.player,localTeam,localTeam.squad,localTeam.squad.player,visitorTeam.squad,visitorTeam.squad.player,league,visitorTeam,localCoach,visitorCoach,venue,events,group,round&bookmakers=2&tz=Europe/Copenhagen")
         .then(response => response.json())
         .then(function (result) {
             console.log("Sportmonks - Fixtures:", result);
@@ -463,7 +463,7 @@ function StageMatcharticle ({data}) {
             setItems(result.data);
             checkExpired(result.data.time.starting_at.timestamp);
 
-            const wants = ["3Way Result", "Handicap Result", "Over/Under", "Player to be Booked", "Goalscorer", "Team To Score First", "1st Goal Method", "1st Half Handicap", "Double Chance", "Highest Scoring Half", "Both Teams To Score", "Time Of First Corner", "Early Goal", "Exact Goals Number", "Total Corners", "Corner Match Bet", "A Red Card in the Match", "First Match Corner", "Team Corners", "Team Cards", "Last Match Corner", "Both Teams To Receive A Card", "Clean Sheet - Home", "Clean Sheet - Away", "2-Way Corners", "First Card Received", "Time Of First Card", "3Way Result 1st Half", "Team To Score Last", "3Way Result 2nd Half", "Double Chance - 1st Half", "Double Chance - 2nd Half", "Odd/Even", "Own Goal", "Time Of First Corner"];
+            const wants = ["3Way Result", "Handicap Result", "Over/Under", "Team Goalscorer", "Player to be Booked", "Goalscorer", "Multi Scorers", "Team To Score First", "1st Goal Method", "1st Half Handicap", "Double Chance", "Highest Scoring Half", "Both Teams To Score", "Time Of First Corner", "Early Goal", "Exact Goals Number", "Total Corners", "Corner Match Bet", "A Red Card in the Match", "First Match Corner", "Team Corners", "Team Cards", "Last Match Corner", "Both Teams To Receive A Card", "Clean Sheet - Home", "Clean Sheet - Away", "2-Way Corners", "First Card Received", "Time Of First Card", "3Way Result 1st Half", "Team To Score Last", "3Way Result 2nd Half", "Double Chance - 1st Half", "Double Chance - 2nd Half", "Odd/Even", "Own Goal", "Time Of First Corner"];
             const availOddsReplica = [];
             for (var r in wants) {
                 if (result.data.odds.data.length === 0) {
@@ -513,7 +513,7 @@ function StageMatcharticle ({data}) {
                 if (availOddsReplica[y].type === "Clean Sheet - Home" || availOddsReplica[y].type === "Clean Sheet - Away") {
                     availSpecials2.push(availOddsReplica[y]);
                 }
-                if (availOddsReplica[y].type === "Team To Score Last" || availOddsReplica[y].type === "Goalscorer"|| availOddsReplica[y].type === "Early Goal" || availOddsReplica[y].type === "1st Goal Method" || availOddsReplica[y].type === "Team To Score First" || availOddsReplica[y].type === "Both Teams To Score" || availOddsReplica[y].type === "Highest Scoring Half" || availOddsReplica[y].type === "Own Goal" || availOddsReplica[y].type === "Exact Goals Number" || availOddsReplica[y].type === "Odd/Even") {
+                if (availOddsReplica[y].type === "Team To Score Last" || availOddsReplica[y].type === "Team Goalscorer" || availOddsReplica[y].type === "Multi Scorers" || availOddsReplica[y].type === "Goalscorer"|| availOddsReplica[y].type === "Early Goal" || availOddsReplica[y].type === "1st Goal Method" || availOddsReplica[y].type === "Team To Score First" || availOddsReplica[y].type === "Both Teams To Score" || availOddsReplica[y].type === "Highest Scoring Half" || availOddsReplica[y].type === "Own Goal" || availOddsReplica[y].type === "Exact Goals Number" || availOddsReplica[y].type === "Odd/Even") {
                     availGoal2.push(availOddsReplica[y]);
                 }
             }
@@ -2151,7 +2151,13 @@ function StageMatcharticle ({data}) {
             if (n < 0) {
                 return "Målscorer"
             } else if (n >= 0) {
-                return item.data[n].label
+                return item.data[n].extra.replace("First", "Første").replace("Last", "Sidste").replace("Anytime", "Når som helst") + " - " + item.data[n].label;
+            }
+        } else if (item.type === "Multi Scorers") {
+            if (n < 0) {
+                return "Målscorer"
+            } else if (n >= 0) {
+                return item.data[n].label.replace(" | 2 or More", " - 2 eller flere").replace(" | 3 or More", " - 3 eller flere")
             }
         }
     }
@@ -2629,7 +2635,7 @@ function StageMatcharticle ({data}) {
                                                 <p className="match-odds-id-h1">Populære</p>
                                                 <p className="match-odds-id-p">{availPopular.length}</p>
                                             </div>
-                                            <ul className="match-odds-id-con display" id="popular-popular">
+                                            <ul className="match-odds-id-con" id="popular-popular">
                                                 {availPopular.map((item) => {
                                                     if (item.type === "Exact Goals Number") {
                                                         return (
@@ -2930,71 +2936,262 @@ function StageMatcharticle ({data}) {
                                                             </li>
                                                         );
                                                     } else if (item.type === "Goalscorer") {
-                                                        item.data.sort((a, b) => {
-                                                            return parseInt(a.value) - parseInt(b.value);
-                                                        });
-                                                        return (
-                                                            <li key={item.type}>
-                                                                <div className="match-bet">
-                                                                    <div className="match-bet-top">
-                                                                        <p className="match-odds-h1">{getLabel(item, -1)}</p>
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#333" viewBox="0 0 16 16">
-                                                                            <path d="M8 3a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 3zm4 8a4 4 0 0 1-8 0V5a4 4 0 1 1 8 0v6zM8 0a5 5 0 0 0-5 5v6a5 5 0 0 0 10 0V5a5 5 0 0 0-5-5z"/>
-                                                                        </svg>
-                                                                    </div>
-                                                                    <div className="match-odds-special">
-                                                                        <ul className="match-odds-offer">
-                                                                            {item.data.slice(0, (Math.ceil(item.data.length/2))).map((odd, index) => {
-                                                                                var nowDate = new Date().getTime();
-                                                                                var thistime = (nowDate.toString()).slice(0, -3);
-                                                                                var oddofforon = "match-odds-offer-element";
-                                                                                if (items["time"].starting_at.timestamp < thistime) {
-                                                                                    oddofforon = "match-odds-offer-element odd-used";
-                                                                                } else {
-                                                                                    if (sessionStorage.getItem("notUsableBtn")) {
-                                                                                        const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
-                                                                                        const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + index);
-                                                                                        if (repliceIndex >= 0) {
-                                                                                            oddofforon = "match-odds-offer-element odd-used";
+                                                        if (availGoal.findIndex(obj => obj.type === "Multi Scorers") >= 0) {
+                                                            const mscore = availGoal[availGoal.findIndex(obj => obj.type === "Multi Scorers")];
+                                                            item.data.sort((a, b) => {
+                                                                return parseInt(a.value) - parseInt(b.value);
+                                                            });
+                                                            var singleGoalscorers = [];
+                                                            for (var u in item.data) {
+                                                                if (singleGoalscorers.findIndex(obj => obj.label === item.data[u].label) < 0) {
+                                                                    singleGoalscorers.push(item.data[u])
+                                                                }
+                                                            }
+                                                            var singleMultiscorers = [];
+                                                            for (var u in mscore.data) {
+                                                                if (singleMultiscorers.findIndex(obj => obj.label.replace(" | 2 or More", "").replace(" | 3 or More", "") === mscore.data[u].label.replace(" | 2 or More", "").replace(" | 3 or More", "")) < 0) {
+                                                                    singleMultiscorers.push(mscore.data[u])
+                                                                }
+                                                            }
+                                                            return (
+                                                                <li key={item.type}>
+                                                                    <div className="match-bet">
+                                                                        <div className="match-bet-top">
+                                                                            <p className="match-odds-h1">{getLabel(item, -1)}</p>
+                                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#333" viewBox="0 0 16 16">
+                                                                                <path d="M8 3a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 3zm4 8a4 4 0 0 1-8 0V5a4 4 0 1 1 8 0v6zM8 0a5 5 0 0 0-5 5v6a5 5 0 0 0 10 0V5a5 5 0 0 0-5-5z"/>
+                                                                            </svg>
+                                                                        </div>
+                                                                        <div className="match-underkat">
+                                                                            <p className="match-underkat-kat-active" id="navgoalsco" onClick={() => {if (document.getElementById("multisco") && document.getElementById("goalsco") && document.getElementById("navmultisco") && document.getElementById("navgoalsco")){
+                                                                                document.getElementById("multisco").classList.add("display-not")
+                                                                                document.getElementById("goalsco").classList.remove("display-not")
+                                                                                document.getElementById("navmultisco").className = "match-underkat-kat"
+                                                                                document.getElementById("navgoalsco").className = "match-underkat-kat-active"
+                                                                                document.getElementById("goalid").classList.remove("display-not")
+                                                                                document.getElementById("multiid").classList.add("display-not")
+                                                                            }}}>Målscorer</p>
+                                                                            <p className="match-underkat-kat" id="navmultisco" onClick={() => {if (document.getElementById("multisco") && document.getElementById("goalsco") && document.getElementById("navmultisco") && document.getElementById("navgoalsco")){
+                                                                                document.getElementById("multisco").classList.remove("display-not")
+                                                                                document.getElementById("goalsco").classList.add("display-not")
+                                                                                document.getElementById("navmultisco").className = "match-underkat-kat-active"
+                                                                                document.getElementById("navgoalsco").className = "match-underkat-kat"
+                                                                                document.getElementById("goalid").classList.add("display-not")
+                                                                                document.getElementById("multiid").classList.remove("display-not")
+                                                                            }}}>Scorer flere mål</p>
+                                                                        </div>
+                                                                        <div className="match-odds-offer-id">
+                                                                            <div className="match-id-right" id="goalid">
+                                                                                <p className="match-row-id-h1">Første</p>
+                                                                                <p className="match-row-id-h1">Sidste</p>
+                                                                                <p className="match-row-id-h1">Når som helst</p>
+                                                                            </div>
+                                                                            <div className="match-id-right display-not" id="multiid">
+                                                                                <p className="match-row-id-h1" style={{width: "50%"}}>2 eller flere</p>
+                                                                                <p className="match-row-id-h1" style={{width: "50%"}}>3 ellere flere</p>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div className="match-odds-special">
+                                                                            <ul id="goalsco" className="match-odds-offer" style={{gap: "0px"}}>
+                                                                                {singleGoalscorers.map((odd, index) => {
+                                                                                    var nowDate = new Date().getTime();
+                                                                                    var thistime = (nowDate.toString()).slice(0, -3);
+                                                                                    var findex = item.data.findIndex(obj => obj.label === odd.label && obj.extra === "First")
+                                                                                    var lindex = item.data.findIndex(obj => obj.label === odd.label && obj.extra === "Last")
+                                                                                    var aindex = item.data.findIndex(obj => obj.label === odd.label && obj.extra === "Anytime")
+                                                                                    var oddofforon0 = "match-odds-offer-element";
+                                                                                    var oddofforon1 = "match-odds-offer-element";
+                                                                                    var oddofforon2 = "match-odds-offer-element";
+                                                                                    if (items["time"].starting_at.timestamp < thistime) {
+                                                                                        oddofforon0 = "match-odds-offer-element odd-used";
+                                                                                        oddofforon1 = "match-odds-offer-element odd-used";
+                                                                                        oddofforon2 = "match-odds-offer-element odd-used";
+                                                                                    } else {
+                                                                                        if (sessionStorage.getItem("notUsableBtn")) {
+                                                                                            const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
+                                                                                            const repliceFIndex = btnReplica.indexOf(item.type + matchID + "-" + findex);
+                                                                                            if (repliceFIndex >= 0) {
+                                                                                                oddofforon0 = "match-odds-offer-element odd-used";
+                                                                                            }
+                                                                                            const repliceLIndex = btnReplica.indexOf(item.type + matchID + "-" + lindex);
+                                                                                            if (repliceLIndex >= 0) {
+                                                                                                oddofforon1 = "match-odds-offer-element odd-used";
+                                                                                            }
+                                                                                            const repliceAIndex = btnReplica.indexOf(item.type + matchID + "-" + aindex);
+                                                                                            if (repliceAIndex >= 0) {
+                                                                                                oddofforon2 = "match-odds-offer-element odd-used";
+                                                                                            }
                                                                                         }
                                                                                     }
-                                                                                }
-                                                                                return (
-                                                                                    <li key={item.type + matchID + "-" + index} className={oddofforon} id={item.type + matchID + "-" + index} onClick={() => chooseOdd(item.type + matchID + "-" + index, item.type, index, odd.value, getLabel(item, index))}>
-                                                                                        <p className="match-odds-offer-h1">{getLabel(item, index)}</p>
-                                                                                        <p className="match-odds-offer-h2">{odd.value}</p>
-                                                                                    </li>
-                                                                                );
-                                                                            })}
-                                                                        </ul>
-                                                                        <ul className="match-odds-offer">
-                                                                            {item.data.slice((Math.ceil(item.data.length/2)), item.data.length).map((odd, index) => {
-                                                                                var nowDate = new Date().getTime();
-                                                                                var thistime = (nowDate.toString()).slice(0, -3);
-                                                                                var oddofforon = "match-odds-offer-element";
-                                                                                if (items["time"].starting_at.timestamp < thistime) {
-                                                                                    oddofforon = "match-odds-offer-element odd-used";
-                                                                                } else {
-                                                                                    if (sessionStorage.getItem("notUsableBtn")) {
-                                                                                        const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
-                                                                                        const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + (index + (Math.ceil(item.data.length/2))));
-                                                                                        if (repliceIndex >= 0) {
-                                                                                            oddofforon = "match-odds-offer-element odd-used";
+                                                                                    var teamSite = "";
+                                                                                    if (items["localTeam"].data.squad.data.findIndex(obj => obj.player.data.display_name === odd.label) >= 0) {
+                                                                                        teamSite = "local"
+                                                                                    } else if (items["localTeam"].data.squad.data.findIndex(obj => obj.player.data.fullname === odd.label) >= 0) {
+                                                                                        teamSite = "local"
+                                                                                    } else if (items["localTeam"].data.squad.data.findIndex(obj => obj.player.data.common_name === odd.label) >= 0) {
+                                                                                        teamSite = "local"
+                                                                                    } else if (items["visitorTeam"].data.squad.data.findIndex(obj => obj.player.data.display_name === odd.label) >= 0) {
+                                                                                        teamSite = "visitor"
+                                                                                    } else if (items["visitorTeam"].data.squad.data.findIndex(obj => obj.player.data.fullname === odd.label) >= 0) {
+                                                                                        teamSite = "visitor"
+                                                                                    } else if (items["visitorTeam"].data.squad.data.findIndex(obj => obj.player.data.common_name === odd.label) >= 0) {
+                                                                                        teamSite = "visitor"
+                                                                                    }
+                                                                                    return (
+                                                                                        <li>
+                                                                                            <div className="match-hz">
+                                                                                                <div style={{display: "flex", alignItems: "center", gap: "5px", width: "50%", overflow: "hidden"}}>
+                                                                                                    {teamSite === "local" && <div className="match-odds-img"><Image src={homelogo} layout="fill" /></div>}
+                                                                                                    {teamSite === "visitor" && <div className="match-odds-img"><Image src={visitorlogo} layout="fill" /></div>}
+                                                                                                    <p className="match-odds-spiller-h1">{odd.label}</p>
+                                                                                                </div>
+                                                                                                <ul className="match-hz-offer" style={{flexDirection: "row"}}>
+                                                                                                    <li className={oddofforon0} id={item.type + matchID + "-" + findex} onClick={() => chooseOdd(item.type + matchID + "-" + findex, item.type, findex, odd.value, getLabel(item, findex))}>
+                                                                                                        <p className="match-odds-offer-h2">{item.data[findex].value}</p>
+                                                                                                    </li>
+                                                                                                    <li className={oddofforon1} id={item.type + matchID + "-" + lindex} onClick={() => chooseOdd(item.type + matchID + "-" + lindex, item.type, lindex, odd.value, getLabel(item, lindex))}>
+                                                                                                        <p className="match-odds-offer-h2">{item.data[lindex].value}</p>
+                                                                                                    </li>
+                                                                                                    {aindex >= 0 && <li className={oddofforon2} id={item.type + matchID + "-" + aindex} onClick={() => chooseOdd(item.type + matchID + "-" + aindex, item.type, aindex, odd.value, getLabel(item, aindex))}>
+                                                                                                        <p className="match-odds-offer-h2">{item.data[aindex].value}</p>
+                                                                                                    </li>}
+                                                                                                </ul>
+                                                                                            </div>
+                                                                                        </li>
+                                                                                    );
+                                                                                })}
+                                                                            </ul>
+                                                                            <ul id="multisco" className="match-odds-offer display-not" style={{gap: "0px"}}>
+                                                                                {singleMultiscorers.map((odd, index) => {
+                                                                                    var nowDate = new Date().getTime();
+                                                                                    var thistime = (nowDate.toString()).slice(0, -3);
+                                                                                    var findex = mscore.data.findIndex(obj => obj.label === odd.label && obj.label.includes(" | 2 or More"))
+                                                                                    var lindex = mscore.data.findIndex(obj => obj.label === odd.label.replace(" | 2 or More", " | 3 or More"))
+                                                                                    var oddofforon0 = "match-odds-offer-element";
+                                                                                    var oddofforon1 = "match-odds-offer-element";
+                                                                                    if (items["time"].starting_at.timestamp < thistime) {
+                                                                                        oddofforon0 = "match-odds-offer-element odd-used";
+                                                                                        oddofforon1 = "match-odds-offer-element odd-used";
+                                                                                        oddofforon2 = "match-odds-offer-element odd-used";
+                                                                                    } else {
+                                                                                        if (sessionStorage.getItem("notUsableBtn")) {
+                                                                                            const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
+                                                                                            const repliceFIndex = btnReplica.indexOf(item.type + matchID + "-" + findex);
+                                                                                            if (repliceFIndex >= 0) {
+                                                                                                oddofforon0 = "match-odds-offer-element odd-used";
+                                                                                            }
+                                                                                            const repliceLIndex = btnReplica.indexOf(item.type + matchID + "-" + lindex);
+                                                                                            if (repliceLIndex >= 0) {
+                                                                                                oddofforon1 = "match-odds-offer-element odd-used";
+                                                                                            }
                                                                                         }
                                                                                     }
-                                                                                }
-                                                                                return (
-                                                                                    <li key={item.type + matchID + "-" + index} className={oddofforon} id={item.type + matchID + "-" + (index + (Math.ceil(item.data.length/2)))} onClick={() => chooseOdd(item.type + matchID + "-" + (index + (Math.ceil(item.data.length/2))), item.type, (index + (Math.ceil(item.data.length/2))), odd.value, getLabel(item, (index + (Math.ceil(item.data.length/2)))))}>
-                                                                                        <p className="match-odds-offer-h1">{getLabel(item, (index + (Math.ceil(item.data.length/2))))}</p>
-                                                                                        <p className="match-odds-offer-h2">{odd.value}</p>
-                                                                                    </li>
-                                                                                );
-                                                                            })}
-                                                                        </ul>
+                                                                                    var teamSite = "";
+                                                                                    if (items["localTeam"].data.squad.data.findIndex(obj => obj.player.data.display_name === odd.label.replace(" | 2 or More", "").replace(" | 3 or More", "")) >= 0) {
+                                                                                        teamSite = "local"
+                                                                                    } else if (items["localTeam"].data.squad.data.findIndex(obj => obj.player.data.fullname === odd.label.replace(" | 2 or More", "").replace(" | 3 or More", "")) >= 0) {
+                                                                                        teamSite = "local"
+                                                                                    } else if (items["localTeam"].data.squad.data.findIndex(obj => obj.player.data.common_name === odd.label.replace(" | 2 or More", "").replace(" | 3 or More", "")) >= 0) {
+                                                                                        teamSite = "local"
+                                                                                    } else if (items["visitorTeam"].data.squad.data.findIndex(obj => obj.player.data.display_name === odd.label.replace(" | 2 or More", "").replace(" | 3 or More", "")) >= 0) {
+                                                                                        teamSite = "visitor"
+                                                                                    } else if (items["visitorTeam"].data.squad.data.findIndex(obj => obj.player.data.fullname === odd.label.replace(" | 2 or More", "").replace(" | 3 or More", "")) >= 0) {
+                                                                                        teamSite = "visitor"
+                                                                                    } else if (items["visitorTeam"].data.squad.data.findIndex(obj => obj.player.data.common_name === odd.label.replace(" | 2 or More", "").replace(" | 3 or More", "")) >= 0) {
+                                                                                        teamSite = "visitor"
+                                                                                    }
+                                                                                    return (
+                                                                                        <li>
+                                                                                            <div className="match-hz">
+                                                                                                <div style={{display: "flex", alignItems: "center", gap: "5px", width: "50%", overflow: "hidden"}}>
+                                                                                                    {teamSite === "local" && <div className="match-odds-img"><Image src={homelogo} layout="fill" /></div>}
+                                                                                                    {teamSite === "visitor" && <div className="match-odds-img"><Image src={visitorlogo} layout="fill" /></div>}
+                                                                                                    <p className="match-odds-spiller-h1">{odd.label.replace(" | 2 or More", "").replace(" | 3 or More", "")}</p>
+                                                                                                </div>
+                                                                                                <ul className="match-hz-offer" style={{flexDirection: "row"}}>
+                                                                                                    {findex >= 0 && <li className={oddofforon0} id={mscore.type + matchID + "-" + findex} onClick={() => chooseOdd(mscore.type + matchID + "-" + findex, mscore.type, findex, mscore.data[findex].value, getLabel(mscore, findex))}>
+                                                                                                        <p className="match-odds-offer-h2">{mscore.data[findex].value}</p>
+                                                                                                    </li>}
+                                                                                                    {lindex >= 0 && <li className={oddofforon1} id={mscore.type + matchID + "-" + lindex} onClick={() => chooseOdd(mscore.type + matchID + "-" + lindex, mscore.type, lindex, mscore.data[lindex].value, getLabel(mscore, lindex))}>
+                                                                                                        <p className="match-odds-offer-h2">{mscore.data[lindex].value}</p>
+                                                                                                    </li>}
+                                                                                                </ul>
+                                                                                            </div>
+                                                                                        </li>
+                                                                                    );
+                                                                                })}
+                                                                            </ul>
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                            </li>
-                                                        );
+                                                                </li>
+                                                            );
+                                                        } else {
+                                                            item.data.sort((a, b) => {
+                                                                return parseInt(a.value) - parseInt(b.value);
+                                                            });
+                                                            return (
+                                                                <li key={item.type}>
+                                                                    <div className="match-bet">
+                                                                        <div className="match-bet-top">
+                                                                            <p className="match-odds-h1">{getLabel(item, -1)}</p>
+                                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#333" viewBox="0 0 16 16">
+                                                                                <path d="M8 3a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 3zm4 8a4 4 0 0 1-8 0V5a4 4 0 1 1 8 0v6zM8 0a5 5 0 0 0-5 5v6a5 5 0 0 0 10 0V5a5 5 0 0 0-5-5z"/>
+                                                                            </svg>
+                                                                        </div>
+                                                                        <div className="match-odds-special">
+                                                                            <ul className="match-odds-offer">
+                                                                                {item.data.slice(0, (Math.ceil(item.data.length/2))).map((odd, index) => {
+                                                                                    var nowDate = new Date().getTime();
+                                                                                    var thistime = (nowDate.toString()).slice(0, -3);
+                                                                                    var oddofforon = "match-odds-offer-element";
+                                                                                    if (items["time"].starting_at.timestamp < thistime) {
+                                                                                        oddofforon = "match-odds-offer-element odd-used";
+                                                                                    } else {
+                                                                                        if (sessionStorage.getItem("notUsableBtn")) {
+                                                                                            const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
+                                                                                            const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + index);
+                                                                                            if (repliceIndex >= 0) {
+                                                                                                oddofforon = "match-odds-offer-element odd-used";
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                    return (
+                                                                                        <li key={item.type + matchID + "-" + index} className={oddofforon} id={item.type + matchID + "-" + index} onClick={() => chooseOdd(item.type + matchID + "-" + index, item.type, index, odd.value, getLabel(item, index))}>
+                                                                                            <p className="match-odds-offer-h1">{getLabel(item, index)}</p>
+                                                                                            <p className="match-odds-offer-h2">{odd.value}</p>
+                                                                                        </li>
+                                                                                    );
+                                                                                })}
+                                                                            </ul>
+                                                                            <ul className="match-odds-offer">
+                                                                                {item.data.slice((Math.ceil(item.data.length/2)), item.data.length).map((odd, index) => {
+                                                                                    var nowDate = new Date().getTime();
+                                                                                    var thistime = (nowDate.toString()).slice(0, -3);
+                                                                                    var oddofforon = "match-odds-offer-element";
+                                                                                    if (items["time"].starting_at.timestamp < thistime) {
+                                                                                        oddofforon = "match-odds-offer-element odd-used";
+                                                                                    } else {
+                                                                                        if (sessionStorage.getItem("notUsableBtn")) {
+                                                                                            const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
+                                                                                            const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + (index + (Math.ceil(item.data.length/2))));
+                                                                                            if (repliceIndex >= 0) {
+                                                                                                oddofforon = "match-odds-offer-element odd-used";
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                    return (
+                                                                                        <li key={item.type + matchID + "-" + index} className={oddofforon} id={item.type + matchID + "-" + (index + (Math.ceil(item.data.length/2)))} onClick={() => chooseOdd(item.type + matchID + "-" + (index + (Math.ceil(item.data.length/2))), item.type, (index + (Math.ceil(item.data.length/2))), odd.value, getLabel(item, (index + (Math.ceil(item.data.length/2)))))}>
+                                                                                            <p className="match-odds-offer-h1">{getLabel(item, (index + (Math.ceil(item.data.length/2))))}</p>
+                                                                                            <p className="match-odds-offer-h2">{odd.value}</p>
+                                                                                        </li>
+                                                                                    );
+                                                                                })}
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                            );
+                                                        }
                                                     } else if (item.type === "1st Goal Method") {
                                                         return (
                                                             <li key={item.type}>
@@ -3055,6 +3252,8 @@ function StageMatcharticle ({data}) {
                                                                 </div>
                                                             </li>
                                                         );
+                                                    } else if (item.type === "Multi Scorers" || item.type === "Team Goalscorer") {
+                                                        return;
                                                     } else {
                                                         return (
                                                             <li key={item.type}>

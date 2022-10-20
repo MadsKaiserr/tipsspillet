@@ -783,6 +783,10 @@
   .noti-section-success {
     flex-direction: column !important;
   }
+  .match-odds-id {
+    margin: 15px 15px !important;
+    width: calc(100% - 30px) !important;
+  }
   .noti-section {
     flex-direction: column !important;
   }
@@ -862,9 +866,6 @@
     display: block !important;
     margin-top: 10px !important;
     width: clamp(212px, 50vw, 350px) !important;
-  }
-  .match-bet {
-    padding: 25px 20px !important;
   }
   .match-odds-offer {
     flex-direction: column !important;
@@ -1279,7 +1280,19 @@
     padding-bottom: 70px !important;
   }
   .match-info-con {
-    padding: 0px 10px !important;
+    padding: 0px 0px !important;
+  }
+  .match-info-half {
+    border-radius: 0px !important;
+  }
+  .match-odds-spiller-h1 {
+    font-size: 14px !important;
+  }
+  .match-odds-offer-h2 {
+    font-size: 12px !important;
+  }
+  .match-odds-offer-element {
+    padding: 1.2vh 10px !important;
   }
   .match-info {
     border-radius: 0px !important;

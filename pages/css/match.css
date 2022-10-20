@@ -1358,6 +1358,68 @@
     font-weight: 500;
     font-family: Inter;
     color: #333;
+    padding: 15px 0px;
+}
+
+.match-row-id-h1 {
+    font-size: 12px;
+    font-weight: 500;
+    font-family: Inter;
+    color: #333;
+    padding: 5px 0px;
+    width: 33%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.match-odds-img {
+    position: relative;
+    width: 16px;
+    height: 16px;
+    min-width: 16px;
+}
+
+.match-odds-spiller-h1 {
+    font-size: 15px;
+    font-weight: 500;
+    font-family: Inter;
+    color: #333;
+}
+
+.match-underkat {
+    padding-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.match-underkat-kat-active {
+    padding: 5px 15px;
+    border-radius: 500px;
+    background-color: var(--primary);
+    font-family: Inter;
+    font-weight: 400;
+    color: #fff;
+    font-size: 13px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.match-underkat-kat {
+    padding: 5px 15px;
+    border-radius: 500px;
+    font-family: Inter;
+    font-weight: 400;
+    color: #333;
+    font-size: 13px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.match-underkat-kat:hover {
+    background-color: var(--stageSurface);
 }
 
 .match-showdrop {
@@ -1424,6 +1486,44 @@
     display: flex;
     gap: 0.5vh;
     width: 100%;
+    margin-top: -5px;
+}
+
+.match-hz {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px var(--stageSurface) solid;
+    padding: 10px 0px;
+}
+
+.match-hz-offer {
+    display: flex;
+    gap: 0.5vh;
+    width: 50%;
+    min-width: 50%;
+}
+
+.match-hz-offer .match-odds-offer-element {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0px !important;
+}
+
+.match-odds-offer-id {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    border-bottom: 1px #ebebeb solid;
+}
+
+.match-id-right {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .match-bet-top {
@@ -1518,7 +1618,7 @@
     padding: 1.4vh 15px;
     background-color: var(--primary);
     border-radius: 2px;
-    margin-top: 10px;
+    margin-top: 5px;
     cursor: pointer;
 }
 
@@ -1556,7 +1656,8 @@
 }
 
 .match-bet {
-    padding: 15px 20px;
+    padding: 0px 20px;
+    padding-bottom: 15px;
     border-top: 1px solid #3d6eeb1e;
 }
 

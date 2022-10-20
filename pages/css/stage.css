@@ -405,6 +405,21 @@
   .kupon-minimize:hover {
     background-color: var(--stageSurface);
   }
+
+  .match-span {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .match-dropdown {
+    font-size: 15px;
+    font-weight: 500;
+    font-family: Inter;
+    color: #333;
+    padding: 10px 10px;
+    border-bottom: 2px solid var(--primary);
+  }
   
   .stage-kupon {
     display: inline-block;
