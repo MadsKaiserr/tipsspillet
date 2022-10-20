@@ -17,6 +17,9 @@ import DownArrow from './../img/down-arrow.png';
 
 function StageMatcharticle ({data}) {
 
+    const [homeScore, setHomeScore] = useState(0);
+    const [awayScore, setAwayScore] = useState(0);
+
     const [grLeagues, setGrLeagues] = useState([]);
     const [smallScreen, setSmallScreen] = useState(false);
 
@@ -142,6 +145,7 @@ function StageMatcharticle ({data}) {
     const [availMinutter, setAvailMinutter] = useState([]);
     const [availSpecials, setAvailSpecials] = useState([]);
     const [availSpillere, setAvailSpillere] = useState([]);
+    const [availOdds, setAvailOdds] = useState([]);
 
     useEffect(() => {
         if (favorit === true) {
@@ -463,7 +467,7 @@ function StageMatcharticle ({data}) {
             setItems(result.data);
             checkExpired(result.data.time.starting_at.timestamp);
 
-            const wants = ["3Way Result", "Handicap Result", "Over/Under", "Team Goalscorer", "Player to be Booked", "Goalscorer", "Multi Scorers", "Team To Score First", "1st Goal Method", "1st Half Handicap", "Double Chance", "Highest Scoring Half", "Both Teams To Score", "Time Of First Corner", "Early Goal", "Exact Goals Number", "Total Corners", "Corner Match Bet", "A Red Card in the Match", "First Match Corner", "Team Corners", "Team Cards", "Last Match Corner", "Both Teams To Receive A Card", "Clean Sheet - Home", "Clean Sheet - Away", "2-Way Corners", "First Card Received", "Time Of First Card", "3Way Result 1st Half", "Team To Score Last", "3Way Result 2nd Half", "Double Chance - 1st Half", "Double Chance - 2nd Half", "Odd/Even", "Own Goal", "Time Of First Corner"];
+            const wants = ["3Way Result", "Handicap Result", "Over/Under", "Team Goalscorer", "Player to be Booked", "Player to be Sent Off", "Goalscorer", "Multi Scorers", "10 Minute Result", "Team To Score First", "Correct Score", "1st Goal Method", "1st Half Handicap", "Double Chance", "Highest Scoring Half", "Both Teams To Score", "Time Of First Corner", "Early Goal", "Exact Goals Number", "Total Corners", "Corner Match Bet", "A Red Card in the Match", "First Match Corner", "Team Corners", "Team Cards", "Last Match Corner", "Both Teams To Receive A Card", "Clean Sheet - Home", "Clean Sheet - Away", "2-Way Corners", "First Card Received", "Time Of First Card", "3Way Result 1st Half", "Team To Score Last", "3Way Result 2nd Half", "Double Chance - 1st Half", "Double Chance - 2nd Half", "Odd/Even", "Own Goal", "Time Of First Corner"];
             const availOddsReplica = [];
             for (var r in wants) {
                 if (result.data.odds.data.length === 0) {
@@ -492,7 +496,7 @@ function StageMatcharticle ({data}) {
             const availSpecials2 = [];
             const availMinutter2 = [];
             for (var y in availOddsReplica) {
-                if (availOddsReplica[y].type === "3Way Result" || availOddsReplica[y].type === "Exact Goals Number" || availOddsReplica[y].type === "Double Chance" || availOddsReplica[y].type === "Team To Score First" || availOddsReplica[y].type === "Over/Under") {
+                if (availOddsReplica[y].type === "3Way Result" || availOddsReplica[y].type === "Correct Score" || availOddsReplica[y].type === "Exact Goals Number" || availOddsReplica[y].type === "Double Chance" || availOddsReplica[y].type === "Team To Score First" || availOddsReplica[y].type === "Over/Under") {
                     availPopular2.push(availOddsReplica[y]);
                 }
                 if (availOddsReplica[y].type === "Handicap Result" || availOddsReplica[y].type === "1st Half Handicap") {
@@ -504,7 +508,7 @@ function StageMatcharticle ({data}) {
                 if (availOddsReplica[y].type === "3Way Result 1st Half" || availOddsReplica[y].type === "1st Half Handicap" || availOddsReplica[y].type === "Goals Over/Under 1st Half" || availOddsReplica[y].type === "Over/Under 2nd Half" || availOddsReplica[y].type === "Highest Scoring Half" || availOddsReplica[y].type === "3Way Result 2nd Half" || availOddsReplica[y].type === "Double Chance - 1st Half" || availOddsReplica[y].type === "Double Chance - 2nd Half") {
                     availMinutter2.push(availOddsReplica[y]);
                 }
-                if (availOddsReplica[y].type === "First Card Received" || availOddsReplica[y].type === "Player to be Booked" || availOddsReplica[y].type.slice(0,10) === "Team Cards" || availOddsReplica[y].type === "A Red Card in the Match" || availOddsReplica[y].type === "Both Teams To Receive 2+ Cards" || availOddsReplica[y].type === "Both Teams To Receive A Card") {
+                if (availOddsReplica[y].type === "First Card Received" || availOddsReplica[y].type === "Player to be Sent Off" || availOddsReplica[y].type === "Player to be Booked" || availOddsReplica[y].type.slice(0,10) === "Team Cards" || availOddsReplica[y].type === "A Red Card in the Match" || availOddsReplica[y].type === "Both Teams To Receive 2+ Cards" || availOddsReplica[y].type === "Both Teams To Receive A Card") {
                     availKort2.push(availOddsReplica[y]);
                 }
                 if (availOddsReplica[y].type.slice(0,12) === "Team Corners" || availOddsReplica[y].type === "Total Corners" ||availOddsReplica[y].type === "First Match Corner" || availOddsReplica[y].type === "Last Match Corner" || availOddsReplica[y].type === "Corner Match Bet" || availOddsReplica[y].type === "Time Of First Corner") {
@@ -513,7 +517,7 @@ function StageMatcharticle ({data}) {
                 if (availOddsReplica[y].type === "Clean Sheet - Home" || availOddsReplica[y].type === "Clean Sheet - Away") {
                     availSpecials2.push(availOddsReplica[y]);
                 }
-                if (availOddsReplica[y].type === "Team To Score Last" || availOddsReplica[y].type === "Team Goalscorer" || availOddsReplica[y].type === "Multi Scorers" || availOddsReplica[y].type === "Goalscorer"|| availOddsReplica[y].type === "Early Goal" || availOddsReplica[y].type === "1st Goal Method" || availOddsReplica[y].type === "Team To Score First" || availOddsReplica[y].type === "Both Teams To Score" || availOddsReplica[y].type === "Highest Scoring Half" || availOddsReplica[y].type === "Own Goal" || availOddsReplica[y].type === "Exact Goals Number" || availOddsReplica[y].type === "Odd/Even") {
+                if (availOddsReplica[y].type === "Team To Score Last" || availOddsReplica[y].type === "Correct Score" || availOddsReplica[y].type === "Team Goalscorer" || availOddsReplica[y].type === "Multi Scorers" || availOddsReplica[y].type === "Goalscorer"|| availOddsReplica[y].type === "Early Goal" || availOddsReplica[y].type === "1st Goal Method" || availOddsReplica[y].type === "Team To Score First" || availOddsReplica[y].type === "Both Teams To Score" || availOddsReplica[y].type === "Highest Scoring Half" || availOddsReplica[y].type === "Own Goal" || availOddsReplica[y].type === "Exact Goals Number" || availOddsReplica[y].type === "Odd/Even") {
                     availGoal2.push(availOddsReplica[y]);
                 }
             }
@@ -525,6 +529,7 @@ function StageMatcharticle ({data}) {
             setAvailSpillere(availSpillere2);
             setAvailSpecials(availSpecials2);
             setAvailMinutter(availMinutter2);
+            setAvailOdds(availOddsReplica);
 
             sethomeTeam(result.data.localTeam.data.name);
             setvisitorTeam(result.data.visitorTeam.data.name);
@@ -2129,7 +2134,7 @@ function StageMatcharticle ({data}) {
             }
         } else if (item.type === "Player to be Booked") {
             if (n < 0) {
-                return "Advarsel til spiller"
+                return "Kort til spiller"
             } else if (n >= 0) {
                 return item.data[n].label
             }
@@ -2158,6 +2163,28 @@ function StageMatcharticle ({data}) {
                 return "Målscorer"
             } else if (n >= 0) {
                 return item.data[n].label.replace(" | 2 or More", " - 2 eller flere").replace(" | 3 or More", " - 3 eller flere")
+            }
+        } else if (item.type === "Correct Score") {
+            if (n < 0) {
+                return "Korrekt resultat"
+            } else if (n >= 0) {
+                if (item.data[n].label.slice(0,1) === "1") {
+                    return item.data[n].label.replace("1 ", homeTeam + " ") + " " + visitorTeam;
+                } else if (item.data[n].label.slice(0,1) === "2") {
+                    return item.data[n].label.replace("2 ", homeTeam + " ") + " " + visitorTeam;
+                } else if (item.data[n].label.slice(0,4) === "Draw") {
+                    return item.data[n].label.replace("Draw ", homeTeam + " ") + " " + visitorTeam;
+                }
+            }
+        } else if (item.type === "10 Minute Result") {
+            if (n < 0) {
+                return "Første 10 minutter vinder"
+            } else if (n === 0) {
+                return homeTeam
+            } else if (n === 1) {
+                return "Uafgjort"
+            } else if (n === 2) {
+                return visitorTeam
             }
         }
     }
@@ -2583,6 +2610,111 @@ function StageMatcharticle ({data}) {
                                                                 </div>
                                                             </li>
                                                         );
+                                                    } else if (item.type === "Correct Score") {
+                                                        var maxHome = 0;
+                                                        var maxAway = 0;
+                                                        const homeScores = item.data.map(object => {
+                                                            if (parseInt((object.label.replace("Draw", "").replace("1 ", "").replace("2 ", "")).slice(0,1)) >= 0) {
+                                                                return parseInt((object.label.replace("Draw", "").replace("1 ", "").replace("2 ", "")).slice(0,1));
+                                                            } else return 0;
+                                                        });
+                                                        const awayScores = item.data.map(object => {
+                                                            if (parseInt((object.label.replace("Draw", "").replace("1 ", "").replace("2 ", "")).slice(-1)) >= 0) {
+                                                                return parseInt((object.label.replace("Draw", "").replace("1 ", "").replace("2 ", "")).slice(-1));
+                                                            } else return 0;
+                                                        });
+                                                        maxHome = Math.max.apply(null,homeScores)
+                                                        maxAway = Math.max.apply(null,awayScores)
+
+                                                        var activeCS = 0;
+                                                        if (item.data.findIndex(obj => parseInt((obj.label.replace("Draw ", "").replace("1 ", "").replace("2 ", "")).slice(0,1)) === homeScore && parseInt((obj.label.replace("Draw ", "").replace("1 ", "").replace("2 ", "")).slice(-1)) === awayScore) >= 0) {
+                                                            activeCS = item.data.findIndex(obj => parseInt((obj.label.replace("Draw ", "").replace("1 ", "").replace("2 ", "")).slice(0,1)) === homeScore && parseInt((obj.label.replace("Draw ", "").replace("1 ", "").replace("2 ", "")).slice(-1)) === awayScore);
+                                                        }
+
+                                                        var nowDate = new Date().getTime();
+                                                        var thistime = (nowDate.toString()).slice(0, -3);
+                                                        var oddofforon = "match-odds-offer-element";
+                                                        if (items["time"].starting_at.timestamp < thistime) {
+                                                            oddofforon = "match-odds-offer-element odd-used";
+                                                        } else {
+                                                            if (sessionStorage.getItem("notUsableBtn")) {
+                                                                const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
+                                                                const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + activeCS);
+                                                                if (repliceIndex >= 0) {
+                                                                    oddofforon = "match-odds-offer-element odd-used";
+                                                                }
+                                                            }
+                                                        }
+                                                        return (
+                                                            <li key={item.type}>
+                                                                <div className="match-bet">
+                                                                    <div className="match-bet-top">
+                                                                        <p className="match-odds-h1">{getLabel(item, -1)}</p>
+                                                                    </div>
+                                                                    <div className="match-odds-special" style={{justifyContent: "space-between", alignItems: "center"}}>
+                                                                        <div className="match-raisers">
+                                                                            <div className="match-odds-raiser">
+                                                                                <p className="match-odds-raiser-p">{homeTeam}</p>
+                                                                                <div className="match-odds-raiser-con">
+                                                                                    {item.data.findIndex(obj => obj.label.replace("Draw ", "").replace("1 ", "").replace("2 ", "") === (homeScore - 1) + ":" + awayScore) < 0 && <div className="match-raiser">
+                                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#333" viewBox="0 0 16 16">
+                                                                                            <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+                                                                                        </svg>
+                                                                                    </div>}
+                                                                                    {item.data.findIndex(obj => obj.label.replace("Draw ", "").replace("1 ", "").replace("2 ", "") === (homeScore - 1) + ":" + awayScore) >= 0 && <div className="match-raiser-active" onClick={() => {if (homeScore > 0){setHomeScore(homeScore - 1)}}}>
+                                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#333" viewBox="0 0 16 16">
+                                                                                            <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+                                                                                        </svg>
+                                                                                    </div>}
+                                                                                    <p className="match-raiser-h1">{homeScore}</p>
+                                                                                    {item.data.findIndex(obj => obj.label.replace("Draw ", "").replace("1 ", "").replace("2 ", "") === (homeScore + 1) + ":" + awayScore) < 0 && <div className="match-raiser">
+                                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#333" viewBox="0 0 16 16">
+                                                                                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                                                                        </svg>
+                                                                                    </div>}
+                                                                                    {item.data.findIndex(obj => obj.label.replace("Draw ", "").replace("1 ", "").replace("2 ", "") === (homeScore + 1) + ":" + awayScore) >= 0 && <div className="match-raiser-active" onClick={() => {if (homeScore < maxHome){ setHomeScore(homeScore + 1)}}}>
+                                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#333" viewBox="0 0 16 16">
+                                                                                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                                                                        </svg>
+                                                                                    </div>}
+                                                                                </div>
+                                                                            </div>
+                                                                            <div className="match-odds-raiser">
+                                                                                <p className="match-odds-raiser-p">{visitorTeam}</p>
+                                                                                <div className="match-odds-raiser-con">
+                                                                                    {item.data.findIndex(obj => obj.label.replace("Draw ", "").replace("1 ", "").replace("2 ", "") === homeScore + ":" + (awayScore - 1)) < 0 && <div className="match-raiser">
+                                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#333" viewBox="0 0 16 16">
+                                                                                            <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+                                                                                        </svg>
+                                                                                    </div>}
+                                                                                    {item.data.findIndex(obj => obj.label.replace("Draw ", "").replace("1 ", "").replace("2 ", "") === homeScore + ":" + (awayScore - 1)) >= 0 && <div className="match-raiser-active" onClick={() => {if (awayScore > 0){setAwayScore(awayScore - 1)}}}>
+                                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#333" viewBox="0 0 16 16">
+                                                                                            <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+                                                                                        </svg>
+                                                                                    </div>}
+                                                                                    <p className="match-raiser-h1">{awayScore}</p>
+                                                                                    {item.data.findIndex(obj => obj.label.replace("Draw ", "").replace("1 ", "").replace("2 ", "") === homeScore + ":" + (awayScore + 1)) < 0 && <div className="match-raiser">
+                                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#333" viewBox="0 0 16 16">
+                                                                                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                                                                        </svg>
+                                                                                    </div>}
+                                                                                    {item.data.findIndex(obj => obj.label.replace("Draw ", "").replace("1 ", "").replace("2 ", "") === homeScore + ":" + (awayScore + 1)) >= 0 && <div className="match-raiser-active" onClick={() => {if (awayScore < maxAway){ setAwayScore(awayScore + 1)}}}>
+                                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#333" viewBox="0 0 16 16">
+                                                                                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                                                                        </svg>
+                                                                                    </div>}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div className="match-raiser-odds">
+                                                                            <div key={item.type + matchID + "-" + activeCS} className={oddofforon} style={{justifyContent: "center"}} id={item.type + matchID + "-" + activeCS} onClick={() => chooseOdd(item.type + matchID + "-" + activeCS, item.type, activeCS, item.data[activeCS].value, getLabel(item, activeCS))}>
+                                                                                <p className="match-odds-offer-h2">{item.data[activeCS].value}</p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        );
                                                     } else {
                                                         return (
                                                             <li key={item.type}>
@@ -2630,113 +2762,163 @@ function StageMatcharticle ({data}) {
                                         </li>
                                     </ul>}
                                     {oddNav === "build" && <div className="match-odds-cont">
-                                        <li key="build-popular" className="match-odds-id">
-                                            <div className="match-odds-id-top" onClick={() => document.getElementById("popular-popular").classList.toggle("display")}>
-                                                <p className="match-odds-id-h1">Populære</p>
-                                                <p className="match-odds-id-p">{availPopular.length}</p>
+                                        <li key="build-resultat" className="match-odds-id">
+                                            <div className="match-odds-id-top" onClick={() => document.getElementById("build-resultat").classList.toggle("display")}>
+                                                <p className="match-odds-id-h1">Resultat</p>
+                                                <p className="match-odds-id-p">3</p>
                                             </div>
-                                            <ul className="match-odds-id-con" id="popular-popular">
-                                                {availPopular.map((item) => {
-                                                    if (item.type === "Exact Goals Number") {
+                                            <ul className="match-odds-id-con" id="build-resultat">
+                                                {availOdds.map((item) => {
+                                                    if (item.type === "3Way Result") {
+                                                        const fuldtid = availOdds[availOdds.findIndex(obj => obj.type === "3Way Result")];
+                                                        const halvleg1 = availOdds[availOdds.findIndex(obj => obj.type === "3Way Result 1st Half")];
+                                                        const halvleg2 = availOdds[availOdds.findIndex(obj => obj.type === "3Way Result 2nd Half")];
+                                                        const winner10 = availOdds[availOdds.findIndex(obj => obj.type === "10 Minute Result")];
+                                                        item.data.sort((a, b) => {
+                                                            return parseInt(a.value) - parseInt(b.value);
+                                                        });
                                                         return (
                                                             <li key={item.type}>
                                                                 <div className="match-bet">
                                                                     <div className="match-bet-top">
                                                                         <p className="match-odds-h1">{getLabel(item, -1)}</p>
                                                                     </div>
+                                                                    <div className="match-odds-offer-id">
+                                                                        <div className="match-id-right">
+                                                                            <p className="match-row-id-h1">{homeTeam}</p>
+                                                                            <p className="match-row-id-h1">Uafgjort</p>
+                                                                            <p className="match-row-id-h1">{visitorTeam}</p>
+                                                                        </div>
+                                                                    </div>
                                                                     <div className="match-odds-special">
-                                                                        <ul className="match-odds-offer">
-                                                                            {item.data.slice(0, (Math.floor(item.data.length/2))).map((odd, index) => {
-                                                                                var nowDate = new Date().getTime();
-                                                                                var thistime = (nowDate.toString()).slice(0, -3);
-                                                                                var oddofforon = "match-odds-offer-element";
-                                                                                if (items["time"].starting_at.timestamp < thistime) {
-                                                                                    oddofforon = "match-odds-offer-element odd-used";
-                                                                                } else {
-                                                                                    if (sessionStorage.getItem("notUsableBtn")) {
-                                                                                        const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
-                                                                                        const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + index);
-                                                                                        if (repliceIndex >= 0) {
-                                                                                            oddofforon = "match-odds-offer-element odd-used";
-                                                                                        }
-                                                                                    }
-                                                                                }
-                                                                                return (
-                                                                                    <li key={item.type + matchID + "-" + index} className={oddofforon} id={item.type + matchID + "-" + index} onClick={() => chooseOdd(item.type + matchID + "-" + index, item.type, index, odd.value, getLabel(item, index))}>
-                                                                                        <p className="match-odds-offer-h1">{getLabel(item, index)}</p>
-                                                                                        <p className="match-odds-offer-h2">{odd.value}</p>
-                                                                                    </li>
-                                                                                );
-                                                                            })}
-                                                                        </ul>
-                                                                        <ul className="match-odds-offer">
-                                                                            {item.data.slice((Math.floor(item.data.length/2)), item.data.length).map((odd, index) => {
-                                                                                var nowDate = new Date().getTime();
-                                                                                var thistime = (nowDate.toString()).slice(0, -3);
-                                                                                var oddofforon = "match-odds-offer-element";
-                                                                                if (items["time"].starting_at.timestamp < thistime) {
-                                                                                    oddofforon = "match-odds-offer-element odd-used";
-                                                                                } else {
-                                                                                    if (sessionStorage.getItem("notUsableBtn")) {
-                                                                                        const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
-                                                                                        const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + (index + (Math.floor(item.data.length/2))));
-                                                                                        if (repliceIndex >= 0) {
-                                                                                            oddofforon = "match-odds-offer-element odd-used";
-                                                                                        }
-                                                                                    }
-                                                                                }
-                                                                                return (
-                                                                                    <li key={item.type + matchID + "-" + index} className={oddofforon} id={item.type + matchID + "-" + (index + (Math.floor(item.data.length/2)))} onClick={() => chooseOdd(item.type + matchID + "-" + (index + (Math.floor(item.data.length/2))), item.type, (index + (Math.floor(item.data.length/2))), odd.value, getLabel(item, (index + (Math.floor(item.data.length/2)))))}>
-                                                                                        <p className="match-odds-offer-h1">{getLabel(item, (index + (Math.floor(item.data.length/2))))}</p>
-                                                                                        <p className="match-odds-offer-h2">{odd.value}</p>
-                                                                                    </li>
-                                                                                );
-                                                                            })}
+                                                                        <ul className="match-odds-offer" style={{gap: "0px"}}>
+                                                                            <li key="kamp">
+                                                                                <div className="match-hz">
+                                                                                    <div style={{display: "flex", alignItems: "center", gap: "5px", width: "50%", overflow: "hidden"}}>
+                                                                                        <p className="match-odds-spiller-h1">Kamp</p>
+                                                                                    </div>
+                                                                                    <ul className="match-hz-offer" style={{flexDirection: "row"}}>
+                                                                                        {fuldtid.data.map((ting, index) => {
+                                                                                            var nowDate = new Date().getTime();
+                                                                                            var thistime = (nowDate.toString()).slice(0, -3);
+                                                                                            var oddofforon = "match-odds-offer-element";
+                                                                                            if (items["time"].starting_at.timestamp < thistime) {
+                                                                                                oddofforon = "match-odds-offer-element odd-used";
+                                                                                            } else {
+                                                                                                if (sessionStorage.getItem("notUsableBtn")) {
+                                                                                                    const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
+                                                                                                    const repliceIndex = btnReplica.indexOf(fuldtid.type + matchID + "-" + index);
+                                                                                                    if (repliceIndex >= 0) {
+                                                                                                        oddofforon = "match-odds-offer-element odd-used";
+                                                                                                    }
+                                                                                                }
+                                                                                            }
+                                                                                            return (
+                                                                                                <li key={fuldtid.type + matchID + "-" + index} className={oddofforon} id={fuldtid.type + matchID + "-" + index} onClick={() => chooseOdd(fuldtid.type + matchID + "-" + index, fuldtid.type, index, ting.value, getLabel(fuldtid, index))}>
+                                                                                                    <p className="match-odds-offer-h2">{ting.value}</p>
+                                                                                                </li>
+                                                                                            );
+                                                                                        })}
+                                                                                    </ul>
+                                                                                </div>
+                                                                            </li>
+                                                                            <li key="halvleg1">
+                                                                                <div className="match-hz">
+                                                                                    <div style={{display: "flex", alignItems: "center", gap: "5px", width: "50%", overflow: "hidden"}}>
+                                                                                        <p className="match-odds-spiller-h1">1. Halvleg</p>
+                                                                                    </div>
+                                                                                    <ul className="match-hz-offer" style={{flexDirection: "row"}}>
+                                                                                        {halvleg1.data.map((ting, index) => {
+                                                                                            var nowDate = new Date().getTime();
+                                                                                            var thistime = (nowDate.toString()).slice(0, -3);
+                                                                                            var oddofforon = "match-odds-offer-element";
+                                                                                            if (items["time"].starting_at.timestamp < thistime) {
+                                                                                                oddofforon = "match-odds-offer-element odd-used";
+                                                                                            } else {
+                                                                                                if (sessionStorage.getItem("notUsableBtn")) {
+                                                                                                    const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
+                                                                                                    const repliceIndex = btnReplica.indexOf(halvleg1.type + matchID + "-" + index);
+                                                                                                    if (repliceIndex >= 0) {
+                                                                                                        oddofforon = "match-odds-offer-element odd-used";
+                                                                                                    }
+                                                                                                }
+                                                                                            }
+                                                                                            return (
+                                                                                                <li key={halvleg1.type + matchID + "-" + index} className={oddofforon} id={halvleg1.type + matchID + "-" + index} onClick={() => chooseOdd(halvleg1.type + matchID + "-" + index, halvleg1.type, index, ting.value, getLabel(halvleg1, index))}>
+                                                                                                    <p className="match-odds-offer-h2">{ting.value}</p>
+                                                                                                </li>
+                                                                                            );
+                                                                                        })}
+                                                                                    </ul>
+                                                                                </div>
+                                                                            </li>
+                                                                            <li key="halvleg2">
+                                                                                <div className="match-hz">
+                                                                                    <div style={{display: "flex", alignItems: "center", gap: "5px", width: "50%", overflow: "hidden"}}>
+                                                                                        <p className="match-odds-spiller-h1">2. Halvleg</p>
+                                                                                    </div>
+                                                                                    <ul className="match-hz-offer" style={{flexDirection: "row"}}>
+                                                                                        {halvleg2.data.map((ting, index) => {
+                                                                                            var nowDate = new Date().getTime();
+                                                                                            var thistime = (nowDate.toString()).slice(0, -3);
+                                                                                            var oddofforon = "match-odds-offer-element";
+                                                                                            if (items["time"].starting_at.timestamp < thistime) {
+                                                                                                oddofforon = "match-odds-offer-element odd-used";
+                                                                                            } else {
+                                                                                                if (sessionStorage.getItem("notUsableBtn")) {
+                                                                                                    const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
+                                                                                                    const repliceIndex = btnReplica.indexOf(halvleg2.type + matchID + "-" + index);
+                                                                                                    if (repliceIndex >= 0) {
+                                                                                                        oddofforon = "match-odds-offer-element odd-used";
+                                                                                                    }
+                                                                                                }
+                                                                                            }
+                                                                                            return (
+                                                                                                <li key={halvleg2.type + matchID + "-" + index} className={oddofforon} id={halvleg2.type + matchID + "-" + index} onClick={() => chooseOdd(halvleg2.type + matchID + "-" + index, halvleg2.type, index, ting.value, getLabel(halvleg2, index))}>
+                                                                                                    <p className="match-odds-offer-h2">{ting.value}</p>
+                                                                                                </li>
+                                                                                            );
+                                                                                        })}
+                                                                                    </ul>
+                                                                                </div>
+                                                                            </li>
+                                                                            <li key="first10">
+                                                                                <div className="match-hz">
+                                                                                    <div style={{display: "flex", alignItems: "center", gap: "5px", width: "50%", overflow: "hidden"}}>
+                                                                                        <p className="match-odds-spiller-h1">10 min. vinder</p>
+                                                                                    </div>
+                                                                                    <ul className="match-hz-offer" style={{flexDirection: "row"}}>
+                                                                                        {winner10.data.map((ting, index) => {
+                                                                                            var nowDate = new Date().getTime();
+                                                                                            var thistime = (nowDate.toString()).slice(0, -3);
+                                                                                            var oddofforon = "match-odds-offer-element";
+                                                                                            if (items["time"].starting_at.timestamp < thistime) {
+                                                                                                oddofforon = "match-odds-offer-element odd-used";
+                                                                                            } else {
+                                                                                                if (sessionStorage.getItem("notUsableBtn")) {
+                                                                                                    const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
+                                                                                                    const repliceIndex = btnReplica.indexOf(winner10.type + matchID + "-" + index);
+                                                                                                    if (repliceIndex >= 0) {
+                                                                                                        oddofforon = "match-odds-offer-element odd-used";
+                                                                                                    }
+                                                                                                }
+                                                                                            }
+                                                                                            return (
+                                                                                                <li key={winner10.type + matchID + "-" + index} className={oddofforon} id={winner10.type + matchID + "-" + index} onClick={() => chooseOdd(winner10.type + matchID + "-" + index, winner10.type, index, ting.value, getLabel(winner10, index))}>
+                                                                                                    <p className="match-odds-offer-h2">{ting.value}</p>
+                                                                                                </li>
+                                                                                            );
+                                                                                        })}
+                                                                                    </ul>
+                                                                                </div>
+                                                                            </li>
                                                                         </ul>
                                                                     </div>
                                                                 </div>
                                                             </li>
                                                         );
                                                     } else {
-                                                        return (
-                                                            <li key={item.type}>
-                                                                <div className="match-bet">
-                                                                    <div className="match-bet-top">
-                                                                        <p className="match-odds-h1">{getLabel(item, -1)}</p>
-                                                                    </div>
-                                                                    <ul className="match-odds-offer">
-                                                                        {item.data.map((odd, index) => {
-                                                                            var nowDate = new Date().getTime();
-                                                                            var thistime = (nowDate.toString()).slice(0, -3);
-                                                                            var oddofforon = "match-odds-offer-element";
-                                                                            var counted = 100;
-                                                                            if (item.data.length === 2 || item.data.length > 3) {
-                                                                                counted = 50;
-                                                                            } else if (item.data.length === 3) {
-                                                                                counted = 33;
-                                                                            }
-                                                                            if (items["time"].starting_at.timestamp < thistime) {
-                                                                                oddofforon = "match-odds-offer-element odd-used";
-                                                                            } else {
-                                                                                if (sessionStorage.getItem("notUsableBtn")) {
-                                                                                    const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
-                                                                                    const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + index);
-                                                                                    if (repliceIndex >= 0) {
-                                                                                        oddofforon = "match-odds-offer-element odd-used";
-                                                                                    }
-                                                                                }
-                                                                            }
-                                                                            return (
-                                                                                <li key={item.type + matchID + "-" + index} className={oddofforon} style={{maxWidth: counted + "%"}} id={item.type + matchID + "-" + index} onClick={() => chooseOdd(item.type + matchID + "-" + index, item.type, index, odd.value, getLabel(item, index))}>
-                                                                                    <p className="match-odds-offer-h1">{getLabel(item, index)}</p>
-                                                                                    <p className="match-odds-offer-h2">{odd.value}</p>
-                                                                                </li>
-                                                                            );
-                                                                        })}
-                                                                    </ul>
-                                                                </div>
-                                                            </li>
-                                                        );
+                                                        return
                                                     }
                                                 }
                                                 )}
@@ -2744,76 +2926,98 @@ function StageMatcharticle ({data}) {
                                         </li>
                                         <li key="build-spillere" className="match-odds-id">
                                             <div className="match-odds-id-top" onClick={() => document.getElementById("build-spillere").classList.toggle("display")}>
-                                                <p className="match-odds-id-h1">Spiller</p>
+                                                <p className="match-odds-id-h1">Spiller - Kort</p>
                                                 <p className="match-odds-id-p">{availSpillere.length}</p>
                                             </div>
                                             <ul className="match-odds-id-con" id="build-spillere">
                                                 {availSpillere.map((item) => {
-                                                    item.data.sort((a, b) => {
-                                                        return parseInt(a.value) - parseInt(b.value);
-                                                    });
-                                                    return (
-                                                        <li key={item.type}>
-                                                            <div className="match-bet">
-                                                                <div className="match-bet-top">
-                                                                    <p className="match-odds-h1">{getLabel(item, -1)}</p>
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#333" viewBox="0 0 16 16">
-                                                                        <path d="M8 3a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 3zm4 8a4 4 0 0 1-8 0V5a4 4 0 1 1 8 0v6zM8 0a5 5 0 0 0-5 5v6a5 5 0 0 0 10 0V5a5 5 0 0 0-5-5z"/>
-                                                                    </svg>
-                                                                </div>
-                                                                <div className="match-odds-special">
-                                                                    <ul className="match-odds-offer">
-                                                                        {item.data.slice(0, (Math.ceil(item.data.length/2))).map((odd, index) => {
-                                                                            var nowDate = new Date().getTime();
-                                                                            var thistime = (nowDate.toString()).slice(0, -3);
-                                                                            var oddofforon = "match-odds-offer-element";
-                                                                            if (items["time"].starting_at.timestamp < thistime) {
-                                                                                oddofforon = "match-odds-offer-element odd-used";
-                                                                            } else {
-                                                                                if (sessionStorage.getItem("notUsableBtn")) {
-                                                                                    const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
-                                                                                    const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + index);
-                                                                                    if (repliceIndex >= 0) {
-                                                                                        oddofforon = "match-odds-offer-element odd-used";
+                                                    if (item.type === "Player to be Booked") {
+                                                        if (availKort.findIndex(obj => obj.type === "Player to be Sent Off") >= 0) {
+                                                            const mscore = availKort[availKort.findIndex(obj => obj.type === "Player to be Sent Off")];
+                                                            item.data.sort((a, b) => {
+                                                                return parseInt(a.value) - parseInt(b.value);
+                                                            });
+                                                            return (
+                                                                <li key={item.type}>
+                                                                    <div className="match-bet">
+                                                                        <div className="match-bet-top">
+                                                                            <p className="match-odds-h1">{getLabel(item, -1)}</p>
+                                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#333" viewBox="0 0 16 16">
+                                                                                <path d="M8 3a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 3zm4 8a4 4 0 0 1-8 0V5a4 4 0 1 1 8 0v6zM8 0a5 5 0 0 0-5 5v6a5 5 0 0 0 10 0V5a5 5 0 0 0-5-5z"/>
+                                                                            </svg>
+                                                                        </div>
+                                                                        <div className="match-odds-offer-id">
+                                                                            <div className="match-id-right">
+                                                                                <p className="match-row-id-h1" style={{width: "50%"}}>Advarsel</p>
+                                                                                <p className="match-row-id-h1" style={{width: "50%"}}>Udvist</p>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div className="match-odds-special">
+                                                                            <ul className="match-odds-offer" style={{gap: "0px"}}>
+                                                                                {item.data.map((odd, index) => {
+                                                                                    var nowDate = new Date().getTime();
+                                                                                    var thistime = (nowDate.toString()).slice(0, -3);
+                                                                                    var findex = item.data.findIndex(obj => obj.label === odd.label)
+                                                                                    var lindex = mscore.data.findIndex(obj => obj.label === odd.label)
+                                                                                    var oddofforon0 = "match-odds-offer-element";
+                                                                                    var oddofforon1 = "match-odds-offer-element";
+                                                                                    if (items["time"].starting_at.timestamp < thistime) {
+                                                                                        oddofforon0 = "match-odds-offer-element odd-used";
+                                                                                        oddofforon1 = "match-odds-offer-element odd-used";
+                                                                                    } else {
+                                                                                        if (sessionStorage.getItem("notUsableBtn")) {
+                                                                                            const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
+                                                                                            const repliceFIndex = btnReplica.indexOf(item.type + matchID + "-" + findex);
+                                                                                            if (repliceFIndex >= 0) {
+                                                                                                oddofforon0 = "match-odds-offer-element odd-used";
+                                                                                            }
+                                                                                            const repliceLIndex = btnReplica.indexOf(mscore.type + matchID + "-" + lindex);
+                                                                                            if (repliceLIndex >= 0) {
+                                                                                                oddofforon1 = "match-odds-offer-element odd-used";
+                                                                                            }
+                                                                                        }
                                                                                     }
-                                                                                }
-                                                                            }
-                                                                            return (
-                                                                                <li key={item.type + matchID + "-" + index} className={oddofforon} id={item.type + matchID + "-" + index} onClick={() => chooseOdd(item.type + matchID + "-" + index, item.type, index, odd.value, getLabel(item, index))}>
-                                                                                    <p className="match-odds-offer-h1">{getLabel(item, index)}</p>
-                                                                                    <p className="match-odds-offer-h2">{odd.value}</p>
-                                                                                </li>
-                                                                            );
-                                                                        })}
-                                                                    </ul>
-                                                                    <ul className="match-odds-offer">
-                                                                        {item.data.slice((Math.ceil(item.data.length/2)), item.data.length).map((odd, index) => {
-                                                                            var nowDate = new Date().getTime();
-                                                                            var thistime = (nowDate.toString()).slice(0, -3);
-                                                                            var oddofforon = "match-odds-offer-element";
-                                                                            if (items["time"].starting_at.timestamp < thistime) {
-                                                                                oddofforon = "match-odds-offer-element odd-used";
-                                                                            } else {
-                                                                                if (sessionStorage.getItem("notUsableBtn")) {
-                                                                                    const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
-                                                                                    const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + (index + (Math.ceil(item.data.length/2))));
-                                                                                    if (repliceIndex >= 0) {
-                                                                                        oddofforon = "match-odds-offer-element odd-used";
+                                                                                    var teamSite = "";
+                                                                                    if (items["localTeam"].data.squad.data.findIndex(obj => obj.player.data.display_name === odd.label) >= 0) {
+                                                                                        teamSite = "local"
+                                                                                    } else if (items["localTeam"].data.squad.data.findIndex(obj => obj.player.data.fullname === odd.label) >= 0) {
+                                                                                        teamSite = "local"
+                                                                                    } else if (items["localTeam"].data.squad.data.findIndex(obj => obj.player.data.common_name === odd.label) >= 0) {
+                                                                                        teamSite = "local"
+                                                                                    } else if (items["visitorTeam"].data.squad.data.findIndex(obj => obj.player.data.display_name === odd.label) >= 0) {
+                                                                                        teamSite = "visitor"
+                                                                                    } else if (items["visitorTeam"].data.squad.data.findIndex(obj => obj.player.data.fullname === odd.label) >= 0) {
+                                                                                        teamSite = "visitor"
+                                                                                    } else if (items["visitorTeam"].data.squad.data.findIndex(obj => obj.player.data.common_name === odd.label) >= 0) {
+                                                                                        teamSite = "visitor"
                                                                                     }
-                                                                                }
-                                                                            }
-                                                                            return (
-                                                                                <li key={item.type + matchID + "-" + index} className={oddofforon} id={item.type + matchID + "-" + (index + (Math.ceil(item.data.length/2)))} onClick={() => chooseOdd(item.type + matchID + "-" + (index + (Math.ceil(item.data.length/2))), item.type, (index + (Math.ceil(item.data.length/2))), odd.value, getLabel(item, (index + (Math.ceil(item.data.length/2)))))}>
-                                                                                    <p className="match-odds-offer-h1">{getLabel(item, (index + (Math.ceil(item.data.length/2))))}</p>
-                                                                                    <p className="match-odds-offer-h2">{odd.value}</p>
-                                                                                </li>
-                                                                            );
-                                                                        })}
-                                                                    </ul>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                    );
+                                                                                    return (
+                                                                                        <li key={odd.label}>
+                                                                                            <div className="match-hz">
+                                                                                                <div style={{display: "flex", alignItems: "center", gap: "5px", width: "50%", overflow: "hidden"}}>
+                                                                                                    {teamSite === "local" && <div className="match-odds-img"><Image src={homelogo} layout="fill" /></div>}
+                                                                                                    {teamSite === "visitor" && <div className="match-odds-img"><Image src={visitorlogo} layout="fill" /></div>}
+                                                                                                    <p className="match-odds-spiller-h1">{odd.label}</p>
+                                                                                                </div>
+                                                                                                <ul className="match-hz-offer" style={{flexDirection: "row"}}>
+                                                                                                    <li className={oddofforon0} id={item.type + matchID + "-" + findex} onClick={() => chooseOdd(item.type + matchID + "-" + findex, item.type, findex, odd.value, getLabel(item, findex))}>
+                                                                                                        <p className="match-odds-offer-h2">{item.data[findex].value}</p>
+                                                                                                    </li>
+                                                                                                    <li className={oddofforon1} id={mscore.type + matchID + "-" + lindex} onClick={() => chooseOdd(mscore.type + matchID + "-" + lindex, mscore.type, lindex, mscore.data[lindex].value, getLabel(item, lindex))}>
+                                                                                                        <p className="match-odds-offer-h2">{mscore.data[lindex].value}</p>
+                                                                                                    </li>
+                                                                                                </ul>
+                                                                                            </div>
+                                                                                        </li>
+                                                                                    );
+                                                                                })}
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                            );
+                                                        } else return;
+                                                    }
                                                 }
                                                 )}
                                             </ul>
@@ -3254,47 +3458,112 @@ function StageMatcharticle ({data}) {
                                                         );
                                                     } else if (item.type === "Multi Scorers" || item.type === "Team Goalscorer") {
                                                         return;
-                                                    } else {
+                                                    } else if (item.type === "Correct Score") {
+                                                        var maxHome = 0;
+                                                        var maxAway = 0;
+                                                        const homeScores = item.data.map(object => {
+                                                            if (parseInt((object.label.replace("Draw", "").replace("1 ", "").replace("2 ", "")).slice(0,1)) >= 0) {
+                                                                return parseInt((object.label.replace("Draw", "").replace("1 ", "").replace("2 ", "")).slice(0,1));
+                                                            } else return 0;
+                                                        });
+                                                        const awayScores = item.data.map(object => {
+                                                            if (parseInt((object.label.replace("Draw", "").replace("1 ", "").replace("2 ", "")).slice(-1)) >= 0) {
+                                                                return parseInt((object.label.replace("Draw", "").replace("1 ", "").replace("2 ", "")).slice(-1));
+                                                            } else return 0;
+                                                        });
+                                                        maxHome = Math.max.apply(null,homeScores)
+                                                        maxAway = Math.max.apply(null,awayScores)
+
+                                                        var activeCS = 0;
+                                                        if (item.data.findIndex(obj => parseInt((obj.label.replace("Draw ", "").replace("1 ", "").replace("2 ", "")).slice(0,1)) === homeScore && parseInt((obj.label.replace("Draw ", "").replace("1 ", "").replace("2 ", "")).slice(-1)) === awayScore) >= 0) {
+                                                            activeCS = item.data.findIndex(obj => parseInt((obj.label.replace("Draw ", "").replace("1 ", "").replace("2 ", "")).slice(0,1)) === homeScore && parseInt((obj.label.replace("Draw ", "").replace("1 ", "").replace("2 ", "")).slice(-1)) === awayScore);
+                                                        }
+
+                                                        var nowDate = new Date().getTime();
+                                                        var thistime = (nowDate.toString()).slice(0, -3);
+                                                        var oddofforon = "match-odds-offer-element";
+                                                        if (items["time"].starting_at.timestamp < thistime) {
+                                                            oddofforon = "match-odds-offer-element odd-used";
+                                                        } else {
+                                                            if (sessionStorage.getItem("notUsableBtn")) {
+                                                                const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
+                                                                const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + activeCS);
+                                                                if (repliceIndex >= 0) {
+                                                                    oddofforon = "match-odds-offer-element odd-used";
+                                                                }
+                                                            }
+                                                        }
                                                         return (
                                                             <li key={item.type}>
                                                                 <div className="match-bet">
                                                                     <div className="match-bet-top">
                                                                         <p className="match-odds-h1">{getLabel(item, -1)}</p>
                                                                     </div>
-                                                                    <ul className="match-odds-offer">
-                                                                        {item.data.map((odd, index) => {
-                                                                            var nowDate = new Date().getTime();
-                                                                            var thistime = (nowDate.toString()).slice(0, -3);
-                                                                            var oddofforon = "match-odds-offer-element";
-                                                                            var counted = 100;
-                                                                            if (item.data.length === 2 || item.data.length > 3) {
-                                                                                counted = 50;
-                                                                            } else if (item.data.length === 3) {
-                                                                                counted = 33;
-                                                                            }
-                                                                            if (items["time"].starting_at.timestamp < thistime) {
-                                                                                oddofforon = "match-odds-offer-element odd-used";
-                                                                            } else {
-                                                                                if (sessionStorage.getItem("notUsableBtn")) {
-                                                                                    const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
-                                                                                    const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + index);
-                                                                                    if (repliceIndex >= 0) {
-                                                                                        oddofforon = "match-odds-offer-element odd-used";
-                                                                                    }
-                                                                                }
-                                                                            }
-                                                                            return (
-                                                                                <li key={item.type + matchID + "-" + index} className={oddofforon} style={{maxWidth: counted + "%"}} id={item.type + matchID + "-" + index} onClick={() => chooseOdd(item.type + matchID + "-" + index, item.type, index, odd.value, getLabel(item, index))}>
-                                                                                    <p className="match-odds-offer-h1">{getLabel(item, index)}</p>
-                                                                                    <p className="match-odds-offer-h2">{odd.value}</p>
-                                                                                </li>
-                                                                            );
-                                                                        })}
-                                                                    </ul>
+                                                                    <div className="match-odds-special" style={{justifyContent: "space-between", alignItems: "center"}}>
+                                                                        <div className="match-raisers">
+                                                                            <div className="match-odds-raiser">
+                                                                                <p className="match-odds-raiser-p">{homeTeam}</p>
+                                                                                <div className="match-odds-raiser-con">
+                                                                                    {item.data.findIndex(obj => obj.label.replace("Draw ", "").replace("1 ", "").replace("2 ", "") === (homeScore - 1) + ":" + awayScore) < 0 && <div className="match-raiser">
+                                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#333" viewBox="0 0 16 16">
+                                                                                            <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+                                                                                        </svg>
+                                                                                    </div>}
+                                                                                    {item.data.findIndex(obj => obj.label.replace("Draw ", "").replace("1 ", "").replace("2 ", "") === (homeScore - 1) + ":" + awayScore) >= 0 && <div className="match-raiser-active" onClick={() => {if (homeScore > 0){setHomeScore(homeScore - 1)}}}>
+                                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#333" viewBox="0 0 16 16">
+                                                                                            <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+                                                                                        </svg>
+                                                                                    </div>}
+                                                                                    <p className="match-raiser-h1">{homeScore}</p>
+                                                                                    {item.data.findIndex(obj => obj.label.replace("Draw ", "").replace("1 ", "").replace("2 ", "") === (homeScore + 1) + ":" + awayScore) < 0 && <div className="match-raiser">
+                                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#333" viewBox="0 0 16 16">
+                                                                                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                                                                        </svg>
+                                                                                    </div>}
+                                                                                    {item.data.findIndex(obj => obj.label.replace("Draw ", "").replace("1 ", "").replace("2 ", "") === (homeScore + 1) + ":" + awayScore) >= 0 && <div className="match-raiser-active" onClick={() => {if (homeScore < maxHome){ setHomeScore(homeScore + 1)}}}>
+                                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#333" viewBox="0 0 16 16">
+                                                                                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                                                                        </svg>
+                                                                                    </div>}
+                                                                                </div>
+                                                                            </div>
+                                                                            <div className="match-odds-raiser">
+                                                                                <p className="match-odds-raiser-p">{visitorTeam}</p>
+                                                                                <div className="match-odds-raiser-con">
+                                                                                    {item.data.findIndex(obj => obj.label.replace("Draw ", "").replace("1 ", "").replace("2 ", "") === homeScore + ":" + (awayScore - 1)) < 0 && <div className="match-raiser">
+                                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#333" viewBox="0 0 16 16">
+                                                                                            <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+                                                                                        </svg>
+                                                                                    </div>}
+                                                                                    {item.data.findIndex(obj => obj.label.replace("Draw ", "").replace("1 ", "").replace("2 ", "") === homeScore + ":" + (awayScore - 1)) >= 0 && <div className="match-raiser-active" onClick={() => {if (awayScore > 0){setAwayScore(awayScore - 1)}}}>
+                                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#333" viewBox="0 0 16 16">
+                                                                                            <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+                                                                                        </svg>
+                                                                                    </div>}
+                                                                                    <p className="match-raiser-h1">{awayScore}</p>
+                                                                                    {item.data.findIndex(obj => obj.label.replace("Draw ", "").replace("1 ", "").replace("2 ", "") === homeScore + ":" + (awayScore + 1)) < 0 && <div className="match-raiser">
+                                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#333" viewBox="0 0 16 16">
+                                                                                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                                                                        </svg>
+                                                                                    </div>}
+                                                                                    {item.data.findIndex(obj => obj.label.replace("Draw ", "").replace("1 ", "").replace("2 ", "") === homeScore + ":" + (awayScore + 1)) >= 0 && <div className="match-raiser-active" onClick={() => {if (awayScore < maxAway){ setAwayScore(awayScore + 1)}}}>
+                                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#333" viewBox="0 0 16 16">
+                                                                                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                                                                        </svg>
+                                                                                    </div>}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div className="match-raiser-odds">
+                                                                            <div key={item.type + matchID + "-" + activeCS} className={oddofforon} style={{justifyContent: "center"}} id={item.type + matchID + "-" + activeCS} onClick={() => chooseOdd(item.type + matchID + "-" + activeCS, item.type, activeCS, item.data[activeCS].value, getLabel(item, activeCS))}>
+                                                                                <p className="match-odds-offer-h2">{item.data[activeCS].value}</p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
                                                             </li>
                                                         );
-                                                    }
+                                                    } else return;
                                                 }
                                                 )}
                                             </ul>
@@ -3473,71 +3742,262 @@ function StageMatcharticle ({data}) {
                                                             </li>
                                                         );
                                                     } else if (item.type === "Goalscorer") {
-                                                        item.data.sort((a, b) => {
-                                                            return parseInt(a.value) - parseInt(b.value);
-                                                        });
-                                                        return (
-                                                            <li key={item.type}>
-                                                                <div className="match-bet">
-                                                                    <div className="match-bet-top">
-                                                                        <p className="match-odds-h1">{getLabel(item, -1)}</p>
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#333" viewBox="0 0 16 16">
-                                                                            <path d="M8 3a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 3zm4 8a4 4 0 0 1-8 0V5a4 4 0 1 1 8 0v6zM8 0a5 5 0 0 0-5 5v6a5 5 0 0 0 10 0V5a5 5 0 0 0-5-5z"/>
-                                                                        </svg>
-                                                                    </div>
-                                                                    <div className="match-odds-special">
-                                                                        <ul className="match-odds-offer">
-                                                                            {item.data.slice(0, (Math.ceil(item.data.length/2))).map((odd, index) => {
-                                                                                var nowDate = new Date().getTime();
-                                                                                var thistime = (nowDate.toString()).slice(0, -3);
-                                                                                var oddofforon = "match-odds-offer-element";
-                                                                                if (items["time"].starting_at.timestamp < thistime) {
-                                                                                    oddofforon = "match-odds-offer-element odd-used";
-                                                                                } else {
-                                                                                    if (sessionStorage.getItem("notUsableBtn")) {
-                                                                                        const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
-                                                                                        const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + index);
-                                                                                        if (repliceIndex >= 0) {
-                                                                                            oddofforon = "match-odds-offer-element odd-used";
+                                                        if (availGoal.findIndex(obj => obj.type === "Multi Scorers") >= 0) {
+                                                            const mscore = availGoal[availGoal.findIndex(obj => obj.type === "Multi Scorers")];
+                                                            item.data.sort((a, b) => {
+                                                                return parseInt(a.value) - parseInt(b.value);
+                                                            });
+                                                            var singleGoalscorers = [];
+                                                            for (var u in item.data) {
+                                                                if (singleGoalscorers.findIndex(obj => obj.label === item.data[u].label) < 0) {
+                                                                    singleGoalscorers.push(item.data[u])
+                                                                }
+                                                            }
+                                                            var singleMultiscorers = [];
+                                                            for (var u in mscore.data) {
+                                                                if (singleMultiscorers.findIndex(obj => obj.label.replace(" | 2 or More", "").replace(" | 3 or More", "") === mscore.data[u].label.replace(" | 2 or More", "").replace(" | 3 or More", "")) < 0) {
+                                                                    singleMultiscorers.push(mscore.data[u])
+                                                                }
+                                                            }
+                                                            return (
+                                                                <li key={item.type}>
+                                                                    <div className="match-bet">
+                                                                        <div className="match-bet-top">
+                                                                            <p className="match-odds-h1">{getLabel(item, -1)}</p>
+                                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#333" viewBox="0 0 16 16">
+                                                                                <path d="M8 3a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 3zm4 8a4 4 0 0 1-8 0V5a4 4 0 1 1 8 0v6zM8 0a5 5 0 0 0-5 5v6a5 5 0 0 0 10 0V5a5 5 0 0 0-5-5z"/>
+                                                                            </svg>
+                                                                        </div>
+                                                                        <div className="match-underkat">
+                                                                            <p className="match-underkat-kat-active" id="navgoalsco" onClick={() => {if (document.getElementById("multisco") && document.getElementById("goalsco") && document.getElementById("navmultisco") && document.getElementById("navgoalsco")){
+                                                                                document.getElementById("multisco").classList.add("display-not")
+                                                                                document.getElementById("goalsco").classList.remove("display-not")
+                                                                                document.getElementById("navmultisco").className = "match-underkat-kat"
+                                                                                document.getElementById("navgoalsco").className = "match-underkat-kat-active"
+                                                                                document.getElementById("goalid").classList.remove("display-not")
+                                                                                document.getElementById("multiid").classList.add("display-not")
+                                                                            }}}>Målscorer</p>
+                                                                            <p className="match-underkat-kat" id="navmultisco" onClick={() => {if (document.getElementById("multisco") && document.getElementById("goalsco") && document.getElementById("navmultisco") && document.getElementById("navgoalsco")){
+                                                                                document.getElementById("multisco").classList.remove("display-not")
+                                                                                document.getElementById("goalsco").classList.add("display-not")
+                                                                                document.getElementById("navmultisco").className = "match-underkat-kat-active"
+                                                                                document.getElementById("navgoalsco").className = "match-underkat-kat"
+                                                                                document.getElementById("goalid").classList.add("display-not")
+                                                                                document.getElementById("multiid").classList.remove("display-not")
+                                                                            }}}>Scorer flere mål</p>
+                                                                        </div>
+                                                                        <div className="match-odds-offer-id">
+                                                                            <div className="match-id-right" id="goalid">
+                                                                                <p className="match-row-id-h1">Første</p>
+                                                                                <p className="match-row-id-h1">Sidste</p>
+                                                                                <p className="match-row-id-h1">Når som helst</p>
+                                                                            </div>
+                                                                            <div className="match-id-right display-not" id="multiid">
+                                                                                <p className="match-row-id-h1" style={{width: "50%"}}>2 eller flere</p>
+                                                                                <p className="match-row-id-h1" style={{width: "50%"}}>3 ellere flere</p>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div className="match-odds-special">
+                                                                            <ul id="goalsco" className="match-odds-offer" style={{gap: "0px"}}>
+                                                                                {singleGoalscorers.map((odd, index) => {
+                                                                                    var nowDate = new Date().getTime();
+                                                                                    var thistime = (nowDate.toString()).slice(0, -3);
+                                                                                    var findex = item.data.findIndex(obj => obj.label === odd.label && obj.extra === "First")
+                                                                                    var lindex = item.data.findIndex(obj => obj.label === odd.label && obj.extra === "Last")
+                                                                                    var aindex = item.data.findIndex(obj => obj.label === odd.label && obj.extra === "Anytime")
+                                                                                    var oddofforon0 = "match-odds-offer-element";
+                                                                                    var oddofforon1 = "match-odds-offer-element";
+                                                                                    var oddofforon2 = "match-odds-offer-element";
+                                                                                    if (items["time"].starting_at.timestamp < thistime) {
+                                                                                        oddofforon0 = "match-odds-offer-element odd-used";
+                                                                                        oddofforon1 = "match-odds-offer-element odd-used";
+                                                                                        oddofforon2 = "match-odds-offer-element odd-used";
+                                                                                    } else {
+                                                                                        if (sessionStorage.getItem("notUsableBtn")) {
+                                                                                            const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
+                                                                                            const repliceFIndex = btnReplica.indexOf(item.type + matchID + "-" + findex);
+                                                                                            if (repliceFIndex >= 0) {
+                                                                                                oddofforon0 = "match-odds-offer-element odd-used";
+                                                                                            }
+                                                                                            const repliceLIndex = btnReplica.indexOf(item.type + matchID + "-" + lindex);
+                                                                                            if (repliceLIndex >= 0) {
+                                                                                                oddofforon1 = "match-odds-offer-element odd-used";
+                                                                                            }
+                                                                                            const repliceAIndex = btnReplica.indexOf(item.type + matchID + "-" + aindex);
+                                                                                            if (repliceAIndex >= 0) {
+                                                                                                oddofforon2 = "match-odds-offer-element odd-used";
+                                                                                            }
                                                                                         }
                                                                                     }
-                                                                                }
-                                                                                return (
-                                                                                    <li key={item.type + matchID + "-" + index} className={oddofforon} id={item.type + matchID + "-" + index} onClick={() => chooseOdd(item.type + matchID + "-" + index, item.type, index, odd.value, getLabel(item, index))}>
-                                                                                        <p className="match-odds-offer-h1">{getLabel(item, index)}</p>
-                                                                                        <p className="match-odds-offer-h2">{odd.value}</p>
-                                                                                    </li>
-                                                                                );
-                                                                            })}
-                                                                        </ul>
-                                                                        <ul className="match-odds-offer">
-                                                                            {item.data.slice((Math.ceil(item.data.length/2)), item.data.length).map((odd, index) => {
-                                                                                var nowDate = new Date().getTime();
-                                                                                var thistime = (nowDate.toString()).slice(0, -3);
-                                                                                var oddofforon = "match-odds-offer-element";
-                                                                                if (items["time"].starting_at.timestamp < thistime) {
-                                                                                    oddofforon = "match-odds-offer-element odd-used";
-                                                                                } else {
-                                                                                    if (sessionStorage.getItem("notUsableBtn")) {
-                                                                                        const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
-                                                                                        const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + (index + (Math.ceil(item.data.length/2))));
-                                                                                        if (repliceIndex >= 0) {
-                                                                                            oddofforon = "match-odds-offer-element odd-used";
+                                                                                    var teamSite = "";
+                                                                                    if (items["localTeam"].data.squad.data.findIndex(obj => obj.player.data.display_name === odd.label) >= 0) {
+                                                                                        teamSite = "local"
+                                                                                    } else if (items["localTeam"].data.squad.data.findIndex(obj => obj.player.data.fullname === odd.label) >= 0) {
+                                                                                        teamSite = "local"
+                                                                                    } else if (items["localTeam"].data.squad.data.findIndex(obj => obj.player.data.common_name === odd.label) >= 0) {
+                                                                                        teamSite = "local"
+                                                                                    } else if (items["visitorTeam"].data.squad.data.findIndex(obj => obj.player.data.display_name === odd.label) >= 0) {
+                                                                                        teamSite = "visitor"
+                                                                                    } else if (items["visitorTeam"].data.squad.data.findIndex(obj => obj.player.data.fullname === odd.label) >= 0) {
+                                                                                        teamSite = "visitor"
+                                                                                    } else if (items["visitorTeam"].data.squad.data.findIndex(obj => obj.player.data.common_name === odd.label) >= 0) {
+                                                                                        teamSite = "visitor"
+                                                                                    }
+                                                                                    return (
+                                                                                        <li key={odd.label}>
+                                                                                            <div className="match-hz">
+                                                                                                <div style={{display: "flex", alignItems: "center", gap: "5px", width: "50%", overflow: "hidden"}}>
+                                                                                                    {teamSite === "local" && <div className="match-odds-img"><Image src={homelogo} layout="fill" /></div>}
+                                                                                                    {teamSite === "visitor" && <div className="match-odds-img"><Image src={visitorlogo} layout="fill" /></div>}
+                                                                                                    <p className="match-odds-spiller-h1">{odd.label}</p>
+                                                                                                </div>
+                                                                                                <ul className="match-hz-offer" style={{flexDirection: "row"}}>
+                                                                                                    <li className={oddofforon0} id={item.type + matchID + "-" + findex} onClick={() => chooseOdd(item.type + matchID + "-" + findex, item.type, findex, odd.value, getLabel(item, findex))}>
+                                                                                                        <p className="match-odds-offer-h2">{item.data[findex].value}</p>
+                                                                                                    </li>
+                                                                                                    <li className={oddofforon1} id={item.type + matchID + "-" + lindex} onClick={() => chooseOdd(item.type + matchID + "-" + lindex, item.type, lindex, odd.value, getLabel(item, lindex))}>
+                                                                                                        <p className="match-odds-offer-h2">{item.data[lindex].value}</p>
+                                                                                                    </li>
+                                                                                                    {aindex >= 0 && <li className={oddofforon2} id={item.type + matchID + "-" + aindex} onClick={() => chooseOdd(item.type + matchID + "-" + aindex, item.type, aindex, odd.value, getLabel(item, aindex))}>
+                                                                                                        <p className="match-odds-offer-h2">{item.data[aindex].value}</p>
+                                                                                                    </li>}
+                                                                                                </ul>
+                                                                                            </div>
+                                                                                        </li>
+                                                                                    );
+                                                                                })}
+                                                                            </ul>
+                                                                            <ul id="multisco" className="match-odds-offer display-not" style={{gap: "0px"}}>
+                                                                                {singleMultiscorers.map((odd, index) => {
+                                                                                    var nowDate = new Date().getTime();
+                                                                                    var thistime = (nowDate.toString()).slice(0, -3);
+                                                                                    var findex = mscore.data.findIndex(obj => obj.label === odd.label && obj.label.includes(" | 2 or More"))
+                                                                                    var lindex = mscore.data.findIndex(obj => obj.label === odd.label.replace(" | 2 or More", " | 3 or More"))
+                                                                                    var oddofforon0 = "match-odds-offer-element";
+                                                                                    var oddofforon1 = "match-odds-offer-element";
+                                                                                    if (items["time"].starting_at.timestamp < thistime) {
+                                                                                        oddofforon0 = "match-odds-offer-element odd-used";
+                                                                                        oddofforon1 = "match-odds-offer-element odd-used";
+                                                                                        oddofforon2 = "match-odds-offer-element odd-used";
+                                                                                    } else {
+                                                                                        if (sessionStorage.getItem("notUsableBtn")) {
+                                                                                            const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
+                                                                                            const repliceFIndex = btnReplica.indexOf(item.type + matchID + "-" + findex);
+                                                                                            if (repliceFIndex >= 0) {
+                                                                                                oddofforon0 = "match-odds-offer-element odd-used";
+                                                                                            }
+                                                                                            const repliceLIndex = btnReplica.indexOf(item.type + matchID + "-" + lindex);
+                                                                                            if (repliceLIndex >= 0) {
+                                                                                                oddofforon1 = "match-odds-offer-element odd-used";
+                                                                                            }
                                                                                         }
                                                                                     }
-                                                                                }
-                                                                                return (
-                                                                                    <li key={item.type + matchID + "-" + index} className={oddofforon} id={item.type + matchID + "-" + (index + (Math.ceil(item.data.length/2)))} onClick={() => chooseOdd(item.type + matchID + "-" + (index + (Math.ceil(item.data.length/2))), item.type, (index + (Math.ceil(item.data.length/2))), odd.value, getLabel(item, (index + (Math.ceil(item.data.length/2)))))}>
-                                                                                        <p className="match-odds-offer-h1">{getLabel(item, (index + (Math.ceil(item.data.length/2))))}</p>
-                                                                                        <p className="match-odds-offer-h2">{odd.value}</p>
-                                                                                    </li>
-                                                                                );
-                                                                            })}
-                                                                        </ul>
+                                                                                    var teamSite = "";
+                                                                                    if (items["localTeam"].data.squad.data.findIndex(obj => obj.player.data.display_name === odd.label.replace(" | 2 or More", "").replace(" | 3 or More", "")) >= 0) {
+                                                                                        teamSite = "local"
+                                                                                    } else if (items["localTeam"].data.squad.data.findIndex(obj => obj.player.data.fullname === odd.label.replace(" | 2 or More", "").replace(" | 3 or More", "")) >= 0) {
+                                                                                        teamSite = "local"
+                                                                                    } else if (items["localTeam"].data.squad.data.findIndex(obj => obj.player.data.common_name === odd.label.replace(" | 2 or More", "").replace(" | 3 or More", "")) >= 0) {
+                                                                                        teamSite = "local"
+                                                                                    } else if (items["visitorTeam"].data.squad.data.findIndex(obj => obj.player.data.display_name === odd.label.replace(" | 2 or More", "").replace(" | 3 or More", "")) >= 0) {
+                                                                                        teamSite = "visitor"
+                                                                                    } else if (items["visitorTeam"].data.squad.data.findIndex(obj => obj.player.data.fullname === odd.label.replace(" | 2 or More", "").replace(" | 3 or More", "")) >= 0) {
+                                                                                        teamSite = "visitor"
+                                                                                    } else if (items["visitorTeam"].data.squad.data.findIndex(obj => obj.player.data.common_name === odd.label.replace(" | 2 or More", "").replace(" | 3 or More", "")) >= 0) {
+                                                                                        teamSite = "visitor"
+                                                                                    }
+                                                                                    return (
+                                                                                        <li key={odd.label}>
+                                                                                            <div className="match-hz">
+                                                                                                <div style={{display: "flex", alignItems: "center", gap: "5px", width: "50%", overflow: "hidden"}}>
+                                                                                                    {teamSite === "local" && <div className="match-odds-img"><Image src={homelogo} layout="fill" /></div>}
+                                                                                                    {teamSite === "visitor" && <div className="match-odds-img"><Image src={visitorlogo} layout="fill" /></div>}
+                                                                                                    <p className="match-odds-spiller-h1">{odd.label.replace(" | 2 or More", "").replace(" | 3 or More", "")}</p>
+                                                                                                </div>
+                                                                                                <ul className="match-hz-offer" style={{flexDirection: "row"}}>
+                                                                                                    {findex >= 0 && <li className={oddofforon0} id={mscore.type + matchID + "-" + findex} onClick={() => chooseOdd(mscore.type + matchID + "-" + findex, mscore.type, findex, mscore.data[findex].value, getLabel(mscore, findex))}>
+                                                                                                        <p className="match-odds-offer-h2">{mscore.data[findex].value}</p>
+                                                                                                    </li>}
+                                                                                                    {lindex >= 0 && <li className={oddofforon1} id={mscore.type + matchID + "-" + lindex} onClick={() => chooseOdd(mscore.type + matchID + "-" + lindex, mscore.type, lindex, mscore.data[lindex].value, getLabel(mscore, lindex))}>
+                                                                                                        <p className="match-odds-offer-h2">{mscore.data[lindex].value}</p>
+                                                                                                    </li>}
+                                                                                                </ul>
+                                                                                            </div>
+                                                                                        </li>
+                                                                                    );
+                                                                                })}
+                                                                            </ul>
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                            </li>
-                                                        );
+                                                                </li>
+                                                            );
+                                                        } else {
+                                                            item.data.sort((a, b) => {
+                                                                return parseInt(a.value) - parseInt(b.value);
+                                                            });
+                                                            return (
+                                                                <li key={item.type}>
+                                                                    <div className="match-bet">
+                                                                        <div className="match-bet-top">
+                                                                            <p className="match-odds-h1">{getLabel(item, -1)}</p>
+                                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#333" viewBox="0 0 16 16">
+                                                                                <path d="M8 3a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 3zm4 8a4 4 0 0 1-8 0V5a4 4 0 1 1 8 0v6zM8 0a5 5 0 0 0-5 5v6a5 5 0 0 0 10 0V5a5 5 0 0 0-5-5z"/>
+                                                                            </svg>
+                                                                        </div>
+                                                                        <div className="match-odds-special">
+                                                                            <ul className="match-odds-offer">
+                                                                                {item.data.slice(0, (Math.ceil(item.data.length/2))).map((odd, index) => {
+                                                                                    var nowDate = new Date().getTime();
+                                                                                    var thistime = (nowDate.toString()).slice(0, -3);
+                                                                                    var oddofforon = "match-odds-offer-element";
+                                                                                    if (items["time"].starting_at.timestamp < thistime) {
+                                                                                        oddofforon = "match-odds-offer-element odd-used";
+                                                                                    } else {
+                                                                                        if (sessionStorage.getItem("notUsableBtn")) {
+                                                                                            const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
+                                                                                            const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + index);
+                                                                                            if (repliceIndex >= 0) {
+                                                                                                oddofforon = "match-odds-offer-element odd-used";
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                    return (
+                                                                                        <li key={item.type + matchID + "-" + index} className={oddofforon} id={item.type + matchID + "-" + index} onClick={() => chooseOdd(item.type + matchID + "-" + index, item.type, index, odd.value, getLabel(item, index))}>
+                                                                                            <p className="match-odds-offer-h1">{getLabel(item, index)}</p>
+                                                                                            <p className="match-odds-offer-h2">{odd.value}</p>
+                                                                                        </li>
+                                                                                    );
+                                                                                })}
+                                                                            </ul>
+                                                                            <ul className="match-odds-offer">
+                                                                                {item.data.slice((Math.ceil(item.data.length/2)), item.data.length).map((odd, index) => {
+                                                                                    var nowDate = new Date().getTime();
+                                                                                    var thistime = (nowDate.toString()).slice(0, -3);
+                                                                                    var oddofforon = "match-odds-offer-element";
+                                                                                    if (items["time"].starting_at.timestamp < thistime) {
+                                                                                        oddofforon = "match-odds-offer-element odd-used";
+                                                                                    } else {
+                                                                                        if (sessionStorage.getItem("notUsableBtn")) {
+                                                                                            const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
+                                                                                            const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + (index + (Math.ceil(item.data.length/2))));
+                                                                                            if (repliceIndex >= 0) {
+                                                                                                oddofforon = "match-odds-offer-element odd-used";
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                    return (
+                                                                                        <li key={item.type + matchID + "-" + index} className={oddofforon} id={item.type + matchID + "-" + (index + (Math.ceil(item.data.length/2)))} onClick={() => chooseOdd(item.type + matchID + "-" + (index + (Math.ceil(item.data.length/2))), item.type, (index + (Math.ceil(item.data.length/2))), odd.value, getLabel(item, (index + (Math.ceil(item.data.length/2)))))}>
+                                                                                            <p className="match-odds-offer-h1">{getLabel(item, (index + (Math.ceil(item.data.length/2))))}</p>
+                                                                                            <p className="match-odds-offer-h2">{odd.value}</p>
+                                                                                        </li>
+                                                                                    );
+                                                                                })}
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                            );
+                                                        }
                                                     } else if (item.type === "1st Goal Method") {
                                                         return (
                                                             <li key={item.type}>
@@ -3598,6 +4058,113 @@ function StageMatcharticle ({data}) {
                                                                 </div>
                                                             </li>
                                                         );
+                                                    } else if (item.type === "Multi Scorers" || item.type === "Team Goalscorer") {
+                                                        return;
+                                                    } else if (item.type === "Correct Score") {
+                                                        var maxHome = 0;
+                                                        var maxAway = 0;
+                                                        const homeScores = item.data.map(object => {
+                                                            if (parseInt((object.label.replace("Draw", "").replace("1 ", "").replace("2 ", "")).slice(0,1)) >= 0) {
+                                                                return parseInt((object.label.replace("Draw", "").replace("1 ", "").replace("2 ", "")).slice(0,1));
+                                                            } else return 0;
+                                                        });
+                                                        const awayScores = item.data.map(object => {
+                                                            if (parseInt((object.label.replace("Draw", "").replace("1 ", "").replace("2 ", "")).slice(-1)) >= 0) {
+                                                                return parseInt((object.label.replace("Draw", "").replace("1 ", "").replace("2 ", "")).slice(-1));
+                                                            } else return 0;
+                                                        });
+                                                        maxHome = Math.max.apply(null,homeScores)
+                                                        maxAway = Math.max.apply(null,awayScores)
+
+                                                        var activeCS = 0;
+                                                        if (item.data.findIndex(obj => parseInt((obj.label.replace("Draw ", "").replace("1 ", "").replace("2 ", "")).slice(0,1)) === homeScore && parseInt((obj.label.replace("Draw ", "").replace("1 ", "").replace("2 ", "")).slice(-1)) === awayScore) >= 0) {
+                                                            activeCS = item.data.findIndex(obj => parseInt((obj.label.replace("Draw ", "").replace("1 ", "").replace("2 ", "")).slice(0,1)) === homeScore && parseInt((obj.label.replace("Draw ", "").replace("1 ", "").replace("2 ", "")).slice(-1)) === awayScore);
+                                                        }
+
+                                                        var nowDate = new Date().getTime();
+                                                        var thistime = (nowDate.toString()).slice(0, -3);
+                                                        var oddofforon = "match-odds-offer-element";
+                                                        if (items["time"].starting_at.timestamp < thistime) {
+                                                            oddofforon = "match-odds-offer-element odd-used";
+                                                        } else {
+                                                            if (sessionStorage.getItem("notUsableBtn")) {
+                                                                const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
+                                                                const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + activeCS);
+                                                                if (repliceIndex >= 0) {
+                                                                    oddofforon = "match-odds-offer-element odd-used";
+                                                                }
+                                                            }
+                                                        }
+                                                        return (
+                                                            <li key={item.type}>
+                                                                <div className="match-bet">
+                                                                    <div className="match-bet-top">
+                                                                        <p className="match-odds-h1">{getLabel(item, -1)}</p>
+                                                                    </div>
+                                                                    <div className="match-odds-special" style={{justifyContent: "space-between", alignItems: "center"}}>
+                                                                        <div className="match-raisers">
+                                                                            <div className="match-odds-raiser">
+                                                                                <p className="match-odds-raiser-p">{homeTeam}</p>
+                                                                                <div className="match-odds-raiser-con">
+                                                                                    {item.data.findIndex(obj => obj.label.replace("Draw ", "").replace("1 ", "").replace("2 ", "") === (homeScore - 1) + ":" + awayScore) < 0 && <div className="match-raiser">
+                                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#333" viewBox="0 0 16 16">
+                                                                                            <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+                                                                                        </svg>
+                                                                                    </div>}
+                                                                                    {item.data.findIndex(obj => obj.label.replace("Draw ", "").replace("1 ", "").replace("2 ", "") === (homeScore - 1) + ":" + awayScore) >= 0 && <div className="match-raiser-active" onClick={() => {if (homeScore > 0){setHomeScore(homeScore - 1)}}}>
+                                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#333" viewBox="0 0 16 16">
+                                                                                            <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+                                                                                        </svg>
+                                                                                    </div>}
+                                                                                    <p className="match-raiser-h1">{homeScore}</p>
+                                                                                    {item.data.findIndex(obj => obj.label.replace("Draw ", "").replace("1 ", "").replace("2 ", "") === (homeScore + 1) + ":" + awayScore) < 0 && <div className="match-raiser">
+                                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#333" viewBox="0 0 16 16">
+                                                                                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                                                                        </svg>
+                                                                                    </div>}
+                                                                                    {item.data.findIndex(obj => obj.label.replace("Draw ", "").replace("1 ", "").replace("2 ", "") === (homeScore + 1) + ":" + awayScore) >= 0 && <div className="match-raiser-active" onClick={() => {if (homeScore < maxHome){ setHomeScore(homeScore + 1)}}}>
+                                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#333" viewBox="0 0 16 16">
+                                                                                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                                                                        </svg>
+                                                                                    </div>}
+                                                                                </div>
+                                                                            </div>
+                                                                            <div className="match-odds-raiser">
+                                                                                <p className="match-odds-raiser-p">{visitorTeam}</p>
+                                                                                <div className="match-odds-raiser-con">
+                                                                                    {item.data.findIndex(obj => obj.label.replace("Draw ", "").replace("1 ", "").replace("2 ", "") === homeScore + ":" + (awayScore - 1)) < 0 && <div className="match-raiser">
+                                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#333" viewBox="0 0 16 16">
+                                                                                            <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+                                                                                        </svg>
+                                                                                    </div>}
+                                                                                    {item.data.findIndex(obj => obj.label.replace("Draw ", "").replace("1 ", "").replace("2 ", "") === homeScore + ":" + (awayScore - 1)) >= 0 && <div className="match-raiser-active" onClick={() => {if (awayScore > 0){setAwayScore(awayScore - 1)}}}>
+                                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#333" viewBox="0 0 16 16">
+                                                                                            <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+                                                                                        </svg>
+                                                                                    </div>}
+                                                                                    <p className="match-raiser-h1">{awayScore}</p>
+                                                                                    {item.data.findIndex(obj => obj.label.replace("Draw ", "").replace("1 ", "").replace("2 ", "") === homeScore + ":" + (awayScore + 1)) < 0 && <div className="match-raiser">
+                                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#333" viewBox="0 0 16 16">
+                                                                                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                                                                        </svg>
+                                                                                    </div>}
+                                                                                    {item.data.findIndex(obj => obj.label.replace("Draw ", "").replace("1 ", "").replace("2 ", "") === homeScore + ":" + (awayScore + 1)) >= 0 && <div className="match-raiser-active" onClick={() => {if (awayScore < maxAway){ setAwayScore(awayScore + 1)}}}>
+                                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#333" viewBox="0 0 16 16">
+                                                                                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                                                                        </svg>
+                                                                                    </div>}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div className="match-raiser-odds">
+                                                                            <div key={item.type + matchID + "-" + activeCS} className={oddofforon} style={{justifyContent: "center"}} id={item.type + matchID + "-" + activeCS} onClick={() => chooseOdd(item.type + matchID + "-" + activeCS, item.type, activeCS, item.data[activeCS].value, getLabel(item, activeCS))}>
+                                                                                <p className="match-odds-offer-h2">{item.data[activeCS].value}</p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        );
                                                     } else {
                                                         return (
                                                             <li key={item.type}>
@@ -3653,71 +4220,91 @@ function StageMatcharticle ({data}) {
                                             <ul className="match-odds-id-con display" id="kort-kort">
                                                 {availKort.map((item) => {
                                                     if (item.type === "Player to be Booked") {
-                                                        item.data.sort((a, b) => {
-                                                            return parseInt(a.value) - parseInt(b.value);
-                                                        });
-                                                        return (
-                                                            <li key={item.type}>
-                                                                <div className="match-bet">
-                                                                    <div className="match-bet-top">
-                                                                        <p className="match-odds-h1">{getLabel(item, -1)}</p>
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#333" viewBox="0 0 16 16">
-                                                                            <path d="M8 3a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 3zm4 8a4 4 0 0 1-8 0V5a4 4 0 1 1 8 0v6zM8 0a5 5 0 0 0-5 5v6a5 5 0 0 0 10 0V5a5 5 0 0 0-5-5z"/>
-                                                                        </svg>
-                                                                    </div>
-                                                                    <div className="match-odds-special">
-                                                                        <ul className="match-odds-offer">
-                                                                            {item.data.slice(0, (Math.ceil(item.data.length/2))).map((odd, index) => {
-                                                                                var nowDate = new Date().getTime();
-                                                                                var thistime = (nowDate.toString()).slice(0, -3);
-                                                                                var oddofforon = "match-odds-offer-element";
-                                                                                if (items["time"].starting_at.timestamp < thistime) {
-                                                                                    oddofforon = "match-odds-offer-element odd-used";
-                                                                                } else {
-                                                                                    if (sessionStorage.getItem("notUsableBtn")) {
-                                                                                        const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
-                                                                                        const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + index);
-                                                                                        if (repliceIndex >= 0) {
-                                                                                            oddofforon = "match-odds-offer-element odd-used";
+                                                        if (availKort.findIndex(obj => obj.type === "Player to be Sent Off") >= 0) {
+                                                            const mscore = availKort[availKort.findIndex(obj => obj.type === "Player to be Sent Off")];
+                                                            item.data.sort((a, b) => {
+                                                                return parseInt(a.value) - parseInt(b.value);
+                                                            });
+                                                            return (
+                                                                <li key={item.type}>
+                                                                    <div className="match-bet">
+                                                                        <div className="match-bet-top">
+                                                                            <p className="match-odds-h1">{getLabel(item, -1)}</p>
+                                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#333" viewBox="0 0 16 16">
+                                                                                <path d="M8 3a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 3zm4 8a4 4 0 0 1-8 0V5a4 4 0 1 1 8 0v6zM8 0a5 5 0 0 0-5 5v6a5 5 0 0 0 10 0V5a5 5 0 0 0-5-5z"/>
+                                                                            </svg>
+                                                                        </div>
+                                                                        <div className="match-odds-offer-id">
+                                                                            <div className="match-id-right">
+                                                                                <p className="match-row-id-h1" style={{width: "50%"}}>Advarsel</p>
+                                                                                <p className="match-row-id-h1" style={{width: "50%"}}>Udvist</p>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div className="match-odds-special">
+                                                                            <ul className="match-odds-offer" style={{gap: "0px"}}>
+                                                                                {item.data.map((odd, index) => {
+                                                                                    var nowDate = new Date().getTime();
+                                                                                    var thistime = (nowDate.toString()).slice(0, -3);
+                                                                                    var findex = item.data.findIndex(obj => obj.label === odd.label)
+                                                                                    var lindex = mscore.data.findIndex(obj => obj.label === odd.label)
+                                                                                    var oddofforon0 = "match-odds-offer-element";
+                                                                                    var oddofforon1 = "match-odds-offer-element";
+                                                                                    if (items["time"].starting_at.timestamp < thistime) {
+                                                                                        oddofforon0 = "match-odds-offer-element odd-used";
+                                                                                        oddofforon1 = "match-odds-offer-element odd-used";
+                                                                                    } else {
+                                                                                        if (sessionStorage.getItem("notUsableBtn")) {
+                                                                                            const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
+                                                                                            const repliceFIndex = btnReplica.indexOf(item.type + matchID + "-" + findex);
+                                                                                            if (repliceFIndex >= 0) {
+                                                                                                oddofforon0 = "match-odds-offer-element odd-used";
+                                                                                            }
+                                                                                            const repliceLIndex = btnReplica.indexOf(mscore.type + matchID + "-" + lindex);
+                                                                                            if (repliceLIndex >= 0) {
+                                                                                                oddofforon1 = "match-odds-offer-element odd-used";
+                                                                                            }
                                                                                         }
                                                                                     }
-                                                                                }
-                                                                                return (
-                                                                                    <li key={item.type + matchID + "-" + index} className={oddofforon} id={item.type + matchID + "-" + index} onClick={() => chooseOdd(item.type + matchID + "-" + index, item.type, index, odd.value, getLabel(item, index))}>
-                                                                                        <p className="match-odds-offer-h1">{getLabel(item, index)}</p>
-                                                                                        <p className="match-odds-offer-h2">{odd.value}</p>
-                                                                                    </li>
-                                                                                );
-                                                                            })}
-                                                                        </ul>
-                                                                        <ul className="match-odds-offer">
-                                                                            {item.data.slice((Math.ceil(item.data.length/2)), item.data.length).map((odd, index) => {
-                                                                                var nowDate = new Date().getTime();
-                                                                                var thistime = (nowDate.toString()).slice(0, -3);
-                                                                                var oddofforon = "match-odds-offer-element";
-                                                                                if (items["time"].starting_at.timestamp < thistime) {
-                                                                                    oddofforon = "match-odds-offer-element odd-used";
-                                                                                } else {
-                                                                                    if (sessionStorage.getItem("notUsableBtn")) {
-                                                                                        const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
-                                                                                        const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + (index + (Math.ceil(item.data.length/2))));
-                                                                                        if (repliceIndex >= 0) {
-                                                                                            oddofforon = "match-odds-offer-element odd-used";
-                                                                                        }
+                                                                                    var teamSite = "";
+                                                                                    if (items["localTeam"].data.squad.data.findIndex(obj => obj.player.data.display_name === odd.label) >= 0) {
+                                                                                        teamSite = "local"
+                                                                                    } else if (items["localTeam"].data.squad.data.findIndex(obj => obj.player.data.fullname === odd.label) >= 0) {
+                                                                                        teamSite = "local"
+                                                                                    } else if (items["localTeam"].data.squad.data.findIndex(obj => obj.player.data.common_name === odd.label) >= 0) {
+                                                                                        teamSite = "local"
+                                                                                    } else if (items["visitorTeam"].data.squad.data.findIndex(obj => obj.player.data.display_name === odd.label) >= 0) {
+                                                                                        teamSite = "visitor"
+                                                                                    } else if (items["visitorTeam"].data.squad.data.findIndex(obj => obj.player.data.fullname === odd.label) >= 0) {
+                                                                                        teamSite = "visitor"
+                                                                                    } else if (items["visitorTeam"].data.squad.data.findIndex(obj => obj.player.data.common_name === odd.label) >= 0) {
+                                                                                        teamSite = "visitor"
                                                                                     }
-                                                                                }
-                                                                                return (
-                                                                                    <li key={item.type + matchID + "-" + index} className={oddofforon} id={item.type + matchID + "-" + (index + (Math.ceil(item.data.length/2)))} onClick={() => chooseOdd(item.type + matchID + "-" + (index + (Math.ceil(item.data.length/2))), item.type, (index + (Math.ceil(item.data.length/2))), odd.value, getLabel(item, (index + (Math.ceil(item.data.length/2)))))}>
-                                                                                        <p className="match-odds-offer-h1">{getLabel(item, (index + (Math.ceil(item.data.length/2))))}</p>
-                                                                                        <p className="match-odds-offer-h2">{odd.value}</p>
-                                                                                    </li>
-                                                                                );
-                                                                            })}
-                                                                        </ul>
+                                                                                    return (
+                                                                                        <li key={odd.label}>
+                                                                                            <div className="match-hz">
+                                                                                                <div style={{display: "flex", alignItems: "center", gap: "5px", width: "50%", overflow: "hidden"}}>
+                                                                                                    {teamSite === "local" && <div className="match-odds-img"><Image src={homelogo} layout="fill" /></div>}
+                                                                                                    {teamSite === "visitor" && <div className="match-odds-img"><Image src={visitorlogo} layout="fill" /></div>}
+                                                                                                    <p className="match-odds-spiller-h1">{odd.label}</p>
+                                                                                                </div>
+                                                                                                <ul className="match-hz-offer" style={{flexDirection: "row"}}>
+                                                                                                    <li className={oddofforon0} id={item.type + matchID + "-" + findex} onClick={() => chooseOdd(item.type + matchID + "-" + findex, item.type, findex, odd.value, getLabel(item, findex))}>
+                                                                                                        <p className="match-odds-offer-h2">{item.data[findex].value}</p>
+                                                                                                    </li>
+                                                                                                    <li className={oddofforon1} id={mscore.type + matchID + "-" + lindex} onClick={() => chooseOdd(mscore.type + matchID + "-" + lindex, mscore.type, lindex, mscore.data[lindex].value, getLabel(item, lindex))}>
+                                                                                                        <p className="match-odds-offer-h2">{mscore.data[lindex].value}</p>
+                                                                                                    </li>
+                                                                                                </ul>
+                                                                                            </div>
+                                                                                        </li>
+                                                                                    );
+                                                                                })}
+                                                                            </ul>
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                            </li>
-                                                        );
+                                                                </li>
+                                                            );
+                                                        } else return;
                                                     } else if (item.type === "Team Cards") {
                                                         var underArray = [];
                                                         var overArray = [];
@@ -3798,6 +4385,8 @@ function StageMatcharticle ({data}) {
                                                                 </div>
                                                             </li>
                                                         );
+                                                    } else if (item.type === "Player to be Sent Off") {
+                                                        return;
                                                     } else {
                                                         return (
                                                             <li key={item.type}>
@@ -4048,68 +4637,350 @@ function StageMatcharticle ({data}) {
                                                     item.data.sort((a, b) => {
                                                         return parseInt(a.value) - parseInt(b.value);
                                                     });
-                                                    return (
-                                                        <li key={item.type}>
-                                                            <div className="match-bet">
-                                                                <div className="match-bet-top">
-                                                                    <p className="match-odds-h1">{getLabel(item, -1)}</p>
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#333" viewBox="0 0 16 16">
-                                                                        <path d="M8 3a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 3zm4 8a4 4 0 0 1-8 0V5a4 4 0 1 1 8 0v6zM8 0a5 5 0 0 0-5 5v6a5 5 0 0 0 10 0V5a5 5 0 0 0-5-5z"/>
-                                                                    </svg>
-                                                                </div>
-                                                                <div className="match-odds-special">
-                                                                    <ul className="match-odds-offer">
-                                                                        {item.data.slice(0, (Math.ceil(item.data.length/2))).map((odd, index) => {
-                                                                            var nowDate = new Date().getTime();
-                                                                            var thistime = (nowDate.toString()).slice(0, -3);
-                                                                            var oddofforon = "match-odds-offer-element";
-                                                                            if (items["time"].starting_at.timestamp < thistime) {
-                                                                                oddofforon = "match-odds-offer-element odd-used";
-                                                                            } else {
-                                                                                if (sessionStorage.getItem("notUsableBtn")) {
-                                                                                    const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
-                                                                                    const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + index);
-                                                                                    if (repliceIndex >= 0) {
-                                                                                        oddofforon = "match-odds-offer-element odd-used";
+                                                    if (item.type === "Player to be Booked") {
+                                                        if (availKort.findIndex(obj => obj.type === "Player to be Sent Off") >= 0) {
+                                                            const mscore = availKort[availKort.findIndex(obj => obj.type === "Player to be Sent Off")];
+                                                            item.data.sort((a, b) => {
+                                                                return parseInt(a.value) - parseInt(b.value);
+                                                            });
+                                                            return (
+                                                                <li key={item.type}>
+                                                                    <div className="match-bet">
+                                                                        <div className="match-bet-top">
+                                                                            <p className="match-odds-h1">{getLabel(item, -1)}</p>
+                                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#333" viewBox="0 0 16 16">
+                                                                                <path d="M8 3a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 3zm4 8a4 4 0 0 1-8 0V5a4 4 0 1 1 8 0v6zM8 0a5 5 0 0 0-5 5v6a5 5 0 0 0 10 0V5a5 5 0 0 0-5-5z"/>
+                                                                            </svg>
+                                                                        </div>
+                                                                        <div className="match-odds-offer-id">
+                                                                            <div className="match-id-right">
+                                                                                <p className="match-row-id-h1" style={{width: "50%"}}>Advarsel</p>
+                                                                                <p className="match-row-id-h1" style={{width: "50%"}}>Udvist</p>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div className="match-odds-special">
+                                                                            <ul className="match-odds-offer" style={{gap: "0px"}}>
+                                                                                {item.data.map((odd, index) => {
+                                                                                    var nowDate = new Date().getTime();
+                                                                                    var thistime = (nowDate.toString()).slice(0, -3);
+                                                                                    var findex = item.data.findIndex(obj => obj.label === odd.label)
+                                                                                    var lindex = mscore.data.findIndex(obj => obj.label === odd.label)
+                                                                                    var oddofforon0 = "match-odds-offer-element";
+                                                                                    var oddofforon1 = "match-odds-offer-element";
+                                                                                    if (items["time"].starting_at.timestamp < thistime) {
+                                                                                        oddofforon0 = "match-odds-offer-element odd-used";
+                                                                                        oddofforon1 = "match-odds-offer-element odd-used";
+                                                                                    } else {
+                                                                                        if (sessionStorage.getItem("notUsableBtn")) {
+                                                                                            const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
+                                                                                            const repliceFIndex = btnReplica.indexOf(item.type + matchID + "-" + findex);
+                                                                                            if (repliceFIndex >= 0) {
+                                                                                                oddofforon0 = "match-odds-offer-element odd-used";
+                                                                                            }
+                                                                                            const repliceLIndex = btnReplica.indexOf(mscore.type + matchID + "-" + lindex);
+                                                                                            if (repliceLIndex >= 0) {
+                                                                                                oddofforon1 = "match-odds-offer-element odd-used";
+                                                                                            }
+                                                                                        }
                                                                                     }
-                                                                                }
-                                                                            }
-                                                                            return (
-                                                                                <li key={item.type + matchID + "-" + index} className={oddofforon} id={item.type + matchID + "-" + index} onClick={() => chooseOdd(item.type + matchID + "-" + index, item.type, index, odd.value, getLabel(item, index))}>
-                                                                                    <p className="match-odds-offer-h1">{getLabel(item, index)}</p>
-                                                                                    <p className="match-odds-offer-h2">{odd.value}</p>
-                                                                                </li>
-                                                                            );
-                                                                        })}
-                                                                    </ul>
-                                                                    <ul className="match-odds-offer">
-                                                                        {item.data.slice((Math.ceil(item.data.length/2)), item.data.length).map((odd, index) => {
-                                                                            var nowDate = new Date().getTime();
-                                                                            var thistime = (nowDate.toString()).slice(0, -3);
-                                                                            var oddofforon = "match-odds-offer-element";
-                                                                            if (items["time"].starting_at.timestamp < thistime) {
-                                                                                oddofforon = "match-odds-offer-element odd-used";
-                                                                            } else {
-                                                                                if (sessionStorage.getItem("notUsableBtn")) {
-                                                                                    const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
-                                                                                    const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + (index + (Math.ceil(item.data.length/2))));
-                                                                                    if (repliceIndex >= 0) {
-                                                                                        oddofforon = "match-odds-offer-element odd-used";
+                                                                                    var teamSite = "";
+                                                                                    if (items["localTeam"].data.squad.data.findIndex(obj => obj.player.data.display_name === odd.label) >= 0) {
+                                                                                        teamSite = "local"
+                                                                                    } else if (items["localTeam"].data.squad.data.findIndex(obj => obj.player.data.fullname === odd.label) >= 0) {
+                                                                                        teamSite = "local"
+                                                                                    } else if (items["localTeam"].data.squad.data.findIndex(obj => obj.player.data.common_name === odd.label) >= 0) {
+                                                                                        teamSite = "local"
+                                                                                    } else if (items["visitorTeam"].data.squad.data.findIndex(obj => obj.player.data.display_name === odd.label) >= 0) {
+                                                                                        teamSite = "visitor"
+                                                                                    } else if (items["visitorTeam"].data.squad.data.findIndex(obj => obj.player.data.fullname === odd.label) >= 0) {
+                                                                                        teamSite = "visitor"
+                                                                                    } else if (items["visitorTeam"].data.squad.data.findIndex(obj => obj.player.data.common_name === odd.label) >= 0) {
+                                                                                        teamSite = "visitor"
                                                                                     }
-                                                                                }
-                                                                            }
-                                                                            return (
-                                                                                <li key={item.type + matchID + "-" + index} className={oddofforon} id={item.type + matchID + "-" + (index + (Math.ceil(item.data.length/2)))} onClick={() => chooseOdd(item.type + matchID + "-" + (index + (Math.ceil(item.data.length/2))), item.type, (index + (Math.ceil(item.data.length/2))), odd.value, getLabel(item, (index + (Math.ceil(item.data.length/2)))))}>
-                                                                                    <p className="match-odds-offer-h1">{getLabel(item, (index + (Math.ceil(item.data.length/2))))}</p>
-                                                                                    <p className="match-odds-offer-h2">{odd.value}</p>
-                                                                                </li>
-                                                                            );
-                                                                        })}
-                                                                    </ul>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                    );
+                                                                                    return (
+                                                                                        <li key={odd.label}>
+                                                                                            <div className="match-hz">
+                                                                                                <div style={{display: "flex", alignItems: "center", gap: "5px", width: "50%", overflow: "hidden"}}>
+                                                                                                    {teamSite === "local" && <div className="match-odds-img"><Image src={homelogo} layout="fill" /></div>}
+                                                                                                    {teamSite === "visitor" && <div className="match-odds-img"><Image src={visitorlogo} layout="fill" /></div>}
+                                                                                                    <p className="match-odds-spiller-h1">{odd.label}</p>
+                                                                                                </div>
+                                                                                                <ul className="match-hz-offer" style={{flexDirection: "row"}}>
+                                                                                                    <li className={oddofforon0} id={item.type + matchID + "-" + findex} onClick={() => chooseOdd(item.type + matchID + "-" + findex, item.type, findex, odd.value, getLabel(item, findex))}>
+                                                                                                        <p className="match-odds-offer-h2">{item.data[findex].value}</p>
+                                                                                                    </li>
+                                                                                                    <li className={oddofforon1} id={mscore.type + matchID + "-" + lindex} onClick={() => chooseOdd(mscore.type + matchID + "-" + lindex, mscore.type, lindex, mscore.data[lindex].value, getLabel(item, lindex))}>
+                                                                                                        <p className="match-odds-offer-h2">{mscore.data[lindex].value}</p>
+                                                                                                    </li>
+                                                                                                </ul>
+                                                                                            </div>
+                                                                                        </li>
+                                                                                    );
+                                                                                })}
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                            );
+                                                        } else return;
+                                                    } else if (item.type === "Goalscorer") {
+                                                        if (availGoal.findIndex(obj => obj.type === "Multi Scorers") >= 0) {
+                                                            const mscore = availGoal[availGoal.findIndex(obj => obj.type === "Multi Scorers")];
+                                                            item.data.sort((a, b) => {
+                                                                return parseInt(a.value) - parseInt(b.value);
+                                                            });
+                                                            var singleGoalscorers = [];
+                                                            for (var u in item.data) {
+                                                                if (singleGoalscorers.findIndex(obj => obj.label === item.data[u].label) < 0) {
+                                                                    singleGoalscorers.push(item.data[u])
+                                                                }
+                                                            }
+                                                            var singleMultiscorers = [];
+                                                            for (var u in mscore.data) {
+                                                                if (singleMultiscorers.findIndex(obj => obj.label.replace(" | 2 or More", "").replace(" | 3 or More", "") === mscore.data[u].label.replace(" | 2 or More", "").replace(" | 3 or More", "")) < 0) {
+                                                                    singleMultiscorers.push(mscore.data[u])
+                                                                }
+                                                            }
+                                                            return (
+                                                                <li key={item.type}>
+                                                                    <div className="match-bet">
+                                                                        <div className="match-bet-top">
+                                                                            <p className="match-odds-h1">{getLabel(item, -1)}</p>
+                                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#333" viewBox="0 0 16 16">
+                                                                                <path d="M8 3a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 3zm4 8a4 4 0 0 1-8 0V5a4 4 0 1 1 8 0v6zM8 0a5 5 0 0 0-5 5v6a5 5 0 0 0 10 0V5a5 5 0 0 0-5-5z"/>
+                                                                            </svg>
+                                                                        </div>
+                                                                        <div className="match-underkat">
+                                                                            <p className="match-underkat-kat-active" id="navgoalsco" onClick={() => {if (document.getElementById("multisco") && document.getElementById("goalsco") && document.getElementById("navmultisco") && document.getElementById("navgoalsco")){
+                                                                                document.getElementById("multisco").classList.add("display-not")
+                                                                                document.getElementById("goalsco").classList.remove("display-not")
+                                                                                document.getElementById("navmultisco").className = "match-underkat-kat"
+                                                                                document.getElementById("navgoalsco").className = "match-underkat-kat-active"
+                                                                                document.getElementById("goalid").classList.remove("display-not")
+                                                                                document.getElementById("multiid").classList.add("display-not")
+                                                                            }}}>Målscorer</p>
+                                                                            <p className="match-underkat-kat" id="navmultisco" onClick={() => {if (document.getElementById("multisco") && document.getElementById("goalsco") && document.getElementById("navmultisco") && document.getElementById("navgoalsco")){
+                                                                                document.getElementById("multisco").classList.remove("display-not")
+                                                                                document.getElementById("goalsco").classList.add("display-not")
+                                                                                document.getElementById("navmultisco").className = "match-underkat-kat-active"
+                                                                                document.getElementById("navgoalsco").className = "match-underkat-kat"
+                                                                                document.getElementById("goalid").classList.add("display-not")
+                                                                                document.getElementById("multiid").classList.remove("display-not")
+                                                                            }}}>Scorer flere mål</p>
+                                                                        </div>
+                                                                        <div className="match-odds-offer-id">
+                                                                            <div className="match-id-right" id="goalid">
+                                                                                <p className="match-row-id-h1">Første</p>
+                                                                                <p className="match-row-id-h1">Sidste</p>
+                                                                                <p className="match-row-id-h1">Når som helst</p>
+                                                                            </div>
+                                                                            <div className="match-id-right display-not" id="multiid">
+                                                                                <p className="match-row-id-h1" style={{width: "50%"}}>2 eller flere</p>
+                                                                                <p className="match-row-id-h1" style={{width: "50%"}}>3 ellere flere</p>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div className="match-odds-special">
+                                                                            <ul id="goalsco" className="match-odds-offer" style={{gap: "0px"}}>
+                                                                                {singleGoalscorers.map((odd, index) => {
+                                                                                    var nowDate = new Date().getTime();
+                                                                                    var thistime = (nowDate.toString()).slice(0, -3);
+                                                                                    var findex = item.data.findIndex(obj => obj.label === odd.label && obj.extra === "First")
+                                                                                    var lindex = item.data.findIndex(obj => obj.label === odd.label && obj.extra === "Last")
+                                                                                    var aindex = item.data.findIndex(obj => obj.label === odd.label && obj.extra === "Anytime")
+                                                                                    var oddofforon0 = "match-odds-offer-element";
+                                                                                    var oddofforon1 = "match-odds-offer-element";
+                                                                                    var oddofforon2 = "match-odds-offer-element";
+                                                                                    if (items["time"].starting_at.timestamp < thistime) {
+                                                                                        oddofforon0 = "match-odds-offer-element odd-used";
+                                                                                        oddofforon1 = "match-odds-offer-element odd-used";
+                                                                                        oddofforon2 = "match-odds-offer-element odd-used";
+                                                                                    } else {
+                                                                                        if (sessionStorage.getItem("notUsableBtn")) {
+                                                                                            const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
+                                                                                            const repliceFIndex = btnReplica.indexOf(item.type + matchID + "-" + findex);
+                                                                                            if (repliceFIndex >= 0) {
+                                                                                                oddofforon0 = "match-odds-offer-element odd-used";
+                                                                                            }
+                                                                                            const repliceLIndex = btnReplica.indexOf(item.type + matchID + "-" + lindex);
+                                                                                            if (repliceLIndex >= 0) {
+                                                                                                oddofforon1 = "match-odds-offer-element odd-used";
+                                                                                            }
+                                                                                            const repliceAIndex = btnReplica.indexOf(item.type + matchID + "-" + aindex);
+                                                                                            if (repliceAIndex >= 0) {
+                                                                                                oddofforon2 = "match-odds-offer-element odd-used";
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                    var teamSite = "";
+                                                                                    if (items["localTeam"].data.squad.data.findIndex(obj => obj.player.data.display_name === odd.label) >= 0) {
+                                                                                        teamSite = "local"
+                                                                                    } else if (items["localTeam"].data.squad.data.findIndex(obj => obj.player.data.fullname === odd.label) >= 0) {
+                                                                                        teamSite = "local"
+                                                                                    } else if (items["localTeam"].data.squad.data.findIndex(obj => obj.player.data.common_name === odd.label) >= 0) {
+                                                                                        teamSite = "local"
+                                                                                    } else if (items["visitorTeam"].data.squad.data.findIndex(obj => obj.player.data.display_name === odd.label) >= 0) {
+                                                                                        teamSite = "visitor"
+                                                                                    } else if (items["visitorTeam"].data.squad.data.findIndex(obj => obj.player.data.fullname === odd.label) >= 0) {
+                                                                                        teamSite = "visitor"
+                                                                                    } else if (items["visitorTeam"].data.squad.data.findIndex(obj => obj.player.data.common_name === odd.label) >= 0) {
+                                                                                        teamSite = "visitor"
+                                                                                    }
+                                                                                    return (
+                                                                                        <li key={odd.label}>
+                                                                                            <div className="match-hz">
+                                                                                                <div style={{display: "flex", alignItems: "center", gap: "5px", width: "50%", overflow: "hidden"}}>
+                                                                                                    {teamSite === "local" && <div className="match-odds-img"><Image src={homelogo} layout="fill" /></div>}
+                                                                                                    {teamSite === "visitor" && <div className="match-odds-img"><Image src={visitorlogo} layout="fill" /></div>}
+                                                                                                    <p className="match-odds-spiller-h1">{odd.label}</p>
+                                                                                                </div>
+                                                                                                <ul className="match-hz-offer" style={{flexDirection: "row"}}>
+                                                                                                    <li className={oddofforon0} id={item.type + matchID + "-" + findex} onClick={() => chooseOdd(item.type + matchID + "-" + findex, item.type, findex, odd.value, getLabel(item, findex))}>
+                                                                                                        <p className="match-odds-offer-h2">{item.data[findex].value}</p>
+                                                                                                    </li>
+                                                                                                    <li className={oddofforon1} id={item.type + matchID + "-" + lindex} onClick={() => chooseOdd(item.type + matchID + "-" + lindex, item.type, lindex, odd.value, getLabel(item, lindex))}>
+                                                                                                        <p className="match-odds-offer-h2">{item.data[lindex].value}</p>
+                                                                                                    </li>
+                                                                                                    {aindex >= 0 && <li className={oddofforon2} id={item.type + matchID + "-" + aindex} onClick={() => chooseOdd(item.type + matchID + "-" + aindex, item.type, aindex, odd.value, getLabel(item, aindex))}>
+                                                                                                        <p className="match-odds-offer-h2">{item.data[aindex].value}</p>
+                                                                                                    </li>}
+                                                                                                </ul>
+                                                                                            </div>
+                                                                                        </li>
+                                                                                    );
+                                                                                })}
+                                                                            </ul>
+                                                                            <ul id="multisco" className="match-odds-offer display-not" style={{gap: "0px"}}>
+                                                                                {singleMultiscorers.map((odd, index) => {
+                                                                                    var nowDate = new Date().getTime();
+                                                                                    var thistime = (nowDate.toString()).slice(0, -3);
+                                                                                    var findex = mscore.data.findIndex(obj => obj.label === odd.label && obj.label.includes(" | 2 or More"))
+                                                                                    var lindex = mscore.data.findIndex(obj => obj.label === odd.label.replace(" | 2 or More", " | 3 or More"))
+                                                                                    var oddofforon0 = "match-odds-offer-element";
+                                                                                    var oddofforon1 = "match-odds-offer-element";
+                                                                                    if (items["time"].starting_at.timestamp < thistime) {
+                                                                                        oddofforon0 = "match-odds-offer-element odd-used";
+                                                                                        oddofforon1 = "match-odds-offer-element odd-used";
+                                                                                        oddofforon2 = "match-odds-offer-element odd-used";
+                                                                                    } else {
+                                                                                        if (sessionStorage.getItem("notUsableBtn")) {
+                                                                                            const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
+                                                                                            const repliceFIndex = btnReplica.indexOf(item.type + matchID + "-" + findex);
+                                                                                            if (repliceFIndex >= 0) {
+                                                                                                oddofforon0 = "match-odds-offer-element odd-used";
+                                                                                            }
+                                                                                            const repliceLIndex = btnReplica.indexOf(item.type + matchID + "-" + lindex);
+                                                                                            if (repliceLIndex >= 0) {
+                                                                                                oddofforon1 = "match-odds-offer-element odd-used";
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                    var teamSite = "";
+                                                                                    if (items["localTeam"].data.squad.data.findIndex(obj => obj.player.data.display_name === odd.label.replace(" | 2 or More", "").replace(" | 3 or More", "")) >= 0) {
+                                                                                        teamSite = "local"
+                                                                                    } else if (items["localTeam"].data.squad.data.findIndex(obj => obj.player.data.fullname === odd.label.replace(" | 2 or More", "").replace(" | 3 or More", "")) >= 0) {
+                                                                                        teamSite = "local"
+                                                                                    } else if (items["localTeam"].data.squad.data.findIndex(obj => obj.player.data.common_name === odd.label.replace(" | 2 or More", "").replace(" | 3 or More", "")) >= 0) {
+                                                                                        teamSite = "local"
+                                                                                    } else if (items["visitorTeam"].data.squad.data.findIndex(obj => obj.player.data.display_name === odd.label.replace(" | 2 or More", "").replace(" | 3 or More", "")) >= 0) {
+                                                                                        teamSite = "visitor"
+                                                                                    } else if (items["visitorTeam"].data.squad.data.findIndex(obj => obj.player.data.fullname === odd.label.replace(" | 2 or More", "").replace(" | 3 or More", "")) >= 0) {
+                                                                                        teamSite = "visitor"
+                                                                                    } else if (items["visitorTeam"].data.squad.data.findIndex(obj => obj.player.data.common_name === odd.label.replace(" | 2 or More", "").replace(" | 3 or More", "")) >= 0) {
+                                                                                        teamSite = "visitor"
+                                                                                    }
+                                                                                    return (
+                                                                                        <li key={odd.label}>
+                                                                                            <div className="match-hz">
+                                                                                                <div style={{display: "flex", alignItems: "center", gap: "5px", width: "50%", overflow: "hidden"}}>
+                                                                                                    {teamSite === "local" && <div className="match-odds-img"><Image src={homelogo} layout="fill" /></div>}
+                                                                                                    {teamSite === "visitor" && <div className="match-odds-img"><Image src={visitorlogo} layout="fill" /></div>}
+                                                                                                    <p className="match-odds-spiller-h1">{odd.label.replace(" | 2 or More", "").replace(" | 3 or More", "")}</p>
+                                                                                                </div>
+                                                                                                <ul className="match-hz-offer" style={{flexDirection: "row"}}>
+                                                                                                    {findex >= 0 && <li className={oddofforon0} id={mscore.type + matchID + "-" + findex} onClick={() => chooseOdd(mscore.type + matchID + "-" + findex, mscore.type, findex, mscore.data[findex].value, getLabel(mscore, findex))}>
+                                                                                                        <p className="match-odds-offer-h2">{mscore.data[findex].value}</p>
+                                                                                                    </li>}
+                                                                                                    {lindex >= 0 && <li className={oddofforon1} id={mscore.type + matchID + "-" + lindex} onClick={() => chooseOdd(mscore.type + matchID + "-" + lindex, mscore.type, lindex, mscore.data[lindex].value, getLabel(mscore, lindex))}>
+                                                                                                        <p className="match-odds-offer-h2">{mscore.data[lindex].value}</p>
+                                                                                                    </li>}
+                                                                                                </ul>
+                                                                                            </div>
+                                                                                        </li>
+                                                                                    );
+                                                                                })}
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                            );
+                                                        } else {
+                                                            item.data.sort((a, b) => {
+                                                                return parseInt(a.value) - parseInt(b.value);
+                                                            });
+                                                            return (
+                                                                <li key={item.type}>
+                                                                    <div className="match-bet">
+                                                                        <div className="match-bet-top">
+                                                                            <p className="match-odds-h1">{getLabel(item, -1)}</p>
+                                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#333" viewBox="0 0 16 16">
+                                                                                <path d="M8 3a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 3zm4 8a4 4 0 0 1-8 0V5a4 4 0 1 1 8 0v6zM8 0a5 5 0 0 0-5 5v6a5 5 0 0 0 10 0V5a5 5 0 0 0-5-5z"/>
+                                                                            </svg>
+                                                                        </div>
+                                                                        <div className="match-odds-special">
+                                                                            <ul className="match-odds-offer">
+                                                                                {item.data.slice(0, (Math.ceil(item.data.length/2))).map((odd, index) => {
+                                                                                    var nowDate = new Date().getTime();
+                                                                                    var thistime = (nowDate.toString()).slice(0, -3);
+                                                                                    var oddofforon = "match-odds-offer-element";
+                                                                                    if (items["time"].starting_at.timestamp < thistime) {
+                                                                                        oddofforon = "match-odds-offer-element odd-used";
+                                                                                    } else {
+                                                                                        if (sessionStorage.getItem("notUsableBtn")) {
+                                                                                            const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
+                                                                                            const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + index);
+                                                                                            if (repliceIndex >= 0) {
+                                                                                                oddofforon = "match-odds-offer-element odd-used";
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                    return (
+                                                                                        <li key={item.type + matchID + "-" + index} className={oddofforon} id={item.type + matchID + "-" + index} onClick={() => chooseOdd(item.type + matchID + "-" + index, item.type, index, odd.value, getLabel(item, index))}>
+                                                                                            <p className="match-odds-offer-h1">{getLabel(item, index)}</p>
+                                                                                            <p className="match-odds-offer-h2">{odd.value}</p>
+                                                                                        </li>
+                                                                                    );
+                                                                                })}
+                                                                            </ul>
+                                                                            <ul className="match-odds-offer">
+                                                                                {item.data.slice((Math.ceil(item.data.length/2)), item.data.length).map((odd, index) => {
+                                                                                    var nowDate = new Date().getTime();
+                                                                                    var thistime = (nowDate.toString()).slice(0, -3);
+                                                                                    var oddofforon = "match-odds-offer-element";
+                                                                                    if (items["time"].starting_at.timestamp < thistime) {
+                                                                                        oddofforon = "match-odds-offer-element odd-used";
+                                                                                    } else {
+                                                                                        if (sessionStorage.getItem("notUsableBtn")) {
+                                                                                            const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
+                                                                                            const repliceIndex = btnReplica.indexOf(item.type + matchID + "-" + (index + (Math.ceil(item.data.length/2))));
+                                                                                            if (repliceIndex >= 0) {
+                                                                                                oddofforon = "match-odds-offer-element odd-used";
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                    return (
+                                                                                        <li key={item.type + matchID + "-" + index} className={oddofforon} id={item.type + matchID + "-" + (index + (Math.ceil(item.data.length/2)))} onClick={() => chooseOdd(item.type + matchID + "-" + (index + (Math.ceil(item.data.length/2))), item.type, (index + (Math.ceil(item.data.length/2))), odd.value, getLabel(item, (index + (Math.ceil(item.data.length/2)))))}>
+                                                                                            <p className="match-odds-offer-h1">{getLabel(item, (index + (Math.ceil(item.data.length/2))))}</p>
+                                                                                            <p className="match-odds-offer-h2">{odd.value}</p>
+                                                                                        </li>
+                                                                                    );
+                                                                                })}
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                            );
+                                                        }
+                                                    } else return;
                                                 }
                                                 )}
                                             </ul>

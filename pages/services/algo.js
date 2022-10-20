@@ -70,6 +70,12 @@ module.exports = {
             return "Hjørnespark";
         } else if (type === "Multi Scorers") {
             return "Målscorer";
+        } else if (type === "Correct Score") {
+            return "Korrekt resultat";
+        } else if (type === "Player to be Sent Off") {
+            return "Udvisning";
+        } else if (type === "10 Minute Result") {
+            return "10 min. vinder";
         }
     },
     getString: function(type,result,homeTeam,visitorTeam) {

@@ -1661,6 +1661,79 @@
     border-top: 1px solid #3d6eeb1e;
 }
 
+.match-odds-raiser {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+}
+
+.match-raisers {
+    display: flex;
+    width: 65%;
+    align-items: center;
+    justify-content: space-around;
+    user-select: none;
+}
+
+.match-raiser-odds {
+    width: 30%;
+}
+
+.match-odds-raiser-con {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    justify-content: center;
+}
+
+.match-raiser-h1 {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Inter;
+    font-weight: 400;
+    color: #333;
+    font-size: 20px;
+    width: 40px;
+}
+
+.match-odds-raiser-p {
+    font-family: Inter;
+    font-weight: 500;
+    color: #333;
+    font-size: 15px;
+    padding-bottom: 10px;
+}
+
+.match-raiser {
+    display: flex;
+    width: 40px;
+    cursor: pointer;
+    height: 40px;
+    border-radius: 3px;
+    background-color: var(--stageSurface);
+    align-items: center;
+    justify-content: center;
+}
+
+.match-raiser-active {
+    display: flex;
+    width: 40px;
+    cursor: pointer;
+    height: 40px;
+    border-radius: 3px;
+    background-color: var(--primary);
+    align-items: center;
+    justify-content: center;
+}
+
+.match-raiser-active svg {
+    fill: #fff !important;
+}
+
 .stats-h1 {
     color: var(--softBlack);
     font-size: 15px;
