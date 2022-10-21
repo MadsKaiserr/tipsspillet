@@ -16,31 +16,32 @@ function StageIndstillinger ({data}) {
 
     const [canModal, setCanModal] = useState(false);
     const [afbrydModal, setAfbrydModal] = useState(false);
+    const [upgradeModal, setUpgradeModal] = useState(false);
+
     const [cardOnline, setCardOnline] = useState(false);
     const [last4, setLast4] = useState("xxxx");
     const [cardName, setCardName] = useState("Indlæser...");
+    const [priceid, setPriceid] = useState("");
+    const [abonnementType, setAbonnementType] = useState("");
     const [cardBrand, setCardBrand] = useState("");
     const [subId, setSubId] = useState("");
     const [afbrudt, setAfbrudt] = useState(false);
 
+    const [loading0, setLoading0] = useState(false);
     const [loading1, setLoading1] = useState(false);
     const [loading2, setLoading2] = useState(false);
 
-    const [priceInterval, setPriceInterval] = useState(1);
-    const [plusPrice, setPlusPrice] = useState(39);
-    const [premiumPrice, setPremiumPrice] = useState(59);
+    const [priceInterval, setPriceInterval] = useState(3);
+    const [ugAb, setUgAb] = useState("plus");
+    const [plusPrice, setPlusPrice] = useState(29);
+    const [premiumPrice, setPremiumPrice] = useState(39);
     const [abonnement, setAbonnement] = useState("none");
     const [rolleExp, setRolleExp] = useState(0);
     const [rolleIat, setRolleIat] = useState(0);
+    const [customerId, setCustomerId] = useState("");
 
     useEffect(() => {
-        if (getUser().customer_id || JSON.parse(cookie.get("auth")).customer_id) {
-            var customer_id = "";
-            if (getUser().customer_id) {
-                customer_id = getUser().customer_id;
-            } else {
-                customer_id = JSON.parse(cookie.get("auth")).customer_id;
-            }
+        if (customerId) {
             const loginURL2 = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/retrievecard";
             const requestConfig2 = {
                 headers: {
@@ -49,7 +50,7 @@ function StageIndstillinger ({data}) {
             }
     
             const requestBody2 = {
-                customer_id: customer_id
+                customer_id: customerId
             }
     
             axios.post(loginURL2, requestBody2, requestConfig2).then(response => {
@@ -59,11 +60,39 @@ function StageIndstillinger ({data}) {
                 setCardBrand(response.data.payment.card.brand)
                 setCardOnline(true);
                 setSubId(response.data.subId)
+                setPriceid(response.data.customer.subscriptions.data[0].items.data[0].plan.id);
+                var PriceId = response.data.customer.subscriptions.data[0].items.data[0].plan.id;
+                const test_plus1 = "price_1LuMW1DgBSgfAmE2l7k2TnCH";
+                const test_plus3 = "price_1LuMW1DgBSgfAmE2hNfySZQn";
+                const test_plus12 = "price_1LuMW1DgBSgfAmE2yportvM9";
+                const test_premium1 = "price_1LuMVMDgBSgfAmE2bMMEoBKC";
+                const test_premium3 = "price_1LuMVMDgBSgfAmE24WJZ75vz";
+                const test_premium12 = "price_1LuMVMDgBSgfAmE2jnAUOR2m";
+
+                const live_plus1 = "price_1LuM3mDgBSgfAmE2pTouEwTQ";
+                const live_plus3 = "price_1LuM3mDgBSgfAmE2JP3pvK5i";
+                const live_plus12 = "price_1LuM3mDgBSgfAmE2Y56zoWBb";
+                const live_premium1 = "price_1LuM2rDgBSgfAmE2o19l1bGB";
+                const live_premium3 = "price_1LuM2rDgBSgfAmE2NL5u2jJF";
+                const live_premium12 = "price_1LuM2rDgBSgfAmE2BxUW5Eyj";
+                if (PriceId === test_plus1 || PriceId === live_plus1) {
+                    setAbonnementType(" - Plus Abonnement (1 måned)")
+                } else if (PriceId === test_plus3 || PriceId === live_plus3) {
+                    setAbonnementType(" - Plus Abonnement (3 måneder)")
+                } else if (PriceId === test_plus12 || PriceId === live_plus12) {
+                    setAbonnementType(" - Plus Abonnement (12 måneder)")
+                } else if (PriceId === test_premium1 || PriceId === live_premium1) {
+                    setAbonnementType(" - Premium Abonnement (1 måned)")
+                } else if (PriceId === test_premium3 || PriceId === live_premium3) {
+                    setAbonnementType(" - Premium Abonnement (3 måneder)")
+                } else if (PriceId === test_premium12 || PriceId === live_premium12) {
+                    setAbonnementType(" - Premium Abonnement (12 måneder)")
+                }
             }).catch(error => {
                 console.log(error);
             })
         }
-    }, [])
+    }, [customerId])
 
     function cancelSub() {
         const loginURL2 = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/cancelsub";
@@ -88,9 +117,10 @@ function StageIndstillinger ({data}) {
     }
 
     const handlePlus = async e => {
+        setUgAb("plus")
         setLoading1(true);
         if (getUser()) {
-            if (getUser().rolle === "none") {
+            if (abonnement === "none") {
                 const URL = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/subscribe";
                 const requestConfig = {
                     headers: {
@@ -111,6 +141,8 @@ function StageIndstillinger ({data}) {
                     console.log("Fejl ved indhentning af data" + error)
                     setLoading1(false);
                 })
+            } else if (abonnement === "premium") {
+                setUpgradeModal(true)
             } else {
                 setLoading1(false);
                 setNotiMessage("error", "Du har allerede abonnement", "Gå til indstillinger på din profil, og herunder abonnement, for at ændre dit nuværende abonnement. Se også https://www.tipsspillet.dk/stage/indstillinger");
@@ -120,10 +152,73 @@ function StageIndstillinger ({data}) {
         }
     }
 
+    function upgrade() {
+        const URL = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/upgrade";
+        const requestConfig = {
+            headers: {
+                "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
+            }
+        }
+
+        const requestBody = {
+            email: getUser().email,
+            navn: getUser().username,
+            subscription: ugAb + priceInterval,
+            subid: subId
+        }
+        axios.post(URL, requestBody, requestConfig).then(response => {
+            console.log(response);
+            setAbonnement(response.data.body.Item.Attributes.rolle)
+            setRolleExp(response.data.body.Item.Attributes.rolle_exp)
+            setRolleIat(response.data.body.Item.Attributes.rolle_iat)
+            setCustomerId(response.data.body.Item.Attributes.rolle_iat)
+            setSubId(response.data.subscription2.id)
+            setPriceid(response.data.subscription2.plan.id);
+            var PriceId = response.data.subscription2.plan.id;
+            const test_plus1 = "price_1LuMW1DgBSgfAmE2l7k2TnCH";
+            const test_plus3 = "price_1LuMW1DgBSgfAmE2hNfySZQn";
+            const test_plus12 = "price_1LuMW1DgBSgfAmE2yportvM9";
+            const test_premium1 = "price_1LuMVMDgBSgfAmE2bMMEoBKC";
+            const test_premium3 = "price_1LuMVMDgBSgfAmE24WJZ75vz";
+            const test_premium12 = "price_1LuMVMDgBSgfAmE2jnAUOR2m";
+
+            const live_plus1 = "price_1LuM3mDgBSgfAmE2pTouEwTQ";
+            const live_plus3 = "price_1LuM3mDgBSgfAmE2JP3pvK5i";
+            const live_plus12 = "price_1LuM3mDgBSgfAmE2Y56zoWBb";
+            const live_premium1 = "price_1LuM2rDgBSgfAmE2o19l1bGB";
+            const live_premium3 = "price_1LuM2rDgBSgfAmE2NL5u2jJF";
+            const live_premium12 = "price_1LuM2rDgBSgfAmE2BxUW5Eyj";
+            if (PriceId === test_plus1 || PriceId === live_plus1) {
+                setAbonnementType(" - Plus Abonnement (1 måned)")
+            } else if (PriceId === test_plus3 || PriceId === live_plus3) {
+                setAbonnementType(" - Plus Abonnement (3 måneder)")
+            } else if (PriceId === test_plus12 || PriceId === live_plus12) {
+                setAbonnementType(" - Plus Abonnement (12 måneder)")
+            } else if (PriceId === test_premium1 || PriceId === live_premium1) {
+                setAbonnementType(" - Premium Abonnement (1 måned)")
+            } else if (PriceId === test_premium3 || PriceId === live_premium3) {
+                setAbonnementType(" - Premium Abonnement (3 måneder)")
+            } else if (PriceId === test_premium12 || PriceId === live_premium12) {
+                setAbonnementType(" - Premium Abonnement (12 måneder)")
+            }
+            setProgress(parseInt(((new Date().getTime() - (response.data.body.Item.Attributes.rolle_iat * 1000))/((response.data.body.Item.Attributes.rolle_exp*1000) - (response.data.body.Item.Attributes.rolle_iat*1000)))*100));
+            setDayProgress(parseInt(((response.data.body.Item.Attributes.rolle_exp*1000)-new Date().getTime())/1000/60/60/24))
+            setLoading0(false);
+            setLoading1(false);
+            setLoading2(false);
+        }).catch(error => {
+            console.log("Fejl ved indhentning af data" + error)
+            setLoading0(false);
+            setLoading1(false);
+            setLoading2(false);
+        })
+    }
+
     const handlePremium = async e => {
+        setUgAb("premium")
         setLoading2(true);
         if (getUser()) {
-            if (getUser().rolle === "none") {
+            if (abonnement === "none") {
                 const URL = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/subscribe";
                 const requestConfig = {
                     headers: {
@@ -143,6 +238,8 @@ function StageIndstillinger ({data}) {
                     console.log("Fejl ved indhentning af data" + error)
                     setLoading2(false);
                 })
+            } else if (abonnement === "plus") {
+                setUpgradeModal(true)
             } else {
                 setLoading2(false);
                 setNotiMessage("error", "Du har allerede abonnement", "Gå til indstillinger på din profil, og herunder abonnement, for at ændre dit nuværende abonnement. Se også https://www.tipsspillet.dk/stage/indstillinger");
@@ -190,17 +287,22 @@ function StageIndstillinger ({data}) {
         setNotiKuponOG(data.notifikationer.kupon);
         setRolleExp(data.rolle_exp * 1000);
         setRolleIat(data.rolle_iat * 1000);
-        setAbonnement(JSON.parse(cookie.get("auth")).rolle);
+        setCustomerId(data.customer_id)
+        setAbonnement(data.rolle);
         setProgress(parseInt(((new Date().getTime() - (data.rolle_iat * 1000))/((data.rolle_exp*1000) - (data.rolle_iat*1000)))*100));
         setDayProgress(parseInt(((data.rolle_exp*1000)-new Date().getTime())/1000/60/60/24))
         if (data.type === "facebook") {
             setFacebook(true);
         }
-
         const year = new Date(data["oprettelse"]).getFullYear();
         const month = new Date(data["oprettelse"]).getMonth();
         const day = new Date(data["oprettelse"]).getDate();
         setOprettelseText(day + "/" + month + "/" + year);
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        if (urlParams.get("abonnement")) {
+            setNav("abonnement")
+        }
     }, [])
 
     const fbResponse = (event) => {
@@ -347,6 +449,42 @@ function StageIndstillinger ({data}) {
         }
     }
 
+    function setType(type) {
+        if (type === "quarter") {
+            document.getElementById("quarter").className = "price-input-element-active";
+            document.getElementById("month").className = "price-input-element";
+            document.getElementById("year").className = "price-input-element";
+            setPlusPrice(29);
+            setPremiumPrice(39);
+        } else if (type === "month") {
+            document.getElementById("month").className = "price-input-element-active";
+            document.getElementById("quarter").className = "price-input-element";
+            document.getElementById("year").className = "price-input-element";
+            setPlusPrice(39);
+            setPremiumPrice(59);
+        } else if (type === "year") {
+            document.getElementById("year").className = "price-input-element-active";
+            document.getElementById("quarter").className = "price-input-element";
+            document.getElementById("month").className = "price-input-element";
+            setPlusPrice(19);
+            setPremiumPrice(29);
+        }
+    }
+
+    const [messageType, setMessageType] = useState("error-con-error");
+
+    function setNotiMessage(type, heading, message) {
+        window.scrollBy(0, -400);
+        if (type === "error") {
+            setMessageType("error-con-error");
+        } else if (type === "success") {
+            setMessageType("error-con-success");
+        }
+        document.getElementById("errorCon").classList.add("display");
+        document.getElementById("errorConH").innerHTML = heading;
+        document.getElementById("errorConP").innerHTML = message;
+    }
+
     return (
         <>
             <Head>
@@ -364,9 +502,9 @@ function StageIndstillinger ({data}) {
             </div>}
             {afbrydModal && <div className="modal-test">
                 <div className="modal-con">
-                    <p className="con-modal-p">Er du sikker på, at du vil afbryde dit abonnement? Du vil stadig have dit abonnements fordele indtil enden af din betalingsperiode.</p>
+                    <p className="con-modal-p">Er du sikker på, at du vil opsige dit abonnement? Du vil stadig have dit abonnements fordele indtil enden af din betalingsperiode.</p>
                     <div className="modal-wrapper">
-                        <button className="con-modal-btn" onClick={() => cancelSub()}>Slut abonnement</button>
+                        <button className="con-modal-btn" onClick={() => cancelSub()}>Opsig abonnement</button>
                         <button className="con-modal-afbryd" onClick={() => setAfbrydModal(false)}>Gå tilbage</button>
                     </div>
                 </div>
@@ -376,6 +514,17 @@ function StageIndstillinger ({data}) {
                     <p className="con-modal-p">Dit abonnement er blevet afbrudt. Du vil stadig have dit abonnements fordele indtil enden af din betalingsperiode.</p>
                     <div className="modal-wrapper">
                         <button className="con-modal-btn" onClick={() => setCanModal(false)}>Okay</button>
+                    </div>
+                </div>
+            </div>}
+            {upgradeModal && <div className="modal-test">
+                <div className="modal-con">
+                    <p className="con-modal-p">Er du sikker på, at du vil opgradere? Denne handling kan ikke fortrydes.</p>
+                    <br />
+                    <p className="con-modal-p">Dit nye abonnement træder i kræft indenfor få minutter, og tiden du har tilbage i dit nuværende abonnement vil blive trukket fra den nye pris.</p>
+                    <div className="modal-wrapper">
+                        <button className="con-modal-btn" onClick={() => {setUpgradeModal(false);upgrade()}}>Opgrader</button>
+                        <button className="con-modal-afbryd" onClick={() => {setUpgradeModal(false);setLoading0(false);setLoading1(false);setLoading2(false);}}>Annuller</button>
                     </div>
                 </div>
             </div>}
@@ -390,6 +539,17 @@ function StageIndstillinger ({data}) {
                     {nav === "abonnement" && <><p className="is-top-p" onClick={() => setNav("generelt")}>Generelt</p>
                     <p className="is-top-p" onClick={() => setNav("notifikationer")}>Notifikationer</p>
                     <p className="is-top-p-active">Abonnement</p></>}
+                </div>
+                <div className={messageType} id="errorCon">
+                    <div className="error-text">
+                        <div className="error-inline">
+                            <svg xmlns="http://www.w3.org/2000/svg" style={{marginTop: "-3px"}} width="16" height="16" fill="var(--red)" viewBox="0 0 16 16">
+                                <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                            </svg>
+                            <p className="error-container-h1" id="errorConH">Test fejl</p>
+                        </div>
+                        <p className="error-container-p" id="errorConP">Test besked</p>
+                    </div>
                 </div>
                 {nav === "generelt" && <><div className="op-content">
                     <p className="op-h1">Generelt</p>
@@ -506,7 +666,7 @@ function StageIndstillinger ({data}) {
                             <div className="sub-card">
                                 <div className="sub-span">
                                     <div className="sub-status"></div>
-                                    <p className="sub-status-p">Aktiv</p>
+                                    <p className="sub-status-p">Aktiv {abonnementType}</p>
                                 </div>
                                 <svg xmlns="http://www.w3.org/2000/svg" className="sub-icon" viewBox="0 0 16 16">
                                     <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v1h14V4a1 1 0 0 0-1-1H2zm13 4H1v5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V7z"/>
@@ -533,13 +693,13 @@ function StageIndstillinger ({data}) {
                                 </div>
                             </div>
                             <div className="card-cta">
-                                <button className="card-cta-btn-active" onClick={() => setAfbrydModal(true)}>Afbryd abonnement</button>
+                                <button className="card-cta-btn-active" onClick={() => setAfbrydModal(true)}>Opsig abonnement</button>
                                 <button className="card-cta-btn">Opgrader</button>
                                 <button className="card-cta-btn">Læs mere</button>
                             </div>
                             </div>}
                             {!cardOnline && <>
-                                {getUser().rolle !== "none" && <>
+                                {abonnement !== "none" && <>
                                     <p className="is-h1">Betalingsoversigt</p>
                                     <p className="is-h2">{dayProgress} dage tilbage af dit abonnement</p>
                                     <div className="plan-progress">
@@ -550,12 +710,19 @@ function StageIndstillinger ({data}) {
                                         <p className="is-p">{new Date(rolleExp).getDate().toString().padStart(2, '0') + "/" + (new Date(rolleExp).getMonth() + 1).toString().padStart(2, '0')}</p>
                                     </div>
                                 </>}
-                                {getUser().rolle === "none" && <>
+                                {abonnement === "none" && <>
                                     <p className="is-h1">Betalingsoversigt</p>
                                     <p className="is-h2">Du har ikke noget abonnement</p>
                                 </>}
                             </>}
                         </>}
+                        <div className="set-center" style={{paddingTop: "40px"}}>
+                            <div className="price-input animation-fadeleft animation-delay-400" id="price-input">
+                                <div className="price-input-element" id="month" onClick={() => {setType("month");setPriceInterval(1)}}>Månedligt</div>
+                                <div className="price-input-element-active" id="quarter" onClick={() => {setType("quarter");setPriceInterval(3)}}>Kvartalvis</div>
+                                <div className="price-input-element" id="year" onClick={() => {setType("year");setPriceInterval(12)}}>Årligt</div>
+                            </div>
+                        </div>
                         <div className="st-plans-con">
                             <div className="st-plan-element">
                                 <div className="st-plan-element-top">
@@ -617,7 +784,7 @@ function StageIndstillinger ({data}) {
                                     </div>
                                 </div>
                                 {abonnement === "none" && <button className="square-btn-default plan-btn-off">Nuværende</button>}
-                                {abonnement !== "none" && <button className="square-btn-default plan-btn">Nedgrader</button>}
+                                {abonnement !== "none" && <button className="square-btn-default plan-btn" onClick={() => cancelSub()}>{loading0 && <div className="loader"></div>}{!loading0 && <>Nedgrader</>}</button>}
                             </div>
                             <div className="st-plan-element">
                                 <div className="st-plan-element-top">

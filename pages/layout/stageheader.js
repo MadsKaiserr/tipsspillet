@@ -328,7 +328,7 @@ function StageHeader () {
                                         <div className="sidemenu-element">
                                             <Link href="/stage"><a className="sidemenu-p" onClick={() => closeMenu()}>Lav kupon</a></Link>
                                             <Link href="/stage/gruppespil"><a className="sidemenu-p" onClick={() => closeMenu()}>Gruppespil</a></Link>
-                                            <Link href="/priser"><a className="sidemenu-p" onClick={() => closeMenu()}>Abonnement</a></Link>
+                                            <Link href="/stage/indstillinger?abonnement=true"><a className="sidemenu-p" onClick={() => closeMenu()}>Abonnement</a></Link>
                                             <Link href="/stage/faq"><a className="sidemenu-p" onClick={() => closeMenu()}>Spørgsmål og svar</a></Link>
                                             <p onClick={() => logout()} className="sidemenu-p">Log ud</p>
                                         </div>

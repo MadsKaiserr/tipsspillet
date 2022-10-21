@@ -610,6 +610,13 @@
   #gs-pos {
     width: 40px !important;
   }
+  .st-plans-con {
+    flex-direction: column;
+  }
+  .st-plan-element {
+    width: 100% !important;
+    max-width: 400px !important;
+  }
 }
 
 @media only screen and (max-width: 835px) {

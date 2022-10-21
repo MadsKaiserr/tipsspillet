@@ -91,7 +91,7 @@ function Success ({data}) {
             })
         } else {
             setFail(true);
-        }
+        } 
     }, [])
 
     return (
