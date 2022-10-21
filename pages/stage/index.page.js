@@ -812,6 +812,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
             fetch("https://soccer.sportmonks.com/api/v2.0/fixtures/multi/"+odd_ids+"?api_token="+"kvgDywRFDSqPhS9iYQynEci42JvyVtqLpCXBJlBHrH5v8Br8RtrEayi94Ybf"+"&include=odds&bookmakers=2&tz=Europe/Copenhagen&per_page=150")
             .then(response => response.json())
             .then(function (result) {
+                console.log("AWS - Kupon matches", result)
                 var doneGames = 0;
                 for (var o in result.data) {
                     if (result.data[o].time.status === "FT") {
@@ -820,20 +821,17 @@ function StageForside ({gruppespil_data, spiller_data}) {
                 }
                 var winning = 0;
                 var winsArray = [];
+                var winable = true;
                 if (doneGames === result.data.length) {
+                    console.log(checkArray, result.data)
                     for (var u in result.data) {
                         for (var t in checkArray) {
                             if (checkArray[t].game === result.data[u].id) {
-                                if (checkArray[t].type.slice(0,-3) === "Over/Under") {
-                                    if (result.data[u].odds.data[result.data[u].odds.data.findIndex(obj => obj.name === checkArray[t].type.slice(0,-3))].bookmaker.data[0].odds.data[parseInt(checkArray[t].result)].winning === true) {
-                                        winning = winning + 1;
-                                        winsArray.push(checkArray[t]);
-                                    }
-                                } else {
-                                    if (result.data[u].odds.data[result.data[u].odds.data.findIndex(obj => obj.name === checkArray[t].type)].bookmaker.data[0].odds.data[parseInt(checkArray[t].result)].winning === true) {
-                                        winning = winning + 1;
-                                        winsArray.push(checkArray[t]);
-                                    }
+                                if (result.data[u].odds.data[result.data[u].odds.data.findIndex(obj => obj.name === checkArray[t].type)].bookmaker.data[0].odds.data[parseInt(checkArray[t].result)].winning === true) {
+                                    winning = winning + 1;
+                                    winsArray.push(checkArray[t]);
+                                } else if (!result.data[u].odds.data[result.data[u].odds.data.findIndex(obj => obj.name === checkArray[t].type)].bookmaker.data[0].odds.data[parseInt(checkArray[t].result)].winning) {
+                                    winable = false;
                                 }
                             }
                         }
@@ -858,6 +856,8 @@ function StageForside ({gruppespil_data, spiller_data}) {
                                 setNotiMessage("error","Serverfejl" , "Serveren slog fejl. Dette skyldes ofte for meget trafik på hjemmesiden. Kontakt os for mere information.");
                             }
                         })
+                    } else if (!winable) {
+                        console.log("FEJL I KAMP")
                     } else {
                         const betCalcURL2 = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/updatelose";
     

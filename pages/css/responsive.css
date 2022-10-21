@@ -488,6 +488,9 @@
   .nav-ham {
     display: block !important;
   }
+  .user-nav-p {
+    display: block !important;
+  }
   .nav-ham-ham {
     display: block !important;
   }
@@ -854,6 +857,13 @@
   }
   .side-nav-bar {
     padding: 0px 20px !important;
+  }
+  .match-raiser-odds {
+    padding-top: 10px;
+  }
+  .match-raisers {
+    justify-content: center;
+    gap: 10vw;
   }
   .plan-element {
     width: clamp(237px, 45vw, 400px);

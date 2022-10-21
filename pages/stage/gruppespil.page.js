@@ -51,6 +51,11 @@ function StageGruppespil ({data}) {
                 document.getElementById("stilling").scrollIntoView();
             }
         }
+        if (urlParams.get("kuponer")) {
+            if (document.getElementById("kuponer")) {
+                document.getElementById("kuponer").scrollIntoView();
+            }
+        }
     })
 
     useEffect(() => {
@@ -571,7 +576,7 @@ function StageGruppespil ({data}) {
                                     <p className="chat-error">{timeText}</p>
                                 </div>
                             </div>
-                            <div className="gruppespil-info">
+                            <div className="gruppespil-info" id="kuponer">
                                 <div className="gruppespil-title" id="gruppespil-title">
                                     <h1 className="gruppespil-h1">Dine Kuponer</h1>
                                     <p className="gruppespil-scroll">Scroll for at se flere</p>

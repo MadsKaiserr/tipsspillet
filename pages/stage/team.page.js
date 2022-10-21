@@ -655,7 +655,7 @@ function StageTeam () {
                 </div>
                 <div className="match-info-con" id="team_match">
                     <div className="match-info-half-4">
-                        <div className="match-odds-nav" style={{padding: "0px", paddingBottom: "15px", marginTop: "-15px"}}>
+                        <div className="match-odds-nav" style={{padding: "0px", paddingBottom: "15px"}}>
                             <button className="match-odds-nav-element-active" id="navOversigt" onClick={() => {setNav("oversigt")}}>Oversigt</button>
                             <button className="match-odds-nav-element" id="navResultater" onClick={() => {setNav("resultater")}}>Resultater</button>
                             <button className="match-odds-nav-element" id="navKommende" onClick={() => {setNav("kommende")}}>Kommende</button>

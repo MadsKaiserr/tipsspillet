@@ -76,6 +76,10 @@ module.exports = {
             return "Udvisning";
         } else if (type === "10 Minute Result") {
             return "10 min. vinder";
+        } else if (type === "Alternative Total Corners") {
+            return "Totale hjørnespark";
+        } else if (type === "Alternative Total Goals") {
+            return "Totale mål";
         }
     },
     getString: function(type,result,homeTeam,visitorTeam) {

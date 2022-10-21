@@ -406,6 +406,21 @@
     background-color: var(--stageSurface);
   }
 
+  .user-nav-p {
+    font-family: Inter;
+    display: none;
+    font-weight: 400;
+    color: #555;
+    font-size: 12px;
+    white-space: wrap;
+    width: 65px;
+    text-align: center;
+  }
+
+  .gruppespil-info {
+    scroll-margin-top: 100px;
+  }
+
   .match-span {
     display: flex;
     align-items: center;
