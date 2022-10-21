@@ -88,6 +88,7 @@ function StageGruppespil ({data}) {
     const [startAm, setStartAm] = useState(0);
     const [gameName, setGameName] = useState("");
     const [beskeder, setBeskeder] = useState([]);
+    const [transaktioner, setTransaktioner] = useState([]);
     const [beskederLength, setBeskederLength] = useState(0);
 
     const [beskedText, setBeskedText] = useState("");
@@ -97,6 +98,7 @@ function StageGruppespil ({data}) {
     const [activeGame, setActiveGame] = useState("");
 
     const [loadingText, setLoadingText] = useState("Indlæser...");
+    const [transakShow, setTransakShow] = useState(false);
     
     useEffect(() => {
         if (loadingText !== "Indlæser...") {
@@ -137,6 +139,7 @@ function StageGruppespil ({data}) {
                 if (data.players[k].player === getUser().email) {
                     myPlayer = data.players[k].odds;
                     setGameAdmin(data.admin);
+                    setTransaktioner(data.players[k].info.transaktioner)
                     setGameType(data.synlighed);
                     localStorage.setItem("notifikationer", data.players[k].info.notifikationer.length);
                     var forbrugInt = 0;
@@ -368,6 +371,18 @@ function StageGruppespil ({data}) {
         }
     }
 
+    useEffect(() => {
+        if (transakShow) {
+            if (document.getElementById("trans-icon")) {
+                document.getElementById("trans-icon").classList.add("pdeg90")
+            }
+        } else {
+            if (document.getElementById("trans-icon")) {
+                document.getElementById("trans-icon").classList.remove("pdeg90")
+            }
+        }
+    }, [transakShow])
+
     return (
         <>
             <Head>
@@ -426,7 +441,7 @@ function StageGruppespil ({data}) {
                                 <div className="gruppespil-title" style={{display: "flex", alignItems: "center", gap:"10px"}}>
                                     <h1 className="gruppespil-h1">{gameName}</h1>
                                     <Link href="/stage/aktive-spil">
-                                        <button className="gruppespil2-btn">Skift gruppespil</button>
+                                        <button className="gruppespil-cta-btn">Skift gruppespil</button>
                                     </Link>
                                 </div>
                                 <div className="gruppespil-info-info">
@@ -442,6 +457,14 @@ function StageGruppespil ({data}) {
                                         <p className="gruppespil-info-element-p">Totale Kuponer</p>
                                         <p className="gruppespil-info-element-h1">{kuponer}</p>
                                     </div>
+                                </div>
+                                <div className="gruppespil-cta">
+                                    <button className="gruppespil-cta-outline" onClick={() => {if (document.getElementById("kuponer")) {
+                                        document.getElementById("kuponer").scrollIntoView();
+                                    }}}>Se kuponer</button>
+                                    <button className="gruppespil-cta-outline" onClick={() => {if (document.getElementById("stilling")) {
+                                        document.getElementById("stilling").scrollIntoView();
+                                    }}}>Se stilling</button>
                                 </div>
                             </div>
                             <div className="gruppespil-info">
@@ -530,6 +553,42 @@ function StageGruppespil ({data}) {
                                             <p className="ant-p">Din <span className="ant-p-a">gevinst</span> fra gruppespillets <br />start</p>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                            <div className="gruppespil-info">
+                                <div className="transaktioner-container">
+                                    <div className="tr-top" onClick={() => {if (transakShow){setTransakShow(false)}else{setTransakShow(true)}}}>
+                                        <p className="tr-h1">Transaktioner</p>
+                                        <svg xmlns="http://www.w3.org/2000/svg" id="trans-icon" width="16" height="16" fill="#555" style={{transition: "0.2s"}} viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+                                        </svg>
+                                    </div>
+                                    {transakShow && <ul className="tr-table">
+                                        {transaktioner.map((trans) => {
+                                            return (
+                                                <li className="tr-element">
+                                                    <div className="tr-span">
+                                                        <div className="tr-icon">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#333" viewBox="0 0 16 16">
+                                                                <path d="M1.92.506a.5.5 0 0 1 .434.14L3 1.293l.646-.647a.5.5 0 0 1 .708 0L5 1.293l.646-.647a.5.5 0 0 1 .708 0L7 1.293l.646-.647a.5.5 0 0 1 .708 0L9 1.293l.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .801.13l.5 1A.5.5 0 0 1 15 2v12a.5.5 0 0 1-.053.224l-.5 1a.5.5 0 0 1-.8.13L13 14.707l-.646.647a.5.5 0 0 1-.708 0L11 14.707l-.646.647a.5.5 0 0 1-.708 0L9 14.707l-.646.647a.5.5 0 0 1-.708 0L7 14.707l-.646.647a.5.5 0 0 1-.708 0L5 14.707l-.646.647a.5.5 0 0 1-.708 0L3 14.707l-.646.647a.5.5 0 0 1-.801-.13l-.5-1A.5.5 0 0 1 1 14V2a.5.5 0 0 1 .053-.224l.5-1a.5.5 0 0 1 .367-.27zm.217 1.338L2 2.118v11.764l.137.274.51-.51a.5.5 0 0 1 .707 0l.646.647.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.509.509.137-.274V2.118l-.137-.274-.51.51a.5.5 0 0 1-.707 0L12 1.707l-.646.647a.5.5 0 0 1-.708 0L10 1.707l-.646.647a.5.5 0 0 1-.708 0L8 1.707l-.646.647a.5.5 0 0 1-.708 0L6 1.707l-.646.647a.5.5 0 0 1-.708 0L4 1.707l-.646.647a.5.5 0 0 1-.708 0l-.509-.51z"/>
+                                                                <path d="M3 4.5a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zm8-6a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5z"/>
+                                                            </svg>
+                                                        </div>
+                                                        <div>
+                                                        {trans.description === "Startbeløb" && <p className="tr-h2">Startbeløb</p>}
+                                                        {trans.description === "Indskydelse" && <p className="tr-h2">Indskydelse</p>}
+                                                        {trans.description === "Bet vundet" && <p className="tr-h2">Væddemål vundet</p>}
+                                                        {trans.description === "Bet placeret" && <p className="tr-h2">Væddemål placeret</p>}
+                                                            <p className="tr-p">{new Date(trans.iat).getDate().toString().padStart(2, '0') + "/" + (new Date(trans.iat).getMonth() + 1).toString().padStart(2, '0')} • {new Date(trans.iat).getHours().toString().padStart(2, '0') + ":" + new Date(trans.iat).getMinutes().toString().padStart(2, '0')}</p>
+                                                        </div>
+                                                    </div>
+                                                    {trans.type === "add" && <p className="tr-h3" style={{color: "var(--green)"}}>kr. {trans.amount}</p>}
+                                                    {trans.type === "remove" && <p className="tr-h3">- kr. {trans.amount}</p>}
+                                                </li>
+                                            );
+                                        })}
+                                        {transaktioner.length < 1 && <p style={{color: "var(--softBlack)", fontSize: "13px"}}>Der blev ikke fundet nogle transaktioner...</p>}
+                                    </ul>}
                                 </div>
                             </div>
                             <div className="gruppespil-info">
@@ -1072,7 +1131,7 @@ function StageGruppespil ({data}) {
                                 <div className="gruppespil-title" style={{display: "flex", alignItems: "center", gap:"10px"}}>
                                     <h1 className="gruppespil-h1">{gameName}</h1>
                                     <Link href="/stage/aktive-spil">
-                                        <button className="gruppespil2-btn">Skift gruppespil</button>
+                                        <button className="gruppespil-cta-btn">Skift gruppespil</button>
                                     </Link>
                                     {adminUser && <Link href={"/stage/gruppespil/indstillinger?id=" + activeGame}>
                                         <button className="gruppespil2-btn">
@@ -1095,6 +1154,14 @@ function StageGruppespil ({data}) {
                                         <p className="gruppespil-info-element-p">Totale Kuponer</p>
                                         <p className="gruppespil-info-element-h1">{kuponer}</p>
                                     </div>
+                                </div>
+                                <div className="gruppespil-cta">
+                                    <button className="gruppespil-cta-outline" onClick={() => {if (document.getElementById("kuponer")) {
+                                        document.getElementById("kuponer").scrollIntoView();
+                                    }}}>Se kuponer</button>
+                                    <button className="gruppespil-cta-outline" onClick={() => {if (document.getElementById("stilling")) {
+                                        document.getElementById("stilling").scrollIntoView();
+                                    }}}>Se stilling</button>
                                 </div>
                             </div>
                             <div className="gruppespil-info">
@@ -1183,6 +1250,42 @@ function StageGruppespil ({data}) {
                                             <p className="ant-p">Din <span className="ant-p-a">gevinst</span> fra gruppespillets <br />start</p>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                            <div className="gruppespil-info">
+                                <div className="transaktioner-container">
+                                    <div className="tr-top" onClick={() => {if (transakShow){setTransakShow(false)}else{setTransakShow(true)}}}>
+                                        <p className="tr-h1">Transaktioner</p>
+                                        <svg xmlns="http://www.w3.org/2000/svg" id="trans-icon" width="16" height="16" fill="#555" style={{transition: "0.2s"}} viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+                                        </svg>
+                                    </div>
+                                    {transakShow && <ul className="tr-table">
+                                        {transaktioner.map((trans) => {
+                                            return (
+                                                <li className="tr-element">
+                                                    <div className="tr-span">
+                                                        <div className="tr-icon">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#333" viewBox="0 0 16 16">
+                                                                <path d="M1.92.506a.5.5 0 0 1 .434.14L3 1.293l.646-.647a.5.5 0 0 1 .708 0L5 1.293l.646-.647a.5.5 0 0 1 .708 0L7 1.293l.646-.647a.5.5 0 0 1 .708 0L9 1.293l.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .801.13l.5 1A.5.5 0 0 1 15 2v12a.5.5 0 0 1-.053.224l-.5 1a.5.5 0 0 1-.8.13L13 14.707l-.646.647a.5.5 0 0 1-.708 0L11 14.707l-.646.647a.5.5 0 0 1-.708 0L9 14.707l-.646.647a.5.5 0 0 1-.708 0L7 14.707l-.646.647a.5.5 0 0 1-.708 0L5 14.707l-.646.647a.5.5 0 0 1-.708 0L3 14.707l-.646.647a.5.5 0 0 1-.801-.13l-.5-1A.5.5 0 0 1 1 14V2a.5.5 0 0 1 .053-.224l.5-1a.5.5 0 0 1 .367-.27zm.217 1.338L2 2.118v11.764l.137.274.51-.51a.5.5 0 0 1 .707 0l.646.647.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.509.509.137-.274V2.118l-.137-.274-.51.51a.5.5 0 0 1-.707 0L12 1.707l-.646.647a.5.5 0 0 1-.708 0L10 1.707l-.646.647a.5.5 0 0 1-.708 0L8 1.707l-.646.647a.5.5 0 0 1-.708 0L6 1.707l-.646.647a.5.5 0 0 1-.708 0L4 1.707l-.646.647a.5.5 0 0 1-.708 0l-.509-.51z"/>
+                                                                <path d="M3 4.5a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zm8-6a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5z"/>
+                                                            </svg>
+                                                        </div>
+                                                        <div>
+                                                        {trans.description === "Startbeløb" && <p className="tr-h2">Startbeløb</p>}
+                                                        {trans.description === "Indskydelse" && <p className="tr-h2">Indskydelse</p>}
+                                                        {trans.description === "Bet vundet" && <p className="tr-h2">Væddemål vundet</p>}
+                                                        {trans.description === "Bet placeret" && <p className="tr-h2">Væddemål placeret</p>}
+                                                            <p className="tr-p">{new Date(trans.iat).getDate().toString().padStart(2, '0') + "/" + (new Date(trans.iat).getMonth() + 1).toString().padStart(2, '0')} • {new Date(trans.iat).getHours().toString().padStart(2, '0') + ":" + new Date(trans.iat).getMinutes().toString().padStart(2, '0')}</p>
+                                                        </div>
+                                                    </div>
+                                                    {trans.type === "add" && <p className="tr-h3" style={{color: "var(--green)"}}>kr. {trans.amount}</p>}
+                                                    {trans.type === "remove" && <p className="tr-h3">- kr. {trans.amount}</p>}
+                                                </li>
+                                            );
+                                        })}
+                                        {transaktioner.length < 1 && <p style={{color: "var(--softBlack)", fontSize: "13px"}}>Der blev ikke fundet nogle transaktioner...</p>}
+                                    </ul>}
                                 </div>
                             </div>
                             <div className="gruppespil-info">

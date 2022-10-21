@@ -964,6 +964,9 @@
   .deg90 {
     transform: rotate(-90deg) !important;
   }
+  .pdeg90 {
+    transform: rotate(90deg) !important;
+  }
   
   .marginLeft20 {
     margin-left: 20px !important;

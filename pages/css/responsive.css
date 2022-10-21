@@ -787,6 +787,15 @@
     width: 95% !important;
     max-width: 450px !important;
   }
+  .gruppespil-info-info div:nth-child(2) {
+    display: none !important;
+  }
+  .gruppespil-cta {
+    padding-top: 0px !important;
+  }
+  .gruppespil-info-element {
+    padding-bottom: 7.5px !important;
+  }
 }
 
 @media only screen and (max-width: 730px) {

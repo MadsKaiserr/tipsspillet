@@ -4265,7 +4265,6 @@
 }
 
 .td-table {
-  max-height: 400px;
   display: flex;
   flex-wrap: wrap;
   justify-content: stretch;

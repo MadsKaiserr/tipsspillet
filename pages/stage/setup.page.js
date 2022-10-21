@@ -305,7 +305,7 @@ function Setup () {
                                 </div>
                             </div>
                             <div className="match-loader display" id="stage-loader1"></div>
-                            <ul className="td-table">
+                            <ul className="td-table" style={{maxHeight: "400px"}}>
                                 {gruppespilsearch.map((item) => {
                                     var Facebooks = 0;
                                     var facebookArray = [];
