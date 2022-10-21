@@ -1052,12 +1052,28 @@ function StageMatcharticle ({data}) {
                 setNotUsableBtn(storageReplica);
                 sessionStorage.setItem("notUsableBtn", JSON.stringify(storageReplica));
 
-                var oddsSessionIndex = oddsSession.findIndex(item => item.match === matchId && item.odds_result === result && item.odds_result === type);
+                var oddsSessionIndex = oddsSession.findIndex(item => item.match === matchId && item.odds_result === result && item.odds_type === type);
                 oddsSession.splice(oddsSessionIndex, 1);
                 setOdds(oddsSession);
                 sessionStorage.setItem("odds", JSON.stringify(oddsSession));
             }
         }
+        // for (var y in oddsSession) {
+        //     if (oddsSession[y].match === parseInt(matchId) && oddsSession[y].odds_result === result && oddsSession[y].odds_type === type) {
+        //         const betIdIndex = type+matchId+"-"+result;
+
+        //         var storageReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
+        //         var indexRep = storageReplica.indexOf(betIdIndex);
+        //         storageReplica.splice(indexRep, 1);
+        //         setNotUsableBtn(storageReplica);
+        //         sessionStorage.setItem("notUsableBtn", JSON.stringify(storageReplica));
+
+        //         var oddsSessionIndex = oddsSession.findIndex(item => item.match === matchId && item.odds_result === result && item.odds_type === type);
+        //         oddsSession.splice(oddsSessionIndex, 1);
+        //         setOdds(oddsSession);
+        //         sessionStorage.setItem("odds", JSON.stringify(oddsSession));
+        //     }
+        // }
         setReturnOdds(returnOddsNew);
         setUdbetaling(udbetalingNew);
         if ((odds.length - 1) <= 0) {
