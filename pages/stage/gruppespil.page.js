@@ -439,7 +439,7 @@ function StageGruppespil ({data}) {
                                         <p className="gruppespil-info-element-h1">{first}</p>
                                     </div>
                                     <div className="gruppespil-info-element">
-                                        <p className="gruppespil-info-element-p">Antal Kuponer</p>
+                                        <p className="gruppespil-info-element-p">Totale Kuponer</p>
                                         <p className="gruppespil-info-element-h1">{kuponer}</p>
                                     </div>
                                 </div>
@@ -1092,7 +1092,7 @@ function StageGruppespil ({data}) {
                                         <p className="gruppespil-info-element-h1">{first}</p>
                                     </div>
                                     <div className="gruppespil-info-element">
-                                        <p className="gruppespil-info-element-p">Antal Kuponer</p>
+                                        <p className="gruppespil-info-element-p">Totale Kuponer</p>
                                         <p className="gruppespil-info-element-h1">{kuponer}</p>
                                     </div>
                                 </div>
