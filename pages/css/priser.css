@@ -104,10 +104,10 @@
     border-radius: 500px;
     background-color: var(--primary);
     color: #fff;
-    padding: 8px 15px;
+    padding: 7px 13px;
     font-family: Inter;
     font-weight: 500;
-    font-size: 15px;
+    font-size: 13.5px;
     cursor: pointer;
     transition: 0.2s;
   }
@@ -115,12 +115,12 @@
   .price-input-element {
     border-radius: 500px;
     color: var(--black);
-    padding: 8px 15px;
+    padding: 7px 13px;
     cursor: pointer;
     font-family: Inter;
     font-weight: 500;
     transition: 0.2s;
-    font-size: 15px;
+    font-size: 13.5px;
   }
 
   .price-input-element:hover {
@@ -136,17 +136,22 @@
 }
 
 .priser-h1 {
-    color: var(--softBlack);
-    font-size: 44px;
-    font-weight: 500;
-    font-family: Helvetica;
-    margin: 10px 0px;
+  color: var(--softBlack);
+  font-size: 40px;
+  display: inline-flex;
+  flex-direction: column;
+  font-family: Inter;
+  font-weight: 600;
 }
 
 .priser-h2 {
-    color: var(--softBlack);
-    opacity: 0.8;
-    font-size: 17px;
-    font-weight: 100;
-    font-family: CircularLight;
+  color: var(--softBlack);
+  font-size: 17px;
+  font-weight: 300;
+  margin: 0px auto;
+  padding: 10px 20px;
+  padding-bottom: 20px;
+  max-width: 500px;
+  text-align: center;
+  font-family: Inter;
 }

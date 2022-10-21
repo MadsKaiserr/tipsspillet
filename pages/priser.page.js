@@ -28,9 +28,8 @@ function Priser () {
             <Spacer />
             <div className="main-container">
                 <div className="hero-text">
-                    <p className="cp-h3 animation-fadeleft">Gennemsigtig prissætning</p>
-                    <h1 className="cp-h1 animation-fadeleft animation-delay-200">Priser og Abonnement</h1>
-                    <h2 className="cp-h2 animation-fadetop animation-delay-300">Betal hvert valgte termin - Lav dine egne gruppespil, få udvidet statistikker, deltag i <span className="color-primary font-weight-500">præmiedyster</span> og meget mere.</h2>
+                    <h1 className="priser-h1 animation-fadeleft animation-delay-200">Priser og Abonnement</h1>
+                    <h2 className="priser-h2 animation-fadetop animation-delay-300">Find det <span style={{color: "var(--primary)", fontWeight: "500"}}>abonnement</span> der bedst passer dig.</h2>
                 </div>
             </div>
             <PriserComp />

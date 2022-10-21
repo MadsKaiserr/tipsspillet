@@ -872,9 +872,6 @@
     justify-content: center;
     gap: 10vw;
   }
-  .plan-element {
-    width: clamp(237px, 45vw, 400px);
-  }
   .plan-funktioner {
     display: none !important;
   }
@@ -1755,7 +1752,7 @@
     display: none !important;
   }
   .plan-element {
-    width: 100% !important;
+    width: 95% !important;
   }
   #faq-top {
     display: none !important;

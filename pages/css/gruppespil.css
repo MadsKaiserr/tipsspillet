@@ -1194,6 +1194,10 @@
     box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.05);
 }
 
+.priser-container {
+  position: relative;
+}
+
 .gruppespil-info {
     margin-bottom: 50px;
     scroll-margin-top: 100px;

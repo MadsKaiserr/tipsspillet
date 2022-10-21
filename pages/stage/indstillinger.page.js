@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useState, useEffect } from 'react';
 import Head from 'next/head'
 import StageHeader from '../layout/stageheader';
+import Priser from '../components/priser';
 import axios from "axios";
 import Link from 'next/link'
 import cookie from 'js-cookie'
@@ -716,197 +717,203 @@ function StageIndstillinger ({data}) {
                                 </>}
                             </>}
                         </>}
-                        <div className="set-center" style={{paddingTop: "40px"}}>
+                        <div className="set-center" style={{marginTop: "40px"}}>
                             <div className="price-input animation-fadeleft animation-delay-400" id="price-input">
                                 <div className="price-input-element" id="month" onClick={() => {setType("month");setPriceInterval(1)}}>Månedligt</div>
                                 <div className="price-input-element-active" id="quarter" onClick={() => {setType("quarter");setPriceInterval(3)}}>Kvartalvis</div>
                                 <div className="price-input-element" id="year" onClick={() => {setType("year");setPriceInterval(12)}}>Årligt</div>
                             </div>
                         </div>
-                        <div className="st-plans-con">
-                            <div className="st-plan-element">
-                                <div className="st-plan-element-top">
-                                    <div className="plan-prices">
-                                        <p className="st-plan-element-prisp">kr</p>
-                                        <p className="st-plan-element-pris">0</p>
-                                        <p className="st-plan-element-prisp" style={{fontSize: "13px", width: "100%", opacity: "0.9", marginTop: "auto", marginBottom: "10px"}}>/ for evigt</p>
+                        <div className="match-figure" style={{top: "500px"}}>
+                            <div className="info-figure1"></div>
+                            <div className="info-figure2"></div>
+                        </div>
+                        <div className="plans-container" style={{marginBottom: "100px"}}>
+                            <div className="plans-con">
+                                <div className="plan-element animation-fadetop animation-delay-400">
+                                    <div className="plan-element-top">
+                                        <p className="plan-identifier">Standard</p>
+                                        <div className="plan-id-divider"><div className="plan-id-block"></div></div>
+                                        <div className="plan-prices">
+                                            <p className="plan-element-prisp">kr</p>
+                                            <p className="plan-element-pris">0</p>
+                                            <p className="plan-element-prisp" style={{fontSize: "15px", width: "100%", opacity: "0.9", marginTop: "auto", marginBottom: "10px"}}>/ for evigt</p>
+                                        </div>
                                     </div>
-                                    <h5 className="st-plan-element-identifier">Basic version</h5>
-                                    <p className="st-plan-element-binding">Prøv dig ad med Basic abonnement helt gratis.</p>
-                                </div>
-                                <div className="plan-element-perks">
-                                    <div className="plan-element-perk">
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="st-plan-element-perk-icon" viewBox="0 0 16 16">
-                                            <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
-                                        </svg>
-                                        <p className="st-plan-element-perk-desc">Deltag i 2 spil ad gangen</p>
-                                    </div>
-                                    <div className="plan-element-perk">
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="st-plan-element-perk-icon" viewBox="0 0 16 16">
-                                            <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
-                                        </svg>
-                                        <p className="st-plan-element-perk-desc">Deltag i venners gruppespil</p>
-                                    </div>
-                                    <div className="plan-element-perk-off">
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="st-plan-element-perk-icon" viewBox="0 0 16 16">
-                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-  <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
-                                        </svg>
-                                        <p className="st-plan-element-perk-desc">Opret gruppespil i alle ligaer</p>
-                                    </div>
-                                    <div className="plan-element-perk-off">
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="st-plan-element-perk-icon" viewBox="0 0 16 16">
-                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-  <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
-                                        </svg>
-                                        <p className="st-plan-element-perk-desc">Deltag i præmieturneringer</p>
-                                    </div>
-                                    <div className="plan-element-perk-off">
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="st-plan-element-perk-icon" viewBox="0 0 16 16">
-                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-  <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
-                                        </svg>
-                                        <p className="st-plan-element-perk-desc">Udvidet statistikker</p>
-                                    </div>
-                                    <div className="plan-element-perk-off">
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="st-plan-element-perk-icon" viewBox="0 0 16 16">
-                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-  <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
-                                        </svg>
-                                        <p className="st-plan-element-perk-desc">Gratis betting tips</p>
-                                    </div>
-                                    <div className="plan-element-perk-off">
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="st-plan-element-perk-icon" viewBox="0 0 16 16">
-                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-  <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
-                                        </svg>
-                                        <p className="st-plan-element-perk-desc">Ingen reklamer</p>
-                                    </div>
-                                </div>
-                                {abonnement === "none" && <button className="square-btn-default plan-btn-off">Nuværende</button>}
-                                {abonnement !== "none" && <button className="square-btn-default plan-btn" onClick={() => cancelSub()}>{loading0 && <div className="loader"></div>}{!loading0 && <>Nedgrader</>}</button>}
-                            </div>
-                            <div className="st-plan-element">
-                                <div className="st-plan-element-top">
-                                    <div className="plan-prices">
-                                        <p className="st-plan-element-prisp">kr</p>
-                                        <p className="st-plan-element-pris">{plusPrice}</p>
-                                        {plusPrice === 29 && <div className="st-plan-spar">Spar 25%</div>}
-                                        {plusPrice === 19 && <div className="st-plan-spar">Spar 50%</div>}
-                                        <p className="st-plan-element-prisp" style={{fontSize: "13px", width: "100%", opacity: "0.9", marginTop: "auto", marginBottom: "10px"}}>/ måned</p>
-                                    </div>
-                                    <h5 className="st-plan-element-identifier">Plus version</h5>
-                                    <p className="st-plan-element-binding">Til fodboldentusiaster og administratorere af gruppespil.</p>
-                                </div>
-                                <div className="plan-element-perks">
-                                    <div className="plan-element-perk">
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="st-plan-element-perk-icon" viewBox="0 0 16 16">
-                                            <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
-                                        </svg>
-                                        <p className="st-plan-element-perk-desc">Deltag i 5 spil ad gangen</p>
-                                    </div>
-                                    <div className="plan-element-perk">
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="st-plan-element-perk-icon" viewBox="0 0 16 16">
-                                            <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
-                                        </svg>
-                                        <p className="st-plan-element-perk-desc">Deltag i venners gruppespil</p>
-                                    </div>
-                                    <div className="plan-element-perk">
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="st-plan-element-perk-icon" viewBox="0 0 16 16">
-                                            <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
-                                        </svg>
-                                        <p className="st-plan-element-perk-desc">Opret private gruppespil</p>
-                                    </div>
-                                    <div className="plan-element-perk">
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="st-plan-element-perk-icon" viewBox="0 0 16 16">
-                                            <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
-                                        </svg>
-                                        <p className="st-plan-element-perk-desc">Deltag i præmieturneringer*</p>
-                                    </div>
-                                    <div className="plan-element-perk">
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="st-plan-element-perk-icon" viewBox="0 0 16 16">
-                                            <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
-                                        </svg>
-                                        <p className="st-plan-element-perk-desc">Plus abonnement statistikker</p>
-                                    </div>
-                                    <div className="plan-element-perk-off">
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="st-plan-element-perk-icon" viewBox="0 0 16 16">
-                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-  <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
-                                        </svg>
-                                        <p className="st-plan-element-perk-desc">Gratis betting tips</p>
-                                    </div>
-                                    <div className="plan-element-perk-off">
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="st-plan-element-perk-icon" viewBox="0 0 16 16">
-                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-  <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
-                                        </svg>
-                                        <p className="st-plan-element-perk-desc">Ingen reklamer</p>
+                                    {abonnement === "none" && <button className="plan-btn-default plan-off">Nuværende</button>}
+                                    {abonnement !== "none" && <button className="plan-btn-default" onClick={() => cancelSub()}>{loading0 && <div className="loader"></div>}{!loading0 && <>Nedgrader</>}</button>}
+                                    <div className="plan-element-perks">
+                                        <div className="plan-element-perk">
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="plan-element-perk-icon" viewBox="0 0 16 16">
+                                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                                            </svg>
+                                            <p className="plan-element-perk-desc">Deltag i 2 spil ad gangen</p>
+                                        </div>
+                                        <div className="plan-element-perk">
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="plan-element-perk-icon" viewBox="0 0 16 16">
+                                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                                            </svg>
+                                            <p className="plan-element-perk-desc">Deltag i venners gruppespil</p>
+                                        </div>
+                                        <div className="plan-element-perk-off">
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="plan-element-perk-icon" viewBox="0 0 16 16">
+                                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+    <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+                                            </svg>
+                                            <p className="plan-element-perk-desc">Opret gruppespil i alle ligaer</p>
+                                        </div>
+                                        <div className="plan-element-perk-off">
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="plan-element-perk-icon" viewBox="0 0 16 16">
+                                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+    <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+                                            </svg>
+                                            <p className="plan-element-perk-desc">Deltag i præmieturneringer</p>
+                                        </div>
+                                        <div className="plan-element-perk-off">
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="plan-element-perk-icon" viewBox="0 0 16 16">
+                                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+    <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+                                            </svg>
+                                            <p className="plan-element-perk-desc">Udvidet statistikker</p>
+                                        </div>
+                                        <div className="plan-element-perk-off">
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="plan-element-perk-icon" viewBox="0 0 16 16">
+                                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+    <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+                                            </svg>
+                                            <p className="plan-element-perk-desc">Gratis betting tips</p>
+                                        </div>
+                                        <div className="plan-element-perk-off">
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="plan-element-perk-icon" viewBox="0 0 16 16">
+                                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+    <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+                                            </svg>
+                                            <p className="plan-element-perk-desc">Ingen reklamer</p>
+                                        </div>
                                     </div>
                                 </div>
-                                {abonnement === "none" && <button className="square-btn-default plan-btn" onClick={handlePlus}>{loading1 && <div className="loader"></div>}{!loading1 && <>Opgrader</>}</button>}
-                                {abonnement === "premium" && <button className="square-btn-default plan-btn" onClick={handlePlus}>{loading1 && <div className="loader"></div>}{!loading1 && <>Nedgrader</>}</button>}
-                                {abonnement === "plus" && <button className="square-btn-default plan-btn-off">Nuværende</button>}
-                            </div>
-                            <div className="st-plan-element">
-                                <div className="st-plan-element-top">
-                                    <div className="plan-prices">
-                                        <p className="st-plan-element-prisp">kr</p>
-                                        <p className="st-plan-element-pris">{premiumPrice}</p>
-                                        {premiumPrice === 39 && <div className="st-plan-spar">Spar 34%</div>}
-                                        {premiumPrice === 29 && <div className="st-plan-spar">Spar 50%</div>}
-                                        <p className="st-plan-element-prisp" style={{fontSize: "13px", width: "100%", opacity: "0.9", marginTop: "auto", marginBottom: "10px"}}>/ måned</p>
+                                <div className="plan-element animation-fadetop animation-delay-600">
+                                    <div className="plan-element-top">
+                                        <p className="plan-identifier">Plus</p>
+                                        <div className="plan-id-divider"><div className="plan-id-block"></div></div>
+                                        <div className="plan-prices">
+                                            <p className="plan-element-prisp">kr</p>
+                                            <p className="plan-element-pris">{plusPrice}</p>
+                                            {plusPrice === 29 && <div className="plan-spar">Spar 25%</div>}
+                                            {plusPrice === 19 && <div className="plan-spar">Spar 50%</div>}
+                                            <p className="plan-element-prisp" style={{fontSize: "15px", width: "100%", opacity: "0.9", marginTop: "auto", marginBottom: "10px"}}>/ måned</p>
+                                        </div>
                                     </div>
-                                    <h5 className="st-plan-element-identifier">Premium version</h5>
-                                    <p className="st-plan-element-binding">Til bettingeksperter, dedikerede spillere og administratorere.</p>
+                                    {abonnement === "none" && <button className="plan-btn-default" onClick={handlePlus}>{loading1 && <div className="loader"></div>}{!loading1 && <>Opgrader</>}</button>}
+                                    {abonnement === "premium" && <button className="plan-btn-default" onClick={handlePlus}>{loading1 && <div className="loader"></div>}{!loading1 && <>Nedgrader</>}</button>}
+                                    {abonnement === "plus" && <button className="plan-btn-default plan-off">Nuværende</button>}
+                                    <div className="plan-element-perks">
+                                        <div className="plan-element-perk">
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="plan-element-perk-icon" viewBox="0 0 16 16">
+                                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                                            </svg>
+                                            <p className="plan-element-perk-desc">Deltag i 5 spil ad gangen</p>
+                                        </div>
+                                        <div className="plan-element-perk">
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="plan-element-perk-icon" viewBox="0 0 16 16">
+                                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                                            </svg>
+                                            <p className="plan-element-perk-desc">Deltag i venners gruppespil</p>
+                                        </div>
+                                        <div className="plan-element-perk">
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="plan-element-perk-icon" viewBox="0 0 16 16">
+                                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                                            </svg>
+                                            <p className="plan-element-perk-desc">Opret private gruppespil</p>
+                                        </div>
+                                        <div className="plan-element-perk">
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="plan-element-perk-icon" viewBox="0 0 16 16">
+                                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                                            </svg>
+                                            <p className="plan-element-perk-desc">Deltag i præmieturneringer*</p>
+                                        </div>
+                                        <div className="plan-element-perk">
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="plan-element-perk-icon" viewBox="0 0 16 16">
+                                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                                            </svg>
+                                            <p className="plan-element-perk-desc">Plus abonnement statistikker</p>
+                                        </div>
+                                        <div className="plan-element-perk-off">
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="plan-element-perk-icon" viewBox="0 0 16 16">
+                                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+    <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+                                            </svg>
+                                            <p className="plan-element-perk-desc">Gratis betting tips</p>
+                                        </div>
+                                        <div className="plan-element-perk-off">
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="plan-element-perk-icon" viewBox="0 0 16 16">
+                                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+    <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+                                            </svg>
+                                            <p className="plan-element-perk-desc">Ingen reklamer</p>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="plan-element-perks">
-                                    <div className="plan-element-perk">
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="st-plan-element-perk-icon" viewBox="0 0 16 16">
-                                            <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
-                                        </svg>
-                                        <p className="st-plan-element-perk-desc">Deltag i <span className="st-plan-element-perk-desc-active">uendelige</span> spil</p>
+                                <div className="plan-element animation-fadetop animation-delay-800">
+                                    <div className="plan-element-top">
+                                        <p className="plan-identifier">Premium</p>
+                                        <div className="plan-id-divider"><div className="plan-id-block"></div></div>
+                                        <div className="plan-prices">
+                                            <p className="plan-element-prisp">kr</p>
+                                            <p className="plan-element-pris">{premiumPrice}</p>
+                                            {premiumPrice === 39 && <div className="plan-spar">Spar 34%</div>}
+                                            {premiumPrice === 29 && <div className="plan-spar">Spar 50%</div>}
+                                            <p className="plan-element-prisp" style={{fontSize: "15px", width: "100%", opacity: "0.9", marginTop: "auto", marginBottom: "10px"}}>/ måned</p>
+                                        </div>
                                     </div>
-                                    <div className="plan-element-perk">
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="st-plan-element-perk-icon" viewBox="0 0 16 16">
-                                            <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
-                                        </svg>
-                                        <p className="st-plan-element-perk-desc">Deltag i venners gruppespil</p>
-                                    </div>
-                                    <div className="plan-element-perk">
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="st-plan-element-perk-icon" viewBox="0 0 16 16">
-                                            <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
-                                        </svg>
-                                        <p className="st-plan-element-perk-desc">Opret <span className="st-plan-element-perk-desc-active">offentlige</span> og <span className="st-plan-element-perk-desc-active">private</span> gruppespil</p>
-                                    </div>
-                                    <div className="plan-element-perk">
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="st-plan-element-perk-icon" viewBox="0 0 16 16">
-                                            <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
-                                        </svg>
-                                        <p className="st-plan-element-perk-desc">Deltag i <i><span className="st-plan-element-perk-desc-active">alle</span></i> præmieturneringer</p>
-                                    </div>
-                                    <div className="plan-element-perk">
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="st-plan-element-perk-icon" viewBox="0 0 16 16">
-                                            <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
-                                        </svg>
-                                        <p className="st-plan-element-perk-desc"><span className="st-plan-element-perk-desc-active">Alle</span> udvidet statistikker</p>
-                                    </div>
-                                    <div className="plan-element-perk">
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="st-plan-element-perk-icon" viewBox="0 0 16 16">
-                                            <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
-                                        </svg>
-                                        <p className="st-plan-element-perk-desc">Gratis betting tips</p>
-                                    </div>
-                                    <div className="plan-element-perk">
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="st-plan-element-perk-icon" viewBox="0 0 16 16">
-                                            <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
-                                        </svg>
-                                        <p className="st-plan-element-perk-desc">Ingen reklamer</p>
+                                    {abonnement === "none" && <button className="plan-btn-default" onClick={handlePremium}>{loading2 && <div className="loader"></div>}{!loading2 && <>Opgrader</>}</button>}
+                                    {abonnement === "plus" && <button className="plan-btn-default" onClick={handlePremium}>{loading2 && <div className="loader"></div>}{!loading2 && <>Opgrader</>}</button>}
+                                    {abonnement === "premium" && <button className="plan-btn-default plan-off">Nuværende</button>}
+                                    <div className="plan-element-perks">
+                                        <div className="plan-element-perk">
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="plan-element-perk-icon" viewBox="0 0 16 16">
+                                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                                            </svg>
+                                            <p className="plan-element-perk-desc">Deltag i <span className="plan-element-perk-desc-active">uendelige</span> spil</p>
+                                        </div>
+                                        <div className="plan-element-perk">
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="plan-element-perk-icon" viewBox="0 0 16 16">
+                                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                                            </svg>
+                                            <p className="plan-element-perk-desc">Deltag i venners gruppespil</p>
+                                        </div>
+                                        <div className="plan-element-perk">
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="plan-element-perk-icon" viewBox="0 0 16 16">
+                                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                                            </svg>
+                                            <p className="plan-element-perk-desc">Opret <span className="plan-element-perk-desc-active">offentlige</span> og <span className="plan-element-perk-desc-active">private</span> gruppespil</p>
+                                        </div>
+                                        <div className="plan-element-perk">
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="plan-element-perk-icon" viewBox="0 0 16 16">
+                                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                                            </svg>
+                                            <p className="plan-element-perk-desc">Deltag i <i><span className="plan-element-perk-desc-active">alle</span></i> præmieturneringer</p>
+                                        </div>
+                                        <div className="plan-element-perk">
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="plan-element-perk-icon" viewBox="0 0 16 16">
+                                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                                            </svg>
+                                            <p className="plan-element-perk-desc"><span className="plan-element-perk-desc-active">Alle</span> udvidet statistikker</p>
+                                        </div>
+                                        <div className="plan-element-perk">
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="plan-element-perk-icon" viewBox="0 0 16 16">
+                                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                                            </svg>
+                                            <p className="plan-element-perk-desc">Gratis betting tips</p>
+                                        </div>
+                                        <div className="plan-element-perk">
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="plan-element-perk-icon" viewBox="0 0 16 16">
+                                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                                            </svg>
+                                            <p className="plan-element-perk-desc">Ingen reklamer</p>
+                                        </div>
                                     </div>
                                 </div>
-                                {abonnement === "none" && <button className="square-btn-default plan-btn" onClick={handlePremium}>{loading2 && <div className="loader"></div>}{!loading2 && <>Opgrader</>}</button>}
-                                {abonnement === "plus" && <button className="square-btn-default plan-btn" onClick={handlePremium}>{loading2 && <div className="loader"></div>}{!loading2 && <>Opgrader</>}</button>}
-                                {abonnement === "premium" && <button className="square-btn-default plan-btn-off">Nuværende</button>}
                             </div>
                         </div>
                     </div>

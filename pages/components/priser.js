@@ -133,6 +133,10 @@ function Priser () {
     return (
         <>
             <div className="priser-container">
+                <div className="match-figure" style={{top: "-200px"}}>
+                    <div className="info-figure1"></div>
+                    <div className="info-figure2"></div>
+                </div>
                 <div className="section-price">
                     <div className={messageType} id="errorCon">
                         <div className="error-text">
@@ -156,14 +160,17 @@ function Priser () {
                         <div className="plans-con">
                             <div className="plan-element animation-fadetop animation-delay-400">
                                 <div className="plan-element-top">
+                                    <p className="plan-identifier">Standard</p>
+                                    <div className="plan-id-divider"><div className="plan-id-block"></div></div>
                                     <div className="plan-prices">
                                         <p className="plan-element-prisp">kr</p>
                                         <p className="plan-element-pris">0</p>
                                         <p className="plan-element-prisp" style={{fontSize: "15px", width: "100%", opacity: "0.9", marginTop: "auto", marginBottom: "10px"}}>/ for evigt</p>
                                     </div>
-                                    <h5 className="plan-element-identifier">Basic version</h5>
-                                    <p className="plan-element-binding">Prøv dig ad med Basic abonnement helt gratis.</p>
                                 </div>
+                                <Link href="/signup">
+                                    <button className="plan-btn-outline">Opret Gratis Konto</button>
+                                </Link>
                                 <div className="plan-element-perks">
                                     <div className="plan-element-perk">
                                         <svg xmlns="http://www.w3.org/2000/svg" className="plan-element-perk-icon" viewBox="0 0 16 16">
@@ -213,12 +220,11 @@ function Priser () {
                                         <p className="plan-element-perk-desc">Ingen reklamer</p>
                                     </div>
                                 </div>
-                                <Link href="/signup">
-                                    <button className="square-btn-outline plan-btn">Opret Gratis Konto</button>
-                                </Link>
                             </div>
                             <div className="plan-element animation-fadetop animation-delay-600">
                                 <div className="plan-element-top">
+                                    <p className="plan-identifier">Plus</p>
+                                    <div className="plan-id-divider"><div className="plan-id-block"></div></div>
                                     <div className="plan-prices">
                                         <p className="plan-element-prisp">kr</p>
                                         <p className="plan-element-pris">{plusPrice}</p>
@@ -226,9 +232,8 @@ function Priser () {
                                         {plusPrice === 19 && <div className="plan-spar">Spar 50%</div>}
                                         <p className="plan-element-prisp" style={{fontSize: "15px", width: "100%", opacity: "0.9", marginTop: "auto", marginBottom: "10px"}}>/ måned</p>
                                     </div>
-                                    <h5 className="plan-element-identifier">Plus version</h5>
-                                    <p className="plan-element-binding">Til fodboldentusiaster og administratorere af gruppespil.</p>
                                 </div>
+                                <button className="plan-btn-default" onClick={handlePlus}>{loading1 && <div className="loader" id="loader1"></div>}{!loading1 && <>Køb abonnement</>}</button>
                                 <div className="plan-element-perks">
                                     <div className="plan-element-perk">
                                         <svg xmlns="http://www.w3.org/2000/svg" className="plan-element-perk-icon" viewBox="0 0 16 16">
@@ -275,10 +280,11 @@ function Priser () {
                                         <p className="plan-element-perk-desc">Ingen reklamer</p>
                                     </div>
                                 </div>
-                                <button className="square-btn-default plan-btn" onClick={handlePlus}>{loading1 && <div className="loader" id="loader1"></div>}{!loading1 && <>Køb abonnement</>}</button>
                             </div>
                             <div className="plan-element animation-fadetop animation-delay-800">
                                 <div className="plan-element-top">
+                                    <p className="plan-identifier">Premium</p>
+                                    <div className="plan-id-divider"><div className="plan-id-block"></div></div>
                                     <div className="plan-prices">
                                         <p className="plan-element-prisp">kr</p>
                                         <p className="plan-element-pris">{premiumPrice}</p>
@@ -286,9 +292,8 @@ function Priser () {
                                         {premiumPrice === 29 && <div className="plan-spar">Spar 50%</div>}
                                         <p className="plan-element-prisp" style={{fontSize: "15px", width: "100%", opacity: "0.9", marginTop: "auto", marginBottom: "10px"}}>/ måned</p>
                                     </div>
-                                    <h5 className="plan-element-identifier">Premium version</h5>
-                                    <p className="plan-element-binding">Til bettingeksperter, dedikerede spillere og administratorere.</p>
                                 </div>
+                                <button className="plan-btn-default" onClick={handlePremium}>{loading2 && <div className="loader" id="loader2"></div>}{!loading2 && <>Køb abonnement</>}</button>
                                 <div className="plan-element-perks">
                                     <div className="plan-element-perk">
                                         <svg xmlns="http://www.w3.org/2000/svg" className="plan-element-perk-icon" viewBox="0 0 16 16">
@@ -333,7 +338,6 @@ function Priser () {
                                         <p className="plan-element-perk-desc">Ingen reklamer</p>
                                     </div>
                                 </div>
-                                <button className="square-btn-default plan-btn" onClick={handlePremium}>{loading2 && <div className="loader" id="loader2"></div>}{!loading2 && <>Køb abonnement</>}</button>
                             </div>
                         </div>
                     </div>
