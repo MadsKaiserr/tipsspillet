@@ -100,6 +100,10 @@ function Gruppespil ({data, responseTime}) {
                 </div>
             </div>
             <div className="gs-container">
+                <div className="match-figure" style={{top: "100px"}}>
+                    <div className="info-figure1"></div>
+                    <div className="info-figure2"></div>
+                </div>
                 <div className="main-block-container">
                     <div className="hero-text">
                         <h3 className="cp-h3 animation-fadeleft">Find gruppespil og præmiedyster</h3>

@@ -1323,6 +1323,15 @@
   .op-content {
     padding-top: 25px !important;
   }
+  .priser-h1 {
+    font-size: 32px !important;
+  }
+  .priser-h2 {
+    font-size: 15px !important;
+  }
+  .gs-container .match-figure {
+    top: -100px !important;
+  }
   .cp-h1 {
     font-size: 28px !important;
   }
