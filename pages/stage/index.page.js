@@ -3049,7 +3049,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
                         <p className="info-p" style={{paddingBottom: "10px"}}>Slutdato: <span className="info-p-span">{slutdatostr}</span></p>
                         <br />
                         <Link href="/stage/aktive-spil">
-                            <button className="gruppespil2-btn" style={{marginTop: "0px"}}>Skift gruppespil</button>
+                            <button className="gruppespil-cta-btn" style={{marginTop: "0px"}}>Skift gruppespil</button>
                         </Link>
                         <div className="info-figure">
                             <div className="info-figure1"></div>

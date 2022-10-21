@@ -352,6 +352,26 @@ function StageIndstillinger ({data}) {
         // })
     }
 
+    function sendEmail() {
+        const loginURL2 = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/sendemail";
+        const requestConfig2 = {
+            headers: {
+                "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
+            }
+        }
+
+        const requestBody2 = {
+            email: [getUser().email],
+            template: "anbefalet"
+        }
+
+        axios.post(loginURL2, requestBody2, requestConfig2).then(response => {
+            console.log("AWS - Send email:", response);
+        }).catch(error => {
+            console.log(error);
+        })
+    }
+
     useEffect(() => {
         if ((usernameField !== ogusernameField) || (emailField !== ogemailField) || (navn !== ognavn)) {
             setEdited(true)
@@ -637,6 +657,7 @@ function StageIndstillinger ({data}) {
                 {message !== "" && <p className="og-msg">{message}</p>}
                 {editedNoti && <button className="wc-btn" style={{marginTop: "30px"}} onClick={() => updateNotifikationer()}>{loading && <div className="loader"></div>}{!loading && <>Opdater indstillinger</>}</button>}
                 {!editedNoti && <button className="wc-btn-off" style={{marginTop: "30px"}}>Opdater indstillinger</button>}
+                {/* <button className="gruppespil-cta-btn" onClick={() => sendEmail()}>Send email</button> */}
                 </>}
                 {nav === "abonnement" && <><div className="op-content" style={{maxWidth: "950px", minHeight: "750px"}}>
                     <p className="op-h1">Abonnement</p>

@@ -53,7 +53,7 @@ export default function Footer()  {
                     <nav className="footer-element">
                         <p className="footer-h2">Platform</p>
                         <Link href="/gruppespil"><a className="footer-h3">Gruppespil</a></Link>
-                        <Link href="/priser"><a className="footer-h3">Priser</a></Link>
+                        <Link href="/priser"><a className="footer-h3">Abonnement</a></Link>
                         <Link href="/gruppespil"><a className="footer-h3">Præmiedyster</a></Link>
                     </nav>
                     <nav className="footer-element">

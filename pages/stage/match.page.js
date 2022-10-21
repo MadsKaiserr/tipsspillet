@@ -3400,7 +3400,6 @@ function StageMatcharticle ({data}) {
                                                                                     if (items["time"].starting_at.timestamp < thistime) {
                                                                                         oddofforon0 = "match-odds-offer-element odd-used";
                                                                                         oddofforon1 = "match-odds-offer-element odd-used";
-                                                                                        oddofforon2 = "match-odds-offer-element odd-used";
                                                                                     } else {
                                                                                         if (sessionStorage.getItem("notUsableBtn")) {
                                                                                             const btnReplica = JSON.parse(sessionStorage.getItem("notUsableBtn"));
