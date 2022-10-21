@@ -1196,6 +1196,14 @@
 
 .gruppespil-info {
     margin-bottom: 50px;
+    scroll-margin-top: 100px;
+}
+
+.table-divider {
+  width: 100%;
+  margin: 3px 0px;
+  background-color: #ebebeb;
+  height: 1px;
 }
 
 .gruppespil-info-choose {

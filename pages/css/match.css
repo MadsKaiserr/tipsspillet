@@ -994,9 +994,40 @@
     transition: 0.2s;
 }
 
-.tabel-container {
+.tabel-pagination {
     margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 5px;
+    user-select: none;
+}
+
+.tabel-page-p {
+    font-family: Inter;
+    font-weight: 300;
+    color: #555;
+    font-size: 12px;
+    cursor: pointer;
+    transition: 0.2s;
+    padding: 7px 15px;
+    border-radius: 50px;
+}
+
+.tabel-page-p:hover {
+    background-color: var(--stageSurface);
+}
+
+.tabel-page-h1 {
+    font-family: Inter;
+    font-weight: 300;
+    color: #888;
+    font-size: 12px;
+}
+
+.tabel-container {
     width: 100%;
+    background-color: var(--surface);
     padding-bottom: 5px;
     border-radius: 3px;
 }

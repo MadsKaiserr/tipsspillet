@@ -417,14 +417,14 @@
     text-align: center;
   }
 
-  .gruppespil-info {
-    scroll-margin-top: 100px;
-  }
-
   .match-span {
     display: flex;
     align-items: center;
     gap: 10px;
+  }
+
+  .gruppespil-title {
+    scroll-margin-top: 100px;
   }
 
   .match-dropdown {

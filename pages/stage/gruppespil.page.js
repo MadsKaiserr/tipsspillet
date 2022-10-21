@@ -68,6 +68,7 @@ function StageGruppespil ({data}) {
     const [forbrug, setForbrug] = useState(0);
 
     const [correct, setCorrect] = useState(0);
+    const [sidetal, setSidetal] = useState(1);
 
     const [gevinstStat, setGevinstStat] = useState(0);
 
@@ -845,8 +846,8 @@ function StageGruppespil ({data}) {
                                     </ul>
                                 </div>
                             </div>
-                            <div className="gruppespil-info" id="stilling">
-                                <div className="gruppespil-title">
+                            <div className="gruppespil-info">
+                                <div className="gruppespil-title" id="stilling">
                                     <h2 className="gs-h2">Spildeltagere</h2>
                                     <p className="gs-h4">Klik for at se mere info</p>
                                 </div>
@@ -895,30 +896,137 @@ function StageGruppespil ({data}) {
                                                 }
                                             }
 
-                                            return (
-                                                <li key={item.player}>
-                                                    <Link href={"/stage/gruppespil/spiller?spiller="+item.player+"&game="+activeGame}>
-                                                        <div className={"tabel-element " + trueMe} style={{borderLeft: "4px solid var(--primary)", padding: "10px 1px"}}>
-                                                            <div className="tabel-top-right">
-                                                                <div className="tabel-ends">
-                                                                    <p className="tabel-p" id="gs-pos" style={{textAlign: "center"}}>{index + 1}</p>
-                                                                    <p className="tabel-h1" id="gs-navn">{item.username && <>{item.username}</>}</p>
+                                            if (tableArray.length > 10) {
+                                                if (index >= ((sidetal - 1) * 7) && index < (sidetal * 7) && index < (tableArray.length - 3)) {
+                                                    return (
+                                                        <li key={item.player}>
+                                                            <Link href={"/stage/gruppespil/spiller?spiller="+item.player+"&game="+activeGame}>
+                                                                <div className={"tabel-element " + trueMe} style={{borderLeft: "4px solid var(--primary)", padding: "10px 1px"}}>
+                                                                    <div className="tabel-top-right">
+                                                                        <div className="tabel-ends">
+                                                                            <p className="tabel-p" id="gs-pos" style={{textAlign: "center"}}>{index + 1}</p>
+                                                                            <p className="tabel-h1" id="gs-navn">{item.username && <>{item.username}</>}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className="tabel-top-right">
+                                                                        <div className="tabel-ends">
+                                                                            <p className="tabel-p" id="gs-kuponer">{item.odds.length}</p>
+                                                                            <p className="tabel-p" id="gs-kapital">{profitHtml && <>{profitHtml}</>}</p>
+                                                                            <p className="tabel-p" id="gs-aktive">{aktive && <>{aktive}</>}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </Link>
+                                                        </li>
+                                                    );
+                                                }
+                                                if (getUser().email === item.player && index > 7 && index < (tableArray.length - 3)) {
+                                                    return (<>
+                                                        <div className="table-divider"></div>
+                                                        <div className="table-divider"></div>
+                                                        <div className="table-divider"></div>
+                                                        <li key={item.player}>
+                                                            <Link href={"/stage/gruppespil/spiller?spiller="+item.player+"&game="+activeGame}>
+                                                                <div className={"tabel-element " + trueMe} style={{borderLeft: "4px solid var(--primary)", padding: "10px 1px"}}>
+                                                                    <div className="tabel-top-right">
+                                                                        <div className="tabel-ends">
+                                                                            <p className="tabel-p" id="gs-pos" style={{textAlign: "center"}}>{index + 1}</p>
+                                                                            <p className="tabel-h1" id="gs-navn">{item.username && <>{item.username}</>}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className="tabel-top-right">
+                                                                        <div className="tabel-ends">
+                                                                            <p className="tabel-p" id="gs-kuponer">{item.odds.length}</p>
+                                                                            <p className="tabel-p" id="gs-kapital">{profitHtml && <>{profitHtml}</>}</p>
+                                                                            <p className="tabel-p" id="gs-aktive">{aktive && <>{aktive}</>}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </Link>
+                                                        </li>
+                                                    </>
+                                                    );
+                                                } else if (index === tableArray.length - 3) {
+                                                    return (<>
+                                                        <div className="table-divider"></div>
+                                                        <div className="table-divider"></div>
+                                                        <div className="table-divider"></div>
+                                                        <li key={item.player}>
+                                                            <Link href={"/stage/gruppespil/spiller?spiller="+item.player+"&game="+activeGame}>
+                                                                <div className={"tabel-element " + trueMe} style={{borderLeft: "4px solid var(--primary)", padding: "10px 1px"}}>
+                                                                    <div className="tabel-top-right">
+                                                                        <div className="tabel-ends">
+                                                                            <p className="tabel-p" id="gs-pos" style={{textAlign: "center"}}>{index + 1}</p>
+                                                                            <p className="tabel-h1" id="gs-navn">{item.username && <>{item.username}</>}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className="tabel-top-right">
+                                                                        <div className="tabel-ends">
+                                                                            <p className="tabel-p" id="gs-kuponer">{item.odds.length}</p>
+                                                                            <p className="tabel-p" id="gs-kapital">{profitHtml && <>{profitHtml}</>}</p>
+                                                                            <p className="tabel-p" id="gs-aktive">{aktive && <>{aktive}</>}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </Link>
+                                                        </li>
+                                                    </>
+                                                    );
+                                                } else if (index > tableArray.length - 3) {
+                                                    return (<>
+                                                        <li key={item.player}>
+                                                            <Link href={"/stage/gruppespil/spiller?spiller="+item.player+"&game="+activeGame}>
+                                                                <div className={"tabel-element " + trueMe} style={{borderLeft: "4px solid var(--primary)", padding: "10px 1px"}}>
+                                                                    <div className="tabel-top-right">
+                                                                        <div className="tabel-ends">
+                                                                            <p className="tabel-p" id="gs-pos" style={{textAlign: "center"}}>{index + 1}</p>
+                                                                            <p className="tabel-h1" id="gs-navn">{item.username && <>{item.username}</>}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className="tabel-top-right">
+                                                                        <div className="tabel-ends">
+                                                                            <p className="tabel-p" id="gs-kuponer">{item.odds.length}</p>
+                                                                            <p className="tabel-p" id="gs-kapital">{profitHtml && <>{profitHtml}</>}</p>
+                                                                            <p className="tabel-p" id="gs-aktive">{aktive && <>{aktive}</>}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </Link>
+                                                        </li>
+                                                    </>
+                                                    );
+                                                }
+                                            } else {
+                                                return (
+                                                    <li key={item.player}>
+                                                        <Link href={"/stage/gruppespil/spiller?spiller="+item.player+"&game="+activeGame}>
+                                                            <div className={"tabel-element " + trueMe} style={{borderLeft: "4px solid var(--primary)", padding: "10px 1px"}}>
+                                                                <div className="tabel-top-right">
+                                                                    <div className="tabel-ends">
+                                                                        <p className="tabel-p" id="gs-pos" style={{textAlign: "center"}}>{index + 1}</p>
+                                                                        <p className="tabel-h1" id="gs-navn">{item.username && <>{item.username}</>}</p>
+                                                                    </div>
+                                                                </div>
+                                                                <div className="tabel-top-right">
+                                                                    <div className="tabel-ends">
+                                                                        <p className="tabel-p" id="gs-kuponer">{item.odds.length}</p>
+                                                                        <p className="tabel-p" id="gs-kapital">{profitHtml && <>{profitHtml}</>}</p>
+                                                                        <p className="tabel-p" id="gs-aktive">{aktive && <>{aktive}</>}</p>
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                            <div className="tabel-top-right">
-                                                                <div className="tabel-ends">
-                                                                    <p className="tabel-p" id="gs-kuponer">{item.odds.length}</p>
-                                                                    <p className="tabel-p" id="gs-kapital">{profitHtml && <>{profitHtml}</>}</p>
-                                                                    <p className="tabel-p" id="gs-aktive">{aktive && <>{aktive}</>}</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </Link>
-                                                </li>
+                                                        </Link>
+                                                    </li>
                                                 );
+                                            }
                                             }
                                         )}
                                     </ul>
+                                </div>
+                                <div className="tabel-pagination">
+                                    <p className="tabel-page-p" onClick={() => {if(sidetal > 1){setSidetal(sidetal - 1)}}}>Forrige side</p>
+                                    <p className="tabel-page-h1">Side {sidetal} af {Math.ceil((tableArray.length - 3) / 7)}</p>
+                                    <p className="tabel-page-p" onClick={() => {if(sidetal < Math.ceil((tableArray.length - 3) / 7)){setSidetal(sidetal + 1)}}}>Næste side</p>
                                 </div>
                             </div>
                             <div className="gruppespil-info" id="inviteInfo">
