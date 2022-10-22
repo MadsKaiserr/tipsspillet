@@ -586,7 +586,15 @@ function StageMatcharticle ({data}) {
                 }
             }
         })
-            .catch(error => console.log('error', error));
+        .catch(error => console.log('error', error));
+
+        // const URL = "https://api.sportmonks.com/v3/football/fixtures/"+matchIDGet2+"?api_token=kvgDywRFDSqPhS9iYQynEci42JvyVtqLpCXBJlBHrH5v8Br8RtrEayi94Ybf&include=odds;";
+
+        // axios.get(URL).then(response => {
+        //     console.log("Sportmonks V3 :", response);
+        // }).catch(error => {
+        //     console.log("Fejl ved indhentning af data" + error)
+        // })
     }
 
     function updateUdbetaling(type, oddsSend, indsats) {

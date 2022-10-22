@@ -564,7 +564,7 @@ function StageGruppespil ({data}) {
                                         </svg>
                                     </div>
                                     {transakShow && <ul className="tr-table">
-                                        {transaktioner.map((trans) => {
+                                        {transaktioner.reverse().map((trans) => {
                                             return (
                                                 <li className="tr-element">
                                                     <div className="tr-span">
@@ -1261,7 +1261,7 @@ function StageGruppespil ({data}) {
                                         </svg>
                                     </div>
                                     {transakShow && <ul className="tr-table">
-                                        {transaktioner.map((trans) => {
+                                        {transaktioner.reverse().map((trans) => {
                                             return (
                                                 <li className="tr-element">
                                                     <div className="tr-span">

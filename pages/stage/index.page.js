@@ -450,11 +450,11 @@ function StageForside ({gruppespil_data, spiller_data}) {
                     }
                 }
             }
-            if (!(odds.length > 0) || !(cookie.get("activeGame")) || indsats <= 0) {
-                if (!(odds.length > 0)) {
+            if (odds.length <= 0 || !cookie.get("activeGame") || indsats <= 0) {
+                if (odds.length <= 0) {
                     setNotiMessage("error", "Ingen væddemål", "Du har ikke placeret nogle væddemål. Placer ét eller flere væddemål, for at lave din kuppon.");
                     placeBetBTN.innerHTML = "Placér bet";
-                } else if (!(cookie.get("activeGame"))) {
+                } else if (!cookie.get("activeGame")) {
                     setNotiMessage("error", "Intet aktivt gruppespil", "For at placere et væddemål, skal du være tilmeldt et gruppespil, og sætte det som aktivt.");
                     placeBetBTN.innerHTML = "Placér bet";
                 } else if (indsats <= 0) {
@@ -482,95 +482,95 @@ function StageForside ({gruppespil_data, spiller_data}) {
                 } else {
                     var newDiv = JSON.parse(sessionStorage.getItem("odds"));
                     var valueArr = newDiv.map(function(item){ return item.id });
-                        var isDuplicate = valueArr.some(function(item, idx){ 
-                            return valueArr.indexOf(item) != idx 
-                        });
-                        if (isDuplicate) {
-                            setNotiMessage("error", "Hovsa...", "Det ser ud til du har duplikeret et odds... Ryd din kupon og prøv igen");
-                            placeBetBTN.innerHTML = "Placér bet";
-                        } else {
-                            const placeBetUrl = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/bet";
-                    const userEmail = getUser().email;
+                    var isDuplicate = valueArr.some(function(item, idx){ 
+                        return valueArr.indexOf(item) != idx 
+                    });
+                    if (isDuplicate) {
+                        setNotiMessage("error", "Hovsa...", "Det ser ud til du har duplikeret et odds... Ryd din kupon og prøv igen");
+                        placeBetBTN.innerHTML = "Placér bet";
+                    } else {
+                        const placeBetUrl = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/bet";
+                        const userEmail = getUser().email;
+                
+                        const betConfig = {
+                            headers: {
+                                "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
+                            }
+                        }
             
-                    const betConfig = {
-                        headers: {
-                            "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
-                        }
-                    }
-        
-                    const localGame = cookie.get("activeGame");
-                    const localIndex = parseInt(localStorage.getItem("playerIndex"));
-        
-                    var last_date = 0;
-                    var gammel = false;
-                    var currentDate = new Date().getTime();
-                    for (var p in odds) {
-                        const bet_dato = parseInt(odds[p].odds_date);
-                        if (bet_dato*1000 < currentDate) {
-                            setNotiMessage("error", "Gammel væddemål", "Et væddemål du prøver at oddse på er allerede startet.");
-                            placeBetBTN.innerHTML = "Placér bet";
-                            gammel = true;
-                        } else {
-                            if (bet_dato > last_date) {
-                                last_date = bet_dato;
+                        const localGame = cookie.get("activeGame");
+                        const localIndex = parseInt(localStorage.getItem("playerIndex"));
+            
+                        var last_date = 0;
+                        var gammel = false;
+                        var currentDate = new Date().getTime();
+                        for (var p in odds) {
+                            const bet_dato = parseInt(odds[p].odds_date);
+                            if (bet_dato*1000 < currentDate) {
+                                setNotiMessage("error", "Gammel væddemål", "Et væddemål du prøver at oddse på er allerede startet.");
+                                placeBetBTN.innerHTML = "Placér bet";
+                                gammel = true;
+                            } else {
+                                if (bet_dato > last_date) {
+                                    last_date = bet_dato;
+                                }
                             }
                         }
-                    }
-        
-                    if (gammel !== true) {
-                        const betBody = {
-                            "betId": localGame,
-                            "updateValue": {
-                                "bets": [],
-                                "player": userEmail,
-                                "indsats": indsats,
-                                "fullProb": returnOdds,
-                                "last_date": last_date,
-                                "type": "kombination"
-                            },
-                            "index": localIndex
-                        }
-                
-                        for (var m in odds) {
-                            const match = odds[m].match;
-                            const result = odds[m].odds_result;
-                            const probability = odds[m].probability;
-                            const type = odds[m].odds_type;
-                            const visitorteamString = odds[m].visitorteam;
-                            const hometeamString = odds[m].hometeam;
-                            const bet_date = odds[m].odds_date;
-                            const label = odds[m].label;
-                
-                            betBody.updateValue.bets[m] = {
-                                "game" : match,
-                                "betType": type,
-                                "result": result,
-                                "probability": probability,
-                                "hometeam": hometeamString,
-                                "visitorteam": visitorteamString,
-                                "bet_date": bet_date,
-                                "label": label,
-                                "indsats": 0
+            
+                        if (gammel !== true) {
+                            const betBody = {
+                                "betId": localGame,
+                                "updateValue": {
+                                    "bets": [],
+                                    "player": userEmail,
+                                    "indsats": indsats,
+                                    "fullProb": returnOdds,
+                                    "last_date": last_date,
+                                    "type": "kombination"
+                                },
+                                "index": localIndex
                             }
+                    
+                            for (var m in odds) {
+                                const match = odds[m].match;
+                                const result = odds[m].odds_result;
+                                const probability = odds[m].probability;
+                                const type = odds[m].odds_type;
+                                const visitorteamString = odds[m].visitorteam;
+                                const hometeamString = odds[m].hometeam;
+                                const bet_date = odds[m].odds_date;
+                                const label = odds[m].label;
+                    
+                                betBody.updateValue.bets[m] = {
+                                    "game" : match,
+                                    "betType": type,
+                                    "result": result,
+                                    "probability": probability,
+                                    "hometeam": hometeamString,
+                                    "visitorteam": visitorteamString,
+                                    "bet_date": bet_date,
+                                    "label": label,
+                                    "indsats": 0
+                                }
+                            }
+                    
+                            axios.patch(placeBetUrl, betBody, betConfig).then(response => {
+                                document.getElementById("placed-modal").classList.remove("display-not");
+                                // document.getElementById("singler-modal").classList.add("display-not")
+                                console.log("AWS - Oprettet:", betBody, response)
+                                cookie.set("notifikationer", parseInt(cookie.get("notifikationer")) + 1, {expires: 7});
+                                setCurrentMoney(currentMoney - indsats);
+                                emptyBets();
+                                setNotiMessage("success", "Væddemål placeret", "Dit væddemål er nu placeret. Gå til 'Mine gruppespil' for at se dine væddemål.");
+                                var placeBetBTN2 = document.getElementById("placeBetBTN");
+                                placeBetBTN2.innerHTML = "Placér bet";
+                            }).catch(error => {
+                                setNotiMessage("error", "Fejl ved oprettelse af væddemål", error.message);
+                                placeBetBTN.innerHTML = "Placér bet";
+                                console.log(error);
+                            })
                         }
-                
-                        axios.patch(placeBetUrl, betBody, betConfig).then(response => {
-                            document.getElementById("placed-modal").classList.remove("display-not");
-                            // document.getElementById("singler-modal").classList.add("display-not")
-                            console.log("AWS - Oprettet:", betBody, response)
-                            cookie.set("notifikationer", parseInt(cookie.get("notifikationer")) + 1, {expires: 7});
-                            setCurrentMoney(currentMoney - indsats);
-                            emptyBets();
-                            setNotiMessage("success", "Væddemål placeret", "Dit væddemål er nu placeret. Gå til 'Mine gruppespil' for at se dine væddemål.");
-                            var placeBetBTN2 = document.getElementById("placeBetBTN");
-                            placeBetBTN2.innerHTML = "Placér bet";
-                        }).catch(error => {
-                            setNotiMessage("error", "Fejl ved oprettelse af væddemål", error.message);
-                            placeBetBTN.innerHTML = "Placér bet";
-                            console.log(error);
-                        })
                     }
-                        }
                 }
             }
         } else {
@@ -830,7 +830,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
                                 if (result.data[u].odds.data[result.data[u].odds.data.findIndex(obj => obj.name === checkArray[t].type)].bookmaker.data[0].odds.data[parseInt(checkArray[t].result)].winning === true) {
                                     winning = winning + 1;
                                     winsArray.push(checkArray[t]);
-                                } else if (!result.data[u].odds.data[result.data[u].odds.data.findIndex(obj => obj.name === checkArray[t].type)].bookmaker.data[0].odds.data[parseInt(checkArray[t].result)].winning) {
+                                } else if (result.data[u].odds.data[result.data[u].odds.data.findIndex(obj => obj.name === checkArray[t].type)].bookmaker.data[0].odds.data[parseInt(checkArray[t].result)].winning === null) {
                                     winable = false;
                                 }
                             }
