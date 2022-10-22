@@ -560,13 +560,13 @@ function StageGruppespil ({data}) {
                                     <div className="tr-top" onClick={() => {if (transakShow){setTransakShow(false)}else{setTransakShow(true)}}}>
                                         <p className="tr-h1">Transaktioner</p>
                                         <svg xmlns="http://www.w3.org/2000/svg" id="trans-icon" width="16" height="16" fill="#555" style={{transition: "0.2s"}} viewBox="0 0 16 16">
-                                            <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+                                            <path fillRule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
                                         </svg>
                                     </div>
                                     {transakShow && <ul className="tr-table">
                                         {transaktioner.reverse().map((trans) => {
                                             return (
-                                                <li className="tr-element">
+                                                <li key={trans.iat} className="tr-element">
                                                     <div className="tr-span">
                                                         <div className="tr-icon">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#333" viewBox="0 0 16 16">
@@ -1257,13 +1257,13 @@ function StageGruppespil ({data}) {
                                     <div className="tr-top" onClick={() => {if (transakShow){setTransakShow(false)}else{setTransakShow(true)}}}>
                                         <p className="tr-h1">Transaktioner</p>
                                         <svg xmlns="http://www.w3.org/2000/svg" id="trans-icon" width="16" height="16" fill="#555" style={{transition: "0.2s"}} viewBox="0 0 16 16">
-                                            <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+                                            <path fillRule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
                                         </svg>
                                     </div>
                                     {transakShow && <ul className="tr-table">
                                         {transaktioner.reverse().map((trans) => {
                                             return (
-                                                <li className="tr-element">
+                                                <li key={trans.iat} className="tr-element">
                                                     <div className="tr-span">
                                                         <div className="tr-icon">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#333" viewBox="0 0 16 16">
