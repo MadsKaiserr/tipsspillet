@@ -22,6 +22,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
 
     const [loading, setLoading] = useState(false);
     const [modal, setModal] = useState(false);
+    const [confirmModal, setConfirmModal] = useState(false);
 
     const [smallScreen, setSmallScreen] = useState(false);
 
@@ -984,6 +985,9 @@ function StageForside ({gruppespil_data, spiller_data}) {
 
     useEffect(() => {
         console.log("AWS - User:", spiller_data);
+        if (!spiller_data.confirmed) {
+            setConfirmModal(true);
+        }
         if (spiller_data) {
             var favorit = [];
             if (spiller_data.favoritter.length > 0) {
@@ -2902,6 +2906,97 @@ function StageForside ({gruppespil_data, spiller_data}) {
     const [feedbackMessage, setFeedbackMessage] = useState("");
     const [feedbackBox, setFeedbackBox] = useState(0);
 
+    const [ec1, setec1] = useState(-1);
+    const [ec2, setec2] = useState(-1);
+    const [ec3, setec3] = useState(-1);
+    const [ec4, setec4] = useState(-1);
+    const [ec5, setec5] = useState(-1);
+    const [ec6, setec6] = useState(-1);
+    const [VEMessage, setVEMessage] = useState("");
+    const [VELoading, setVELoading] = useState(false);
+    const [VESCAllowed, setVESCAllowed] = useState(true);
+    const [confirmedModal, setConfirmedModal] = useState(false);
+
+    function verifyEmail() {
+        setVELoading(true);
+        setVEMessage("");
+        if (ec1 < 0 || ec2 < 0 || ec3 < 0 || ec4 < 0 || ec5 < 0 || ec6 < 0) {
+            console.log("Udfyld alle felter")
+            setVELoading(false);
+        } else if (isNaN(ec1) || isNaN(ec2) || isNaN(ec3) || isNaN(ec4) || isNaN(ec5) || isNaN(ec6)) {
+            console.log("Koden består kun af tal")
+            setVELoading(false);
+        } else {
+            const loginURL2 = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/verifyemail";
+            const requestConfig2 = {
+                headers: {
+                    "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
+                }
+            }
+    
+            const requestBody2 = {
+                email: getUser().email,
+                code: (ec1 + "") + (ec2 + "") + (ec3 + "") + (ec4 + "") + (ec5 + "") + (ec6 + "")
+            }
+    
+            axios.post(loginURL2, requestBody2, requestConfig2).then(response => {
+                console.log("AWS - Verify Email:", response);
+                if (response.data.res.msg === "Bekræftet") {
+                    setConfirmModal(false);
+                    setConfirmedModal(true);
+                }
+            }).catch(error => {
+                setVELoading(false);
+                console.log(error);
+                if (error.response.data.msg === "Forkert kode") {
+                    setVEMessage("Forkert kode")
+                }
+            })
+        }
+    }
+
+    function sendCode() {
+        if (VESCAllowed) {
+            if (document.getElementById("veki") && document.getElementById("vekiLink") && document.getElementById("kodetimer")) {
+                document.getElementById("veki").style.opacity = "0.4";
+                document.getElementById("veki").style.cursor = "not-allowed";
+                document.getElementById("vekiLink").style.cursor = "not-allowed";
+                document.getElementById("kodetimer").classList.remove("display-not");
+                setVESCAllowed(false);
+                var timeleft = 30;
+                var kodeInterval = setInterval(function(){
+                    if(timeleft <= 0){
+                        document.getElementById("veki").style.opacity = "1";
+                        document.getElementById("kodetimer").classList.add("display-not");
+                        document.getElementById("veki").style.cursor = "default";
+                        document.getElementById("vekiLink").style.cursor = "pointer";
+                        setVESCAllowed(true);
+                        clearInterval(kodeInterval);
+                    }
+                    document.getElementById("kodetimer").innerHTML = timeleft;
+                    timeleft -= 1;
+                }, 1000);
+            }
+
+            const loginURL2 = "https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/sendverify";
+            const requestConfig2 = {
+                headers: {
+                    "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
+                }
+            }
+    
+            const requestBody2 = {
+                email: getUser().email
+            }
+    
+            axios.post(loginURL2, requestBody2, requestConfig2).then(response => {
+                console.log("AWS - Verify Code Sent:", response);
+            }).catch(error => {
+                console.log(error);
+            })
+        }
+    }
+
     return (
         <>
         <Head>
@@ -2911,6 +3006,36 @@ function StageForside ({gruppespil_data, spiller_data}) {
         <StageHeader />
         <div className="height-fix2">
         </div>
+        {confirmModal && <div className="ec-wrapper">
+            <div className="ec-img">
+
+            </div>
+            {/* <div className="wc-circles">
+                <div className="wc-cir1"><div className="wc-cir2"><div className="wc-cir3"></div></div></div>
+            </div> */}
+            <p className="ec-h1">Bekræft email</p>
+            <p className="ec-h2">Indsæt koden, som blev sendt på din email</p>
+            {VEMessage !== "" && <p className="ec-h4">{VEMessage}</p>}
+            <div className="ec-container">
+                <input onChange={event => setec1(event.target.value)} id="ec-1" type="none" className="ec-input" maxLength="1" autoComplete="new-password" />
+                <input onChange={event => setec2(event.target.value)} id="ec-2" type="none" className="ec-input" maxLength="1" autoComplete="new-password"/>
+                <input onChange={event => setec3(event.target.value)} id="ec-3" type="none" className="ec-input" maxLength="1" autoComplete="new-password" />
+                <input onChange={event => setec4(event.target.value)} id="ec-4" type="none" className="ec-input" maxLength="1" autoComplete="new-password" />
+                <input onChange={event => setec5(event.target.value)} id="ec-5" type="none" className="ec-input" maxLength="1" autoComplete="new-password" />
+                <input onChange={event => setec6(event.target.value)} id="ec-6" type="none" className="ec-input" maxLength="1" autoComplete="new-password" />
+            </div>
+            <button className="ec-btn" onClick={() => verifyEmail()}>{VELoading && <div className="loader"></div>}{!VELoading && <>Verificer</>}</button>
+            <p className="login-form-label" id="veki" style={{marginTop: "10px"}}>Har du ikke fået en kode? <span id="vekiLink" className="login-link" onClick={() => sendCode()}>Send kode igen</span></p>
+            <p className="login-form-label display-not" id="kodetimer">30</p>
+        </div>}
+        {confirmedModal && <div className="modal-test">
+            <div className="modal-con">
+                <p className="con-modal-p">Din mailadresse blev bekræftet</p>
+                <div className="modal-wrapper">
+                    <button className="con-modal-btn" onClick={() => setConfirmedModal(false)}>Okay</button>
+                </div>
+            </div>
+        </div>}
         {feedback && <>
             <div className="wc-container" id="wc-container">
                 <div className="wc-wrapper">

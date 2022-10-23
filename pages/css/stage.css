@@ -3818,6 +3818,97 @@
   justify-content: center;
 }
 
+.ec-wrapper {
+  position: fixed;
+  left: 30px;
+  bottom: 30px;
+  background-color: #fff;
+  border-radius: 5px;
+  z-index: 8;
+  padding: 25px 0px;
+  display: flex;
+  align-items: center;
+  min-width: 400px;
+  justify-content: center;
+  flex-direction: column;
+  box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.05);
+}
+
+.ec-h1 {
+  font-family: Inter;
+  font-size: 22px;
+  color: #333;
+  font-weight: 600;
+}
+
+.ec-h2 {
+  font-family: Inter;
+  font-size: 15px;
+  color: #555;
+  padding-top: 5px;
+  padding-bottom: 25px;
+  font-weight: 400;
+}
+
+.ec-h3 {
+  font-family: Inter;
+  font-size: 14px;
+  color: #555;
+  padding-top: 10px;
+  font-weight: 500;
+}
+
+.ec-h4 {
+  font-family: Inter;
+  font-size: 12px;
+  color: var(--red);
+  padding-top: 5px;
+  font-weight: 400;
+}
+
+.ec-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.ec-btn {
+  padding: 10px 30px;
+  background-color: rgb(42, 45, 56);
+  color: #fff;
+  font-weight: 400;
+  font-family: Inter;
+  cursor: pointer;
+  font-size: 14px;
+  border: 0px;
+  margin-top: 10px;
+  border-radius: 5px;
+}
+
+.ec-input {
+  font-family: Inter;
+  font-size: 26px;
+  font-weight: 400;
+  display: flex;
+  padding: 5px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 35px;
+  color: #333;
+  border: 0px;
+  background-color: var(--stageSurface);
+  border-radius: 5px;
+}
+
+.ec-input::-webkit-outer-spin-button,
+.ec-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 .setup-container {
   padding: 0px 15px;
   background-color: #fff;
