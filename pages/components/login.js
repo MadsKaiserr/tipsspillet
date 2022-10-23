@@ -120,7 +120,6 @@ function Login () {
             }).catch(error => {
                 console.log(error);
                 setMessage(error.response.data.message);
-                // window.open("/signup", "_self");
             })
         } else {
             setMessage("Serverfejl")

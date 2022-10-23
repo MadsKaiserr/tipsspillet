@@ -136,7 +136,7 @@
 }
 
 .priser-h1 {
-  color: var(--softBlack);
+  color: #333;
   font-size: 40px;
   display: inline-flex;
   flex-direction: column;

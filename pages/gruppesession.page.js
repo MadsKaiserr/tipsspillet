@@ -13,6 +13,7 @@ import Back from './components/back';
 function Gruppesession ({data, allowed}) {
     const router = useRouter()
     const [tableArray, setTableArray] = useState([]);
+    const [sidetal, setSidetal] = useState(1);
 
     const [activeGame, setActiveGame] = useState([]);
     const [password, setPassword] = useState("");
@@ -38,7 +39,7 @@ function Gruppesession ({data, allowed}) {
         if (cookie.get("auth")) {
             window.open("/stage/gruppespil/spiller?spiller="+player+"&game="+urlParams.get('game'), "_self")
         } else {
-            window.open("/signup", "_self")
+            window.open("/login", "_self")
         }
     }
 
@@ -198,7 +199,7 @@ function Gruppesession ({data, allowed}) {
                             } else if (varighedDate < nowDate) {
                                 setNotiMessage("error", "Gruppespil slut", "Gruppespil er desværre allerede færdiggjort");
                             } else if (!getUser().rolle) {
-                                router.push("/signup");
+                                router.push("/login");
                             }
                         }
                     }).catch(error => {
@@ -274,12 +275,12 @@ function Gruppesession ({data, allowed}) {
                         } else if (varighedDate < nowDate) {
                             setNotiMessage("error", "Gruppespil slut", "Gruppespil er desværre allerede færdiggjort");
                         } else if (!getUser().rolle) {
-                            router.push("/signup");
+                            router.push("/login");
                         }
                     }
                 }
             } else {
-                router.push("/signup");
+                router.push("/login");
             }
         } else {
             setLoading(false);
@@ -311,7 +312,7 @@ function Gruppesession ({data, allowed}) {
                 window.open("/priser", "_self");
             }
         } else {
-            window.open("/signup", "_self");
+            window.open("/login", "_self");
         }
     }
 
@@ -513,8 +514,8 @@ function Gruppesession ({data, allowed}) {
                                 </div>
                             </div>
                         </div>
-                        <div className="gruppespil-info">
-                            <div className="gruppespil-title">
+                        <div className="gruppespil-info" id="stilling">
+                            <div className="gruppespil-title" id="stilling">
                                 <h2 className="gs-h2">Spildeltagere</h2>
                                 <p className="gs-h4">Klik for at se mere info</p>
                             </div>
@@ -542,11 +543,11 @@ function Gruppesession ({data, allowed}) {
                                         if (profit >= 0) {
                                             profitHtml = <p className="gruppespil-table-p gruppetable-kapital gruppetable-win"><svg xmlns="http://www.w3.org/2000/svg" className="gruppetable-icon-win" viewBox="0 0 16 16">
                                             <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
-                                        </svg>{parseInt(profit)},00 kr.<span className="gruppetable-span">({parseInt(kapital)},00 kr.)</span></p>;
+                                        </svg>{profit},00 kr.<span className="gruppetable-span">({parseInt(kapital)},00 kr.)</span></p>;
                                         } else {
                                             profitHtml = <p className="gruppespil-table-p gruppetable-kapital gruppetable-loss"><svg xmlns="http://www.w3.org/2000/svg" className="gruppetable-icon-loss" viewBox="0 0 16 16">
                                             <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
-                                        </svg>{parseInt(profit)},00 kr.<span className="gruppetable-span">({parseInt(kapital)},00 kr.)</span></p>;
+                                        </svg>{profit},00 kr.<span className="gruppetable-span">({parseInt(kapital)},00 kr.)</span></p>;
                                         }
 
                                         var aktive = 0;
@@ -555,35 +556,137 @@ function Gruppesession ({data, allowed}) {
                                                 aktive = aktive + 1;
                                             }
                                         }
+
                                         var trueMe = "";
+                                        var getEmail = "";
                                         if (getUser()) {
                                             if (getUser().email === item.player) {
                                                 trueMe = "tabel-correct";
+                                                getEmail = getUser().email;
                                             }
                                         }
 
-                                        return (
-                                            <li key={item.player}>
-                                                <div className={"tabel-element " + trueMe} style={{borderLeft: "4px solid var(--primary)", padding: "10px 1px"}} onClick={() => getPlayer(item.player)}>
-                                                    <div className="tabel-top-right">
-                                                        <div className="tabel-ends">
-                                                            <p className="tabel-p" id="gs-pos" style={{textAlign: "center"}}>{index + 1}</p>
-                                                            <p className="tabel-h1" id="gs-navn">{item.username && <>{item.username}</>}</p>
+                                        if (tableArray.length > 10) {
+                                            if (index >= ((sidetal - 1) * 7) && index < (sidetal * 7) && index < (tableArray.length - 3)) {
+                                                return (
+                                                    <li key={item.player} onClick={() => getPlayer(item.player)}>
+                                                        <div className={"tabel-element " + trueMe} style={{borderLeft: "4px solid var(--primary)", padding: "10px 1px"}}>
+                                                            <div className="tabel-top-right">
+                                                                <div className="tabel-ends">
+                                                                    <p className="tabel-p" id="gs-pos" style={{textAlign: "center"}}>{index + 1}</p>
+                                                                    <p className="tabel-h1" id="gs-navn">{item.username && <>{item.username}</>}</p>
+                                                                </div>
+                                                            </div>
+                                                            <div className="tabel-top-right">
+                                                                <div className="tabel-ends">
+                                                                    <p className="tabel-p" id="gs-kuponer">{item.odds.length}</p>
+                                                                    <p className="tabel-p" id="gs-kapital">{profitHtml && <>{profitHtml}</>}</p>
+                                                                    <p className="tabel-p" id="gs-aktive">{aktive && <>{aktive}</>}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                );
+                                            }
+                                            if (getEmail === item.player && index > 7 && index < (tableArray.length - 3)) {
+                                                return (<>
+                                                    <div className="table-divider"></div>
+                                                    <div className="table-divider"></div>
+                                                    <div className="table-divider"></div>
+                                                    <li key={item.player} onClick={() => getPlayer(item.player)}>
+                                                        <div className={"tabel-element " + trueMe} style={{borderLeft: "4px solid var(--primary)", padding: "10px 1px"}}>
+                                                            <div className="tabel-top-right">
+                                                                <div className="tabel-ends">
+                                                                    <p className="tabel-p" id="gs-pos" style={{textAlign: "center"}}>{index + 1}</p>
+                                                                    <p className="tabel-h1" id="gs-navn">{item.username && <>{item.username}</>}</p>
+                                                                </div>
+                                                            </div>
+                                                            <div className="tabel-top-right">
+                                                                <div className="tabel-ends">
+                                                                    <p className="tabel-p" id="gs-kuponer">{item.odds.length}</p>
+                                                                    <p className="tabel-p" id="gs-kapital">{profitHtml && <>{profitHtml}</>}</p>
+                                                                    <p className="tabel-p" id="gs-aktive">{aktive && <>{aktive}</>}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </>
+                                                );
+                                            } else if (index === tableArray.length - 3) {
+                                                return (<>
+                                                    <div className="table-divider"></div>
+                                                    <div className="table-divider"></div>
+                                                    <div className="table-divider"></div>
+                                                    <li key={item.player} onClick={() => getPlayer(item.player)}>
+                                                        <div className={"tabel-element " + trueMe} style={{borderLeft: "4px solid var(--primary)", padding: "10px 1px"}}>
+                                                            <div className="tabel-top-right">
+                                                                <div className="tabel-ends">
+                                                                    <p className="tabel-p" id="gs-pos" style={{textAlign: "center"}}>{index + 1}</p>
+                                                                    <p className="tabel-h1" id="gs-navn">{item.username && <>{item.username}</>}</p>
+                                                                </div>
+                                                            </div>
+                                                            <div className="tabel-top-right">
+                                                                <div className="tabel-ends">
+                                                                    <p className="tabel-p" id="gs-kuponer">{item.odds.length}</p>
+                                                                    <p className="tabel-p" id="gs-kapital">{profitHtml && <>{profitHtml}</>}</p>
+                                                                    <p className="tabel-p" id="gs-aktive">{aktive && <>{aktive}</>}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </>
+                                                );
+                                            } else if (index > tableArray.length - 3) {
+                                                return (<>
+                                                    <li key={item.player} onClick={() => getPlayer(item.player)}>
+                                                        <div className={"tabel-element " + trueMe} style={{borderLeft: "4px solid var(--primary)", padding: "10px 1px"}}>
+                                                            <div className="tabel-top-right">
+                                                                <div className="tabel-ends">
+                                                                    <p className="tabel-p" id="gs-pos" style={{textAlign: "center"}}>{index + 1}</p>
+                                                                    <p className="tabel-h1" id="gs-navn">{item.username && <>{item.username}</>}</p>
+                                                                </div>
+                                                            </div>
+                                                            <div className="tabel-top-right">
+                                                                <div className="tabel-ends">
+                                                                    <p className="tabel-p" id="gs-kuponer">{item.odds.length}</p>
+                                                                    <p className="tabel-p" id="gs-kapital">{profitHtml && <>{profitHtml}</>}</p>
+                                                                    <p className="tabel-p" id="gs-aktive">{aktive && <>{aktive}</>}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </>
+                                                );
+                                            }
+                                        } else {
+                                            return (
+                                                <li key={item.player} onClick={() => getPlayer(item.player)}>
+                                                    <div className={"tabel-element " + trueMe} style={{borderLeft: "4px solid var(--primary)", padding: "10px 1px"}}>
+                                                        <div className="tabel-top-right">
+                                                            <div className="tabel-ends">
+                                                                <p className="tabel-p" id="gs-pos" style={{textAlign: "center"}}>{index + 1}</p>
+                                                                <p className="tabel-h1" id="gs-navn">{item.username && <>{item.username}</>}</p>
+                                                            </div>
+                                                        </div>
+                                                        <div className="tabel-top-right">
+                                                            <div className="tabel-ends">
+                                                                <p className="tabel-p" id="gs-kuponer">{item.odds.length}</p>
+                                                                <p className="tabel-p" id="gs-kapital">{profitHtml && <>{profitHtml}</>}</p>
+                                                                <p className="tabel-p" id="gs-aktive">{aktive && <>{aktive}</>}</p>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                    <div className="tabel-top-right">
-                                                        <div className="tabel-ends">
-                                                            <p className="tabel-p" id="gs-kuponer">{item.odds.length}</p>
-                                                            <p className="tabel-p" id="gs-kapital">{profitHtml && <>{profitHtml}</>}</p>
-                                                            <p className="tabel-p" id="gs-aktive">{aktive && <>{aktive}</>}</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
+                                                </li>
                                             );
+                                        }
                                         }
                                     )}
                                 </ul>
+                            </div>
+                            <div className="tabel-pagination">
+                                <p className="tabel-page-p" onClick={() => {if(sidetal > 1){setSidetal(sidetal - 1)}}}>Forrige side</p>
+                                <p className="tabel-page-h1">Side {sidetal} af {Math.ceil((tableArray.length - 3) / 7)}</p>
+                                <p className="tabel-page-p" onClick={() => {if(sidetal < Math.ceil((tableArray.length - 3) / 7)){setSidetal(sidetal + 1)}}}>Næste side</p>
                             </div>
                         </div>
                         {synlighed !== "privat" && <div className="gruppespil-info">

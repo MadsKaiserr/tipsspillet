@@ -3819,17 +3819,14 @@
 }
 
 .setup-container {
-  padding: 100px 15px;
+  padding: 0px 15px;
   background-color: #fff;
   border-radius: 5px;
   width: 100%;
   margin-bottom: 100px !important;
   min-height: 450px;
-  position: absolute;
   display: flex;
   justify-content: center;
-  top: 0;
-  left: 0;
   height: 100%;
   width: 100%;
   z-index: 8;

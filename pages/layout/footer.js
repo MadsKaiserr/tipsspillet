@@ -15,7 +15,7 @@ export default function Footer()  {
                 window.open("/priser", "_self");
             }
         } else {
-            window.open("/signup", "_self");
+            window.open("/login", "_self");
         }
     }
     return (

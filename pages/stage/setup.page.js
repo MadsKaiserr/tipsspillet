@@ -74,9 +74,9 @@ function Setup () {
         axios.get(URL, requestConfig).then(response => {
             console.log("AWS - Gruppespil:", response)
             var newArray = [];
-            for (var q in response.data.allGruppespil) {
-                if (new Date(response.data.allGruppespil[q].varighed).getTime() > new Date().getTime()) {
-                    newArray.push(response.data.allGruppespil[q])
+            for (var q in response.data.newGruppespil) {
+                if (new Date(response.data.newGruppespil[q].varighed).getTime() > new Date().getTime()) {
+                    newArray.push(response.data.newGruppespil[q])
                 }
             }
             setGruppespilSearch(newArray);
@@ -305,16 +305,8 @@ function Setup () {
                                 </div>
                             </div>
                             <div className="match-loader display" id="stage-loader1"></div>
-                            <ul className="td-table" style={{maxHeight: "400px"}}>
+                            <ul className="td-table" style={{maxHeight: "400px", overflowY: "auto"}}>
                                 {gruppespilsearch.map((item) => {
-                                    var Facebooks = 0;
-                                    var facebookArray = [];
-                                    for (var u in item.players) {
-                                        if (item.players[u].fb_logo_id) {
-                                            Facebooks = Facebooks + 1;
-                                            facebookArray.push(item.players[u]);
-                                        }
-                                    }
                                     var returnable = <li key={item.id} className="tl-element">
                                         <div style={{width: "100%", height: "100%", display: "flex", alignItems: "center"}} onClick={() => window.open("/gruppesession?game=" + item.id + "&res=setup", "_self")}>
                                             <div className="tl-wrapper" id="td-navn">
@@ -324,26 +316,9 @@ function Setup () {
                                                 <p className="td-modifier-p" style={{fontWeight: "500"}}>{item.name}</p>
                                             </div>
                                             <p className="td-modifier-p" id="td-synlighed">{item.synlighed}</p>
-                                            {facebookArray.length > 0 && <div className="tl-wrapper-show" id="td-spillere">
-                                                <ul className="tl-players">
-                                                    {facebookArray.slice(0,5).map((spiller) => {
-                                                        if (spiller.fb_logo_id) {
-                                                            return (
-                                                                <li key={spiller.fb_logo_id} className="td-player-img">
-                                                                    <Image layout="fill" src={"http://graph.facebook.com/"+ spiller.fb_logo_id +"/picture?type=square"} />
-                                                                </li>
-                                                            );
-                                                        }
-                                                    })}
-                                                </ul>
-                                                <p className="td-modifier-p" style={{paddingLeft: "8px", whiteSpace: "nowrap"}} id="td-spillere">+{item.players.length - Facebooks} flere</p>
-                                            </div>}
-                                            {facebookArray.length > 0 && <div className="tl-wrapper-hide" id="td-spillere">
-                                                <p className="td-modifier-p" style={{paddingLeft: "8px"}} id="td-spillere">{item.players.length}</p>
-                                            </div>}
-                                            {facebookArray.length <= 0 && <div className="tl-wrapper" id="td-spillere">
-                                                <p className="td-modifier-p" style={{paddingLeft: "8px"}} id="td-spillere">{item.players.length}</p>
-                                            </div>}
+                                            <div className="tl-wrapper" id="td-spillere">
+                                                <p className="td-modifier-p" style={{paddingLeft: "8px"}} id="td-spillere">{item.player_count}</p>
+                                            </div>
                                             <p className="td-modifier-p" id="td-admin">{item.admin}</p>
                                         </div>
                                     </li>;
@@ -351,89 +326,6 @@ function Setup () {
                                 })}
                             </ul>
                         </div>
-                            {/* <div className="setup-hit-wrapper">
-                                <div className="setup-inline" id="setup-1">
-                                    <p className="setup-p-fat">NAVN</p>
-                                </div>
-                                <div className="setup-hit-wrapper" style={{justifyContent: "flex-end"}}>
-                                    <div className="setup-inline" id="setup-2">
-                                        <p className="setup-p">SPILLERE</p>
-                                    </div>
-                                    <div className="setup-inline" id="setup-3">
-                                        <p className="setup-p">ADMIN</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <ul className="setup-hits" style={{maxHeight: "600px"}}>
-                                <div className="match-loader display" id="stage-loader1"></div>
-                                {gruppespilsearch.map((item) => {
-                                    return (
-                                        <li key={item.id} className="setup-hit" id={"gruppespil-" + item.id} style={{flexDirection: "column", alignItems: "flex-start", paddingLeft: "20px"}} onClick={() => {pullGruppespil(item.id)}}>
-                                            <div className="setup-hit-wrapper">
-                                                <div className="setup-inline" id="setup-1">
-                                                    <p className="setup-p-fat">{item.name}</p>
-                                                </div>
-                                                <div className="setup-hit-wrapper" style={{justifyContent: "flex-end"}}>
-                                                    <div className="setup-inline" id="setup-2">
-                                                        <p className="setup-p">{item.players.length}</p>
-                                                    </div>
-                                                    <div className="setup-inline" id="setup-3">
-                                                        <p className="setup-p">{item.admin}</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="setup-hit-pull" id={"pull-" + item.id}>
-                                                <div className="pull-stats">
-                                                    <div className="pull-stat">
-                                                        <p className="pull-h1">{item.players.length}</p>
-                                                        <div className="pull-stat-bottom">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" className="pull-icon" viewBox="0 0 16 16">
-                                                                <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816zM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275zM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/>
-                                                            </svg>
-                                                            <p className="pull-stat-p">Tilmeldte</p>
-                                                        </div>
-                                                    </div>
-                                                    <div className="pull-stat">
-                                                        <p className="pull-h1">{item.admin}</p>
-                                                        <div className="pull-stat-bottom">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" className="pull-icon" viewBox="0 0 16 16">
-                                                                <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
-                                                            </svg>
-                                                            <p className="pull-stat-p">Administrator</p>
-                                                        </div>
-                                                    </div>
-                                                    <div className="pull-stat">
-                                                        <p className="pull-h1">{item.varighed}</p>
-                                                        <div className="pull-stat-bottom">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" className="pull-icon" viewBox="0 0 16 16">
-                                                                <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
-                                                            </svg>
-                                                            <p className="pull-stat-p">Slutdato</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <p className="setup-hit-p" style={{paddingBottom: "5px"}}>Tilmeldte</p>
-                                                <ul className="pull-tilmeldte">
-                                                    {item.players.map((player) => {
-                                                        return (
-                                                            <li key={player.player} className="tilmeldte-element">
-                                                                <div className="tilmeldte-pb">{player.username !== "" && <>{(player.username).slice(0,1)}</>}</div>
-                                                                <div className="tilmeldte-wrapper">
-                                                                    <p className="setup-p">{player.username}</p>
-                                                                    <p className="setup-pp">{player.player}</p>
-                                                                </div>
-                                                            </li>
-                                                        );
-                                                    })}
-                                                </ul>
-                                                <div className="pull-cta">
-                                                    <button className="setup-btn" onClick={() => {tilmeld(item.id)}}>Tilmeld</button>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    );
-                                })}
-                            </ul> */}
                         </div>
                         <div className="setup-cta">
                             <Link href="/stage"><a className="nav-btn-outline">Forlad opsætning</a></Link>

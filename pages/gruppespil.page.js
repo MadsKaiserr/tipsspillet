@@ -50,9 +50,9 @@ function Gruppespil ({data, responseTime}) {
         console.log(responseTime)
         if (!data.notFound) {
             var newArray = [];
-            for (var q in data.allGruppespil) {
-                if (new Date(data.allGruppespil[q].varighed).getTime() > new Date().getTime()) {
-                    newArray.push(data.allGruppespil[q]);
+            for (var q in data.newGruppespil) {
+                if (new Date(data.newGruppespil[q].varighed).getTime() > new Date().getTime()) {
+                    newArray.push(data.newGruppespil[q]);
                 }
             }
             setItems(newArray);
@@ -71,7 +71,7 @@ function Gruppespil ({data, responseTime}) {
                 window.open("/priser", "_self");
             }
         } else {
-            window.open("/signup", "_self");
+            window.open("/login", "_self");
         }
     }
 
@@ -104,11 +104,10 @@ function Gruppespil ({data, responseTime}) {
                     <div className="info-figure1"></div>
                     <div className="info-figure2"></div>
                 </div>
-                <div className="main-block-container">
+                <div className="main-block-container" style={{paddingBottom: "15px"}}>
                     <div className="hero-text">
-                        <h3 className="cp-h3 animation-fadeleft">Find gruppespil og præmiedyster</h3>
-                        <h1 className="cp-h1 animation-fadeleft animation-delay-200">Gruppespil og Dyster</h1>
-                        <h2 className="cp-h2 animation-fadetop animation-delay-300">Find netop det gruppespil der passer dig, eller <span className="color-primary font-weight-500">tilmeld</span> dig et <span className="color-primary font-weight-500">gruppespil</span> med familie og venner.</h2>
+                        <h1 className="priser-h1 animation-fadeleft animation-delay-200">Find gruppespil og præmiedyster</h1>
+                        <h2 className="priser-h2 animation-fadetop animation-delay-300">Find netop det gruppespil der passer dig, eller <span style={{color: "var(--primary)", fontWeight: "500"}}>tilmeld</span> dig et <span style={{color: "var(--primary)", fontWeight: "500"}}>gruppespil</span>.</h2>
                     </div>
                 </div>
                 <div className="gs-wrapper">
@@ -166,14 +165,6 @@ function Gruppespil ({data, responseTime}) {
                             <div className="match-loader display" id="stage-loader1"></div>
                             <ul className="td-table">
                                 {search.map((item) => {
-                                    var Facebooks = 0;
-                                    var facebookArray = [];
-                                    for (var u in item.players) {
-                                        if (item.players[u].fb_logo_id) {
-                                            Facebooks = Facebooks + 1;
-                                            facebookArray.push(item.players[u]);
-                                        }
-                                    }
                                     var returnable = <li key={item.id} className="tl-element">
                                         <div style={{width: "100%", height: "100%", display: "flex", alignItems: "center"}} onClick={() => window.open("/gruppesession?game=" + item.id, "_self")}>
                                         <div className="tl-wrapper" id="td-navn">
@@ -183,26 +174,9 @@ function Gruppespil ({data, responseTime}) {
                                             <p className="td-modifier-p" style={{fontWeight: "500"}}>{item.name}</p>
                                         </div>
                                         <p className="td-modifier-p" id="td-synlighed">{item.synlighed}</p>
-                                        {facebookArray.length > 0 && <div className="tl-wrapper-show" id="td-spillere">
-                                            <ul className="tl-players">
-                                                {facebookArray.slice(0,5).map((spiller) => {
-                                                    if (spiller.fb_logo_id) {
-                                                        return (
-                                                            <li key={spiller.fb_logo_id} className="td-player-img">
-                                                                <Image layout="fill" src={"http://graph.facebook.com/"+ spiller.fb_logo_id +"/picture?type=square"} />
-                                                            </li>
-                                                        );
-                                                    }
-                                                })}
-                                            </ul>
-                                            <p className="td-modifier-p" style={{paddingLeft: "8px", whiteSpace: "nowrap"}} id="td-spillere">+{item.players.length - Facebooks} flere</p>
-                                        </div>}
-                                        {facebookArray.length > 0 && <div className="tl-wrapper-hide" id="td-spillere">
-                                            <p className="td-modifier-p" style={{paddingLeft: "8px"}} id="td-spillere">{item.players.length}</p>
-                                        </div>}
-                                        {facebookArray.length <= 0 && <div className="tl-wrapper" id="td-spillere">
-                                            <p className="td-modifier-p" style={{paddingLeft: "8px"}} id="td-spillere">{item.players.length}</p>
-                                        </div>}
+                                        <div className="tl-wrapper" id="td-spillere">
+                                            <p className="td-modifier-p" style={{paddingLeft: "8px"}} id="td-spillere">{item.player_count}</p>
+                                        </div>
                                         <p className="td-modifier-p" id="td-admin">{item.admin}</p>
                                         </div>
                                     </li>;

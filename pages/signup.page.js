@@ -358,8 +358,7 @@ function Signup () {
                     <div className="signup-popup" id="info1">
                         {message !== "" && <p className="form-error">{message}</p>}
                         <div className="cg-info">
-                            <h1 className="cg-h1">Opret din konto</h1>
-                            <h2 className="cg-h2">Kom igang på Tipsspillet</h2>
+                            <h1 className="login-h1">Opret din konto</h1>
                         </div>
                         <form onSubmit={signupHandler} className="cg-form" id="loginForm">
                             <input type="text" className="cg-input" onChange={event => setFornavn(event.target.value)} placeholder="Fulde navn" />
@@ -388,16 +387,16 @@ function Signup () {
                                 </div>
                             </div>
                             <input className="cg-input" id="kodeord" type="password" onChange={event => setKodeord(event.target.value)} placeholder="Kodeord" />
-                            <div className="signup-check">
-                                <div className="signup-checkbox" id="box1" onClick={() => {if (box1) {setBox1(false)}else{setBox1(true)}}}>
+                            <div className="signup-check" onClick={() => {if (box1) {setBox1(false)}else{setBox1(true)}}}>
+                                <div className="signup-checkbox" id="box1">
                                     <svg xmlns="http://www.w3.org/2000/svg" id={"box1-icon"} className="setup-icon" viewBox="0 0 16 16">
                                         <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
                                     </svg>
                                 </div>
-                                <p className="login-check-p">Jeg accepterer Tipsspillet&apos;s <Link href="/betingelser" className="login-form-dotted"><span className="login-form-dotted">brugsbetingelser</span></Link> og <Link href="/privatliv" className="login-form-dotted"><span className="login-form-dotted">privatlivspolitik</span></Link></p>
+                                <p className="login-check-p">Jeg accepterer Tipsspillet&apos;s <span className="login-form-dotted" onClick={() => window.open("/betingelser", "_BLANK")}>brugsbetingelser</span> og <span className="login-form-dotted" onClick={() => window.open("/privatliv", "_BLANK")}>privatlivspolitik</span></p>
                             </div>
-                            <div className="signup-check">
-                                <div className="signup-checkbox" id="box2" onClick={() => {if (box2) {setBox2(false)}else{setBox2(true)}}}>
+                            <div className="signup-check" onClick={() => {if (box2) {setBox2(false)}else{setBox2(true)}}}>
+                                <div className="signup-checkbox" id="box2">
                                     <svg xmlns="http://www.w3.org/2000/svg" id={"box2-icon"} className="setup-icon" viewBox="0 0 16 16">
                                         <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
                                     </svg>
@@ -422,19 +421,20 @@ function Signup () {
                                 <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/>
                             </svg>}
                             />
+                            <p className="login-form-label">Har du allerede en konto? <Link href="/login"><a className="login-link">Log ind</a></Link></p>
                         </form>
                         <form onSubmit={fbSignupHandler} className="login-form display-not" id="fbForm">
                             <input type="text" className="cg-input" onChange={event => setUsername(event.target.value)} placeholder="Brugernavn" />
-                            <div className="signup-check">
-                                <div className="signup-checkbox" id="box3" onClick={() => {if (box3) {setBox3(false)}else{setBox3(true)}}}>
+                            <div className="signup-check" onClick={() => {if (box3) {setBox3(false)}else{setBox3(true)}}}>
+                                <div className="signup-checkbox" id="box3">
                                     <svg xmlns="http://www.w3.org/2000/svg" id={"box3-icon"} className="setup-icon" viewBox="0 0 16 16">
                                         <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
                                     </svg>
                                 </div>
-                                <p className="login-check-p">Jeg accepterer Tipsspillet&apos;s <Link href="/betingelser" className="login-form-dotted"><span className="login-form-dotted">brugsbetingelser</span></Link> og <Link href="/privatliv" className="login-form-dotted"><span className="login-form-dotted">privatlivspolitik</span></Link></p>
+                                <p className="login-check-p">Jeg accepterer Tipsspillet&apos;s <span className="login-form-dotted" onClick={() => window.open("/betingelser", "_BLANK")}>brugsbetingelser</span> og <span className="login-form-dotted" onClick={() => window.open("/privatliv", "_BLANK")}>privatlivspolitik</span></p>
                             </div>
-                            <div className="signup-check">
-                                <div className="signup-checkbox" id="box4" onClick={() => {if (box4) {setBox4(false)}else{setBox4(true)}}}>
+                            <div className="signup-check" onClick={() => {if (box4) {setBox4(false)}else{setBox4(true)}}}>
+                                <div className="signup-checkbox" id="box4">
                                     <svg xmlns="http://www.w3.org/2000/svg" id={"box4-icon"} className="setup-icon" viewBox="0 0 16 16">
                                         <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
                                     </svg>
@@ -461,124 +461,6 @@ function Signup () {
                 </div>
                 <p className="footer-copyright" style={{position: "absolute", bottom: "5px", opacity: "0.5", width: "100%", left: "0"}}>©2022 Alle rettigheder forbeholdes | Mads Kaiser</p>
             </div>
-            {/* <div className="route-thirds">
-                <div className="signup-tilbage" onClick={() => window.open("/", "_SELF")}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="25px" height="25px" fill="var(--black)" viewBox="0 0 16 16">
-                    <path fillRule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/>
-                    </svg>
-                    <p className="signup-tilbage-p">Tilbage til forsiden</p>
-                </div>
-                <div className="route-thirds-element-1" id="third">
-                    <div className="signup-popup" id="info1">
-                        {message !== "" && <p className="form-error">{message}</p>}
-                        <div className="cg-info">
-                            <h1 className="cg-h1">Opret din konto</h1>
-                            <h2 className="cg-h2">Kom igang på Tipsspillet</h2>
-                        </div>
-                        <form onSubmit={signupHandler} className="cg-form" id="loginForm">
-                            <input type="text" className="cg-input" onChange={event => setFornavn(event.target.value)} placeholder="Fulde navn" />
-                            <input type="text" className="cg-input" onChange={event => setUsername(event.target.value)} placeholder="Brugernavn" />
-                            <input type="text" className="cg-input" onChange={event => setEmail(event.target.value)} placeholder="Email" />
-                            <div className="login-form-p">
-                                <div className="login-req" id="login-req">
-                                    <div className="login-req-element" id="passTegn">
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="login-req-check" viewBox="0 0 16 16">
-                                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
-                                        </svg>
-                                        <p className="login-req-p">Mindst 8 tegn</p>
-                                    </div>
-                                    <div className="login-req-element" id="passTal">
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="login-req-check" viewBox="0 0 16 16">
-                                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
-                                        </svg>
-                                        <p className="login-req-p">Mindst 1 tal</p>
-                                    </div>
-                                    <div className="login-req-element" id="passBig">
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="login-req-check" viewBox="0 0 16 16">
-                                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
-                                        </svg>
-                                        <p className="login-req-p">Mindst 1 stort og småt bogstav</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <input className="cg-input" id="kodeord" type="password" onChange={event => setKodeord(event.target.value)} placeholder="Kodeord" />
-                            <div className="signup-check">
-                                <div className="signup-checkbox" id="box1" onClick={() => {if (box1) {setBox1(false)}else{setBox1(true)}}}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" id={"box1-icon"} className="setup-icon" viewBox="0 0 16 16">
-                                        <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
-                                    </svg>
-                                </div>
-                                <p className="login-check-p">Jeg accepterer Tipsspillet&apos;s <Link href="/betingelser" className="login-form-dotted"><span className="login-form-dotted">brugsbetingelser</span></Link> og <Link href="/privatliv" className="login-form-dotted"><span className="login-form-dotted">privatlivspolitik</span></Link></p>
-                            </div>
-                            <div className="signup-check">
-                                <div className="signup-checkbox" id="box2" onClick={() => {if (box2) {setBox2(false)}else{setBox2(true)}}}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" id={"box2-icon"} className="setup-icon" viewBox="0 0 16 16">
-                                        <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
-                                    </svg>
-                                </div>
-                                <p className="login-check-p">Jeg vil gerne modtage rabatkuponer, nyheder og tips til betting</p>
-                            </div>
-                            <div className="form-btn">
-                                {message !== "" && <p className="form-error">{message}</p>}
-                                <button value="Login" className="main-btn-login" style={{width: "100%", marginTop: "15px"}} type="submit">{loading && <div className="loader" id="loader"></div>}{!loading && <>Opret konto</>}</button>
-                            </div>
-                            <FacebookLogin
-                                appId="1252645385555497"
-                                autoLoad={false}
-                                fields="name,email"
-                                callback={fbResponse}
-                                disableMobileRedirect={true}
-                                version="2.5"
-                                textButton="Opret konto med Facebook"
-                                redirectUri="https://www.tipsspillet.dk/"
-                                cssClass="facebook-button-class"
-                                icon={<svg xmlns="http://www.w3.org/2000/svg" className="facebook-icon" viewBox="0 0 16 16">
-                                <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/>
-                            </svg>}
-                            />
-                        </form>
-                        <form onSubmit={fbSignupHandler} className="login-form display-not" id="fbForm">
-                            <input type="text" className="cg-input" onChange={event => setUsername(event.target.value)} placeholder="Brugernavn" />
-                            <div className="signup-check">
-                                <div className="signup-checkbox" id="box3" onClick={() => {if (box3) {setBox3(false)}else{setBox3(true)}}}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" id={"box3-icon"} className="setup-icon" viewBox="0 0 16 16">
-                                        <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
-                                    </svg>
-                                </div>
-                                <p className="login-check-p">Jeg accepterer Tipsspillet&apos;s <Link href="/betingelser" className="login-form-dotted"><span className="login-form-dotted">brugsbetingelser</span></Link> og <Link href="/privatliv" className="login-form-dotted"><span className="login-form-dotted">privatlivspolitik</span></Link></p>
-                            </div>
-                            <div className="signup-check">
-                                <div className="signup-checkbox" id="box4" onClick={() => {if (box4) {setBox4(false)}else{setBox4(true)}}}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" id={"box4-icon"} className="setup-icon" viewBox="0 0 16 16">
-                                        <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
-                                    </svg>
-                                </div>
-                                <p className="login-check-p">Jeg vil gerne modtage rabatkuponer, nyheder og tips til betting</p>
-                            </div>
-                            <div className="form-btn">
-                                {message !== "" && <p className="form-error">{message}</p>}
-                                <button value="Login" className="main-btn-login" style={{width: "100%"}} type="submit">{loading2 && <div className="loader" id="loader"></div>}{!loading2 && <>Opret konto med facebook</>}</button>
-                            </div>
-                        </form>
-                    </div>
-                    <div className="signup-popup display-not" id="info2">
-                        <Link href="/"><Image className="signup-logo" alt="Tipsspillet logo" src={PrimaryLogo} height="55px" width="55px" /></Link>
-                        <div className="login-text" style={{paddingTop: "30px"}}>
-                            <h2 className="login-text-h1">Din konto er nu oprettet!&#128640;</h2>
-                        </div>
-                        <div className="login-form">
-                            <p className="tak-p">Tak for du vil være med til at teste beta-versionen af Tipsspillet! Det betyder meget!</p>
-                            <p className="tak-p">Da vi stadig er i beta-test, kan der forekomme fejl, mangler mm., og vi vil derfor være taknemmelige, hvis du kunne anmelde fejl, og komme med generel feedback, som kunne hjælpe os på vej til en fremtidigt lancering af hjemmesiden. Dette gøres på kommentar knappen nederst i højre hjørne på siden med kampe.</p>
-                            <p className="tak-p">Flere ligaer, odds, funktioner mm. er på vej</p>
-                            <button className="nav-btn-default" style={{marginLeft: "0px", marginTop: "5px"}} onClick={() => {access()}}>Fortsæt<div className="nav-in-before"></div><span className="nav-in">Begynd at spille</span></button>
-                        </div>
-                    </div>
-                    <p className="footer-copyright" style={{position: "absolute", bottom: "5px", opacity: "0.3"}}>©2022 Alle rettigheder forbeholdes | Mads Kaiser</p>
-                </div>
-                <div className="route-thirds-element-2">
-                    <canvas className="canvas-container-signup" id="gradient-canvas" data-transition-in></canvas>
-                </div>
-            </div> */}
         </>
     )
 }

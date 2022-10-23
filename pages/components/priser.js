@@ -58,7 +58,7 @@ function Priser () {
                 setNotiMessage("error", "Du har allerede abonnement", "Gå til indstillinger på din profil, og herunder abonnement, for at ændre dit nuværende abonnement. Se også https://www.tipsspillet.dk/stage/indstillinger");
             }
         } else {
-            router.push("/signup")
+            router.push("/login")
         }
     }
 
@@ -90,7 +90,7 @@ function Priser () {
                 setNotiMessage("error", "Du har allerede abonnement", "Gå til indstillinger på din profil, og herunder abonnement, for at ændre dit nuværende abonnement. Se også https://www.tipsspillet.dk/stage/indstillinger");
             }
         } else {
-            router.push("/signup")
+            router.push("/login")
         }
     }
 

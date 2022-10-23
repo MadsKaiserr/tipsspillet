@@ -85,6 +85,7 @@
     display: flex;
     align-items: center;
     flex-direction: row;
+    cursor: pointer;
     margin-top: 15px;
     width: 100%;
     text-align: left;
@@ -160,7 +161,7 @@
     padding: 100px 14%;
     padding-top: 40px;
     position: relative;
-    min-height: 600px;
+    min-height: 800px;
   }
   
   .signup-wave {
@@ -531,10 +532,7 @@
   .cg-info {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
     gap: 8px;
-    text-align: center;
     padding-bottom: 25px;
   }
 
@@ -741,7 +739,7 @@
     color: var(--softBlack);
     font-size: 13px;
     font-weight: 400;
-    margin-top: 15px;
+    margin-top: 5px;
   }
   
   .login-link {

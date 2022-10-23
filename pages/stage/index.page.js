@@ -1078,6 +1078,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
                     players: gruppespil_data.players,
                     since: Math.floor(weekCount)
                 }
+                console.log("INDSKYDELSE", winBody)
     
                 const requestConfig = {
                     headers: {
@@ -1092,11 +1093,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
                         }
                     }
                 }).catch(error => {
-                    if (error.response.status === 401 || error.response.status === 403) {
-                        setNotiMessage("error","Fejl i opdatering af indskydelse" , error.response.data.message);
-                    } else {
-                        setNotiMessage("error","Serverfejl" , "Serveren slog fejl. Dette skyldes ofte for meget trafik på hjemmesiden. Kontakt os for mere information.");
-                    }
+                    setNotiMessage("error","Fejl i opdatering af indskydelse" , error.response.data.message);
                 })
             }
         } else {

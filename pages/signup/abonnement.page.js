@@ -107,7 +107,7 @@ function Priser () {
                 setNotiMessage("error", "Du har allerede Plus", "Hvis du vil støtte os i Test-Perioden, kan du kun opgradere til Premium.");
             }
         } else {
-            router.push("/signup")
+            router.push("/login")
         }
     }
 
@@ -194,7 +194,7 @@ function Priser () {
                 setNotiMessage("error", "Du har allerede Premium", "Din konto har allerede Premium abonnementet. Har du ikke dine fordele, skal du kontakte os.");
             }
         } else {
-            router.push("/signup")
+            router.push("/login")
         }
     }
 

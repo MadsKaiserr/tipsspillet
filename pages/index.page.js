@@ -73,64 +73,6 @@ export default function Home() {
             <Link href="/gruppespil">
                 <button className="main-btn-default hero-btn">Find gruppespil</button>
             </Link><br />
-            {/* <Image width="30px" height="40px" src={RightArrow} alt="" style={{paddingTop: "10px"}} className="cursive-arrow" />
-            <p className="cursive-cta">Start med at finde dig et gruppespil!</p> */}
-            {/* <div className="hero-info">
-                <div className="hero-info-block">
-                    <div className="hero-info-block-h1">
-                        <div className="main-component-h">
-                        <span style={{animationDelay: "0.05s"}}>2</span>
-                        <span style={{animationDelay: "0.1s"}}>9</span>
-                        <span style={{animationDelay: "0.15s"}}>+</span>
-                    </div>
-                    </div>
-                    <div className="hero-info-block-h2"><div className="main-component-h">
-                        <span style={{animationDelay: "0.05s"}}>L</span>
-                        <span style={{animationDelay: "0.1s"}}>i</span>
-                        <span style={{animationDelay: "0.15s"}}>g</span>
-                        <span style={{animationDelay: "0.2s"}}>a</span>
-                        <span style={{animationDelay: "0.25s"}}>e</span>
-                        <span style={{animationDelay: "0.3s"}}>r</span>
-                    </div></div>
-                </div>
-                <div className="hero-info-block">
-                    <div className="hero-info-block-h1">
-                        <div className="main-component-h">
-                        <span style={{animationDelay: "0.05s"}}>1</span>
-                        <span style={{animationDelay: "0.1s"}}>5</span>
-                        <span style={{animationDelay: "0.2s"}}>+</span>
-                    </div></div>
-                    <div className="hero-info-block-h2"><div className="main-component-h">
-                        <span style={{animationDelay: "0.05s"}}>B</span>
-                        <span style={{animationDelay: "0.1s"}}>r</span>
-                        <span style={{animationDelay: "0.15s"}}>u</span>
-                        <span style={{animationDelay: "0.2s"}}>g</span>
-                        <span style={{animationDelay: "0.25s"}}>e</span>
-                        <span style={{animationDelay: "0.3s"}}>r</span>
-                        <span style={{animationDelay: "0.35s"}}>e</span>
-                    </div></div>
-                </div>
-                <div className="hero-info-block">
-                    <div className="hero-info-block-h1">
-                        <div className="main-component-h">
-                        <span style={{animationDelay: "0.05s"}}>4</span>
-                        <span style={{animationDelay: "0.2s"}}>+</span>
-                    </div></div>
-                    <div className="hero-info-block-h2"><div className="main-component-h">
-                        <span style={{animationDelay: "0.05s"}}>A</span>
-                        <span style={{animationDelay: "0.1s"}}>k</span>
-                        <span style={{animationDelay: "0.15s"}}>t</span>
-                        <span style={{animationDelay: "0.2s"}}>i</span>
-                        <span style={{animationDelay: "0.25s"}}>v</span>
-                        <span style={{animationDelay: "0.3s"}}>e</span>
-                        &nbsp;
-                        <span style={{animationDelay: "0.35s"}}>s</span>
-                        <span style={{animationDelay: "0.4s"}}>p</span>
-                        <span style={{animationDelay: "0.45s"}}>i</span>
-                        <span style={{animationDelay: "0.5s"}}>l</span>
-                    </div></div>
-                </div>
-            </div> */}
             </div>
         </div>
         <div className="forside-blob">
@@ -183,11 +125,10 @@ export default function Home() {
                 <div className="db-fill-inverted" id="fill-4"><Image src={GrMatchMockMB} /></div>
             </div>
         </div>
-        <div className="main-container">
+        <div className="main-container" style={{paddingTop: "100px"}}>
             <div className="hero-text">
-                <p className="cp-h3 animation-fadeleft">Gennemsigtig prissætning</p>
-                <h2 className="cp-h1 animation-fadeleft animation-delay-200">Priser og Abonnement</h2>
-                <h3 className="cp-h2 animation-fadetop animation-delay-300">Betal hvert valgte termin - Lav dine egne gruppespil, få udvidet statistikker, deltag i <span className="color-primary font-weight-500">præmiedyster</span> og meget mere.</h3>
+                <h1 className="priser-h1 animation-fadeleft animation-delay-200">Priser og Abonnement</h1>
+                <h2 className="priser-h2 animation-fadetop animation-delay-300">Find det <span style={{color: "var(--primary)", fontWeight: "500"}}>abonnement</span> der bedst passer dig.</h2>
             </div>
         </div>
         <PriserComp />

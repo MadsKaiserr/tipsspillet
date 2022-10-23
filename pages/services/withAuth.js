@@ -11,7 +11,7 @@ const withAuth = Component => {
     
         if (!isLoggedIn) {
             if (typeof window !== 'undefined') {
-                window.open("/signup", "_self");
+                window.open("/login", "_self");
             }
         } else {
             return (

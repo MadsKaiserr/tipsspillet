@@ -17,9 +17,9 @@ function StageAktiveSpil ({ data }) {
     useEffect(() => {
         console.log("AWS - Gruppespil:", data)
         var myArray = [];
-        for (var q in data.allGruppespil) {
-            if (data.allGruppespil[q].players.findIndex(obj => obj.player === getUser().email) >= 0) {
-                myArray.push(data.allGruppespil[q]);
+        for (var q in data.newGruppespil) {
+            if (data.newGruppespil[q].players.findIndex(obj => obj.player === getUser().email) >= 0) {
+                myArray.push(data.newGruppespil[q]);
             }
         }
         setItems(myArray);
@@ -222,14 +222,8 @@ function StageAktiveSpil ({ data }) {
                         <ul className="td-table" style={{maxHeight: "none", gap: "10px"}}>
                             {search.map((item) => {
                                 const index = item.players.findIndex(obj => obj.player === getUser().email);
-                                var Facebooks = 0;
-                                var facebookArray = [];
                                 var activeKupon = 0;
                                 for (var u in item.players) {
-                                    if (item.players[u].fb_logo_id) {
-                                        Facebooks = Facebooks + 1;
-                                        facebookArray.push(item.players[u]);
-                                    }
                                     if (item.players[u].player === getUser().email) {
                                         for (var q in item.players[u].odds) {
                                             if (item.players[u].odds[q].calculated === "false") {
@@ -470,7 +464,7 @@ export async function getServerSideProps({ res, req, query }) {
             "x-api-key": "utBfOHNWpj750kzjq0snL4gNN1SpPTxH8LdSLPmJ"
         }
     }
-    const resp = await axios.get('https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/gruppespil', requestConfig);
+    const resp = await axios.get('https://1ponivn4w3.execute-api.eu-central-1.amazonaws.com/api/aktivgruppespil', requestConfig);
     const data = resp.data;
     if (!data) {
         return {
