@@ -467,7 +467,8 @@ function StageMatcharticle ({data}) {
             setItems(result.data);
             checkExpired(result.data.time.starting_at.timestamp);
 
-            const wants = ["3Way Result", "Handicap Result", "Over/Under", "Team Goalscorer", "Alternative Total Goals", "Player to be Booked", "Alternative Total Corners", "Player to be Sent Off", "Goalscorer", "Multi Scorers", "10 Minute Result", "Team To Score First", "Correct Score", "1st Goal Method", "1st Half Handicap", "Double Chance", "Highest Scoring Half", "Both Teams To Score", "Time Of First Corner", "Early Goal", "Exact Goals Number", "Total Corners", "Corner Match Bet", "A Red Card in the Match", "First Match Corner", "Team Corners", "Team Cards", "Last Match Corner", "Both Teams To Receive A Card", "Clean Sheet - Home", "Clean Sheet - Away", "2-Way Corners", "First Card Received", "Time Of First Card", "3Way Result 1st Half", "Team To Score Last", "3Way Result 2nd Half", "Double Chance - 1st Half", "Double Chance - 2nd Half", "Odd/Even", "Own Goal", "Time Of First Corner"];
+            const wants = ["3Way Result", "Over/Under", "10 Minute Result", "Team To Score First", "Double Chance", "Highest Scoring Half", "Both Teams To Score", "Exact Goals Number", "Clean Sheet - Home", "Clean Sheet - Away", "3Way Result 1st Half", "Team To Score Last", "3Way Result 2nd Half", "Double Chance - 2nd Half", "Odd/Even"];
+            // const wants = ["3Way Result", "Handicap Result", "Over/Under", "Team Goalscorer", "Alternative Total Goals", "Player to be Booked", "Alternative Total Corners", "Player to be Sent Off", "Goalscorer", "Multi Scorers", "10 Minute Result", "Team To Score First", "Correct Score", "1st Goal Method", "1st Half Handicap", "Double Chance", "Highest Scoring Half", "Both Teams To Score", "Time Of First Corner", "Early Goal", "Exact Goals Number", "Total Corners", "Corner Match Bet", "A Red Card in the Match", "First Match Corner", "Team Corners", "Team Cards", "Last Match Corner", "Both Teams To Receive A Card", "Clean Sheet - Home", "Clean Sheet - Away", "2-Way Corners", "First Card Received", "Time Of First Card", "3Way Result 1st Half", "Team To Score Last", "3Way Result 2nd Half", "Double Chance - 1st Half", "Double Chance - 2nd Half", "Odd/Even", "Own Goal", "Time Of First Corner"];
             const availOddsReplica = [];
             for (var r in wants) {
                 if (result.data.odds.data.length === 0) {
@@ -2963,7 +2964,7 @@ function StageMatcharticle ({data}) {
                                         <li key="build-spillere" className="match-odds-id">
                                             <div className="match-odds-id-top" onClick={() => document.getElementById("build-spillere").classList.toggle("display")}>
                                                 <p className="match-odds-id-h1">Spiller - Kort</p>
-                                                <p className="match-odds-id-p">1</p>
+                                                <p className="match-odds-id-p">0</p>
                                             </div>
                                             <ul className="match-odds-id-con" id="build-spillere">
                                                 {availSpillere.map((item) => {
@@ -3061,7 +3062,7 @@ function StageMatcharticle ({data}) {
                                         <li key="build-corner" className="match-odds-id">
                                             <div className="match-odds-id-top" onClick={() => document.getElementById("build-corner").classList.toggle("display")}>
                                                 <p className="match-odds-id-h1">Hjørnespark</p>
-                                                <p className="match-odds-id-p">1</p>
+                                                <p className="match-odds-id-p">0</p>
                                             </div>
                                             <ul className="match-odds-id-con" id="build-corner">
                                                 {availOdds.map((item) => {
@@ -3207,7 +3208,7 @@ function StageMatcharticle ({data}) {
                                         <li key="build-goals"className="match-odds-id">
                                             <div className="match-odds-id-top" onClick={() => document.getElementById("build-goal").classList.toggle("display")}>
                                                 <p className="match-odds-id-h1">Mål</p>
-                                                <p className="match-odds-id-p">5</p>
+                                                <p className="match-odds-id-p">1</p>
                                             </div>
                                             <ul className="match-odds-id-con" id="build-goal">
                                                 {availGoal.map((item) => {

@@ -1020,6 +1020,12 @@
     padding: 40px 15px !important;
     padding-bottom: 10px !important;
   }
+  .ec-wrapper {
+    width: 90% !important;
+    left: 5% !important;
+    min-width: 0px !important;
+    bottom: 60px !important;
+  }
   .plans-container {
     padding-top: 0px !important;
   }
@@ -1349,6 +1355,9 @@
   }
   .match-stilling {
     width: 30% !important;
+}
+.ec-wrapper {
+  z-index: 29 !important;
 }
   .match-stilling-p1-live {
     font-size: 12px !important;

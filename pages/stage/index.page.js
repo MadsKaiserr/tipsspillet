@@ -147,6 +147,9 @@ function StageForside ({gruppespil_data, spiller_data}) {
     useEffect(() => {
         setAuth(getUser());
         setActiveGame(cookie.get("activeGame"));
+        if (!cookie.get("problemer") || cookie.get("problemer") === "false") {
+            setProblemer(true);
+        }
     }, [])
 
     const [selected, setSelected] = useState(new Date());
@@ -2997,6 +3000,52 @@ function StageForside ({gruppespil_data, spiller_data}) {
         }
     }
 
+    useEffect(() => {
+        if (ec1.length === 1 && document.getElementById("ec-2")) {
+            document.getElementById("ec-2").focus()
+        }
+    }, [ec1])
+
+    useEffect(() => {
+        if (ec2.length === 1 && document.getElementById("ec-3")) {
+            document.getElementById("ec-3").focus()
+        } else if (ec2.length === 0 && document.getElementById("ec-1")) {
+            document.getElementById("ec-1").focus()
+        }
+    }, [ec2])
+
+    useEffect(() => {
+        if (ec3.length === 1 && document.getElementById("ec-4")) {
+            document.getElementById("ec-4").focus()
+        } else if (ec3.length === 0 && document.getElementById("ec-2")) {
+            document.getElementById("ec-2").focus()
+        }
+    }, [ec3])
+
+    useEffect(() => {
+        if (ec4.length === 1 && document.getElementById("ec-5")) {
+            document.getElementById("ec-5").focus()
+        } else if (ec4.length === 0 && document.getElementById("ec-3")) {
+            document.getElementById("ec-3").focus()
+        }
+    }, [ec4])
+
+    useEffect(() => {
+        if (ec5.length === 1 && document.getElementById("ec-6")) {
+            document.getElementById("ec-6").focus()
+        } else if (ec5.length === 0 && document.getElementById("ec-4")) {
+            document.getElementById("ec-4").focus()
+        }
+    }, [ec5])
+
+    useEffect(() => {
+        if (ec6.length === 0 && document.getElementById("ec-5")) {
+            document.getElementById("ec-5").focus()
+        }
+    }, [ec6])
+
+    const [problemer, setProblemer] = useState(false);
+
     return (
         <>
         <Head>
@@ -3027,6 +3076,23 @@ function StageForside ({gruppespil_data, spiller_data}) {
             <button className="ec-btn" onClick={() => verifyEmail()}>{VELoading && <div className="loader"></div>}{!VELoading && <>Verificer</>}</button>
             <p className="login-form-label" id="veki" style={{marginTop: "10px"}}>Har du ikke fået en kode? <span id="vekiLink" className="login-link" onClick={() => sendCode()}>Send kode igen</span></p>
             <p className="login-form-label display-not" id="kodetimer">30</p>
+        </div>}
+        {problemer && <div className="wc-container" id="wc-container" style={{zIndex: "999"}}>
+            <div className="wc-wrapper">
+                <div className="wc-top">
+                    <div className="wc-circles">
+                        <div className="wc-cir1"><div className="wc-cir2"><div className="wc-cir3"></div></div></div>
+                    </div>
+                    <p className="wc-h1"><span style={{color: "var(--primary)", fontWeight: "600"}}>Vigtig</span> besked.</p>
+                    <div className="wc-trans"></div>
+                </div>
+                <div className="wc-content">
+                    <p className="wc-h2">Vi er desværre udfordret på, at vores dataleverandør ikke kan levere de fornødne data i forbindelse med resultater af forskellige typer af de indgåede væddemål.</p><br />
+                    <p className="wc-h4">Vi har derfor valgt at lukke ned for de væddemål, hvor vi ikke kan få resultater, indtil problemet er løst. Det er bl.a. væddemål som ”Byg selv væddemål” der er ramt af udfordringen</p>
+                    <p className="wc-h4">Der er heldigvis masser af andre spilmuligheder, der ikke er berørt af problemstillingen. Vi takker for jeres deltagelse og håber at I vil kæmpe videre og forsøge at vinde over jeres kammerater og øvrige konkurrenter her i testspillet.</p>
+                </div>
+                <button className="wc-btn" onClick={() => {setProblemer(false); cookie.set("problemer", "true")}}>Okay</button>
+            </div>
         </div>}
         {confirmedModal && <div className="modal-test">
             <div className="modal-con">
