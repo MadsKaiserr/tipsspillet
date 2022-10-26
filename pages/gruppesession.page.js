@@ -180,7 +180,6 @@ function Gruppesession ({data, allowed}) {
                                 console.log("AWS - Gruppespil:", response)
                                 cookie.set("activeGame", activeGame["id"], {expires: 7});
                                 localStorage.setItem("activeGame", activeGame["id"]);
-                                localStorage.setItem("playerIndex", response.data.Item.Attributes.players.findIndex(obj => obj.player === getUser().email));
                                 const queryString = window.location.search;
                                 const urlParams = new URLSearchParams(queryString);
                                 var GetRes = urlParams.get("res");
@@ -256,7 +255,6 @@ function Gruppesession ({data, allowed}) {
                             console.log("AWS - Gruppespil:", response)
                             cookie.set("activeGame", activeGame["id"], {expires: 7});
                             localStorage.setItem("activeGame", activeGame["id"]);
-                            localStorage.setItem("playerIndex", response.data.Item.Attributes.players.findIndex(obj => obj.player === getUser().email));
                             const queryString = window.location.search;
                             const urlParams = new URLSearchParams(queryString);
                             var GetRes = urlParams.get("res");

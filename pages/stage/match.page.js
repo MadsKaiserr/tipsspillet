@@ -770,7 +770,6 @@ function StageMatcharticle ({data}) {
                     }
         
                     const localGame = cookie.get("activeGame");
-                    const localIndex = parseInt(localStorage.getItem("playerIndex"));
         
                     var last_date = 0;
                     var gammel = false;
@@ -798,8 +797,7 @@ function StageMatcharticle ({data}) {
                                 "fullProb": returnOdds,
                                 "last_date": last_date,
                                 "type": "kombination"
-                            },
-                            "index": localIndex
+                            }
                         }
                 
                         for (var m in odds) {
@@ -894,7 +892,6 @@ function StageMatcharticle ({data}) {
                 }
     
                 const localGame = cookie.get("activeGame");
-                const localIndex = parseInt(localStorage.getItem("playerIndex"));
     
                 var last_date = 0;
                 var gammel = false;
@@ -922,8 +919,7 @@ function StageMatcharticle ({data}) {
                             "fullProb": returnOdds,
                             "last_date": last_date,
                             "type": "kombination"
-                        },
-                        "index": localIndex
+                        }
                     }
             
                     for (var m in odds) {

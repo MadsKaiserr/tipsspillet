@@ -61,7 +61,6 @@ function StageAktiveSpil ({ data }) {
         cookie.set("activeGame", id, {expires: 7});
         cookie.set("notifikationer", notifikationer, {expires: 7});
         localStorage.setItem("activeGame", id);
-        localStorage.setItem("playerIndex", index);
         localStorage.setItem("aktive-spil-suspend", "null");
         router.push("/stage")
     }

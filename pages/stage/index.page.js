@@ -503,7 +503,6 @@ function StageForside ({gruppespil_data, spiller_data}) {
                         }
             
                         const localGame = cookie.get("activeGame");
-                        const localIndex = parseInt(localStorage.getItem("playerIndex"));
             
                         var last_date = 0;
                         var gammel = false;
@@ -531,8 +530,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
                                     "fullProb": returnOdds,
                                     "last_date": last_date,
                                     "type": "kombination"
-                                },
-                                "index": localIndex
+                                }
                             }
                     
                             for (var m in odds) {
@@ -628,7 +626,6 @@ function StageForside ({gruppespil_data, spiller_data}) {
                 }
     
                 const localGame = cookie.get("activeGame");
-                const localIndex = parseInt(localStorage.getItem("playerIndex"));
     
                 var last_date = 0;
                 var gammel = false;
@@ -656,8 +653,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
                             "fullProb": returnOdds,
                             "last_date": last_date,
                             "type": "singler"
-                        },
-                        "index": localIndex
+                        }
                     }
             
                     for (var m in odds) {

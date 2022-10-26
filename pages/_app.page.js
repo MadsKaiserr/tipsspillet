@@ -11,7 +11,6 @@ import './css/blog.css';
 import Script from 'next/script'
 import Footer from './layout/footer';
 import Login from './components/login';
-import { useState, useEffect } from 'react';
 import Router, { useRouter } from 'next/router';
 
 import NProgress from 'nprogress';
