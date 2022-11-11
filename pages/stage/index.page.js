@@ -1092,11 +1092,12 @@ function StageForside ({gruppespil_data, spiller_data}) {
                     console.log("AWS - Indskydelse:", responseTem, winBody);
                     for (var i in responseTem.data.Item.Attributes.players) {
                         if (responseTem.data.Item.Attributes.players[i].player === getUser().email) {
-                            setCurrentMoney(responseTem.data.Item.Attributes.players[i].info.money);
+                            setCurrentMoney(responseTem.players[i].info.money);
                         }
                     }
                 }).catch(error => {
-                    setNotiMessage("error","Fejl i opdatering af indskydelse" , error.response.data.message);
+                    setNotiMessage("error","Fejl i opdatering af indskydelse" , "");
+                    console.log(error);
                 })
             }
         } else {
@@ -2948,7 +2949,7 @@ function StageForside ({gruppespil_data, spiller_data}) {
                 setVELoading(false);
                 console.log(error);
                 if (error.response.data.msg === "Forkert kode") {
-                    setVEMessage("Forkert kode")
+                    setVEMessage("Forkert kode, prøv at anmode om ny kode")
                 }
             })
         }
@@ -2972,7 +2973,9 @@ function StageForside ({gruppespil_data, spiller_data}) {
                         setVESCAllowed(true);
                         clearInterval(kodeInterval);
                     }
-                    document.getElementById("kodetimer").innerHTML = timeleft;
+                    if (document.getElementById("kodetimer") ) {
+                        document.getElementById("kodetimer").innerHTML = timeleft;
+                    }
                     timeleft -= 1;
                 }, 1000);
             }
@@ -3051,27 +3054,31 @@ function StageForside ({gruppespil_data, spiller_data}) {
         <StageHeader />
         <div className="height-fix2">
         </div>
-        {confirmModal && <div className="ec-wrapper">
-            <div className="ec-img">
-
+        {confirmModal && <div>
+            <div className="wc-ec-wrapper">
+                <div className="wc-top" style={{}}>
+                    <div className="wc-circles">
+                        <div className="wc-cir1"><div className="wc-cir2"><div className="wc-cir3"></div></div></div>
+                    </div>
+                    <p className="wc-h1">Bekræft <span style={{color: "var(--primary)", fontWeight: "600"}}>email</span></p>
+                    <div className="wc-trans" style={{height: "45px"}}></div>
+                </div>
+                <div className="wc-content" style={{textAlign: "center"}}>
+                    <p className="wc-h2">Indsæt koden, som er blevet sendt på din email</p>
+                    {VEMessage !== "" && <p className="ec-h4">{VEMessage}</p>}
+                    <div className="ec-container">
+                        <input onChange={event => setec1(event.target.value)} id="ec-1" type="none" className="ec-input" maxLength="1" autoComplete="new-password" />
+                        <input onChange={event => setec2(event.target.value)} id="ec-2" type="none" className="ec-input" maxLength="1" autoComplete="new-password"/>
+                        <input onChange={event => setec3(event.target.value)} id="ec-3" type="none" className="ec-input" maxLength="1" autoComplete="new-password" />
+                        <input onChange={event => setec4(event.target.value)} id="ec-4" type="none" className="ec-input" maxLength="1" autoComplete="new-password" />
+                        <input onChange={event => setec5(event.target.value)} id="ec-5" type="none" className="ec-input" maxLength="1" autoComplete="new-password" />
+                        <input onChange={event => setec6(event.target.value)} id="ec-6" type="none" className="ec-input" maxLength="1" autoComplete="new-password" />
+                    </div>
+                    <p className="login-form-label" id="veki" style={{marginTop: "10px"}}>Har du ikke fået en kode? <span id="vekiLink" className="login-link" onClick={() => sendCode()}>Send kode igen</span></p>
+                    <p className="login-form-label display-not" id="kodetimer">30</p>
+                </div>
+                <button className="wc-btn" onClick={() => verifyEmail()}>{VELoading && <div className="loader"></div>}{!VELoading && <>Verificer</>}</button>
             </div>
-            {/* <div className="wc-circles">
-                <div className="wc-cir1"><div className="wc-cir2"><div className="wc-cir3"></div></div></div>
-            </div> */}
-            <p className="ec-h1">Bekræft email</p>
-            <p className="ec-h2">Indsæt koden, som blev sendt på din email</p>
-            {VEMessage !== "" && <p className="ec-h4">{VEMessage}</p>}
-            <div className="ec-container">
-                <input onChange={event => setec1(event.target.value)} id="ec-1" type="none" className="ec-input" maxLength="1" autoComplete="new-password" />
-                <input onChange={event => setec2(event.target.value)} id="ec-2" type="none" className="ec-input" maxLength="1" autoComplete="new-password"/>
-                <input onChange={event => setec3(event.target.value)} id="ec-3" type="none" className="ec-input" maxLength="1" autoComplete="new-password" />
-                <input onChange={event => setec4(event.target.value)} id="ec-4" type="none" className="ec-input" maxLength="1" autoComplete="new-password" />
-                <input onChange={event => setec5(event.target.value)} id="ec-5" type="none" className="ec-input" maxLength="1" autoComplete="new-password" />
-                <input onChange={event => setec6(event.target.value)} id="ec-6" type="none" className="ec-input" maxLength="1" autoComplete="new-password" />
-            </div>
-            <button className="ec-btn" onClick={() => verifyEmail()}>{VELoading && <div className="loader"></div>}{!VELoading && <>Verificer</>}</button>
-            <p className="login-form-label" id="veki" style={{marginTop: "10px"}}>Har du ikke fået en kode? <span id="vekiLink" className="login-link" onClick={() => sendCode()}>Send kode igen</span></p>
-            <p className="login-form-label display-not" id="kodetimer">30</p>
         </div>}
         {problemer && <div className="wc-container" id="wc-container" style={{zIndex: "999"}}>
             <div className="wc-wrapper">
