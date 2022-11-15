@@ -19,8 +19,11 @@ function StageIndstillinger ({data}) {
     const [afbrydModal, setAfbrydModal] = useState(false);
     const [upgradeModal, setUpgradeModal] = useState(false);
 
+    const [latestInv, setLatestInv] = useState(0);
     const [cardOnline, setCardOnline] = useState(false);
+    const [fakturaLink, setFakturaLink] = useState("https://www.tipsspillet.dk/stage/indstillinger")
     const [last4, setLast4] = useState("xxxx");
+    const [priceAmt, setPriceAmt] = useState(0);
     const [cardName, setCardName] = useState("Indlæser...");
     const [priceid, setPriceid] = useState("");
     const [abonnementType, setAbonnementType] = useState("");
@@ -62,6 +65,9 @@ function StageIndstillinger ({data}) {
                 setCardOnline(true);
                 setSubId(response.data.subId)
                 setPriceid(response.data.customer.subscriptions.data[0].items.data[0].plan.id);
+                setPriceAmt(response.data.customer.subscriptions.data[0].items.data[0].price.unit_amount);
+                setLatestInv(response.data.latest.created * 1000)
+                setFakturaLink(response.data.latest.invoice_pdf)
                 var PriceId = response.data.customer.subscriptions.data[0].items.data[0].plan.id;
                 const test_plus1 = "price_1LuMW1DgBSgfAmE2l7k2TnCH";
                 const test_plus3 = "price_1LuMW1DgBSgfAmE2hNfySZQn";
@@ -92,6 +98,8 @@ function StageIndstillinger ({data}) {
             }).catch(error => {
                 console.log(error);
             })
+        } else {
+            console.log("Ikke kunde")
         }
     }, [customerId])
 
@@ -272,6 +280,7 @@ function StageIndstillinger ({data}) {
     const [nav, setNav] = useState("generelt");
 
     useEffect(() => {
+        console.log("AWS - Get User", data)
         setUser(JSON.stringify(data));
         setUsernameField(data["username"]);
         setEmailField(data["email"]);
@@ -470,28 +479,6 @@ function StageIndstillinger ({data}) {
         }
     }
 
-    function setType(type) {
-        if (type === "quarter") {
-            document.getElementById("quarter").className = "price-input-element-active";
-            document.getElementById("month").className = "price-input-element";
-            document.getElementById("year").className = "price-input-element";
-            setPlusPrice(29);
-            setPremiumPrice(39);
-        } else if (type === "month") {
-            document.getElementById("month").className = "price-input-element-active";
-            document.getElementById("quarter").className = "price-input-element";
-            document.getElementById("year").className = "price-input-element";
-            setPlusPrice(39);
-            setPremiumPrice(59);
-        } else if (type === "year") {
-            document.getElementById("year").className = "price-input-element-active";
-            document.getElementById("quarter").className = "price-input-element";
-            document.getElementById("month").className = "price-input-element";
-            setPlusPrice(19);
-            setPremiumPrice(29);
-        }
-    }
-
     const [messageType, setMessageType] = useState("error-con-error");
 
     function setNotiMessage(type, heading, message) {
@@ -505,6 +492,12 @@ function StageIndstillinger ({data}) {
         document.getElementById("errorConH").innerHTML = heading;
         document.getElementById("errorConP").innerHTML = message;
     }
+
+    useEffect(() => {
+        if (nav === "abonnement" && !afbrudt && !cardOnline && abonnement === "none") {
+            router.push("/stage/opgrader");
+        }
+    }, [nav])
 
     return (
         <>
@@ -659,7 +652,7 @@ function StageIndstillinger ({data}) {
                 {!editedNoti && <button className="wc-btn-off" style={{marginTop: "30px"}}>Opdater indstillinger</button>}
                 {/* <button className="gruppespil-cta-btn" onClick={() => sendEmail()}>Send email</button> */}
                 </>}
-                {nav === "abonnement" && <><div className="op-content" style={{maxWidth: "950px", minHeight: "750px"}}>
+                {nav === "abonnement" && <><div className="op-content" style={{maxWidth: "1100px", minHeight: "750px"}}>
                     <p className="op-h1">Abonnement</p>
                     <p className="op-h2">Indstillinger for abonnement</p>
                     <div className="op-form">
@@ -675,268 +668,90 @@ function StageIndstillinger ({data}) {
                             </div>
                         </>}
                         {!afbrudt && <>
-                            {cardOnline && <div className="sub-data">
-                            <p className="is-h1">Betalingsoversigt</p>
-                            <p className="is-h2">{dayProgress} dage til næste betaling</p>
-                            <div className="plan-progress">
-                                <div className="plan-user" style={{width: progress + "%"}}></div>
-                            </div>
-                            <div className="plan-progress-id">
-                                <p className="is-p">{new Date(rolleIat).getDate().toString().padStart(2, '0') + "/" + (new Date(rolleIat).getMonth() + 1).toString().padStart(2, '0')}</p>
-                                <p className="is-p">{new Date(rolleExp).getDate().toString().padStart(2, '0') + "/" + (new Date(rolleExp).getMonth() + 1).toString().padStart(2, '0')}</p>
-                            </div>
-                            <div className="sub-card">
-                                <div className="sub-span">
-                                    <div className="sub-status"></div>
-                                    <p className="sub-status-p">Aktiv {abonnementType}</p>
+                            <div className="op-cards">
+                            {cardOnline && <>
+                                <div className="sub-data">
+                                <p className="is-h1">Betalingsoversigt</p>
+                                <p className="is-h2">{dayProgress} dage til næste betaling</p>
+                                <div className="plan-progress">
+                                    <div className="plan-user" style={{width: progress + "%"}}></div>
                                 </div>
-                                <svg xmlns="http://www.w3.org/2000/svg" className="sub-icon" viewBox="0 0 16 16">
-                                    <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v1h14V4a1 1 0 0 0-1-1H2zm13 4H1v5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V7z"/>
-                                    <path d="M2 10a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-1z"/>
-                                </svg>
-                                <p className="sub-card-p">{cardName}</p>
-                                <div className="sub-span">
-                                    <p className="sub-card-p">•••• •••• ••••</p>
-                                    <p className="sub-card-p">{last4}</p>
+                                <div className="plan-progress-id">
+                                    <p className="is-p">{new Date(rolleIat).getDate().toString().padStart(2, '0') + "/" + (new Date(rolleIat).getMonth() + 1).toString().padStart(2, '0')}</p>
+                                    <p className="is-p">{new Date(rolleExp).getDate().toString().padStart(2, '0') + "/" + (new Date(rolleExp).getMonth() + 1).toString().padStart(2, '0')}</p>
                                 </div>
-                                <div className="sub-span">
+                                <div className="sub-card">
                                     <div className="sub-span">
-                                        <p className="sub-card-p" style={{opacity: "0.75"}}>EXP</p>
-                                        <p className="sub-card-p">••/••</p>
+                                        <div className="sub-status"></div>
+                                        <p className="sub-status-p">Aktiv {abonnementType}</p>
                                     </div>
-                                    <div className="sub-span" style={{paddingLeft: "8px"}}>
-                                        <p className="sub-card-p" style={{opacity: "0.75"}}>CVC</p>
-                                        <p className="sub-card-p">•••</p>
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="sub-icon" viewBox="0 0 16 16">
+                                        <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v1h14V4a1 1 0 0 0-1-1H2zm13 4H1v5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V7z"/>
+                                        <path d="M2 10a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-1z"/>
+                                    </svg>
+                                    <p className="sub-card-p">{cardName}</p>
+                                    <div className="sub-span">
+                                        <p className="sub-card-p">•••• •••• ••••</p>
+                                        <p className="sub-card-p">{last4}</p>
+                                    </div>
+                                    <div className="sub-span">
+                                        <div className="sub-span">
+                                            <p className="sub-card-p" style={{opacity: "0.75"}}>EXP</p>
+                                            <p className="sub-card-p">••/••</p>
+                                        </div>
+                                        <div className="sub-span" style={{paddingLeft: "8px"}}>
+                                            <p className="sub-card-p" style={{opacity: "0.75"}}>CVC</p>
+                                            <p className="sub-card-p">•••</p>
+                                        </div>
+                                    </div>
+                                    <div className="sub-img">
+                                        {cardBrand === "visa" && <Image src={Visa} />}
+                                        {cardBrand === "mastercard" && <Image src={Mastercard} />}
                                     </div>
                                 </div>
-                                <div className="sub-img">
-                                    {cardBrand === "visa" && <Image src={Visa} />}
-                                    {cardBrand === "mastercard" && <Image src={Mastercard} />}
+                                <div className="card-cta">
+                                    <button className="card-cta-btn-active" onClick={() => setAfbrydModal(true)}>Opsig abonnement</button>
+                                    <button className="card-cta-btn">Opgrader</button>
+                                    <button className="card-cta-btn" onClick={() => {window.open("/abonnement", "_blank")}}>Læs mere</button>
                                 </div>
-                            </div>
-                            <div className="card-cta">
-                                <button className="card-cta-btn-active" onClick={() => setAfbrydModal(true)}>Opsig abonnement</button>
-                                <button className="card-cta-btn">Opgrader</button>
-                                <button className="card-cta-btn">Læs mere</button>
-                            </div>
-                            </div>}
+                                </div>
+                                <div className="sub-data">
+                                    <p className="is-h1">Fakturering</p>
+                                    <p className="is-h2">Næste betaling d. {new Date(rolleExp).getDate().toString().padStart(2, '0') + "." + (new Date(rolleExp).getMonth() + 1).toString().padStart(2, '0') + "." + new Date(rolleExp).getFullYear().toString().padStart(2, '0')}</p>
+                                    <p className="is-h3">{priceAmt / 100},00 kr.</p>
+                                    <p className="is-h2" style={{paddingTop: "15px"}}>Faktureringshistorik</p>
+                                    <p className="is-h4">Sidst betalt d. {new Date(latestInv).getDate().toString().padStart(2, '0') + "." + (new Date(latestInv).getMonth() + 1).toString().padStart(2, '0') + "." + new Date(latestInv).getFullYear().toString().padStart(2, '0')}</p>
+                                    <p className="is-a" style={{paddingTop: "15px"}} onClick={() => window.open(fakturaLink, "_BLANK")}>Download faktura</p>
+                                </div>
+                                {/* <div className="sub-data">
+                                    <p className="is-h1">Fakturering</p>
+                                    <p className="is-h2">Næste betaling d. {new Date(rolleExp).getDate().toString().padStart(2, '0') + "." + (new Date(rolleExp).getMonth() + 1).toString().padStart(2, '0') + "." + new Date(rolleExp).getFullYear().toString().padStart(2, '0')}</p>
+                                    <p className="is-h3">{priceAmt / 100},00 kr.</p>
+                                    <p className="is-h2" style={{paddingTop: "15px"}}>Faktureringshistorik</p>
+                                    <p className="is-h4">Sidst betalt d. {new Date(rolleIat).getDate().toString().padStart(2, '0') + "." + (new Date(rolleIat).getMonth() + 1).toString().padStart(2, '0') + "." + new Date(rolleIat).getFullYear().toString().padStart(2, '0')}</p>
+                                </div> */}
+                            </>}
                             {!cardOnline && <>
                                 {abonnement !== "none" && <>
-                                    <p className="is-h1">Betalingsoversigt</p>
-                                    <p className="is-h2">{dayProgress} dage tilbage af dit abonnement</p>
-                                    <div className="plan-progress">
-                                        <div className="plan-user" style={{width: progress + "%"}}></div>
+                                    <div className="sub-data">
+                                        <p className="is-h1">Betalingsoversigt</p>
+                                        <p className="is-h2">{dayProgress} dage tilbage af dit abonnement</p>
+                                        <div className="plan-progress">
+                                            <div className="plan-user" style={{width: progress + "%"}}></div>
+                                        </div>
+                                        <div className="plan-progress-id">
+                                            <p className="is-p">{new Date(rolleIat).getDate().toString().padStart(2, '0') + "/" + (new Date(rolleIat).getMonth() + 1).toString().padStart(2, '0')}</p>
+                                            <p className="is-p">{new Date(rolleExp).getDate().toString().padStart(2, '0') + "/" + (new Date(rolleExp).getMonth() + 1).toString().padStart(2, '0')}</p>
+                                        </div>
+                                        <div className="card-cta">
+                                            <button className="card-cta-btn-active">Forny abonnement</button>
+                                            <button className="card-cta-btn" onClick={() => {window.open("/abonnement", "_blank")}}>Læs mere</button>
+                                        </div>
                                     </div>
-                                    <div className="plan-progress-id">
-                                        <p className="is-p">{new Date(rolleIat).getDate().toString().padStart(2, '0') + "/" + (new Date(rolleIat).getMonth() + 1).toString().padStart(2, '0')}</p>
-                                        <p className="is-p">{new Date(rolleExp).getDate().toString().padStart(2, '0') + "/" + (new Date(rolleExp).getMonth() + 1).toString().padStart(2, '0')}</p>
-                                    </div>
-                                </>}
-                                {abonnement === "none" && <>
-                                    <p className="is-h1">Betalingsoversigt</p>
-                                    <p className="is-h2">Du har ikke noget abonnement</p>
                                 </>}
                             </>}
+                            </div>
                         </>}
-                        <div className="set-center" style={{marginTop: "40px"}}>
-                            <div className="price-input animation-fadeleft animation-delay-400" id="price-input">
-                                <div className="price-input-element" id="month" onClick={() => {setType("month");setPriceInterval(1)}}>Månedligt</div>
-                                <div className="price-input-element-active" id="quarter" onClick={() => {setType("quarter");setPriceInterval(3)}}>Kvartalvis</div>
-                                <div className="price-input-element" id="year" onClick={() => {setType("year");setPriceInterval(12)}}>Årligt</div>
-                            </div>
-                        </div>
-                        <div className="match-figure" style={{top: "500px"}}>
-                            <div className="info-figure1"></div>
-                            <div className="info-figure2"></div>
-                        </div>
-                        <div className="plans-container" style={{marginBottom: "100px"}}>
-                            <div className="plans-con">
-                                <div className="plan-element animation-fadetop animation-delay-400">
-                                    <div className="plan-element-top">
-                                        <p className="plan-identifier">Standard</p>
-                                        <div className="plan-id-divider"><div className="plan-id-block"></div></div>
-                                        <div className="plan-prices">
-                                            <p className="plan-element-prisp">kr</p>
-                                            <p className="plan-element-pris">0</p>
-                                            <p className="plan-element-prisp" style={{fontSize: "15px", width: "100%", opacity: "0.9", marginTop: "auto", marginBottom: "10px"}}>/ for evigt</p>
-                                        </div>
-                                    </div>
-                                    {abonnement === "none" && <button className="plan-btn-default plan-off">Nuværende</button>}
-                                    {abonnement !== "none" && <button className="plan-btn-default" onClick={() => cancelSub()}>{loading0 && <div className="loader"></div>}{!loading0 && <>Nedgrader</>}</button>}
-                                    <div className="plan-element-perks">
-                                        <div className="plan-element-perk">
-                                            <svg xmlns="http://www.w3.org/2000/svg" className="plan-element-perk-icon" viewBox="0 0 16 16">
-                                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
-                                            </svg>
-                                            <p className="plan-element-perk-desc">Deltag i 2 spil ad gangen</p>
-                                        </div>
-                                        <div className="plan-element-perk">
-                                            <svg xmlns="http://www.w3.org/2000/svg" className="plan-element-perk-icon" viewBox="0 0 16 16">
-                                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
-                                            </svg>
-                                            <p className="plan-element-perk-desc">Deltag i venners gruppespil</p>
-                                        </div>
-                                        <div className="plan-element-perk-off">
-                                            <svg xmlns="http://www.w3.org/2000/svg" className="plan-element-perk-icon" viewBox="0 0 16 16">
-                                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-    <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
-                                            </svg>
-                                            <p className="plan-element-perk-desc">Opret gruppespil i alle ligaer</p>
-                                        </div>
-                                        <div className="plan-element-perk-off">
-                                            <svg xmlns="http://www.w3.org/2000/svg" className="plan-element-perk-icon" viewBox="0 0 16 16">
-                                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-    <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
-                                            </svg>
-                                            <p className="plan-element-perk-desc">Deltag i præmieturneringer</p>
-                                        </div>
-                                        <div className="plan-element-perk-off">
-                                            <svg xmlns="http://www.w3.org/2000/svg" className="plan-element-perk-icon" viewBox="0 0 16 16">
-                                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-    <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
-                                            </svg>
-                                            <p className="plan-element-perk-desc">Udvidet statistikker</p>
-                                        </div>
-                                        <div className="plan-element-perk-off">
-                                            <svg xmlns="http://www.w3.org/2000/svg" className="plan-element-perk-icon" viewBox="0 0 16 16">
-                                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-    <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
-                                            </svg>
-                                            <p className="plan-element-perk-desc">Gratis betting tips</p>
-                                        </div>
-                                        <div className="plan-element-perk-off">
-                                            <svg xmlns="http://www.w3.org/2000/svg" className="plan-element-perk-icon" viewBox="0 0 16 16">
-                                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-    <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
-                                            </svg>
-                                            <p className="plan-element-perk-desc">Ingen reklamer</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="plan-element animation-fadetop animation-delay-600">
-                                    <div className="plan-element-top">
-                                        <p className="plan-identifier">Plus</p>
-                                        <div className="plan-id-divider"><div className="plan-id-block"></div></div>
-                                        <div className="plan-prices">
-                                            <p className="plan-element-prisp">kr</p>
-                                            <p className="plan-element-pris">{plusPrice}</p>
-                                            {plusPrice === 29 && <div className="plan-spar">Spar 25%</div>}
-                                            {plusPrice === 19 && <div className="plan-spar">Spar 50%</div>}
-                                            <p className="plan-element-prisp" style={{fontSize: "15px", width: "100%", opacity: "0.9", marginTop: "auto", marginBottom: "10px"}}>/ måned</p>
-                                        </div>
-                                    </div>
-                                    {abonnement === "none" && <button className="plan-btn-default" onClick={handlePlus}>{loading1 && <div className="loader"></div>}{!loading1 && <>Opgrader</>}</button>}
-                                    {abonnement === "premium" && <button className="plan-btn-default" onClick={handlePlus}>{loading1 && <div className="loader"></div>}{!loading1 && <>Nedgrader</>}</button>}
-                                    {abonnement === "plus" && <button className="plan-btn-default plan-off">Nuværende</button>}
-                                    <div className="plan-element-perks">
-                                        <div className="plan-element-perk">
-                                            <svg xmlns="http://www.w3.org/2000/svg" className="plan-element-perk-icon" viewBox="0 0 16 16">
-                                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
-                                            </svg>
-                                            <p className="plan-element-perk-desc">Deltag i 5 spil ad gangen</p>
-                                        </div>
-                                        <div className="plan-element-perk">
-                                            <svg xmlns="http://www.w3.org/2000/svg" className="plan-element-perk-icon" viewBox="0 0 16 16">
-                                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
-                                            </svg>
-                                            <p className="plan-element-perk-desc">Deltag i venners gruppespil</p>
-                                        </div>
-                                        <div className="plan-element-perk">
-                                            <svg xmlns="http://www.w3.org/2000/svg" className="plan-element-perk-icon" viewBox="0 0 16 16">
-                                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
-                                            </svg>
-                                            <p className="plan-element-perk-desc">Opret private gruppespil</p>
-                                        </div>
-                                        <div className="plan-element-perk">
-                                            <svg xmlns="http://www.w3.org/2000/svg" className="plan-element-perk-icon" viewBox="0 0 16 16">
-                                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
-                                            </svg>
-                                            <p className="plan-element-perk-desc">Deltag i præmieturneringer*</p>
-                                        </div>
-                                        <div className="plan-element-perk">
-                                            <svg xmlns="http://www.w3.org/2000/svg" className="plan-element-perk-icon" viewBox="0 0 16 16">
-                                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
-                                            </svg>
-                                            <p className="plan-element-perk-desc">Plus abonnement statistikker</p>
-                                        </div>
-                                        <div className="plan-element-perk-off">
-                                            <svg xmlns="http://www.w3.org/2000/svg" className="plan-element-perk-icon" viewBox="0 0 16 16">
-                                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-    <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
-                                            </svg>
-                                            <p className="plan-element-perk-desc">Gratis betting tips</p>
-                                        </div>
-                                        <div className="plan-element-perk-off">
-                                            <svg xmlns="http://www.w3.org/2000/svg" className="plan-element-perk-icon" viewBox="0 0 16 16">
-                                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-    <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
-                                            </svg>
-                                            <p className="plan-element-perk-desc">Ingen reklamer</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="plan-element animation-fadetop animation-delay-800">
-                                    <div className="plan-element-top">
-                                        <p className="plan-identifier">Premium</p>
-                                        <div className="plan-id-divider"><div className="plan-id-block"></div></div>
-                                        <div className="plan-prices">
-                                            <p className="plan-element-prisp">kr</p>
-                                            <p className="plan-element-pris">{premiumPrice}</p>
-                                            {premiumPrice === 39 && <div className="plan-spar">Spar 34%</div>}
-                                            {premiumPrice === 29 && <div className="plan-spar">Spar 50%</div>}
-                                            <p className="plan-element-prisp" style={{fontSize: "15px", width: "100%", opacity: "0.9", marginTop: "auto", marginBottom: "10px"}}>/ måned</p>
-                                        </div>
-                                    </div>
-                                    {abonnement === "none" && <button className="plan-btn-default" onClick={handlePremium}>{loading2 && <div className="loader"></div>}{!loading2 && <>Opgrader</>}</button>}
-                                    {abonnement === "plus" && <button className="plan-btn-default" onClick={handlePremium}>{loading2 && <div className="loader"></div>}{!loading2 && <>Opgrader</>}</button>}
-                                    {abonnement === "premium" && <button className="plan-btn-default plan-off">Nuværende</button>}
-                                    <div className="plan-element-perks">
-                                        <div className="plan-element-perk">
-                                            <svg xmlns="http://www.w3.org/2000/svg" className="plan-element-perk-icon" viewBox="0 0 16 16">
-                                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
-                                            </svg>
-                                            <p className="plan-element-perk-desc">Deltag i <span className="plan-element-perk-desc-active">uendelige</span> spil</p>
-                                        </div>
-                                        <div className="plan-element-perk">
-                                            <svg xmlns="http://www.w3.org/2000/svg" className="plan-element-perk-icon" viewBox="0 0 16 16">
-                                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
-                                            </svg>
-                                            <p className="plan-element-perk-desc">Deltag i venners gruppespil</p>
-                                        </div>
-                                        <div className="plan-element-perk">
-                                            <svg xmlns="http://www.w3.org/2000/svg" className="plan-element-perk-icon" viewBox="0 0 16 16">
-                                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
-                                            </svg>
-                                            <p className="plan-element-perk-desc">Opret <span className="plan-element-perk-desc-active">offentlige</span> og <span className="plan-element-perk-desc-active">private</span> gruppespil</p>
-                                        </div>
-                                        <div className="plan-element-perk">
-                                            <svg xmlns="http://www.w3.org/2000/svg" className="plan-element-perk-icon" viewBox="0 0 16 16">
-                                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
-                                            </svg>
-                                            <p className="plan-element-perk-desc">Deltag i <i><span className="plan-element-perk-desc-active">alle</span></i> præmieturneringer</p>
-                                        </div>
-                                        <div className="plan-element-perk">
-                                            <svg xmlns="http://www.w3.org/2000/svg" className="plan-element-perk-icon" viewBox="0 0 16 16">
-                                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
-                                            </svg>
-                                            <p className="plan-element-perk-desc"><span className="plan-element-perk-desc-active">Alle</span> udvidet statistikker</p>
-                                        </div>
-                                        <div className="plan-element-perk">
-                                            <svg xmlns="http://www.w3.org/2000/svg" className="plan-element-perk-icon" viewBox="0 0 16 16">
-                                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
-                                            </svg>
-                                            <p className="plan-element-perk-desc">Gratis betting tips</p>
-                                        </div>
-                                        <div className="plan-element-perk">
-                                            <svg xmlns="http://www.w3.org/2000/svg" className="plan-element-perk-icon" viewBox="0 0 16 16">
-                                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
-                                            </svg>
-                                            <p className="plan-element-perk-desc">Ingen reklamer</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 </>}

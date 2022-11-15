@@ -265,9 +265,30 @@ function StageAktiveSpil ({ data }) {
                                     </>}
                                     {!cookie.get("activeGame") && <><button className="td-btn">Sæt som aktiv</button></>}
                                 </li>;
+
+                                var afsluttetReturn = 
+                                <li key={item.id} className="as-element" onClick={() => setActiveGame(item.id, index, item.name, item.players[index].info.notifikationer.length)}>
+                                    <div>
+                                        <p className="as-h1">{item.name}</p>
+                                        <p className="as-h2">Spillet er afsluttet</p>
+                                        <div className="hero-info">
+                                            <div className="hero-info-block">
+                                                <p className="hero-info-block-h1">{item.players.length}</p>
+                                                <p className="hero-info-block-h2">Spillere</p>
+                                            </div>
+                                            <div className="hero-info-block">
+                                                <p className="hero-info-block-h1">{position}</p>
+                                                <p className="hero-info-block-h2">Din position</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button className="td-outline">Spillet er afsluttet</button>
+                                </li>;
                                 if (currentType === "alle") {
                                     if (new Date(item.varighed).getTime() > new Date().getTime()) {
                                         return returnable;
+                                    } else {
+                                        return afsluttetReturn;
                                     }
                                 } else if (currentType === "gruppespil") {
                                     if ((item.synlighed === "offentlig" || item.synlighed === "privat") && new Date(item.varighed).getTime() > new Date().getTime()) {
@@ -275,7 +296,7 @@ function StageAktiveSpil ({ data }) {
                                     }
                                 } else if (currentType === "afsluttede") {
                                     if (new Date(item.varighed).getTime() < new Date().getTime()) {
-                                        return returnable;
+                                        return afsluttetReturn;
                                     }
                                 } else if (currentType === "dyster") {
                                     if (item.synlighed === "dyst" && new Date(item.varighed).getTime() > new Date().getTime()) {
@@ -284,7 +305,7 @@ function StageAktiveSpil ({ data }) {
                                 }
                             })}
                             {currentType === "alle" && <>
-                                {search.filter(function( obj ) { return new Date(obj.varighed).getTime() > new Date().getTime() }).length === 0 && <>
+                                {search.length === 0 && <>
                                     <div className="td-empty-container">
                                         <div className="td-empty-bg"></div>
                                         <div className="td-empty-element" style={{marginLeft: "-50px"}}>
